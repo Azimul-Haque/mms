@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'title' => 'Microfinance Management',
+    'title' => 'Surjo Somobaay',
 
     'title_prefix' => '',
 
@@ -30,9 +30,9 @@ return [
     |
     */
 
-    'logo' => '<b>Microfinance</b> Management',
+    'logo' => '<b>Surjo</b> Somobaay',
 
-    'logo_mini' => '<b>MM</b>S',
+    'logo_mini' => '<b>S</b>S',
 
     /*
     |--------------------------------------------------------------------------
