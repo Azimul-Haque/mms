@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'title' => 'Surjo Somobaay',
+    'title' => 'Surjo Somobay',
 
     'title_prefix' => '',
 
@@ -30,7 +30,7 @@ return [
     |
     */
 
-    'logo' => '<b>Surjo</b> Somobaay',
+    'logo' => '<b>Surjo</b> Somobay',
 
     'logo_mini' => '<b>S</b>S',
 
