@@ -133,7 +133,7 @@
                 <!-- Sidebar Menu -->
                 <ul class="sidebar-menu" data-widget="tree">
                     {{-- @each('adminlte::partials.menu-item', $adminlte->menu(), 'item') --}}
-                    <li class="treeview {{ Request::is('dashboard') ? 'active menu-open' : '' }} {{ Request::is('programs/*') ? 'active menu-open' : '' }} {{ Request::is('groups/*') ? 'active menu-open' : '' }} {{ Request::is('staffs/*') ? 'active menu-open' : '' }}">
+                    <li class="treeview {{ Request::is('dashboard') ? 'active' : '' }} {{ Request::is('programs/*') ? 'active' : '' }} {{ Request::is('group/*') ? 'active' : '' }} {{ Request::is('staff/*') ? 'active' : '' }}">
                         <a href="#">
                             <i class="fa fa-fw fa-university"></i><span>Programs</span>
                             <span class="pull-right-container">
@@ -144,67 +144,59 @@
                           <li class="{{ Request::is('programs/features') ? 'active' : '' }}">
                             <a href="{{ route('programs.features') }}"><i class="fa fa-list-ol"></i> Program Features</a>
                           </li>
-                          @foreach($staffs as $staff)
-                          <li class="treeview {{-- {{ Request::is('dashboard') ? 'active menu-open' : '' }} {{ Request::is('programs/*') ? 'active menu-open' : '' }} --}} {{ Request::is('staffs/*') ? 'active menu-open' : '' }} {{ Request::is('groups/*') ? 'active menu-open' : '' }}">
-                            <a href="#"><i class="fa fa-user-circle-o"></i> {{ $staff->name }}
-                              <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                              </span>
-                            </a>
-                            <ul class="treeview-menu {{-- {{ Request::is('dashboard') ? 'menu-open' : '' }} {{ Request::is('programs/*') ? 'menu-open' : '' }} --}}">
-                              <li class="{{ Request::is('staffs/features') ? 'active' : '' }}">
-                                <a href="{{ route('staffs.features') }}"><i class="fa fa-list-ol"></i> Staff Features</a>
-                              </li>
-                              <li class="treeview {{-- {{ Request::is('dashboard') ? 'active menu-open' : '' }} {{ Request::is('programs/*') ? 'active menu-open' : '' }} --}} {{ Request::is('groups/*') ? 'active menu-open' : '' }}">
-                                <a href="#"><i class="fa fa-users"></i> Grpup 1
-                                  <span class="pull-right-container">
-                                    <i class="fa fa-angle-left pull-right"></i>
-                                  </span>
-                                </a>
-                                <ul class="treeview-menu {{-- {{ Request::is('dashboard') ? 'active menu-open' : '' }} {{ Request::is('programs/*') ? 'active menu-open' : '' }} --}}">
-                                  <li class="{{ Request::is('groups/features') ? 'active' : '' }}">
-                                    <a href="{{ route('groups.features') }}"><i class="fa fa-list-ol"></i> Group Features</a>
-                                  </li>
-                                  <li><a href="#"><i class="fa fa-user"></i> Member 1</a></li>
-                                  <li><a href="#"><i class="fa fa-user"></i> Member 2</a></li>
-                                  <li><a href="#"><i class="fa fa-user"></i> Member 3</a></li>
-                                  <li><a href="#"><i class="fa fa-user"></i> Member 4</a></li>
-                                  <li><a href="#"><i class="fa fa-user"></i> Member 5</a></li>
-                                </ul>
-                                <a href="#"><i class="fa fa-users"></i> Grpup 2
-                                  <span class="pull-right-container">
-                                    <i class="fa fa-angle-left pull-right"></i>
-                                  </span>
-                                </a>
-                                <ul class="treeview-menu {{-- {{ Request::is('dashboard') ? 'active menu-open' : '' }} {{ Request::is('programs/*') ? 'active menu-open' : '' }} --}}">
-                                  <li><a href="#"><i class="fa fa-user"></i> Member 1</a></li>
-                                  <li><a href="#"><i class="fa fa-user"></i> Member 2</a></li>
-                                  <li><a href="#"><i class="fa fa-user"></i> Member 3</a></li>
-                                  <li><a href="#"><i class="fa fa-user"></i> Member 4</a></li>
-                                  <li><a href="#"><i class="fa fa-user"></i> Member 5</a></li>
-                                </ul>
-                                <a href="#"><i class="fa fa-users"></i> Grpup 3
-                                  <span class="pull-right-container">
-                                    <i class="fa fa-angle-left pull-right"></i>
-                                  </span>
-                                </a>
-                                <ul class="treeview-menu {{-- {{ Request::is('dashboard') ? 'active menu-open' : '' }} {{ Request::is('programs/*') ? 'active menu-open' : '' }} --}}">
-                                  <li><a href="#"><i class="fa fa-user"></i> Member 1</a></li>
-                                  <li><a href="#"><i class="fa fa-user"></i> Member 2</a></li>
-                                  <li><a href="#"><i class="fa fa-user"></i> Member 3</a></li>
-                                  <li><a href="#"><i class="fa fa-user"></i> Member 4</a></li>
-                                  <li><a href="#"><i class="fa fa-user"></i> Member 5</a></li>
-                                </ul>
-                              </li>
-                              
-
-                              {{-- <li><a href="#"><i class="fa fa-circle-o"></i> Level Two</a></li> --}}
-                            </ul>
-                          </li>
+                          @foreach($univstaffs as $staff)
+                            @if((Auth::user()->role == 'admin') || (Auth::user()->role != 'admin' && Auth::user()->id == $staff->id))
+                            <li class="treeview {{-- {{ Request::is('dashboard') ? 'active menu-open' : '' }} {{ Request::is('programs/*') ? 'active menu-open' : '' }} --}} {{ Request::is('staff/'.$staff->id.'/*') ? 'active' : '' }} {{ Request::is('group/'. $staff->id .'/*') ? 'active' : '' }}">
+                              <a href="#"><i class="fa fa-user-circle-o"></i> {{ $staff->name }}
+                                <span class="pull-right-container">
+                                  <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                              </a>
+                              <ul class="treeview-menu {{-- {{ Request::is('dashboard') ? 'menu-open' : '' }} {{ Request::is('programs/*') ? 'menu-open' : '' }} --}}">
+                                <li class="{{ Request::is('staff/'.$staff->id.'/features') ? 'active' : '' }}">
+                                  <a href="{{ route('staff.features', $staff->id) }}"><i class="fa fa-list-ol"></i> Staff Features</a>
+                                </li>
+                                @foreach($staff->groups as $group)
+                                <li class="treeview {{ Request::is('group/'. $staff->id .'/'. $group->id .'/*') ? 'active' : '' }}">
+                                  <a href="#"><i class="fa fa-users"></i> {{ $group->name }}
+                                    <span class="pull-right-container">
+                                      <i class="fa fa-angle-left pull-right"></i>
+                                    </span>
+                                  </a>
+                                  <ul class="treeview-menu {{ Request::is('group/'. $staff->id .'/'. $group->id .'/*') ? 'menu-open' : '' }}">
+                                    <li class="{{ Request::is('group/'. $staff->id .'/'. $group->id .'/features') ? 'active' : '' }}">
+                                      <a href="{{ route('group.features', [$staff->id, $group->id]) }}"><i class="fa fa-list-ol"></i> Group Features</a>
+                                    </li>
+                                    @foreach($group->members as $member)
+                                      <li class="{{ Request::is('group/'. $staff->id .'/'. $group->id .'/'.$member->id.'/member') ? 'active' : '' }}">
+                                        <a href="{{ route('dashboard.member.single', [$staff->id, $group->id, $member->id]) }}">
+                                          <i class="fa fa-user"></i> {{ $member->name }}
+                                        </a>
+                                      </li>
+                                    @endforeach
+                                  </ul>
+                                </li>
+                                @endforeach
+                                {{-- <li><a href="#"><i class="fa fa-circle-o"></i> Level Two</a></li> --}}
+                              </ul>
+                            </li>
+                            @endif
                           @endforeach
                         </ul>
                     </li>
                     @if(Auth::user()->role == 'admin')
+                        <li class="{{ Request::is('staffs') ? 'active' : '' }} {{ Request::is('staffs/*') ? 'active' : '' }}">
+                            <a href="{{ route('dashboard.staffs') }}">
+                                <i class="fa fa-fw fa-user-circle"></i>
+                                <span>Staffs</span>
+                            </a>
+                        </li>
+                        <li class="{{ Request::is('groups') ? 'active' : '' }} {{ Request::is('groups/*') ? 'active' : '' }}">
+                            <a href="{{ route('dashboard.groups') }}">
+                                <i class="fa fa-fw fa-address-card"></i>
+                                <span>Groups</span>
+                            </a>
+                        </li>
                         {{-- <li class="{{ Request::is('dashboard/applications') ? 'active' : '' }}">
                             <a href="{{ route('dashboard.applications') }}">
                                 <i class="fa fa-fw fa-plus"></i>
@@ -286,6 +278,14 @@
             @endif
         </div>
         <!-- /.content-wrapper -->
+        <!-- /.content-wrapper -->
+        <footer class="main-footer">
+          <div class="pull-right hidden-xs">
+            <b>Version</b> 0.0.01
+          </div>
+          <strong>Copyright © {{ date('Y') }}</strong> 
+          All rights reserved.
+        </footer>
 
     </div>
     <!-- ./wrapper -->

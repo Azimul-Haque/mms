@@ -29,7 +29,7 @@ class Controller extends BaseController
       // }
 
       // share with all view
-      View::share('staffs', $staffs);
+      View::share('univstaffs', $staffs);
       // View::share('due_orders', $due_orders);
       // View::share('completed_orders', $completed_orders);
     }

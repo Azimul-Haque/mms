@@ -70,9 +70,30 @@ Route::auth();
 // dashboard routes
 Route::resource('users','UserController');
 Route::get('/dashboard', ['as'=>'dashboard.index','uses'=>'DashboardController@index']);
+
+Route::get('/staffs', ['as'=>'dashboard.staffs','uses'=>'DashboardController@getStaffs']);
+Route::get('/staffs/create', ['as'=>'dashboard.staffs.create','uses'=>'DashboardController@createStaff']);
+Route::post('/staffs/store', ['as'=>'dashboard.staffs.store','uses'=>'DashboardController@storeStaff']);
+Route::get('/staffs/{id}/edit', ['as'=>'dashboard.staffs.edit','uses'=>'DashboardController@editStaff']);
+Route::put('/staffs/{id}/update', ['as'=>'dashboard.staffs.update','uses'=>'DashboardController@updateStaff']);
+
+Route::get('/groups', ['as'=>'dashboard.groups','uses'=>'DashboardController@getGroups']);
+Route::get('/groups/create', ['as'=>'dashboard.groups.create','uses'=>'DashboardController@createGroup']);
+Route::post('/groups/store', ['as'=>'dashboard.groups.store','uses'=>'DashboardController@storeGroup']);
+Route::get('/groups/{id}/edit', ['as'=>'dashboard.groups.edit','uses'=>'DashboardController@editGroup']);
+Route::put('/groups/{id}/update', ['as'=>'dashboard.groups.update','uses'=>'DashboardController@updateGroup']);
+
+Route::get('/group/{s_id}/{g_id}/members', ['as'=>'dashboard.members','uses'=>'MemberController@getMembers']);
+Route::get('/group/{s_id}/{g_id}/members/create', ['as'=>'dashboard.members.create','uses'=>'MemberController@createMember']);
+Route::post('/group/{s_id}/{g_id}/members/store', ['as'=>'dashboard.members.store','uses'=>'MemberController@storeMember']);
+Route::get('/group/{s_id}/{g_id}/members/{id}/edit', ['as'=>'dashboard.members.edit','uses'=>'MemberController@editMember']);
+Route::put('/group/{s_id}/{g_id}/members/{id}/update', ['as'=>'dashboard.members.update','uses'=>'MemberController@updateMember']);
+
+Route::get('/group/{s_id}/{g_id}/{m_id}/member', ['as'=>'dashboard.member.single','uses'=>'MemberController@getSingleMember']);
+
 Route::get('/programs/features', ['as'=>'programs.features','uses'=>'DashboardController@getProgramFeatures']);
-Route::get('/staffs/features', ['as'=>'staffs.features','uses'=>'DashboardController@getStaffsFeatures']); // id dhukbe ekhane
-Route::get('/groups/features', ['as'=>'groups.features','uses'=>'DashboardController@getGroupsFeatures']); // id dhukbe ekhane
+Route::get('/staff/{id}/features', ['as'=>'staff.features','uses'=>'StaffController@getStaffFeatures']); // id dhukbe ekhane
+Route::get('/group/{s_id}/{g_id}/features', ['as'=>'group.features','uses'=>'GroupController@getGroupFeatures']); // id dhukbe ekhane
 // Route::get('/dashboard/committee', ['as'=>'dashboard.committee','uses'=>'DashboardController@getCommittee']);
 // Route::post('/dashboard/committee', ['as'=>'dashboard.storecommittee','uses'=>'DashboardController@storeCommittee']);
 // Route::put('/dashboard/committee/{id}', ['as'=>'dashboard.updatecommittee','uses'=>'DashboardController@updateCommittee']);
