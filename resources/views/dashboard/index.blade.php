@@ -11,17 +11,18 @@
 @stop
 
 @section('content')
-<div class="row">
+  @if(Auth::user()->role == 'admin')
+  <div class="row">
     <div class="col-md-3 col-sm-6 col-xs-12">
       <a href="{{ route('dashboard.staffs') }}">
-      	<div class="info-box">
-      	  <span class="info-box-icon bg-aqua"><i class="fa fa-user-circle-o"></i></span>
+        <div class="info-box">
+          <span class="info-box-icon bg-aqua"><i class="fa fa-user-circle-o"></i></span>
 
-      	  <div class="info-box-content">
-      	    <span class="info-box-text">Staff</span>
-      	    <span class="info-box-number">List</span>
-      	  </div>
-      	</div>
+          <div class="info-box-content">
+            <span class="info-box-text">Staff</span>
+            <span class="info-box-number">List</span>
+          </div>
+        </div>
       </a>
     </div>
     <div class="col-md-3 col-sm-6 col-xs-12">
@@ -34,7 +35,7 @@
               <span class="info-box-number">Names</span>
             </div>
           </div>
-  	  </a>
+      </a>
     </div>
 
     <!-- fix for small devices only -->
@@ -50,7 +51,7 @@
               <span class="info-box-number">Report</span>
             </div>
           </div>
-  	  </a> --}}
+      </a> --}}
     </div>
     <div class="col-md-3 col-sm-6 col-xs-12">
       {{-- <a href="#!">
@@ -62,7 +63,8 @@
               <span class="info-box-number">Glance</span>
             </div>
           </div>
-  	  </a> --}}
+      </a> --}}
     </div>
   </div>
+  @endif
 @stop

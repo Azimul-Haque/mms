@@ -17,33 +17,37 @@
 
 @section('content')
   <div class="row">
-      <div class="col-md-12">
-        <div class="table-responsive">
-          <table class="table">
-            <thead>
+    <div class="col-md-12">
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Mobile</th>
+              <th>Groups</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            @foreach($staffs as $staff)
               <tr>
-                <th>Name</th>
-                <th>Mobile</th>
-                <th>Groups</th>
-                <th>Action</th>
+                <td>{{ $staff->name }}</td>
+                <td>{{ $staff->phone }}</td>
+                <td>
+                  @foreach($staff->groups as $group)
+                  <span class="label label-warning">{{ $group->name }}</span>
+                  @endforeach
+                </td>
+                <td>
+                  <a href="{{ route('dashboard.staffs.edit', $staff->id) }}" class="btn btn-success btn-sm" title="Edit User"><i class="fa fa-pencil"></i> Edit</a>
+                  <button class="btn btn-danger btn-sm" title="Delete User" disabled><i class="fa fa-trash"></i> Delete</button>
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              @foreach($staffs as $staff)
-                <tr>
-                  <td>{{ $staff->name }}</td>
-                  <td>{{ $staff->phone }}</td>
-                  <td></td>
-                  <td>
-                    <a href="{{ route('dashboard.staffs.edit', $staff->id) }}" class="btn btn-success btn-sm" title="Edit User"><i class="fa fa-pencil"></i> Edit</a>
-                    <button class="btn btn-danger btn-sm" title="Delete User" disabled><i class="fa fa-trash"></i> Delete</button>
-                  </td>
-                </tr>
-              @endforeach
-            </tbody>
-          </table>
-        </div>
-        {{ $staffs->links() }}
+            @endforeach
+          </tbody>
+        </table>
       </div>
+      {{ $staffs->links() }}
     </div>
+  </div>
 @stop
