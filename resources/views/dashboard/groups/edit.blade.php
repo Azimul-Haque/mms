@@ -72,7 +72,7 @@
                 {!! Form::label('user_id', 'Assign Staff *') !!}
                 <select name="user_id" id="user_id" class="form-control" required>
                   <option selected="" disabled="">Select Staff</option>
-                  @foreach($staffs as $staff)
+                  @foreach($univstaffs as $staff)
                     <option value="{{ $staff->id }}" @if($group->user_id == $staff->id) selected @endif>{{ $staff->name }}</option>
                   @endforeach
                 </select>
