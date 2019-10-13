@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Add Group | Microfinance Management')
+@section('title', 'Add Loan Name | Microfinance Management')
 
 @section('css')
   <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap-datepicker.min.css') }}">
@@ -8,7 +8,7 @@
 
 @section('content_header')
     <h1>
-      Add Group
+      Add Loan Name
     </h1>
 @stop
 
@@ -16,20 +16,30 @@
   <div class="row">
       <div class="col-md-10">
         <div class="panel panel-primary">
-          <div class="panel-heading">Add Group</div>
-          {!! Form::open(['route' => 'dashboard.groups.store', 'method' => 'POST']) !!}
+          <div class="panel-heading">Add Loan Name</div>
+          {!! Form::open(['route' => 'dashboard.loannames.store', 'method' => 'POST']) !!}
           <div class="panel-body">
             <div class="row">
               <div class="col-md-6">
-                {!! Form::label('name', 'Group Name *') !!}
+                {!! Form::label('name', 'Loan Name *') !!}
                 {!! Form::text('name', null, array('class' => 'form-control', 'required' => '')) !!}
               </div>
               <div class="col-md-6">
-                {!! Form::label('formation', 'Formation Date *') !!}
-                {!! Form::text('formation', null, array('class' => 'form-control', 'required' => '', 'autocomplete' => 'off', 'readonly' => '')) !!}
+                {!! Form::label('installment_count', 'Default Installment Number *') !!}
+                {!! Form::text('installment_count', null, array('class' => 'form-control', 'required' => '', 'autocomplete' => 'off')) !!}
+              </div>
+            </div><br/>
+            <div class="row">
+              <div class="col-md-6">
+                <select name="installment_type" class="form-control" required>
+                  <option selected="" disabled="">Default Installment Type *</option>
+                  <option value="1">Weekly</option>
+                  <option value="2">Fortnightly</option>
+                  <option value="3">Monthly</option>
+                </select>
               </div>
             </div>
-            <div class="row">
+            {{-- <div class="row">
               <div class="col-md-6">
                 {!! Form::label('meeting_day', 'Meeting Day *') !!}
                 <select name="meeting_day" class="form-control" required>
@@ -68,16 +78,7 @@
                   <input type="radio" name="status" id="status" value="0"> Inactive
                 </label>
               </div>
-              <div class="col-md-6">
-                {!! Form::label('user_id', 'Assign Staff *') !!}
-                <select name="user_id" id="user_id" class="form-control" required>
-                  <option selected="" disabled="">Select Staff</option>
-                  @foreach($staffs as $staff)
-                    <option value="{{ $staff->id }}">{{ $staff->name }}</option>
-                  @endforeach
-                </select>
-              </div>
-            </div>
+            </div>--}}
             
             
           </div>
@@ -94,16 +95,5 @@
 @stop
 
 @section('js')
-  <script type="text/javascript" src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
-  <script type="text/javascript">
-    $(function() {
-      $("#formation").datepicker({
-        format: 'MM dd, yyyy',
-        todayHighlight: true,
-        autoclose: true,
-      });
-    });
 
-    $('#user_id').select2();
-  </script>
 @endsection

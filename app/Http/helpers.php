@@ -121,14 +121,14 @@
           return 'Tribal';
   }
 
-  function deliverylocation($deliverylocation) 
+  function installment_type($installment_type) 
   {
-      if ($deliverylocation == 0)
-          return 'Dhaka';
-      elseif($deliverylocation == 1020)
-          return 'Peri Pasta or Pizza Burg, Mirpur- 02 (Free pick-up)';
-      elseif($deliverylocation == 2)
-          return 'Outside of Dhaka';
+      if ($installment_type == 1)
+          return 'Weekly';
+      elseif($installment_type == 2)
+          return 'Fortnightly';
+      elseif($installment_type == 3)
+          return 'Monthly';
   }
 
   function convertNumberToWord($num = false)

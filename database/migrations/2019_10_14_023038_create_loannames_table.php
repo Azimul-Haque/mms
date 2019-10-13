@@ -15,7 +15,7 @@ class CreateLoannamesTable extends Migration
         Schema::create('loannames', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('installment');
+            $table->integer('installment_count');
             $table->integer('installment_type');
             $table->timestamps();
         });

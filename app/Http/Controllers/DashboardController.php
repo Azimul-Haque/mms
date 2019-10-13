@@ -176,6 +176,53 @@ class DashboardController extends Controller
         return view('dashboard.loannames.index')->withLoannames($loannames);
     }
 
+    public function createLoanName()
+    {
+        return view('dashboard.loannames.create');
+    }
+
+    public function storeLoanName(Request $request)
+    {
+        $this->validate($request, [
+          'name'                  => 'required',
+          'installment_count'     => 'required',
+          'installment_type'      => 'required'
+        ]);
+
+        $loanname = new Loanname;
+        $loanname->name = $request->name;
+        $loanname->installment_count = $request->installment_count;
+        $loanname->installment_type = $request->installment_type;
+        $loanname->save();
+
+        Session::flash('success', 'Added successfully!'); 
+        return redirect()->route('dashboard.loannames');
+    }
+
+    public function editLoanName($id)
+    {
+        $loanname = Loanname::find($id);
+        return view('dashboard.loannames.edit')->withLoanname($loanname);
+    }
+
+    public function updateLoanName(Request $request, $id)
+    {
+        $loanname = Loanname::find($id);
+        $this->validate($request, [
+          'name'                  => 'required',
+          'installment_count'     => 'required',
+          'installment_type'      => 'required'
+        ]);
+
+        $loanname->name = $request->name;
+        $loanname->installment_count = $request->installment_count;
+        $loanname->installment_type = $request->installment_type;
+        $loanname->save();
+
+        Session::flash('success', 'Updated successfully!'); 
+        return redirect()->route('dashboard.loannames');
+    }
+
     public function getProgramFeatures()
     {
         return view('programs.features');
