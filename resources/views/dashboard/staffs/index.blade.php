@@ -40,7 +40,7 @@
                 </td>
                 <td>
                   <a href="{{ route('dashboard.staffs.edit', $staff->id) }}" class="btn btn-success btn-sm" title="Edit User"><i class="fa fa-pencil"></i> Edit</a>
-                  <button class="btn btn-danger btn-sm" title="Delete User" disabled><i class="fa fa-trash"></i> Delete</button>
+                  {{-- <button class="btn btn-danger btn-sm" title="Delete User" disabled><i class="fa fa-trash"></i> Delete</button> --}}
                 </td>
               </tr>
             @endforeach

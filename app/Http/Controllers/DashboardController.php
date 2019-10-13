@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\User;
 use App\Group;
+use App\Loanname;
 
 use Carbon\Carbon;
 use DB, Hash, Auth, Image, File, Session;
@@ -167,6 +168,12 @@ class DashboardController extends Controller
 
         Session::flash('success', 'Updated successfully!'); 
         return redirect()->route('dashboard.groups');
+    }
+
+    public function getLoanNames()
+    {
+        $loannames = Loanname::orderBy('id', 'desc')->paginate(10);
+        return view('dashboard.loannames.index')->withLoannames($loannames);
     }
 
     public function getProgramFeatures()

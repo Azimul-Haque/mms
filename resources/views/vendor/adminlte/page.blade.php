@@ -197,6 +197,12 @@
                                 <span>Groups</span>
                             </a>
                         </li>
+                        <li class="{{ Request::is('loannames') ? 'active' : '' }} {{ Request::is('loannames/*') ? 'active' : '' }}">
+                            <a href="{{ route('dashboard.loannames') }}">
+                                <i class="fa fa-fw fa-address-card"></i>
+                                <span>Loan Names</span>
+                            </a>
+                        </li>
                         {{-- <li class="{{ Request::is('dashboard/applications') ? 'active' : '' }}">
                             <a href="{{ route('dashboard.applications') }}">
                                 <i class="fa fa-fw fa-plus"></i>
