@@ -47,8 +47,8 @@
             <span class="info-box-icon bg-green"><i class="fa fa-tags"></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-text">Loan &</span>
-              <span class="info-box-number">Saving Names</span>
+              <span class="info-box-text">Loan, Saving</span>
+              <span class="info-box-number">& Scheme Names</span>
             </div>
           </div>
       </a>
