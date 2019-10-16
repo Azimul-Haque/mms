@@ -11,6 +11,7 @@ return array(
     'CreateMembersTable' => $baseDir . '/database/migrations/2019_09_30_063220_create_members_table.php',
     'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
     'CreateSavingnamesTable' => $baseDir . '/database/migrations/2019_10_17_015934_create_savingnames_table.php',
+    'CreateSchemesTable' => $baseDir . '/database/migrations/2019_10_17_044234_create_schemes_table.php',
     'CreateUsersTable' => $baseDir . '/database/migrations/2014_10_12_000000_create_users_table.php',
     'DatabaseSeeder' => $baseDir . '/database/seeds/DatabaseSeeder.php',
     'FPDF_TPL' => $vendorDir . '/setasign/fpdi/fpdf_tpl.php',

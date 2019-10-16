@@ -14,7 +14,6 @@ class CreateMembersTable extends Migration
     {
         Schema::create('members', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('default_program');
             $table->integer('passbook');
             $table->string('name');
             $table->string('fhusband');
@@ -32,11 +31,26 @@ class CreateMembersTable extends Migration
             $table->string('profession');
             $table->string('dob');
             $table->string('nid');
-            $table->integer('status');
-            $table->string('admission_date');
-            $table->string('mobile');
-            $table->string('mobile');
+            $table->date('admission_date');
+            $table->date('closing_date');
 
+            $table->string('present_district');
+            $table->string('present_upazilla');
+            $table->string('present_union');
+            $table->string('present_post');
+            $table->string('present_village');
+            $table->string('present_house');
+            $table->string('present_phone');
+
+            $table->string('permanent_district');
+            $table->string('permanent_upazilla');
+            $table->string('permanent_union');
+            $table->string('permanent_post');
+            $table->string('permanent_village');
+            $table->string('permanent_house');
+            $table->string('permanent_phone');
+
+            $table->integer('status');
             $table->integer('group_id')->unsigned();
             $table->timestamps();
         });

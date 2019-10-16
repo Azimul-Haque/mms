@@ -81,6 +81,16 @@
           return 'Inactive';
   }
 
+  function gender($var) 
+  {
+      if ($var == 1)
+          return 'Male';
+      elseif($var == 2)
+          return 'Female';
+      elseif($var == 0)
+          return 'Other';
+  }
+
   function statuscolor($var) 
   {
       if ($var == 1)
@@ -119,6 +129,14 @@
           return 'Non-tribal';
       elseif($var == 1)
           return 'Tribal';
+  }
+
+  function ishusband($var) 
+  {
+      if ($var == 0)
+          return 'No';
+      elseif($var == 1)
+          return 'Yes';
   }
 
   function convertNumberToWord($num = false)

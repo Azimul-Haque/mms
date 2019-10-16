@@ -14,23 +14,27 @@
 
 @section('content')
   <div class="row">
-      <div class="col-md-10">
+      <div class="col-md-12">
         <div class="panel panel-primary">
           <div class="panel-heading">Add Member</div>
           {!! Form::open(['route' => ['dashboard.members.store', $staff->id, $group->id], 'method' => 'POST']) !!}
           <div class="panel-body">
             <div class="row">
-              <div class="col-md-6">
+              <div class="col-md-4">
+                {!! Form::label('passbook', 'Passbook No *') !!}
+                {!! Form::number('passbook', null, array('class' => 'form-control', 'required' => '')) !!}
+              </div>
+              <div class="col-md-4">
                 {!! Form::label('name', 'Member Name *') !!}
                 {!! Form::text('name', null, array('class' => 'form-control', 'required' => '')) !!}
               </div>
-              <div class="col-md-6">
+              <div class="col-md-4">
                 {!! Form::label('fhusband', 'Fatehr/ Husband Name *') !!}
                 {!! Form::text('fhusband', null, array('class' => 'form-control', 'required' => '')) !!}
               </div>
             </div>
             <div class="row">
-              <div class="col-md-6">
+              <div class="col-md-4">
                 {!! Form::label('ishusband', 'Is Husband *') !!}<br/>
                 <label class="radio-inline">
                   <input type="radio" name="ishusband" id="ishusband" value="1" checked> Yes
@@ -39,23 +43,36 @@
                   <input type="radio" name="ishusband" id="ishusband" value="0"> No
                 </label>
               </div>
-              <div class="col-md-6">
+              <div class="col-md-4">
                 {!! Form::label('mother', 'Mother Name *') !!}
                 {!! Form::text('mother', null, array('class' => 'form-control', 'required' => '')) !!}
               </div>
+              <div class="col-md-4">
+                {!! Form::label('gender', 'Gender *') !!}
+                <select name="gender" class="form-control" required="">
+                  <option value="" selected="" disabled="">Select Gender</option>
+                  <option value="1">Male</option>
+                  <option value="2">Female</option>
+                  <option value="0">Other</option>
+                </select>
+              </div>
             </div>
             <div class="row">
-              <div class="col-md-6">
-                {!! Form::label('admission_date', 'Admission Date *') !!}
-                {!! Form::text('admission_date', null, array('class' => 'form-control', 'required' => '', 'autocomplete' => 'off', 'readonly' => '')) !!}
-              </div>
-              <div class="col-md-6">
+              <div class="col-md-4">
                 {!! Form::label('dob', 'Date of Birth *') !!}
                 {!! Form::text('dob', null, array('class' => 'form-control', 'required' => '', 'autocomplete' => 'off', 'readonly' => '')) !!}
               </div>
+              <div class="col-md-4">
+                {!! Form::label('admission_date', 'Admission Date *') !!}
+                {!! Form::text('admission_date', null, array('class' => 'form-control', 'required' => '', 'autocomplete' => 'off', 'readonly' => '')) !!}
+              </div>
+              <div class="col-md-4">
+                {!! Form::label('closing_date', 'Closing Date (Optional)') !!}
+                {!! Form::text('closing_date', null, array('class' => 'form-control', 'autocomplete' => 'off', 'readonly' => '')) !!}
+              </div>
             </div>
             <div class="row">
-              <div class="col-md-6">
+              <div class="col-md-4">
                 {!! Form::label('marital_status', 'Marital Status *') !!}
                 <select name="marital_status" class="form-control" required>
                   <option selected="" disabled="">Select Marital Status</option>
@@ -64,7 +81,7 @@
                   <option value="2">Divorced</option>
                 </select>
               </div>
-              <div class="col-md-6">
+              <div class="col-md-4">
                 {!! Form::label('religion', 'Religion *') !!}
                 <select name="religion" class="form-control" required>
                   <option selected="" disabled="">Select Religion</option>
@@ -75,9 +92,7 @@
                   <option value="4">Others</option>
                 </select>
               </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
+              <div class="col-md-4">
                 {!! Form::label('ethnicity', 'Ethnicity *') !!}
                 <select name="ethnicity" class="form-control" required>
                   <option selected="" disabled="">Select Marital Status</option>
@@ -85,19 +100,73 @@
                   <option value="1">Tribal</option>
                 </select>
               </div>
-              <div class="col-md-6">
+            </div>
+            <div class="row">
+              <div class="col-md-4">
                 {!! Form::label('guardian', 'Guardian *') !!}
                 {!! Form::text('guardian', null, array('class' => 'form-control', 'required' => '', 'autocomplete' => 'off')) !!}
+              </div>
+              <div class="col-md-4">
+                {!! Form::label('guardianrelation', 'Guardian Relation *') !!}
+                {!! Form::text('guardianrelation', null, array('class' => 'form-control', 'required' => '', 'autocomplete' => 'off')) !!}
+              </div>
+              <div class="col-md-4">
+                {!! Form::label('residence_type', 'Residence Type (Optional)') !!}
+                {!! Form::text('residence_type', null, array('class' => 'form-control', 'autocomplete' => 'off')) !!}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                {!! Form::label('landlord_name', 'Landlord Name (Optional)') !!}
+                {!! Form::text('landlord_name', null, array('class' => 'form-control', 'autocomplete' => 'off')) !!}
+              </div>
+              <div class="col-md-4">
+                {!! Form::label('education', 'Education *') !!}
+                {!! Form::text('education', null, array('class' => 'form-control', 'required' => '', 'autocomplete' => 'off')) !!}
+              </div>
+              <div class="col-md-4">
+                {!! Form::label('profession', 'Profession *') !!}
+                {!! Form::text('profession', null, array('class' => 'form-control', 'required' => '', 'autocomplete' => 'off')) !!}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                {!! Form::label('nid', 'National ID No *') !!}
+                {!! Form::text('nid', null, array('class' => 'form-control', 'required' => '', 'autocomplete' => 'off', 'onkeypress' => 'if(this.value.length==17) return false;')) !!}
               </div>
             </div>
             <div class="row">
               <div class="col-md-6">
-                {!! Form::label('nid', 'National ID No *') !!}
-                {!! Form::text('nid', null, array('class' => 'form-control', 'required' => '', 'autocomplete' => 'off', 'onkeypress' => 'if(this.value.length==17) return false;')) !!}
+                {!! Form::label('present_district', 'Present District *') !!}
+                {!! Form::text('present_district', 'Thakurgaon', array('class' => 'form-control', 'required' => '', 'autocomplete' => 'off')) !!}
+                {!! Form::label('present_upazilla', 'Present Upazilla *') !!}
+                {!! Form::text('present_upazilla', null, array('class' => 'form-control', 'required' => '', 'autocomplete' => 'off')) !!}
+                {!! Form::label('present_union', 'Present Union *') !!}
+                {!! Form::text('present_union', null, array('class' => 'form-control', 'required' => '', 'autocomplete' => 'off')) !!}
+                {!! Form::label('present_post', 'Present Post Office *') !!}
+                {!! Form::text('present_post', null, array('class' => 'form-control', 'required' => '', 'autocomplete' => 'off')) !!}
+                {!! Form::label('present_village', 'Present Village *') !!}
+                {!! Form::text('present_village', null, array('class' => 'form-control', 'required' => '', 'autocomplete' => 'off')) !!}
+                {!! Form::label('present_house', 'Present House *') !!}
+                {!! Form::text('present_house', null, array('class' => 'form-control', 'required' => '', 'autocomplete' => 'off')) !!}
+                {!! Form::label('present_phone', 'Present Phone *') !!}
+                {!! Form::text('present_phone', null, array('class' => 'form-control', 'required' => '', 'autocomplete' => 'off')) !!}
               </div>
               <div class="col-md-6">
-                {!! Form::label('education', 'Education *') !!}
-                {!! Form::text('education', null, array('class' => 'form-control', 'required' => '', 'autocomplete' => 'off')) !!}
+                {!! Form::label('permanent_district', 'Permanent District *') !!}
+                {!! Form::text('permanent_district', 'Thakurgaon', array('class' => 'form-control', 'required' => '', 'autocomplete' => 'off')) !!}
+                {!! Form::label('permanent_upazilla', 'Permanent Upazilla *') !!}
+                {!! Form::text('permanent_upazilla', null, array('class' => 'form-control', 'required' => '', 'autocomplete' => 'off')) !!}
+                {!! Form::label('permanent_union', 'Permanent Union *') !!}
+                {!! Form::text('permanent_union', null, array('class' => 'form-control', 'required' => '', 'autocomplete' => 'off')) !!}
+                {!! Form::label('permanent_post', 'Permanent Post Office *') !!}
+                {!! Form::text('permanent_post', null, array('class' => 'form-control', 'required' => '', 'autocomplete' => 'off')) !!}
+                {!! Form::label('permanent_village', 'Permanent Village *') !!}
+                {!! Form::text('permanent_village', null, array('class' => 'form-control', 'required' => '', 'autocomplete' => 'off')) !!}
+                {!! Form::label('permanent_house', 'Permanent House *') !!}
+                {!! Form::text('permanent_house', null, array('class' => 'form-control', 'required' => '', 'autocomplete' => 'off')) !!}
+                {!! Form::label('permanent_phone', 'Permanent Phone (Optional)') !!}
+                {!! Form::text('permanent_phone', null, array('class' => 'form-control', 'autocomplete' => 'off')) !!}
               </div>
             </div>
           </div>
@@ -123,6 +192,11 @@
         autoclose: true,
       });
       $("#dob").datepicker({
+        format: 'MM dd, yyyy',
+        todayHighlight: true,
+        autoclose: true,
+      });
+      $("#closing_date").datepicker({
         format: 'MM dd, yyyy',
         todayHighlight: true,
         autoclose: true,
