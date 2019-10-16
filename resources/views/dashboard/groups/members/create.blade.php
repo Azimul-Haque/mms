@@ -137,6 +137,7 @@
             </div>
             <div class="row">
               <div class="col-md-6">
+                <big><b><u>Present Address</u></b></big><br/>
                 {!! Form::label('present_district', 'Present District *') !!}
                 {!! Form::text('present_district', 'Thakurgaon', array('class' => 'form-control', 'required' => '', 'autocomplete' => 'off')) !!}
                 {!! Form::label('present_upazilla', 'Present Upazilla *') !!}
@@ -151,12 +152,14 @@
                 {!! Form::text('present_house', null, array('class' => 'form-control', 'required' => '', 'autocomplete' => 'off')) !!}
                 {!! Form::label('present_phone', 'Present Phone *') !!}
                 {!! Form::text('present_phone', null, array('class' => 'form-control', 'required' => '', 'autocomplete' => 'off')) !!}<br/>
+                {!! Form::label('passbook_fee', 'PassBook Fee') !!}
                 <div class="input-group">
                   <span class="input-group-addon">৳</span>
                   <input id="passbook_fee" type="text" class="form-control" name="passbook_fee" placeholder="PassBook Fee" value="20">
                 </div>
               </div>
               <div class="col-md-6">
+                <big><b><u>Permanent Address</u></b></big><br/>
                 {!! Form::label('permanent_district', 'Permanent District *') !!}
                 {!! Form::text('permanent_district', 'Thakurgaon', array('class' => 'form-control', 'required' => '', 'autocomplete' => 'off')) !!}
                 {!! Form::label('permanent_upazilla', 'Permanent Upazilla *') !!}
@@ -171,8 +174,8 @@
                 {!! Form::text('permanent_house', null, array('class' => 'form-control', 'required' => '', 'autocomplete' => 'off')) !!}
                 {!! Form::label('permanent_phone', 'Permanent Phone (Optional)') !!}
                 {!! Form::text('permanent_phone', null, array('class' => 'form-control', 'autocomplete' => 'off')) !!}<br/>
+                {!! Form::label('addmission_fee', 'Admission Fee') !!}
                 <div class="input-group">
-                  {!! Form::label('addmission_fee', 'Admission Fee') !!}<br/>
                   <span class="input-group-addon">৳</span>
                   <input id="addmission_fee" type="text" class="form-control" name="addmission_fee" placeholder="Admission Fee" value="30">
                 </div>

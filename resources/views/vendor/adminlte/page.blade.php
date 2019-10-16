@@ -200,7 +200,7 @@
                         <li class="{{ Request::is('loanandsavingnames') ? 'active' : '' }} {{ Request::is('loannames') ? 'active' : '' }} {{ Request::is('loannames/*') ? 'active' : '' }}">
                             <a href="{{ route('dashboard.loanandsavingnames') }}">
                                 <i class="fa fa-fw fa-tags"></i>
-                                <span>Loan & Saving Names</span>
+                                <span>Loan, Saving, Scheme Names</span>
                             </a>
                         </li>
                         {{-- <li class="{{ Request::is('dashboard/applications') ? 'active' : '' }}">
