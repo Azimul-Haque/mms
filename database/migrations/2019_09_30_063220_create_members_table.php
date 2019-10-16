@@ -20,15 +20,22 @@ class CreateMembersTable extends Migration
             $table->string('fhusband');
             $table->integer('ishusband');
             $table->string('mother');
-            $table->string('admission_date');
-            $table->string('education');
-            $table->string('dob');
+            $table->integer('gender');
             $table->integer('marital_status');
             $table->integer('religion');
             $table->integer('ethnicity');
             $table->string('guardian');
+            $table->string('guardianrelation');
+            $table->string('residence_type');
+            $table->string('landlord_name');
+            $table->string('education');
+            $table->string('profession');
+            $table->string('dob');
             $table->string('nid');
             $table->integer('status');
+            $table->string('admission_date');
+            $table->string('mobile');
+            $table->string('mobile');
 
             $table->integer('group_id')->unsigned();
             $table->timestamps();
