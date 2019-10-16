@@ -19,7 +19,7 @@
   <div class="row">
     <div class="col-md-12">
       <div class="table-responsive">
-        <table class="table">
+        <table class="table table-condensed">
           <thead>
             <tr>
               <th>Name</th>
