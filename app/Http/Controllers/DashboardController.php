@@ -9,6 +9,7 @@ use App\User;
 use App\Group;
 use App\Loanname;
 use App\Savingname;
+use App\Schemename;
 
 use Carbon\Carbon;
 use DB, Hash, Auth, Image, File, Session;
@@ -175,9 +176,11 @@ class DashboardController extends Controller
     {
         $loannames = Loanname::orderBy('id', 'desc')->paginate(10);
         $savingnames = Savingname::orderBy('id', 'desc')->paginate(10);
+        $schemenames = Schemename::orderBy('id', 'desc')->paginate(10);
         return view('dashboard.loanandsavingnames.index')
                                     ->withLoannames($loannames)
-                                    ->withSavingnames($savingnames);
+                                    ->withSavingnames($savingnames)
+                                    ->withSchemenames($schemenames);
     }
 
     public function createLoanName()
@@ -253,6 +256,45 @@ class DashboardController extends Controller
 
         $savingname->name = $request->name;
         $savingname->save();
+
+        Session::flash('success', 'Updated successfully!'); 
+        return redirect()->route('dashboard.loanandsavingnames');
+    }
+
+    public function createSchemeName()
+    {
+        return view('dashboard.loanandsavingnames.createschemename');
+    }
+
+    public function storeSchemeName(Request $request)
+    {
+        $this->validate($request, [
+          'name'                  => 'required',
+        ]);
+
+        $schemename = new Schemename;
+        $schemename->name = $request->name;
+        $schemename->save();
+
+        Session::flash('success', 'Added successfully!'); 
+        return redirect()->route('dashboard.loanandsavingnames');
+    }
+
+    public function editSchemeName($id)
+    {
+        $schemename = Schemename::find($id);
+        return view('dashboard.loanandsavingnames.editschemename')->withSchemename($schemename);
+    }
+
+    public function updateSchemeName(Request $request, $id)
+    {
+        $schemename = Schemename::find($id);
+        $this->validate($request, [
+          'name'                  => 'required',
+        ]);
+
+        $schemename->name = $request->name;
+        $schemename->save();
 
         Session::flash('success', 'Updated successfully!'); 
         return redirect()->route('dashboard.loanandsavingnames');

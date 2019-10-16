@@ -92,6 +92,10 @@ Route::get('/savingnames/create', ['as'=>'dashboard.savingnames.create','uses'=>
 Route::post('/savingnames/store', ['as'=>'dashboard.savingnames.store','uses'=>'DashboardController@storeSavingName']);
 Route::get('/savingnames/{id}/edit', ['as'=>'dashboard.savingnames.edit','uses'=>'DashboardController@editSavingName']);
 Route::put('/savingnames/{id}/update', ['as'=>'dashboard.savingnames.update','uses'=>'DashboardController@updateSavingName']);
+Route::get('/schemenames/create', ['as'=>'dashboard.schemenames.create','uses'=>'DashboardController@createSchemeName']);
+Route::post('/schemenames/store', ['as'=>'dashboard.schemenames.store','uses'=>'DashboardController@storeSchemeName']);
+Route::get('/schemenames/{id}/edit', ['as'=>'dashboard.schemenames.edit','uses'=>'DashboardController@editSchemeName']);
+Route::put('/schemenames/{id}/update', ['as'=>'dashboard.schemenames.update','uses'=>'DashboardController@updateSchemeName']);
 
 Route::get('/group/{s_id}/{g_id}/members', ['as'=>'dashboard.members','uses'=>'MemberController@getMembers']);
 Route::get('/group/{s_id}/{g_id}/members/create', ['as'=>'dashboard.members.create','uses'=>'MemberController@createMember']);

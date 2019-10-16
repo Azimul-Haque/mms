@@ -150,7 +150,11 @@
                 {!! Form::label('present_house', 'Present House *') !!}
                 {!! Form::text('present_house', null, array('class' => 'form-control', 'required' => '', 'autocomplete' => 'off')) !!}
                 {!! Form::label('present_phone', 'Present Phone *') !!}
-                {!! Form::text('present_phone', null, array('class' => 'form-control', 'required' => '', 'autocomplete' => 'off')) !!}
+                {!! Form::text('present_phone', null, array('class' => 'form-control', 'required' => '', 'autocomplete' => 'off')) !!}<br/>
+                <div class="input-group">
+                  <span class="input-group-addon">৳</span>
+                  <input id="passbook_fee" type="text" class="form-control" name="passbook_fee" placeholder="PassBook Fee" value="20">
+                </div>
               </div>
               <div class="col-md-6">
                 {!! Form::label('permanent_district', 'Permanent District *') !!}
@@ -166,7 +170,12 @@
                 {!! Form::label('permanent_house', 'Permanent House *') !!}
                 {!! Form::text('permanent_house', null, array('class' => 'form-control', 'required' => '', 'autocomplete' => 'off')) !!}
                 {!! Form::label('permanent_phone', 'Permanent Phone (Optional)') !!}
-                {!! Form::text('permanent_phone', null, array('class' => 'form-control', 'autocomplete' => 'off')) !!}
+                {!! Form::text('permanent_phone', null, array('class' => 'form-control', 'autocomplete' => 'off')) !!}<br/>
+                <div class="input-group">
+                  {!! Form::label('addmission_fee', 'Admission Fee') !!}<br/>
+                  <span class="input-group-addon">৳</span>
+                  <input id="addmission_fee" type="text" class="form-control" name="addmission_fee" placeholder="Admission Fee" value="30">
+                </div>
               </div>
             </div>
           </div>
