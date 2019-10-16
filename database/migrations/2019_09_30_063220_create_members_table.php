@@ -50,8 +50,8 @@ class CreateMembersTable extends Migration
             $table->string('permanent_house');
             $table->string('permanent_phone');
 
-            $table->string('passbook_fee');
-            $table->string('addmission_fee');
+            $table->float('passbook_fee');
+            $table->float('addmission_fee');
 
             $table->integer('status');
             $table->integer('group_id')->unsigned();
