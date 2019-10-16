@@ -8,7 +8,7 @@
 
 @section('content_header')
     <h1>
-      Add Member
+      Add Member [Staff: <b>{{ $staff->name }}</b>, Group: <b>{{ $group->name }}</b>]
     </h1>
 @stop
 

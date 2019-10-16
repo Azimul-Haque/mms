@@ -33,9 +33,9 @@ class MemberController extends Controller
     {
     	$staff = User::find($s_id);
     	$group = Group::find($g_id);
-        return view('dashboard.groups.members.create')
-        					->withStaff($staff)
-        					->withGroup($group);
+      return view('dashboard.groups.members.create')
+      					->withStaff($staff)
+      					->withGroup($group);
     }
 
     public function storeMember(Request $request, $s_id, $g_id)
@@ -81,8 +81,8 @@ class MemberController extends Controller
 
     public function editMember($s_id, $g_id, $id)
     {
-        $group = Group::find($id);
-        return view('dashboard.groups.edit')->withMember($group);
+        // $group = Group::find($id);
+        // return view('dashboard.groups.edit')->withMember($group);
     }    
 
     public function updateMember(Request $request, $s_id, $g_id, $id)

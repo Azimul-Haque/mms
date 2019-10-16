@@ -364,6 +364,7 @@ class ComposerStaticInit5ba844acaeab7533148c65467b83a279
         'CreateLoannamesTable' => __DIR__ . '/../..' . '/database/migrations/2019_10_14_023038_create_loannames_table.php',
         'CreateMembersTable' => __DIR__ . '/../..' . '/database/migrations/2019_09_30_063220_create_members_table.php',
         'CreatePasswordResetsTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
+        'CreateSavingnamesTable' => __DIR__ . '/../..' . '/database/migrations/2019_10_17_015934_create_savingnames_table.php',
         'CreateUsersTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_000000_create_users_table.php',
         'DatabaseSeeder' => __DIR__ . '/../..' . '/database/seeds/DatabaseSeeder.php',
         'FPDF_TPL' => __DIR__ . '/..' . '/setasign/fpdi/fpdf_tpl.php',

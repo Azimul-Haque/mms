@@ -83,11 +83,15 @@ Route::post('/groups/store', ['as'=>'dashboard.groups.store','uses'=>'DashboardC
 Route::get('/groups/{id}/edit', ['as'=>'dashboard.groups.edit','uses'=>'DashboardController@editGroup']);
 Route::put('/groups/{id}/update', ['as'=>'dashboard.groups.update','uses'=>'DashboardController@updateGroup']);
 
-Route::get('/loannames', ['as'=>'dashboard.loannames','uses'=>'DashboardController@getLoanNames']);
+Route::get('/loanandsavingnames', ['as'=>'dashboard.loanandsavingnames','uses'=>'DashboardController@getLoanAndNames']);
 Route::get('/loannames/create', ['as'=>'dashboard.loannames.create','uses'=>'DashboardController@createLoanName']);
 Route::post('/loannames/store', ['as'=>'dashboard.loannames.store','uses'=>'DashboardController@storeLoanName']);
 Route::get('/loannames/{id}/edit', ['as'=>'dashboard.loannames.edit','uses'=>'DashboardController@editLoanName']);
 Route::put('/loannames/{id}/update', ['as'=>'dashboard.loannames.update','uses'=>'DashboardController@updateLoanName']);
+Route::get('/savingnames/create', ['as'=>'dashboard.savingnames.create','uses'=>'DashboardController@createSavingName']);
+Route::post('/savingnames/store', ['as'=>'dashboard.savingnames.store','uses'=>'DashboardController@storeSavingName']);
+Route::get('/savingnames/{id}/edit', ['as'=>'dashboard.savingnames.edit','uses'=>'DashboardController@editSavingName']);
+Route::put('/savingnames/{id}/update', ['as'=>'dashboard.savingnames.update','uses'=>'DashboardController@updateSavingName']);
 
 Route::get('/group/{s_id}/{g_id}/members', ['as'=>'dashboard.members','uses'=>'MemberController@getMembers']);
 Route::get('/group/{s_id}/{g_id}/members/create', ['as'=>'dashboard.members.create','uses'=>'MemberController@createMember']);

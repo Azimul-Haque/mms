@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Add Loan Name | Microfinance Management')
+@section('title', 'Edit Loan Name | Microfinance Management')
 
 @section('css')
   <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap-datepicker.min.css') }}">
@@ -8,37 +8,33 @@
 
 @section('content_header')
     <h1>
-      Add Loan Name
+      Edit Loan Name
     </h1>
 @stop
 
 @section('content')
   <div class="row">
-      <div class="col-md-10">
+      <div class="col-md-6">
         <div class="panel panel-primary">
-          <div class="panel-heading">Add Loan Name</div>
-          {!! Form::open(['route' => 'dashboard.loannames.store', 'method' => 'POST']) !!}
+          <div class="panel-heading">Edit Loan Name</div>
+          {!! Form::model($loanname, ['route' => ['dashboard.loannames.update', $loanname->id], 'method' => 'PUT']) !!}
           <div class="panel-body">
             <div class="row">
-              <div class="col-md-6">
+              <div class="col-md-12">
                 {!! Form::label('name', 'Loan Name *') !!}
                 {!! Form::text('name', null, array('class' => 'form-control', 'required' => '')) !!}
               </div>
-              <div class="col-md-6">
-                {!! Form::label('installment_count', 'Default Installment Number *') !!}
-                {!! Form::text('installment_count', null, array('class' => 'form-control', 'required' => '', 'autocomplete' => 'off')) !!}
-              </div>
             </div><br/>
-            <div class="row">
+            {{-- <div class="row">
               <div class="col-md-6">
                 <select name="installment_type" class="form-control" required>
                   <option selected="" disabled="">Default Installment Type *</option>
-                  <option value="1">Weekly</option>
-                  <option value="2">Fortnightly</option>
-                  <option value="3">Monthly</option>
+                  <option value="1" @if($loanname->installment_type == 1) selected="" @endif>Weekly</option>
+                  <option value="2" @if($loanname->installment_type == 2) selected="" @endif>Fortnightly</option>
+                  <option value="3" @if($loanname->installment_type == 3) selected="" @endif>Monthly</option>
                 </select>
               </div>
-            </div>
+            </div> --}}
             {{-- <div class="row">
               <div class="col-md-6">
                 {!! Form::label('meeting_day', 'Meeting Day *') !!}

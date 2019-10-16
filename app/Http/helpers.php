@@ -121,16 +121,6 @@
           return 'Tribal';
   }
 
-  function installment_type($installment_type) 
-  {
-      if ($installment_type == 1)
-          return 'Weekly';
-      elseif($installment_type == 2)
-          return 'Fortnightly';
-      elseif($installment_type == 3)
-          return 'Monthly';
-  }
-
   function convertNumberToWord($num = false)
   {
       $num = str_replace(array(',', ' '), '' , trim($num));

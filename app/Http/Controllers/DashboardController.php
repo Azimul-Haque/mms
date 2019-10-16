@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Group;
 use App\Loanname;
+use App\Savingname;
 
 use Carbon\Carbon;
 use DB, Hash, Auth, Image, File, Session;
@@ -170,39 +171,38 @@ class DashboardController extends Controller
         return redirect()->route('dashboard.groups');
     }
 
-    public function getLoanNames()
+    public function getLoanAndNames()
     {
         $loannames = Loanname::orderBy('id', 'desc')->paginate(10);
-        return view('dashboard.loannames.index')->withLoannames($loannames);
+        $savingnames = Savingname::orderBy('id', 'desc')->paginate(10);
+        return view('dashboard.loanandsavingnames.index')
+                                    ->withLoannames($loannames)
+                                    ->withSavingnames($savingnames);
     }
 
     public function createLoanName()
     {
-        return view('dashboard.loannames.create');
+        return view('dashboard.loanandsavingnames.createloanname');
     }
 
     public function storeLoanName(Request $request)
     {
         $this->validate($request, [
           'name'                  => 'required',
-          'installment_count'     => 'required',
-          'installment_type'      => 'required'
         ]);
 
         $loanname = new Loanname;
         $loanname->name = $request->name;
-        $loanname->installment_count = $request->installment_count;
-        $loanname->installment_type = $request->installment_type;
         $loanname->save();
 
         Session::flash('success', 'Added successfully!'); 
-        return redirect()->route('dashboard.loannames');
+        return redirect()->route('dashboard.loanandsavingnames');
     }
 
     public function editLoanName($id)
     {
         $loanname = Loanname::find($id);
-        return view('dashboard.loannames.edit')->withLoanname($loanname);
+        return view('dashboard.loanandsavingnames.editloanname')->withLoanname($loanname);
     }
 
     public function updateLoanName(Request $request, $id)
@@ -210,17 +210,52 @@ class DashboardController extends Controller
         $loanname = Loanname::find($id);
         $this->validate($request, [
           'name'                  => 'required',
-          'installment_count'     => 'required',
-          'installment_type'      => 'required'
         ]);
 
         $loanname->name = $request->name;
-        $loanname->installment_count = $request->installment_count;
-        $loanname->installment_type = $request->installment_type;
         $loanname->save();
 
         Session::flash('success', 'Updated successfully!'); 
-        return redirect()->route('dashboard.loannames');
+        return redirect()->route('dashboard.loanandsavingnames');
+    }
+
+    public function createSavingName()
+    {
+        return view('dashboard.loanandsavingnames.createsavingname');
+    }
+
+    public function storeSavingName(Request $request)
+    {
+        $this->validate($request, [
+          'name'                  => 'required',
+        ]);
+
+        $savingname = new Savingname;
+        $savingname->name = $request->name;
+        $savingname->save();
+
+        Session::flash('success', 'Added successfully!'); 
+        return redirect()->route('dashboard.loanandsavingnames');
+    }
+
+    public function editSavingName($id)
+    {
+        $savingname = Savingname::find($id);
+        return view('dashboard.loanandsavingnames.editsavingname')->withSavingname($savingname);
+    }
+
+    public function updateSavingName(Request $request, $id)
+    {
+        $savingname = Savingname::find($id);
+        $this->validate($request, [
+          'name'                  => 'required',
+        ]);
+
+        $savingname->name = $request->name;
+        $savingname->save();
+
+        Session::flash('success', 'Updated successfully!'); 
+        return redirect()->route('dashboard.loanandsavingnames');
     }
 
     public function getProgramFeatures()
