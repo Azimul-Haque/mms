@@ -40,7 +40,6 @@
                   <td><span class="label label-{{ statuscolor($group->status) }}">{{ status($group->status) }}</span></td>
                   <td>
                     <a href="{{ route('dashboard.groups.edit', $group->id) }}" class="btn btn-success btn-sm" title="Edit Group"><i class="fa fa-pencil"></i> Edit</a>
-                    {{-- <button class="btn btn-danger btn-sm" title="Delete Group" disabled><i class="fa fa-trash"></i> Delete</button> --}}
                   </td>
                 </tr>
               @endforeach
