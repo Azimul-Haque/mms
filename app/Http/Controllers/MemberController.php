@@ -11,6 +11,7 @@ use App\User;
 use App\Group;
 use App\Member;
 use App\Saving;
+use App\Savingname;
 
 use Carbon\Carbon;
 use DB, Hash, Auth, Image, File, Session;
@@ -24,7 +25,7 @@ class MemberController extends Controller
     	$group = Group::find($g_id);
         $members = Member::where('group_id', $g_id)
         				 ->orderBy('id', 'asc')->get();
-                 
+
         return view('dashboard.groups.members.index')
         					->withStaff($staff)
         					->withGroup($group)
@@ -123,7 +124,20 @@ class MemberController extends Controller
         $member->group_id = $g_id;
         $member->save();
 
-        Session::flash('success', 'Added successfully!'); 
+        // add a mandatory general account...
+        // add a mandatory general account...
+        $savingaccount = new Saving;
+        $savingaccount->savingname_id = 1;
+        $savingaccount->opening_date = date('Y-m-d', strtotime($request->admission_date));
+        
+        $savingaccount->meeting_day = 1;
+        $savingaccount->installment_type = 2;
+        $savingaccount->minimum_deposit = 10;
+        $savingaccount->status = 1; // 1 means active/open
+        $savingaccount->member_id = $member->id;
+        $savingaccount->save();
+
+        Session::flash('success', 'Added successfully (with a default General Saving Account)!'); 
         return redirect()->route('dashboard.members', [$s_id, $g_id]);
     }
 
@@ -182,8 +196,8 @@ class MemberController extends Controller
     // Saving accounts
     public function getMemberSavings($s_id, $g_id, $m_id)
     {
-    	$staff = User::find($s_id);
-    	$group = Group::find($g_id);
+      $staff = User::find($s_id);
+      $group = Group::find($g_id);
 
       $member = Member::where('id', $m_id)
                       ->where('staff_id', $s_id)
@@ -193,9 +207,142 @@ class MemberController extends Controller
       $savings = Saving::where('member_id', $member->id)->get();
 
       return view('dashboard.groups.members.savings.index')
+              ->withStaff($staff)
+              ->withGroup($group)
+              ->withMember($member)
+              ->withSavings($savings);
+    }
+
+    public function createSavingAccount($s_id, $g_id, $m_id)
+    {
+      $staff = User::find($s_id);
+      $group = Group::find($g_id);
+
+      $member = Member::where('id', $m_id)
+                      ->where('staff_id', $s_id)
+                      ->where('group_id', $g_id)
+                      ->first();
+      $savingnames = Savingname::all();
+
+      return view('dashboard.groups.members.savings.create')
+              ->withStaff($staff)
+              ->withGroup($group)
+              ->withMember($member)
+              ->withSavingnames($savingnames);
+    }
+
+    public function storeSavingAccount(Request $request, $s_id, $g_id, $m_id)
+    {
+        $checkacc = Saving::where('member_id', $m_id)
+                          ->where('savingname_id', $request->savingname_id)->first();
+        
+        if($checkacc) {
+          Session::flash('warning', 'This member already has an account like this type.'); 
+          return redirect()->route('dashboard.member.savings', [$s_id, $g_id, $m_id]);
+        }
+
+        $this->validate($request, [
+          'savingname_id'               => 'required',
+          'opening_date'                => 'required',
+          'meeting_day'                 => 'required',
+          'installment_type'            => 'required',
+          'minimum_deposit'             => 'required',
+          'closing_date'                => 'sometimes'
+        ]);
+
+        $savingaccount = new Saving;
+        $savingaccount->savingname_id = $request->savingname_id;
+        $savingaccount->opening_date = date('Y-m-d', strtotime($request->opening_date));
+        if($request->closing_date != '') {
+          $savingaccount->closing_date = date('Y-m-d', strtotime($request->closing_date));
+        } else {
+          $savingaccount->closing_date = '';
+        }
+        $savingaccount->meeting_day = $request->meeting_day;
+        $savingaccount->installment_type = $request->installment_type;
+        $savingaccount->minimum_deposit = $request->minimum_deposit;
+        $savingaccount->status = 1; // 1 means active/open
+        $savingaccount->member_id = $m_id;
+        $savingaccount->save();
+
+        Session::flash('success', 'Added successfully!'); 
+        return redirect()->route('dashboard.member.savings', [$s_id, $g_id, $m_id]);
+    }
+
+    // Loans accounts
+    // Loans accounts
+    public function getMemberLoans($s_id, $g_id, $m_id)
+    {
+      $staff = User::find($s_id);
+      $group = Group::find($g_id);
+
+      $member = Member::where('id', $m_id)
+                      ->where('staff_id', $s_id)
+                      ->where('group_id', $g_id)
+                      ->first();
+
+      $loans = Saving::where('member_id', $member->id)->get();
+
+      return view('dashboard.groups.members.loans.index')
+              ->withStaff($staff)
+              ->withGroup($group)
+              ->withMember($member)
+              ->withLoans($loans);
+    }
+
+    public function createLoanAccount($s_id, $g_id, $m_id)
+    {
+    	$staff = User::find($s_id);
+    	$group = Group::find($g_id);
+
+      $member = Member::where('id', $m_id)
+                      ->where('staff_id', $s_id)
+                      ->where('group_id', $g_id)
+                      ->first();
+      $savingnames = Savingname::all();
+
+      return view('dashboard.groups.members.loans.create')
       				->withStaff($staff)
       				->withGroup($group)
               ->withMember($member)
-      				->withSavings($savings);
+      				->withSavingnames($savingnames);
+    }
+
+    public function storeLoanAccount(Request $request, $s_id, $g_id, $m_id)
+    {
+        $checkacc = Saving::where('member_id', $m_id)
+                          ->where('savingname_id', $request->savingname_id)->first();
+        
+        if($checkacc) {
+          Session::flash('warning', 'This member already has an account like this type.'); 
+          return redirect()->route('dashboard.member.loans', [$s_id, $g_id, $m_id]);
+        }
+
+        $this->validate($request, [
+          'savingname_id'               => 'required',
+          'opening_date'                => 'required',
+          'meeting_day'                 => 'required',
+          'installment_type'            => 'required',
+          'minimum_deposit'             => 'required',
+          'closing_date'                => 'sometimes'
+        ]);
+
+        $savingaccount = new Saving;
+        $savingaccount->savingname_id = $request->savingname_id;
+        $savingaccount->opening_date = date('Y-m-d', strtotime($request->opening_date));
+        if($request->closing_date != '') {
+          $savingaccount->closing_date = date('Y-m-d', strtotime($request->closing_date));
+        } else {
+          $savingaccount->closing_date = '';
+        }
+        $savingaccount->meeting_day = $request->meeting_day;
+        $savingaccount->installment_type = $request->installment_type;
+        $savingaccount->minimum_deposit = $request->minimum_deposit;
+        $savingaccount->status = 1; // 1 means active/open
+        $savingaccount->member_id = $m_id;
+        $savingaccount->save();
+
+        Session::flash('success', 'Added successfully!'); 
+        return redirect()->route('dashboard.member.loans', [$s_id, $g_id, $m_id]);
     }
 }

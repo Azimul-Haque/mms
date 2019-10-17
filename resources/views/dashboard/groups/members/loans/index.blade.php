@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Saving Accounts | '. $member->name .' | Microfinance Management')
+@section('title', 'Loan Accounts | '. $member->name .' | Microfinance Management')
 
 @section('css')
   <style type="text/css">
@@ -52,9 +52,9 @@
 
 @section('content_header')
     <h1>
-      Saving Accounts [Member: <b>{{ $member->name }}</b>, Group: <b>{{ $group->name }}</b>, Staff: <b>{{ $staff->name }}</b>]
+      Loan Accounts [Member: <b>{{ $member->name }}</b>, Group: <b>{{ $group->name }}</b>, Staff: <b>{{ $staff->name }}</b>]
       <div class="pull-right">
-        <a href="{{ route('dashboard.savings.create', [$staff->id, $group->id, $member->id]) }}" class="btn btn-primary" title="Add a New Saving Account"><i class="fa fa-plus"></i> Add Saving Account</a>
+        <a href="{{ route('dashboard.loans.create', [$staff->id, $group->id, $member->id]) }}" class="btn btn-primary" title="Add a New Loan Account"><i class="fa fa-plus"></i> Add Loan Account</a>
       </div>
     </h1>
 @stop
@@ -79,7 +79,7 @@
               </tr>
             </thead>
             <tbody>
-              @foreach($savings as $savingaccount)
+              @foreach($loans as $savingaccount)
                 <tr>
                   <td>{{ $savingaccount->savingname->name }}</td>
                   <td>{{ installment_type($savingaccount->installment_type) }}</td>

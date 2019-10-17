@@ -107,6 +107,13 @@ Route::get('/group/{s_id}/{g_id}/{m_id}/member', ['as'=>'dashboard.member.single
 
 // saving accounts
 Route::get('/group/{s_id}/{g_id}/{m_id}/member/saving/accounts', ['as'=>'dashboard.member.savings','uses'=>'MemberController@getMemberSavings']);
+Route::get('/group/{s_id}/{g_id}/{m_id}/member/saving/accounts/create', ['as'=>'dashboard.savings.create','uses'=>'MemberController@createSavingAccount']);
+Route::post('/group/{s_id}/{g_id}/{m_id}/member/saving/accounts/store', ['as'=>'dashboard.savings.store','uses'=>'MemberController@storeSavingAccount']);
+
+// loan accounts
+Route::get('/group/{s_id}/{g_id}/{m_id}/member/loan/accounts', ['as'=>'dashboard.member.loans','uses'=>'MemberController@getMemberLoans']);
+Route::get('/group/{s_id}/{g_id}/{m_id}/member/loan/accounts/create', ['as'=>'dashboard.loans.create','uses'=>'MemberController@createLoanAccount']);
+Route::post('/group/{s_id}/{g_id}/{m_id}/member/loan/accounts/store', ['as'=>'dashboard.loans.store','uses'=>'MemberController@storeLoanAccount']);
 
 Route::get('/programs/features', ['as'=>'programs.features','uses'=>'DashboardController@getProgramFeatures']);
 Route::get('/staff/{id}/features', ['as'=>'staff.features','uses'=>'StaffController@getStaffFeatures']); // id dhukbe ekhane

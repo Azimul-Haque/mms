@@ -78,7 +78,7 @@
       if ($var == 1)
           return 'Active';
       elseif($var == 0)
-          return 'Inactive';
+          return 'Closed';
   }
 
   function gender($var) 
@@ -137,6 +137,16 @@
           return 'No';
       elseif($var == 1)
           return 'Yes';
+  }
+
+  function installment_type($var) 
+  {
+      if ($var == 1)
+          return 'Daily';
+      elseif($var == 2)
+          return 'Weekly';
+      elseif($var == 3)
+          return 'Monthly';
   }
 
   function convertNumberToWord($num = false)

@@ -24,7 +24,7 @@
         </a>
       </div>
       <div class="col-md-3 col-sm-6 col-xs-12">
-        <a href="#!">
+        <a href="{{ route('dashboard.member.loans', [$staff->id, $group->id, $member->id]) }}">
           <div class="info-box">
             <span class="info-box-icon bg-red"><i class="fa fa-book"></i></span>
             <div class="info-box-content">
