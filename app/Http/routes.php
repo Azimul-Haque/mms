@@ -105,6 +105,9 @@ Route::put('/group/{s_id}/{g_id}/members/{id}/update', ['as'=>'dashboard.members
 
 Route::get('/group/{s_id}/{g_id}/{m_id}/member', ['as'=>'dashboard.member.single','uses'=>'MemberController@getSingleMember']);
 
+// saving accounts
+Route::get('/group/{s_id}/{g_id}/{m_id}/member/saving/accounts', ['as'=>'dashboard.member.savings','uses'=>'MemberController@getMemberSavings']);
+
 Route::get('/programs/features', ['as'=>'programs.features','uses'=>'DashboardController@getProgramFeatures']);
 Route::get('/staff/{id}/features', ['as'=>'staff.features','uses'=>'StaffController@getStaffFeatures']); // id dhukbe ekhane
 Route::get('/group/{s_id}/{g_id}/features', ['as'=>'group.features','uses'=>'GroupController@getGroupFeatures']); // id dhukbe ekhane

@@ -39,7 +39,7 @@
       <div class="clearfix visible-sm-block"></div>
 
       <div class="col-md-3 col-sm-6 col-xs-12">
-        <a href="#!">
+        <a href="{{ route('dashboard.member.savings', [$staff->id, $group->id, $member->id]) }}">
           <div class="info-box">
             <span class="info-box-icon bg-green"><i class="fa fa-database"></i></span>
             <div class="info-box-content">
@@ -52,11 +52,10 @@
       <div class="col-md-3 col-sm-6 col-xs-12">
         <a href="#!">
           <div class="info-box">
-            <span class="info-box-icon bg-yellow"><i class="fa fa-briefcase"></i></span>
-
+            <span class="info-box-icon bg-yellow"><i class="fa fa-address-book-o"></i></span>
             <div class="info-box-content">
-              <span class="info-box-text">Security</span>
-              <span class="info-box-number">Accounts</span>
+              <span class="info-box-text">View</span>
+              <span class="info-box-number">Member</span>
             </div>
           </div>
         </a>
@@ -64,7 +63,7 @@
     </div>
     <div class="row">
       <div class="col-md-3 col-sm-6 col-xs-12">
-        <a href="#!">
+        {{-- <a href="#!">
         	<div class="info-box">
         	  <span class="info-box-icon bg-aqua"><i class="fa fa-address-book-o"></i></span>
         	  <div class="info-box-content">
@@ -72,10 +71,10 @@
         	    <span class="info-box-number">Member</span>
         	  </div>
         	</div>
-        </a>
+        </a> --}}
       </div>
       <div class="col-md-3 col-sm-6 col-xs-12">
-        <a href="#!">
+     {{--    <a href="#!">
           <div class="info-box">
             <span class="info-box-icon bg-red"><i class="fa fa-user-times"></i></span>
             <div class="info-box-content">
@@ -83,14 +82,14 @@
               <span class="info-box-number">Debt</span>
             </div>
           </div>
-    	  </a>
+    	  </a> --}}
       </div>
 
       <!-- fix for small devices only -->
       <div class="clearfix visible-sm-block"></div>
 
       <div class="col-md-3 col-sm-6 col-xs-12">
-        <a href="#!">
+   {{--      <a href="#!">
           <div class="info-box">
             <span class="info-box-icon bg-green"><i class="fa fa-cogs"></i></span>
             <div class="info-box-content">
@@ -98,7 +97,7 @@
               <span class="info-box-number">to Bad Debt</span>
             </div>
           </div>
-    	  </a>
+    	  </a> --}}
       </div>
       {{-- <div class="col-md-3 col-sm-6 col-xs-12">
         <a href="#!">

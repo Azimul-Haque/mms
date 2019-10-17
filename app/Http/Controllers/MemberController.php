@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use App\User;
 use App\Group;
 use App\Member;
+use App\Saving;
 
 use Carbon\Carbon;
 use DB, Hash, Auth, Image, File, Session;
@@ -23,6 +24,7 @@ class MemberController extends Controller
     	$group = Group::find($g_id);
         $members = Member::where('group_id', $g_id)
         				 ->orderBy('id', 'asc')->get();
+                 
         return view('dashboard.groups.members.index')
         					->withStaff($staff)
         					->withGroup($group)
@@ -117,6 +119,7 @@ class MemberController extends Controller
         $member->permanent_phone = $request->permanent_phone;
 
         $member->status = 1; // auto active
+        $member->staff_id = $s_id;
         $member->group_id = $g_id;
         $member->save();
 
@@ -161,12 +164,38 @@ class MemberController extends Controller
 
     public function getSingleMember($s_id, $g_id, $m_id)
     {
+      $staff = User::find($s_id);
+      $group = Group::find($g_id);
+
+      $member = Member::where('id', $m_id)
+                      ->where('staff_id', $s_id)
+                      ->where('group_id', $g_id)
+                      ->first();
+
+      return view('dashboard.groups.members.singlemember')
+              ->withStaff($staff)
+              ->withGroup($group)
+              ->withMember($member);
+    }
+
+    // Saving accounts
+    // Saving accounts
+    public function getMemberSavings($s_id, $g_id, $m_id)
+    {
     	$staff = User::find($s_id);
     	$group = Group::find($g_id);
-        $member = Member::find($m_id);
-        return view('dashboard.groups.members.singlemember')
-        				->withStaff($staff)
-        				->withGroup($group)
-        				->withMember($member);
+
+      $member = Member::where('id', $m_id)
+                      ->where('staff_id', $s_id)
+                      ->where('group_id', $g_id)
+                      ->first();
+
+      $savings = Saving::where('member_id', $member->id)->get();
+
+      return view('dashboard.groups.members.savings.index')
+      				->withStaff($staff)
+      				->withGroup($group)
+              ->withMember($member)
+      				->withSavings($savings);
     }
 }

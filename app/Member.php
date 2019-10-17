@@ -9,4 +9,8 @@ class Member extends Model
     public function group() {
         return $this->belongsTo('App\Group');
     }
+
+    public function savings() {
+        return $this->hasMany('App\Saving');
+    }
 }
