@@ -122,17 +122,22 @@
       </div>
       <div class="col-md-6">
         <div class="table-responsive" style="height: 550px; overflow-y: auto; display: block;">
-          <table class="table table-condensed">
+          <table class="table table-condensed" id="installmentsTable">
             <thead>
               <tr>
                 <th>Date</th>
                 <th>Installment Amount<br/>(Principal)</th>
-                <th>Disburse Date</th>
-                <th>Total Installments</th>
-                <th>Disbursed</th>
-                <th>Status</th>
-                <th>Closing Date</th>
-                <th>Action</th>
+                <th>Installment Amount<br/>(Interest)</th>
+                <th>Installment Amount<br/>(Total)</th>
+                <th>Paid Amount<br/>(Principal)</th>
+                <th>Paid Amount<br/>(Interest)</th>
+                <th>Paid Amount<br/>(Total)</th>
+                <th>Outstanding Amount<br/>(Principal)</th>
+                <th>Outstanding Amount<br/>(Interest)</th>
+                <th>Outstanding Amount<br/>(Total)</th>
+                <th>Overdue Amount<br/>(Principal)</th>
+                <th>Overdue Amount<br/>(Interest)</th>
+                <th>Overdue Amount<br/>(Total)</th>
               </tr>
             </thead>
             <tbody>
@@ -169,8 +174,13 @@
       var installment_type = $('#installment_type').val();
       var installments = $('#installments').val();
       var first_installment_date = $('#first_installment_date').val();
-
-      console.log(installments);
+      for(var i=0; i<installments;i++) {
+        var tablerow = '<tr>';
+        tablerow += '<td>3</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td>';
+        tablerow += '</tr>';
+        $('#installmentsTable > tbody:last-child').append(tablerow);
+        console.log(installments);
+      }
     });
   </script>
 @endsection
