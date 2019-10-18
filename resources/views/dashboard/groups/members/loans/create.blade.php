@@ -200,6 +200,13 @@
           var dateToPay = moment(first_installment_date).add(i, 'weeks').format('ddd, DD/MM/YYYY');
         } else if(installment_type == 3) {
           var dateToPay = moment(first_installment_date).add(i*1, 'months').format('ddd, DD/MM/YYYY');
+          if(dateToPay.includes('Fri')) {
+            dateToPay = moment(first_installment_date).add(i*1, 'months').add(2, 'days').format('ddd, DD/MM/YYYY');
+          } else if(dateToPay.includes('Sat')) {
+            dateToPay = moment(first_installment_date).add(i*1, 'months').add(1, 'days').format('ddd, DD/MM/YYYY');
+          } else {
+            dateToPay = dateToPay;
+          }
         }
         tablerow += '<td>'+ (i+1) +'</td>';
         tablerow += '<td>'+ dateToPay +'</td>';
