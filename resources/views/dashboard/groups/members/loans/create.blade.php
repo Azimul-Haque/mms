@@ -4,6 +4,7 @@
 
 @section('css')
   <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap-datepicker.min.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ asset('css/plain-table.css') }}">
 @stop
 
 @section('content_header')
@@ -37,7 +38,7 @@
             <div class="row">
               <div class="col-md-6">
                 {!! Form::label('installment_type', 'Installment Type *') !!}
-                <select name="installment_type" class="form-control" required="">
+                <select name="installment_type" id="installment_type" class="form-control" required="">
                   <option value="" selected="" disabled="">Select Installment Type</option>
                   <option value="1">Daily</option>
                   <option value="2">Weekly</option>
@@ -46,7 +47,7 @@
               </div>
               <div class="col-md-6">
                 {!! Form::label('installments', 'Installments *') !!}
-                <select name="installments" class="form-control" required="">
+                <select name="installments" id="installments" class="form-control" required="">
                   <option value="" selected="" disabled="">Select Number of Installments</option>
                   @for($i=1;$i<=100;$i++)
                     <option value="{{ $i }}">{{ $i }}</option>
@@ -61,7 +62,7 @@
               </div>
               <div class="col-md-6">
                 {!! Form::label('schemename_id', 'Scheme *') !!}
-                <select name="schemename_id" class="form-control" required="">
+                <select name="schemename_id" id="schemename_id" class="form-control" required="">
                   <option value="" selected="" disabled="">Select Program</option>
                   @foreach($schemenames as $schemename)
                     <option value="{{ $schemename->id }}">{{ $schemename->name }}</option>
@@ -69,15 +70,76 @@
                 </select>
               </div>
             </div>
+            <div class="row">
+              <div class="col-md-6">
+                <br/>
+                {!! Form::label('principal_amount', 'Principal Amount *') !!}
+                <div class="input-group">
+                  <span class="input-group-addon">৳</span>
+                  {!! Form::text('principal_amount', null, array('class' => 'form-control', 'placeholder' => 'Principal Amount', 'required' => '', 'autocomplete' => 'off')) !!}
+                </div>
+              </div>
+              <div class="col-md-6">
+                <br/>
+                {!! Form::label('service_charge', 'Service Charge *') !!}
+                <div class="input-group">
+                  <span class="input-group-addon">৳</span>
+                  {!! Form::text('service_charge', null, array('class' => 'form-control', 'placeholder' => 'Service Charge', 'required' => '', 'autocomplete' => 'off')) !!}
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <br/>
+                {!! Form::label('total_disbursed', 'Total Disbursed Amount *') !!}
+                <div class="input-group">
+                  <span class="input-group-addon">৳</span>
+                  {!! Form::text('total_disbursed', null, array('class' => 'form-control', 'placeholder' => 'Total Disbursed Amount', 'required' => '', 'autocomplete' => 'off')) !!}
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                {!! Form::label('closing_date', 'Closing Date (Optional) *') !!}
+                {!! Form::text('closing_date', null, array('class' => 'form-control', 'placeholder' => 'Closing Date (Optional)', 'autocomplete' => 'off', 'readonly' => '')) !!}
+              </div>
+              <div class="col-md-6">
+                {!! Form::label('status', 'Status *') !!}
+                <select name="status" class="form-control" required="">
+                  <option value="" selected="" disabled="">Select Status</option>
+                  <option value="1">Disbursed</option>
+                  <option value="0">Closed</option>
+                </select>
+              </div>
+            </div>
           </div>
           <div class="panel-footer">
             <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-o"></i> Save</button>
+            <button type="button" class="btn btn-success" id="loadInstallments"><i class="fa fa-refresh"></i> Load Installments</button>
           </div>
           {!! Form::close() !!}
         </div>
       </div>
-      <div class="col-md-4">
-
+      <div class="col-md-6">
+        <div class="table-responsive" style="height: 550px; overflow-y: auto; display: block;">
+          <table class="table table-condensed">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Installment Amount<br/>(Principal)</th>
+                <th>Disburse Date</th>
+                <th>Total Installments</th>
+                <th>Disbursed</th>
+                <th>Status</th>
+                <th>Closing Date</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
 @stop
@@ -103,6 +165,12 @@
       });
     });
 
-    $('#user_id').select2();
+    $('#loadInstallments').click(function() {
+      var installment_type = $('#installment_type').val();
+      var installments = $('#installments').val();
+      var first_installment_date = $('#first_installment_date').val();
+
+      console.log(installments);
+    });
   </script>
 @endsection
