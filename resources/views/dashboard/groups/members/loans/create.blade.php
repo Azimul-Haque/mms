@@ -49,7 +49,7 @@
                 {!! Form::label('installments', 'Installments *') !!}
                 <select name="installments" id="installments" class="form-control" required="">
                   <option value="" selected="" disabled="">Select Number of Installments</option>
-                  @for($i=1;$i<=100;$i++)
+                  @for($i=1;$i<=120;$i++)
                     <option value="{{ $i }}">{{ $i }}</option>
                   @endfor
                 </select>
@@ -114,7 +114,7 @@
             </div>
           </div>
           <div class="panel-footer">
-            <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-o"></i> Save</button>
+            <button type="button" class="btn btn-primary" title="কাজ চলছে"><i class="fa fa-floppy-o"></i> Save</button> {{-- submit --}}
             <button type="button" class="btn btn-success" id="loadInstallments"><i class="fa fa-refresh"></i> Load Installments</button>
           </div>
           {!! Form::close() !!}
@@ -125,6 +125,7 @@
           <table class="table table-condensed" id="installmentsTable">
             <thead>
               <tr>
+                <th>#</th>
                 <th>Date</th>
                 <th>Installment Amount<br/>(Principal)</th>
                 <th>Installment Amount<br/>(Interest)</th>
@@ -151,6 +152,8 @@
 
 @section('js')
   <script type="text/javascript" src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
+  {{-- <script type="text/javascript" src="{{ asset('js/dateformat.js') }}"></script> --}}
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
   <script type="text/javascript">
     $(function() {
       $("#disburse_date").datepicker({
@@ -159,7 +162,7 @@
         autoclose: true,
       });
       $("#first_installment_date").datepicker({
-        format: 'D, dd/mm/yyyy',
+        format: 'MM dd, yyyy',
         todayHighlight: true,
         autoclose: true,
       });
@@ -174,12 +177,46 @@
       var installment_type = $('#installment_type').val();
       var installments = $('#installments').val();
       var first_installment_date = $('#first_installment_date').val();
+      var principal_amount = $('#principal_amount').val();
+      var service_charge = $('#service_charge').val();
+      var total_disbursed = parseFloat(principal_amount) + parseFloat(service_charge);
+      $('#installmentsTable > tbody').empty();
+      function addWeekdays(date, days) {
+        date = moment(date); // use a clone
+        while (days > 0) {
+          date = date.add(1, 'days');
+          // 5 == Fri, 6 = Sat
+          if (date.isoWeekday() !== 5 && date.isoWeekday() !== 6) {
+            days -= 1;
+          }
+        }
+        return date;
+      }
       for(var i=0; i<installments;i++) {
         var tablerow = '<tr>';
-        tablerow += '<td>3</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td>';
+        if(installment_type == 1) {
+          var dateToPay = addWeekdays(moment(first_installment_date), i).format('ddd, DD/MM/YYYY');
+        } else if(installment_type == 2) {
+          var dateToPay = moment(first_installment_date).add(i, 'weeks').format('ddd, DD/MM/YYYY');
+        } else if(installment_type == 3) {
+          var dateToPay = moment(first_installment_date).add(i*1, 'months').format('ddd, DD/MM/YYYY');
+        }
+        tablerow += '<td>'+ (i+1) +'</td>';
+        tablerow += '<td>'+ dateToPay +'</td>';
+        tablerow += '<td>'+ principal_amount +'</td>';
+        tablerow += '<td>'+ service_charge +'</td>';
+        tablerow += '<td>'+ total_disbursed +'</td>';
+        tablerow += '<td>'+ 0.00 +'</td>';
+        tablerow += '<td>'+ 0.00 +'</td>';
+        tablerow += '<td>'+ 0.00 +'</td>';
+        tablerow += '<td>'+ principal_amount +'</td>';
+        tablerow += '<td>'+ service_charge +'</td>';
+        tablerow += '<td>'+ total_disbursed +'</td>';
+        tablerow += '<td>0.00</td><td>0.00</td><td>0.00</td>';
         tablerow += '</tr>';
-        $('#installmentsTable > tbody:last-child').append(tablerow);
-        console.log(installments);
+        
+        
+        $('#installmentsTable > tbody').append(tablerow);
       }
     });
   </script>
