@@ -31,7 +31,7 @@
               </div>
               <div class="col-md-6">
                 {!! Form::label('opening_date', 'Opening Date *') !!}
-                {!! Form::text('opening_date', null, array('class' => 'form-control', 'required' => '', 'autocomplete' => 'off', 'readonly' => '')) !!}
+                {!! Form::text('opening_date', null, array('class' => 'form-control', 'placeholder' => 'Opening Date', 'required' => '', 'autocomplete' => 'off', 'readonly' => '')) !!}
               </div>
             </div>
             <div class="row">
@@ -61,11 +61,11 @@
             <div class="row">
               <div class="col-md-6">
                 {!! Form::label('minimum_deposit', 'Minimum Deposit *') !!}
-                {!! Form::text('minimum_deposit', null, array('class' => 'form-control', 'required' => '', 'autocomplete' => 'off')) !!}
+                {!! Form::text('minimum_deposit', null, array('class' => 'form-control', 'placeholder' => 'Minimum Diposit Amount', 'required' => '', 'autocomplete' => 'off')) !!}
               </div>
               <div class="col-md-6">
                 {!! Form::label('closing_date', 'Closing Date (Optional)') !!}
-                {!! Form::text('closing_date', null, array('class' => 'form-control', 'autocomplete' => 'off')) !!}
+                {!! Form::text('closing_date', null, array('class' => 'form-control', 'placeholder' => 'Closing Date', 'autocomplete' => 'off', 'readonly' => '')) !!}
               </div>
             </div>
           </div>
@@ -86,17 +86,17 @@
   <script type="text/javascript">
     $(function() {
       $("#opening_date").datepicker({
-        format: 'MM dd, yyyy',
+        format: 'D, dd/mm/yyyy',
         todayHighlight: true,
         autoclose: true,
       });
       $("#dob").datepicker({
-        format: 'MM dd, yyyy',
+        format: 'D, dd/mm/yyyy',
         todayHighlight: true,
         autoclose: true,
       });
       $("#closing_date").datepicker({
-        format: 'MM dd, yyyy',
+        format: 'D, dd/mm/yyyy',
         todayHighlight: true,
         autoclose: true,
       });

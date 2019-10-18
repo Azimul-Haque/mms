@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Edit Loan Name | Microfinance Management')
+@section('title', 'Edit Saving Name | Microfinance Management')
 
 @section('css')
   <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap-datepicker.min.css') }}">
@@ -8,7 +8,7 @@
 
 @section('content_header')
     <h1>
-      Edit Loan Name
+      Edit Saving Name
     </h1>
 @stop
 
@@ -16,13 +16,13 @@
   <div class="row">
       <div class="col-md-6">
         <div class="panel panel-primary">
-          <div class="panel-heading">Edit Loan Name</div>
+          <div class="panel-heading">Edit Saving Name</div>
           {!! Form::model($savingname, ['route' => ['dashboard.savingnames.update', $savingname->id], 'method' => 'PUT']) !!}
           <div class="panel-body">
             <div class="row">
               <div class="col-md-12">
-                {!! Form::label('name', 'Loan Name *') !!}
-                {!! Form::text('name', null, array('class' => 'form-control', 'required' => '')) !!}
+                {!! Form::label('name', 'Saving Name *') !!}
+                {!! Form::text('name', null, array('class' => 'form-control', 'placeholder' => 'Saving Name', 'required' => '')) !!}
               </div>
             </div><br/>
             {{-- <div class="row">

@@ -23,17 +23,17 @@
           {!! Form::model($staff, ['route' => ['dashboard.staffs.update', $staff->id], 'method' => 'PUT']) !!}
           <div class="panel-body">
             {!! Form::label('name', 'Staff Name *') !!}
-            {!! Form::text('name', null, array('class' => 'form-control', 'required' => '')) !!}<br/>
+            {!! Form::text('name', null, array('class' => 'form-control', 'placeholder' => 'Staff Name', 'required' => '')) !!}<br/>
 
             {!! Form::label('phone', 'Mobile Number (11 Digit) *') !!}
-            {!! Form::text('phone', null, array('class' => 'form-control', 'onkeypress' => 'if(this.value.length==11) return false;', 'required' => '', 'autocomplete' => 'off')) !!}<br/>
+            {!! Form::text('phone', null, array('class' => 'form-control', 'placeholder' => 'Mobile Number (11 Digit)', 'onkeypress' => 'if(this.value.length==11) return false;', 'required' => '', 'autocomplete' => 'off')) !!}<br/>
 
 
             {!! Form::label('password', 'Password *') !!}
-            {!! Form::password('password', array('class' => 'form-control', 'required' => '', 'autocomplete' => 'off')) !!}<br/>
+            {!! Form::password('password', array('class' => 'form-control', 'placeholder' => 'Password', 'required' => '', 'autocomplete' => 'off')) !!}<br/>
 
             {!! Form::label('password_confirmation', 'Confirm Password *') !!}
-            {!! Form::password('password_confirmation' , array('class' => 'form-control', 'required' => '')) !!}
+            {!! Form::password('password_confirmation' , array('class' => 'form-control', 'placeholder' => 'Confirm Password', 'required' => '')) !!}
           </div>
           <div class="panel-footer">
             <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-o"></i> Save</button>

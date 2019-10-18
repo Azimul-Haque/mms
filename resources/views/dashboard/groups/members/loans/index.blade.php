@@ -68,30 +68,26 @@
               <tr>
                 <th>Program</th>
                 <th>Installment Type</th>
-                <th>Opening Date</th>
-                <th>Meting Day</th>
-                <th>Minimum Deposit</th>
-                <th>Late Fee</th>
-                <th>Balance ( ৳)</th>
+                <th>Disburse Date</th>
+                <th>Total Installments</th>
+                <th>Disbursed</th>
                 <th>Status</th>
                 <th>Closing Date</th>
                 <th>Action</th>
               </tr>
             </thead>
             <tbody>
-              @foreach($loans as $savingaccount)
+              @foreach($loans as $loan)
                 <tr>
-                  <td>{{ $savingaccount->savingname->name }}</td>
-                  <td>{{ installment_type($savingaccount->installment_type) }}</td>
-                  <td>{{ date('F d, Y', strtotime($member->admission_date)) }}</td>
-                  <td>{{ meeting_day($savingaccount->meeting_day) }}</td>
-                  <td>{{ $savingaccount->minimum_deposit }}</td>
-                  <td>{{ $savingaccount->late_fee }}</td>
-                  <td>{{ $savingaccount->total_amount }}</td>
-                  <td>{{ status($savingaccount->status) }}</td>
+                  <td>{{ $loan->loanname->name }}</td>
+                  <td>{{ installment_type($loan->installment_type) }}</td>
+                  <td>{{ date('D, d/m/Y', strtotime($member->disburse_date)) }}</td>
+                  <td>{{ $loan->installments }}</td>
+                  <td>{{ $loan->total_disbursed }}</td>
+                  <td>{{ status($loan->status) }}</td>
                   <td>
-                    @if($savingaccount->closing_date != '0000-00-00')
-                      {{ date('F d, Y', strtotime($member->closing_date)) }}
+                    @if($loan->closing_date != '0000-00-00')
+                      {{ date('D, d/m/Y', strtotime($member->closing_date)) }}
                     @endif
                   </td>
                   <td>

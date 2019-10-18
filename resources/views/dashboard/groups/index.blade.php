@@ -35,7 +35,7 @@
                 <tr>
                   <td>{{ $group->name }}</td>
                   <td>{{ $group->user->name }}</td>
-                  <td>{{ date('F d, Y', $group->formation) }}</td>
+                  <td>{{ date('D, d/m/Y', $group->formation) }}</td>
                   <td>{{ meeting_day($group->meeting_day) }}</td>
                   <td><span class="label label-{{ statuscolor($group->status) }}">{{ status($group->status) }}</span></td>
                   <td>

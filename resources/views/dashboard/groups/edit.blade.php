@@ -98,7 +98,7 @@
   <script type="text/javascript">
     $(function() {
       $("#formation").datepicker({
-        format: 'MM dd, yyyy',
+        format: 'D, dd/mm/yyyy',
         todayHighlight: true,
         autoclose: true,
       });

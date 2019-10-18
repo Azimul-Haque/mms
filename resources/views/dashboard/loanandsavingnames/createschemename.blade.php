@@ -22,7 +22,7 @@
             <div class="row">
               <div class="col-md-12">
                 {!! Form::label('name', 'Scheme Name *') !!}
-                {!! Form::text('name', null, array('class' => 'form-control', 'required' => '')) !!}
+                {!! Form::text('name', null, array('class' => 'form-control', 'placeholder' => 'Scheme Name', 'required' => '')) !!}
               </div>
             </div><br/>
             {{-- <div class="row">

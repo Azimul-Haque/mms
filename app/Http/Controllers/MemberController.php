@@ -12,6 +12,9 @@ use App\Group;
 use App\Member;
 use App\Saving;
 use App\Savingname;
+use App\Loan;
+use App\Loanname;
+use App\Schemename;
 
 use Carbon\Carbon;
 use DB, Hash, Auth, Image, File, Session;
@@ -281,7 +284,7 @@ class MemberController extends Controller
                       ->where('group_id', $g_id)
                       ->first();
 
-      $loans = Saving::where('member_id', $member->id)->get();
+      $loans = Loan::where('member_id', $member->id)->get();
 
       return view('dashboard.groups.members.loans.index')
               ->withStaff($staff)
@@ -299,13 +302,16 @@ class MemberController extends Controller
                       ->where('staff_id', $s_id)
                       ->where('group_id', $g_id)
                       ->first();
-      $savingnames = Savingname::all();
+
+      $loannames = Loanname::all();
+      $schemenames = Schemename::all();
 
       return view('dashboard.groups.members.loans.create')
       				->withStaff($staff)
       				->withGroup($group)
               ->withMember($member)
-      				->withSavingnames($savingnames);
+              ->withLoannames($loannames)
+      				->withSchemenames($schemenames);
     }
 
     public function storeLoanAccount(Request $request, $s_id, $g_id, $m_id)

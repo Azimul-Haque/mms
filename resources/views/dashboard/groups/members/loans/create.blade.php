@@ -14,7 +14,7 @@
 
 @section('content')
   <div class="row">
-      <div class="col-md-12">
+      <div class="col-md-6">
         <div class="panel panel-primary">
           <div class="panel-heading">Add Saving Account</div>
           {!! Form::open(['route' => ['dashboard.savings.store', $staff->id, $group->id, $member->id], 'method' => 'POST']) !!}
@@ -24,14 +24,14 @@
                 {!! Form::label('savingname_id', 'Program *') !!}
                 <select name="savingname_id" class="form-control" required="">
                   <option value="" selected="" disabled="">Select Program</option>
-                  @foreach($savingnames as $savingname)
-                    <option value="{{ $savingname->id }}">{{ $savingname->name }}</option>
+                  @foreach($loannames as $loanname)
+                    <option value="{{ $loanname->id }}">{{ $loanname->name }}</option>
                   @endforeach
                 </select>
               </div>
               <div class="col-md-6">
-                {!! Form::label('opening_date', 'Opening Date *') !!}
-                {!! Form::text('opening_date', null, array('class' => 'form-control', 'required' => '', 'autocomplete' => 'off', 'readonly' => '')) !!}
+                {!! Form::label('disburse_date', 'Disburse Date *') !!}
+                {!! Form::text('disburse_date', null, array('class' => 'form-control', 'placeholder' => 'Disburse Date', 'required' => '', 'autocomplete' => 'off', 'readonly' => '')) !!}
               </div>
             </div>
             <div class="row">
@@ -45,27 +45,28 @@
                 </select>
               </div>
               <div class="col-md-6">
-                {!! Form::label('meeting_day', 'Meeeting Day *') !!}
-                <select name="meeting_day" class="form-control" required="">
-                  <option value="" selected="" disabled="">Select Meeeting Day</option>
-                  <option value="1">Saturday</option>
-                  <option value="2">Sunday</option>
-                  <option value="3">Monday</option>
-                  <option value="4">Tuesday</option>
-                  <option value="5">Wednesday</option>
-                  <option value="6">Thursday</option>
-                  <option value="7">Friday</option>
+                {!! Form::label('installments', 'Installments *') !!}
+                <select name="installments" class="form-control" required="">
+                  <option value="" selected="" disabled="">Select Number of Installments</option>
+                  @for($i=1;$i<=100;$i++)
+                    <option value="{{ $i }}">{{ $i }}</option>
+                  @endfor
                 </select>
               </div>
             </div>
             <div class="row">
               <div class="col-md-6">
-                {!! Form::label('minimum_deposit', 'Minimum Deposit *') !!}
-                {!! Form::text('minimum_deposit', null, array('class' => 'form-control', 'required' => '', 'autocomplete' => 'off')) !!}
+                {!! Form::label('first_installment_date', 'First Installment Date *') !!}
+                {!! Form::text('first_installment_date', null, array('class' => 'form-control', 'placeholder' => 'First Installment Date', 'required' => '', 'autocomplete' => 'off', 'readonly' => '')) !!}
               </div>
               <div class="col-md-6">
-                {!! Form::label('closing_date', 'Closing Date (Optional)') !!}
-                {!! Form::text('closing_date', null, array('class' => 'form-control', 'autocomplete' => 'off')) !!}
+                {!! Form::label('schemename_id', 'Scheme *') !!}
+                <select name="schemename_id" class="form-control" required="">
+                  <option value="" selected="" disabled="">Select Program</option>
+                  @foreach($schemenames as $schemename)
+                    <option value="{{ $schemename->id }}">{{ $schemename->name }}</option>
+                  @endforeach
+                </select>
               </div>
             </div>
           </div>
@@ -85,18 +86,18 @@
   <script type="text/javascript" src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
   <script type="text/javascript">
     $(function() {
-      $("#opening_date").datepicker({
-        format: 'MM dd, yyyy',
+      $("#disburse_date").datepicker({
+        format: 'D, dd/mm/yyyy',
         todayHighlight: true,
         autoclose: true,
       });
-      $("#dob").datepicker({
-        format: 'MM dd, yyyy',
+      $("#first_installment_date").datepicker({
+        format: 'D, dd/mm/yyyy',
         todayHighlight: true,
         autoclose: true,
       });
       $("#closing_date").datepicker({
-        format: 'MM dd, yyyy',
+        format: 'D, dd/mm/yyyy',
         todayHighlight: true,
         autoclose: true,
       });
