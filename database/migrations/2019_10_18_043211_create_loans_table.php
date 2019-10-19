@@ -22,7 +22,10 @@ class CreateLoansTable extends Migration
             $table->integer('schemename_id')->unsigned();
             $table->float('principal_amount');
             $table->float('service_charge');
+            $table->float('down_payment')->default(0.00);
             $table->float('total_disbursed');
+            $table->float('total_paid')->default(0.00);
+            $table->float('total_outstanding')->default(0.00);
 
             $table->date('closing_date');
             $table->integer('status');

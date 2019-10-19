@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Add Saving Account | Microfinance Management')
+@section('title', 'Add Loan Account | Microfinance Management')
 
 @section('css')
   <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap-datepicker.min.css') }}">
@@ -9,7 +9,7 @@
 
 @section('content_header')
     <h1>
-      Add Saving Account [Member: <b>{{ $member->name }}</b>, Group: <b>{{ $group->name }}</b>, Staff: <b>{{ $staff->name }}</b>]
+      Add Loan Account [Member: <b>{{ $member->name }}</b>, Group: <b>{{ $group->name }}</b>, Staff: <b>{{ $staff->name }}</b>]
     </h1>
 @stop
 
@@ -17,7 +17,7 @@
   <div class="row">
       <div class="col-md-6">
         <div class="panel panel-primary">
-          <div class="panel-heading">Add Saving Account</div>
+          <div class="panel-heading">Add Loan Account</div>
           {!! Form::open(['route' => ['dashboard.savings.store', $staff->id, $group->id, $member->id], 'method' => 'POST']) !!}
           <div class="panel-body">
             <div class="row">
@@ -89,8 +89,15 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-md-12">
-                <br/>
+              <br/>
+              <div class="col-md-6">
+                {!! Form::label('down_payment', 'Down Payment (If PRODUCT) *') !!}
+                <div class="input-group">
+                  <span class="input-group-addon">৳</span>
+                  {!! Form::text('down_payment', null, array('class' => 'form-control', 'placeholder' => 'Down Payment (If PRODUCT)', 'required' => '', 'autocomplete' => 'off')) !!}
+                </div>
+              </div>
+              <div class="col-md-6">
                 {!! Form::label('total_disbursed', 'Total Disbursed Amount *') !!}
                 <div class="input-group">
                   <span class="input-group-addon">৳</span>
@@ -136,9 +143,9 @@
                 <th>Outstanding Amount<br/>(Principal)</th>
                 <th>Outstanding Amount<br/>(Interest)</th>
                 <th>Outstanding Amount<br/>(Total)</th>
-                <th>Overdue Amount<br/>(Principal)</th>
+                {{-- <th>Overdue Amount<br/>(Principal)</th>
                 <th>Overdue Amount<br/>(Interest)</th>
-                <th>Overdue Amount<br/>(Total)</th>
+                <th>Overdue Amount<br/>(Total)</th> --}}
               </tr>
             </thead>
             <tbody>
@@ -172,14 +179,40 @@
         autoclose: true,
       });
     });
-
+    $('#principal_amount').change(function() {
+      var principal_amount = $('#principal_amount').val() ? $('#principal_amount').val() : 0; // a ? a : 0;
+      var down_payment = $('#down_payment').val() ? $('#down_payment').val() : 0; // a ? a : 0;
+      var left_pricipal_amount = parseFloat(principal_amount) - parseFloat(down_payment); // if product(!0) or loan(0)
+      var service_charge = $('#service_charge').val() ? $('#service_charge').val() : 0; // a ? a : 0;
+      var total_disbursed = parseFloat(left_pricipal_amount) + parseFloat(service_charge);
+      $('#total_disbursed').val(total_disbursed);
+    });
+    $('#down_payment').change(function() {
+      var principal_amount = $('#principal_amount').val() ? $('#principal_amount').val() : 0; // a ? a : 0;
+      var down_payment = $('#down_payment').val() ? $('#down_payment').val() : 0; // a ? a : 0;
+      var left_pricipal_amount = parseFloat(principal_amount) - parseFloat(down_payment); // if product(!0) or loan(0)
+      var service_charge = $('#service_charge').val() ? $('#service_charge').val() : 0; // a ? a : 0;
+      var total_disbursed = parseFloat(left_pricipal_amount) + parseFloat(service_charge);
+      $('#total_disbursed').val(total_disbursed);
+    });
+    $('#service_charge').change(function() {
+      var principal_amount = $('#principal_amount').val() ? $('#principal_amount').val() : 0; // a ? a : 0;
+      var down_payment = $('#down_payment').val() ? $('#down_payment').val() : 0; // a ? a : 0;
+      var left_pricipal_amount = parseFloat(principal_amount) - parseFloat(down_payment); // if product(!0) or loan(0)
+      var service_charge = $('#service_charge').val() ? $('#service_charge').val() : 0; // a ? a : 0;
+      var total_disbursed = parseFloat(left_pricipal_amount) + parseFloat(service_charge);
+      $('#total_disbursed').val(total_disbursed);
+    });
     $('#loadInstallments').click(function() {
       var installment_type = $('#installment_type').val();
       var installments = $('#installments').val();
       var first_installment_date = $('#first_installment_date').val();
-      var principal_amount = $('#principal_amount').val();
-      var service_charge = $('#service_charge').val();
-      var total_disbursed = parseFloat(principal_amount) + parseFloat(service_charge);
+      var principal_amount = $('#principal_amount').val() ? $('#principal_amount').val() : 0; // a ? a : 0;
+      var down_payment = $('#down_payment').val() ? $('#down_payment').val() : 0; // a ? a : 0;
+      var left_pricipal_amount = parseFloat(principal_amount) - parseFloat(down_payment); // if product(!0) or loan(0)
+      var service_charge = $('#service_charge').val() ? $('#service_charge').val() : 0; // a ? a : 0;
+      var total_disbursed = parseFloat(left_pricipal_amount) + parseFloat(service_charge);
+      $('#total_disbursed').val(total_disbursed);
       $('#installmentsTable > tbody').empty();
       function addWeekdays(date, days) {
         date = moment(date); // use a clone
@@ -210,16 +243,16 @@
         }
         tablerow += '<td>'+ (i+1) +'</td>';
         tablerow += '<td>'+ dateToPay +'</td>';
-        tablerow += '<td>'+ (principal_amount/installments).toFixed(2) +'</td>';
+        tablerow += '<td>'+ (left_pricipal_amount/installments).toFixed(2) +'</td>';
         tablerow += '<td>'+ (service_charge/installments).toFixed(2) +'</td>';
         tablerow += '<td>'+ total_disbursed/installments +'</td>';
         tablerow += '<td>'+ 0.00 +'</td>';
         tablerow += '<td>'+ 0.00 +'</td>';
         tablerow += '<td>'+ 0.00 +'</td>';
-        tablerow += '<td>'+ principal_amount +'</td>';
+        tablerow += '<td>'+ left_pricipal_amount +'</td>';
         tablerow += '<td>'+ service_charge +'</td>';
         tablerow += '<td>'+ total_disbursed +'</td>';
-        tablerow += '<td>0.00</td><td>0.00</td><td>0.00</td>';
+        // tablerow += '<td>0.00</td><td>0.00</td><td>0.00</td>'; // overdue
         tablerow += '</tr>';
         
         
