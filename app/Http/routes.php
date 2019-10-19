@@ -114,6 +114,8 @@ Route::post('/group/{s_id}/{g_id}/{m_id}/member/saving/accounts/store', ['as'=>'
 Route::get('/group/{s_id}/{g_id}/{m_id}/member/loan/accounts', ['as'=>'dashboard.member.loans','uses'=>'MemberController@getMemberLoans']);
 Route::get('/group/{s_id}/{g_id}/{m_id}/member/loan/accounts/create', ['as'=>'dashboard.loans.create','uses'=>'MemberController@createLoanAccount']);
 Route::post('/group/{s_id}/{g_id}/{m_id}/member/loan/accounts/store', ['as'=>'dashboard.loans.store','uses'=>'MemberController@storeLoanAccount']);
+Route::get('/group/{s_id}/{g_id}/{m_id}/member/loan/accounts/single/{l_id}', ['as'=>'dashboard.loans.single','uses'=>'MemberController@getMemberLoanSingle']);
+
 
 Route::get('/programs/features', ['as'=>'programs.features','uses'=>'DashboardController@getProgramFeatures']);
 Route::get('/staff/{id}/features', ['as'=>'staff.features','uses'=>'StaffController@getStaffFeatures']); // id dhukbe ekhane

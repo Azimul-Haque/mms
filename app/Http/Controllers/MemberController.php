@@ -13,6 +13,7 @@ use App\Member;
 use App\Saving;
 use App\Savingname;
 use App\Loan;
+use App\Loaninstallment;
 use App\Loanname;
 use App\Schemename;
 
@@ -315,40 +316,114 @@ class MemberController extends Controller
     }
 
     public function storeLoanAccount(Request $request, $s_id, $g_id, $m_id)
-    {
-        $checkacc = Saving::where('member_id', $m_id)
-                          ->where('savingname_id', $request->savingname_id)->first();
-        
-        if($checkacc) {
-          Session::flash('warning', 'This member already has an account like this type.'); 
-          return redirect()->route('dashboard.member.loans', [$s_id, $g_id, $m_id]);
-        }
-
+    {        
         $this->validate($request, [
-          'savingname_id'               => 'required',
-          'opening_date'                => 'required',
-          'meeting_day'                 => 'required',
+          'loanname_id'                 => 'required',
+          'disburse_date'               => 'required',
           'installment_type'            => 'required',
-          'minimum_deposit'             => 'required',
-          'closing_date'                => 'sometimes'
+          'installments'                => 'required',
+          'first_installment_date'      => 'required',
+          'schemename_id'               => 'required',
+          'principal_amount'            => 'required',
+          'service_charge'              => 'required',
+          'down_payment'                => 'sometimes',
+          'total_disbursed'             => 'required'
         ]);
 
-        $savingaccount = new Saving;
-        $savingaccount->savingname_id = $request->savingname_id;
-        $savingaccount->opening_date = date('Y-m-d', strtotime($request->opening_date));
-        if($request->closing_date != '') {
-          $savingaccount->closing_date = date('Y-m-d', strtotime($request->closing_date));
-        } else {
-          $savingaccount->closing_date = '';
+        $loan = new Loan;
+        $loan->loanname_id = $request->loanname_id;
+        $loan->disburse_date = date('Y-m-d', strtotime($request->disburse_date));
+        $loan->installment_type = $request->installment_type;
+        $loan->installments = $request->installments;
+        $loan->first_installment_date = date('Y-m-d', strtotime($request->first_installment_date));
+        $loan->schemename_id = $request->schemename_id;
+        $loan->principal_amount = $request->principal_amount ? $request->principal_amount : 0;
+        $loan->service_charge = $request->service_charge ? $request->service_charge : 0;
+        $loan->down_payment = $request->down_payment ? $request->down_payment : 0;
+        $loan->total_disbursed = $request->total_disbursed;
+        $loan->total_paid = 0.00; // jodi bole pore tobe down payment add kore deoa hobe
+        $loan->total_outstanding = $request->total_disbursed;
+        $loan->status = $request->status; // 1 means disbursed, 0 means closed
+        $loan->member_id = $m_id;
+        $loan->save();
+
+        $installments_arr = [];
+        // add the installments
+        for($i=0; $i<$request->installments; $i++) 
+        {
+          if($request->installment_type == 1) {
+            $dateToPay = $this->addWeekdays(Carbon::parse($request->first_installment_date), $i);
+          } else if($request->installment_type == 2) {
+            $dateToPay = Carbon::parse($request->first_installment_date)->adddays(7);
+          } else if($request->installment_type == 3) {
+            $dateToPay = Carbon::parse($request->first_installment_date)->addMonths($i);
+            if(date('D', strtotime($dateToPay)) == 'Fri') {
+              $dateToPay = Carbon::parse($dateToPay)->adddays(2);
+            } else if(date('D', strtotime($dateToPay)) == 'Sat') {
+              $dateToPay = Carbon::parse($dateToPay)->adddays(1);
+            } else {
+              $dateToPay = $dateToPay;
+            }
+          }
+
+          // store the loan installments...
+          $loaninstallment = new Loaninstallment;
+          $loaninstallment->due_date = date('Y-m-d', strtotime($dateToPay));
+          $loaninstallment->installment_no = $i + 1;
+          $loaninstallment->installment_principal = ($loan->principal_amount - $loan->down_payment) / $loan->installments;
+          $loaninstallment->installment_interest = $loan->service_charge / $loan->installments;
+          $loaninstallment->installment_total = $loan->total_disbursed / $loan->installments;
+
+          $loaninstallment->paid_principal = 0.00;
+          $loaninstallment->paid_interest = 0.00;
+          $loaninstallment->paid_total = 0.00;
+
+          $loaninstallment->outstanding_principal = $loan->principal_amount - $loan->down_payment;
+          $loaninstallment->outstanding_interest = $loan->service_charge;
+          $loaninstallment->outstanding_total = $loan->total_disbursed;
+
+          $loaninstallment->loan_id = $loan->id;
+
+          $loaninstallment->save();
         }
-        $savingaccount->meeting_day = $request->meeting_day;
-        $savingaccount->installment_type = $request->installment_type;
-        $savingaccount->minimum_deposit = $request->minimum_deposit;
-        $savingaccount->status = 1; // 1 means active/open
-        $savingaccount->member_id = $m_id;
-        $savingaccount->save();
+
+        // dd($installments_arr);
 
         Session::flash('success', 'Added successfully!'); 
         return redirect()->route('dashboard.member.loans', [$s_id, $g_id, $m_id]);
+    }
+
+    public function addWeekdays($date, $days) {
+      $dateToPay = Carbon::parse($date);
+      while ($days > 0) {
+        $dateToPay = $dateToPay->adddays(1);
+        // 5 == Fri, 6 = Sat, tai 5 and 6 er moddher gulake grohon korbe
+        if (date('N', strtotime($dateToPay)) < 5 || date('N', strtotime($dateToPay)) > 6) {
+          $days--;
+        }
+      }
+      return $dateToPay;
+    }
+
+    public function getMemberLoanSingle($s_id, $g_id, $m_id, $l_id)
+    {
+      $staff = User::find($s_id);
+      $group = Group::find($g_id);
+      $member = Member::find($m_id);
+
+      $loan = Loan::where('id', $l_id)
+                  ->where('member_id', $member->id)
+                  ->get();
+                  
+      $loannames = Loanname::all();
+      $schemenames = Schemename::all();
+
+      return view('dashboard.groups.members.loans.single')
+              ->withStaff($staff)
+              ->withGroup($group)
+              ->withMember($member)
+              ->withLoan($loan)
+              ->withLoannames($loannames)
+              ->withSchemenames($schemenames);
     }
 }

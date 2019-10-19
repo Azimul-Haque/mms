@@ -20,9 +20,9 @@ class CreateLoaninstallmentsTable extends Migration
             $table->float('installment_interest');
             $table->float('installment_total');
 
-            $table->float('paid_principal');
-            $table->float('paid_interest');
-            $table->float('paid_total');
+            $table->float('paid_principal')->default(0.00);
+            $table->float('paid_interest')->default(0.00);
+            $table->float('paid_total')->default(0.00);
 
             $table->float('outstanding_principal');
             $table->float('outstanding_interest');

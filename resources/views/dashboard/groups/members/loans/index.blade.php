@@ -35,7 +35,9 @@
             <tbody>
               @foreach($loans as $loan)
                 <tr>
-                  <td>{{ $loan->loanname->name }}</td>
+                  <td>
+                    <a href="{{ route('dashboard.loans.single', [$staff->id, $group->id, $member->id, $loan->id]) }}">{{ $loan->loanname->name }}</a>
+                  </td>
                   <td>{{ installment_type($loan->installment_type) }}</td>
                   <td>{{ date('D, d/m/Y', strtotime($member->disburse_date)) }}</td>
                   <td>{{ $loan->installments }}</td>
@@ -47,7 +49,7 @@
                     @endif
                   </td>
                   <td>
-                    <a href="#!" class="btn btn-success btn-sm" title="কাজ চলছে!"><i class="fa fa-pencil"></i> Edit</a>
+                    <a href="{{ route('dashboard.loans.single', [$staff->id, $group->id, $member->id, $loan->id]) }}" class="btn btn-success btn-sm" title="কাজ চলছে!"><i class="fa fa-pencil"></i> Edit</a>
                     {{-- <button class="btn btn-danger btn-sm" title="Delete Member" disabled><i class="fa fa-trash"></i> Delete</button> --}}
                   </td>
                 </tr>

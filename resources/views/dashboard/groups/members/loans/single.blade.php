@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Add Loan Account | Microfinance Management')
+@section('title', 'Loan Account | Microfinance Management')
 
 @section('css')
   <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap-datepicker.min.css') }}">
@@ -9,7 +9,7 @@
 
 @section('content_header')
     <h1>
-      Add Loan Account [Member: <b>{{ $member->name }}</b>, Group: <b>{{ $group->name }}</b>, Staff: <b>{{ $staff->name }}</b>]
+      Loan Account [Member: <b>{{ $member->name }}</b>, Group: <b>{{ $group->name }}</b>, Staff: <b>{{ $staff->name }}</b>]
     </h1>
 @stop
 
@@ -17,7 +17,7 @@
   <div class="row">
       <div class="col-md-6">
         <div class="panel panel-primary">
-          <div class="panel-heading">Add Loan Account</div>
+          <div class="panel-heading">Loan Account ({{ $loan->loanname->name }})</div>
           {!! Form::open(['route' => ['dashboard.loans.store', $staff->id, $group->id, $member->id], 'method' => 'POST']) !!}
           <div class="panel-body">
             <div class="row">
