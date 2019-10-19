@@ -18,15 +18,15 @@
       <div class="col-md-6">
         <div class="panel panel-primary">
           <div class="panel-heading">Loan Account ({{ $loan->loanname->name }})</div>
-          {!! Form::open(['route' => ['dashboard.loans.store', $staff->id, $group->id, $member->id], 'method' => 'POST']) !!}
+          {!! Form::model($loan, ['route' => ['dashboard.loans.update', $staff->id, $group->id, $member->id, $loan->id], 'method' => 'PUT']) !!}
           <div class="panel-body">
             <div class="row">
               <div class="col-md-6">
                 {!! Form::label('loanname_id', 'Program *') !!}
-                <select name="loanname_id" class="form-control" required="">
+                <select name="loanname_id" class="form-control" disabled="">
                   <option value="" selected="" disabled="">Select Program</option>
                   @foreach($loannames as $loanname)
-                    <option value="{{ $loanname->id }}">{{ $loanname->name }}</option>
+                    <option value="{{ $loanname->id }}" @if($loan->loanname_id == $loanname->id) selected="" @endif>{{ $loanname->name }}</option>
                   @endforeach
                 </select>
               </div>
@@ -38,19 +38,19 @@
             <div class="row">
               <div class="col-md-6">
                 {!! Form::label('installment_type', 'Installment Type *') !!}
-                <select name="installment_type" id="installment_type" class="form-control" required="">
+                <select name="installment_type" id="installment_type" class="form-control" disabled="">
                   <option value="" selected="" disabled="">Select Installment Type</option>
-                  <option value="1">Daily</option>
-                  <option value="2">Weekly</option>
-                  <option value="3">Monthly</option>
+                  <option value="1" @if($loan->installment_type == 0) selected="" @endif>Daily</option>
+                  <option value="2" @if($loan->installment_type == 1) selected="" @endif>Weekly</option>
+                  <option value="3" @if($loan->installment_type == 2) selected="" @endif>Monthly</option>
                 </select>
               </div>
               <div class="col-md-6">
                 {!! Form::label('installments', 'Installments *') !!}
-                <select name="installments" id="installments" class="form-control" required="">
+                <select name="installments" id="installments" class="form-control" disabled="">
                   <option value="" selected="" disabled="">Select Number of Installments</option>
                   @for($i=1;$i<=120;$i++)
-                    <option value="{{ $i }}">{{ $i }}</option>
+                    <option value="{{ $i }}" @if($loan->installments == $i) selected="" @endif>{{ $i }}</option>
                   @endfor
                 </select>
               </div>
@@ -62,10 +62,10 @@
               </div>
               <div class="col-md-6">
                 {!! Form::label('schemename_id', 'Scheme *') !!}
-                <select name="schemename_id" id="schemename_id" class="form-control" required="">
+                <select name="schemename_id" id="schemename_id" class="form-control" disabled="">
                   <option value="" selected="" disabled="">Select Program</option>
                   @foreach($schemenames as $schemename)
-                    <option value="{{ $schemename->id }}">{{ $schemename->name }}</option>
+                    <option value="{{ $schemename->id }}" @if($loan->schemename_id == $schemename->id) selected="" @endif>{{ $schemename->name }}</option>
                   @endforeach
                 </select>
               </div>
@@ -76,7 +76,7 @@
                 {!! Form::label('principal_amount', 'Principal Amount *') !!}
                 <div class="input-group">
                   <span class="input-group-addon">৳</span>
-                  {!! Form::text('principal_amount', null, array('class' => 'form-control', 'placeholder' => 'Principal Amount', 'required' => '', 'onchange' => 'calculateTotalDisburse();')) !!}
+                  {!! Form::text('principal_amount', null, array('class' => 'form-control', 'placeholder' => 'Principal Amount', 'readonly' => '', 'onchange' => 'calculateTotalDisburse();')) !!}
                 </div>
               </div>
               <div class="col-md-6">
@@ -84,7 +84,7 @@
                 {!! Form::label('service_charge', 'Service Charge *') !!}
                 <div class="input-group">
                   <span class="input-group-addon">৳</span>
-                  {!! Form::text('service_charge', null, array('class' => 'form-control', 'placeholder' => 'Service Charge', 'required' => '', 'onchange' => 'calculateTotalDisburse();')) !!}
+                  {!! Form::text('service_charge', null, array('class' => 'form-control', 'placeholder' => 'Service Charge', 'readonly' => '', 'onchange' => 'calculateTotalDisburse();')) !!}
                 </div>
               </div>
             </div>
@@ -94,35 +94,38 @@
                 {!! Form::label('down_payment', 'Down Payment (If PRODUCT) *') !!}
                 <div class="input-group">
                   <span class="input-group-addon">৳</span>
-                  {!! Form::text('down_payment', null, array('class' => 'form-control', 'placeholder' => 'Down Payment (If PRODUCT)', 'autocomplete' => 'off', 'onchange' => 'calculateTotalDisburse();')) !!}
+                  {!! Form::text('down_payment', null, array('class' => 'form-control', 'placeholder' => 'Down Payment (If PRODUCT)', 'autocomplete' => 'off', 'onchange' => 'calculateTotalDisburse();', 'readonly' => '')) !!}
                 </div>
               </div>
               <div class="col-md-6">
                 {!! Form::label('total_disbursed', 'Total Disbursed Amount *') !!}
                 <div class="input-group">
                   <span class="input-group-addon">৳</span>
-                  {!! Form::text('total_disbursed', null, array('class' => 'form-control', 'placeholder' => 'Total Disbursed Amount', 'required' => '', 'autocomplete' => 'off')) !!}
+                  {!! Form::text('total_disbursed', null, array('class' => 'form-control', 'placeholder' => 'Total Disbursed Amount', 'readonly' => '', 'autocomplete' => 'off')) !!}
                 </div>
               </div>
             </div>
             <div class="row">
               <div class="col-md-6">
                 {!! Form::label('closing_date', 'Closing Date (Optional)') !!}
+                @if($loan->closing_date != '0000-00-00')
                 {!! Form::text('closing_date', null, array('class' => 'form-control', 'placeholder' => 'Closing Date (Optional)', 'autocomplete' => 'off', 'readonly' => '')) !!}
+                @else
+                {!! Form::text('closing_date', '', array('class' => 'form-control', 'placeholder' => 'Closing Date (Optional)', 'autocomplete' => 'off', 'readonly' => '')) !!}
+                @endif
               </div>
               <div class="col-md-6">
                 {!! Form::label('status', 'Status *') !!}
                 <select name="status" class="form-control" required="">
                   <option value="" selected="" disabled="">Select Status</option>
-                  <option value="1">Disbursed</option>
-                  <option value="0">Closed</option>
+                  <option value="1" @if($loan->status == 1) selected="" @endif>Disbursed</option>
+                  <option value="0" @if($loan->status == 0) selected="" @endif>Closed</option>
                 </select>
               </div>
             </div>
           </div>
           <div class="panel-footer">
-            <button type="submit" class="btn btn-primary" title="কাজ চলছে" onclick="previewTable();"><i class="fa fa-floppy-o"></i> Save</button> {{-- submit --}}
-            <button type="button" class="btn btn-success" id="loadInstallments" onclick="previewTable();"><i class="fa fa-refresh"></i> Load Installments</button>
+            <button type="submit" class="btn btn-primary" title="কাজ চলছে"><i class="fa fa-floppy-o"></i> Save</button>
           </div>
           {!! Form::close() !!}
         </div>
@@ -187,64 +190,5 @@
       var total_disbursed = parseFloat(left_pricipal_amount) + parseFloat(service_charge);
       $('#total_disbursed').val(total_disbursed);
     };
-
-    function previewTable() {
-      var installment_type = $('#installment_type').val();
-      var installments = $('#installments').val();
-      var first_installment_date = $('#first_installment_date').val();
-      var principal_amount = $('#principal_amount').val() ? $('#principal_amount').val() : 0; // a ? a : 0;
-      var down_payment = $('#down_payment').val() ? $('#down_payment').val() : 0; // a ? a : 0;
-      var left_pricipal_amount = parseFloat(principal_amount) - parseFloat(down_payment); // if product(!0) or loan(0)
-      var service_charge = $('#service_charge').val() ? $('#service_charge').val() : 0; // a ? a : 0;
-      var total_disbursed = parseFloat(left_pricipal_amount) + parseFloat(service_charge);
-      $('#total_disbursed').val(total_disbursed);
-      $('#installmentsTable > tbody').empty();
-      
-      for(var i=0; i<installments;i++) {
-        var tablerow = '<tr>';
-        if(installment_type == 1) {
-          var dateToPay = addWeekdays(moment(first_installment_date), i).format('ddd, DD/MM/YYYY');
-        } else if(installment_type == 2) {
-          var dateToPay = moment(first_installment_date).add(i, 'weeks').format('ddd, DD/MM/YYYY');
-        } else if(installment_type == 3) {
-          var dateToPay = moment(first_installment_date).add(i*1, 'months').format('ddd, DD/MM/YYYY');
-          if(dateToPay.includes('Fri')) {
-            dateToPay = moment(first_installment_date).add(i*1, 'months').add(2, 'days').format('ddd, DD/MM/YYYY');
-          } else if(dateToPay.includes('Sat')) {
-            dateToPay = moment(first_installment_date).add(i*1, 'months').add(1, 'days').format('ddd, DD/MM/YYYY');
-          } else {
-            dateToPay = dateToPay;
-          }
-        }
-        tablerow += '<td>'+ (i+1) +'</td>';
-        tablerow += '<td>'+ dateToPay +'</td>';
-        tablerow += '<td>'+ (left_pricipal_amount/installments).toFixed(2) +'</td>';
-        tablerow += '<td>'+ (service_charge/installments).toFixed(2) +'</td>';
-        tablerow += '<td>'+ total_disbursed/installments +'</td>';
-        tablerow += '<td>'+ 0.00 +'</td>';
-        tablerow += '<td>'+ 0.00 +'</td>';
-        tablerow += '<td>'+ 0.00 +'</td>';
-        tablerow += '<td>'+ left_pricipal_amount +'</td>';
-        tablerow += '<td>'+ service_charge +'</td>';
-        tablerow += '<td>'+ total_disbursed +'</td>';
-        // tablerow += '<td>0.00</td><td>0.00</td><td>0.00</td>'; // overdue
-        tablerow += '</tr>';
-        
-        
-        $('#installmentsTable > tbody').append(tablerow);
-      }
-    };
-
-    function addWeekdays(date, days) {
-      date = moment(date);
-      while (days > 0) {
-        date = date.add(1, 'days');
-        // 5 == Fri, 6 = Sat
-        if (date.isoWeekday() !== 5 && date.isoWeekday() !== 6) {
-          days -= 1;
-        }
-      }
-      return date;
-    }
   </script>
 @endsection

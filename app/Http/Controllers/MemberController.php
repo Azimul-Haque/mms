@@ -327,7 +327,9 @@ class MemberController extends Controller
           'principal_amount'            => 'required',
           'service_charge'              => 'required',
           'down_payment'                => 'sometimes',
-          'total_disbursed'             => 'required'
+          'total_disbursed'             => 'required',
+          'closing_date'                => 'sometimes',
+          'status'                      => 'sometimes'
         ]);
 
         $loan = new Loan;
@@ -405,6 +407,16 @@ class MemberController extends Controller
       return $dateToPay;
     }
 
+    public function updateLoanAccount(Request $request, $s_id, $g_id, $m_id, $l_id)
+    {        
+        $this->validate($request, [
+          'total_disbursed'    => 'required',
+          'status'             => 'required'
+        ]);
+
+       
+    }
+
     public function getMemberLoanSingle($s_id, $g_id, $m_id, $l_id)
     {
       $staff = User::find($s_id);
@@ -413,8 +425,8 @@ class MemberController extends Controller
 
       $loan = Loan::where('id', $l_id)
                   ->where('member_id', $member->id)
-                  ->get();
-                  
+                  ->first();
+
       $loannames = Loanname::all();
       $schemenames = Schemename::all();
 

@@ -114,6 +114,7 @@ Route::post('/group/{s_id}/{g_id}/{m_id}/member/saving/accounts/store', ['as'=>'
 Route::get('/group/{s_id}/{g_id}/{m_id}/member/loan/accounts', ['as'=>'dashboard.member.loans','uses'=>'MemberController@getMemberLoans']);
 Route::get('/group/{s_id}/{g_id}/{m_id}/member/loan/accounts/create', ['as'=>'dashboard.loans.create','uses'=>'MemberController@createLoanAccount']);
 Route::post('/group/{s_id}/{g_id}/{m_id}/member/loan/accounts/store', ['as'=>'dashboard.loans.store','uses'=>'MemberController@storeLoanAccount']);
+Route::put('/group/{s_id}/{g_id}/{m_id}/member/loan/accounts/update/{l_id}', ['as'=>'dashboard.loans.update','uses'=>'MemberController@updateLoanAccount']);
 Route::get('/group/{s_id}/{g_id}/{m_id}/member/loan/accounts/single/{l_id}', ['as'=>'dashboard.loans.single','uses'=>'MemberController@getMemberLoanSingle']);
 
 
