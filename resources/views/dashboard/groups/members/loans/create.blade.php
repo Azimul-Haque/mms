@@ -210,9 +210,9 @@
         }
         tablerow += '<td>'+ (i+1) +'</td>';
         tablerow += '<td>'+ dateToPay +'</td>';
-        tablerow += '<td>'+ principal_amount +'</td>';
-        tablerow += '<td>'+ service_charge +'</td>';
-        tablerow += '<td>'+ total_disbursed +'</td>';
+        tablerow += '<td>'+ (principal_amount/installments).toFixed(2) +'</td>';
+        tablerow += '<td>'+ (service_charge/installments).toFixed(2) +'</td>';
+        tablerow += '<td>'+ total_disbursed/installments +'</td>';
         tablerow += '<td>'+ 0.00 +'</td>';
         tablerow += '<td>'+ 0.00 +'</td>';
         tablerow += '<td>'+ 0.00 +'</td>';
