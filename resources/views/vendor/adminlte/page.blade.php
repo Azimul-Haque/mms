@@ -168,11 +168,13 @@
                                       <a href="{{ route('group.features', [$staff->id, $group->id]) }}"><i class="fa fa-list-ol"></i> Group Features</a>
                                     </li>
                                     @foreach($group->members as $member)
-                                      <li class="{{ Request::is('group/'. $staff->id .'/'. $group->id .'/'.$member->id.'/member') ? 'active' : '' }} {{ Request::is('group/'. $staff->id .'/'. $group->id .'/'.$member->id.'/member/*') ? 'active' : '' }}">
-                                        <a href="{{ route('dashboard.member.single', [$staff->id, $group->id, $member->id]) }}">
-                                          <i class="fa fa-user"></i> {{ $member->name }}
-                                        </a>
-                                      </li>
+                                        @if($member->status == 1) {{-- if member is Active --}}
+                                          <li class="{{ Request::is('group/'. $staff->id .'/'. $group->id .'/'.$member->id.'/member') ? 'active' : '' }} {{ Request::is('group/'. $staff->id .'/'. $group->id .'/'.$member->id.'/member/*') ? 'active' : '' }}">
+                                            <a href="{{ route('dashboard.member.single', [$staff->id, $group->id, $member->id]) }}">
+                                              <i class="fa fa-user"></i> {{ $member->name }}
+                                            </a>
+                                          </li>
+                                        @endif
                                     @endforeach
                                   </ul>
                                 </li>

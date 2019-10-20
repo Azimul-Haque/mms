@@ -139,19 +139,19 @@
               <div class="col-md-6">
                 <big><b><u>Present Address</u></b></big><br/>
                 {!! Form::label('present_district', 'Present District *') !!}
-                {!! Form::text('present_district', 'Thakurgaon', array('class' => 'form-control', 'placeholder' => 'Present District', 'required' => '', 'autocomplete' => 'off')) !!}
+                {!! Form::text('present_district', 'Thakurgaon', array('class' => 'form-control', 'placeholder' => 'Present District', 'required' => '')) !!}
                 {!! Form::label('present_upazilla', 'Present Upazilla *') !!}
-                {!! Form::text('present_upazilla', null, array('class' => 'form-control', 'placeholder' => 'Present Upazilla', 'required' => '', 'autocomplete' => 'off')) !!}
+                {!! Form::text('present_upazilla', null, array('class' => 'form-control', 'placeholder' => 'Present Upazilla', 'required' => '')) !!}
                 {!! Form::label('present_union', 'Present Union *') !!}
-                {!! Form::text('present_union', null, array('class' => 'form-control', 'placeholder' => 'Present Union', 'required' => '', 'autocomplete' => 'off')) !!}
+                {!! Form::text('present_union', null, array('class' => 'form-control', 'placeholder' => 'Present Union', 'required' => '')) !!}
                 {!! Form::label('present_post', 'Present Post Office *') !!}
-                {!! Form::text('present_post', null, array('class' => 'form-control', 'placeholder' => 'Present Post Office', 'required' => '', 'autocomplete' => 'off')) !!}
+                {!! Form::text('present_post', null, array('class' => 'form-control', 'placeholder' => 'Present Post Office', 'required' => '')) !!}
                 {!! Form::label('present_village', 'Present Village *') !!}
-                {!! Form::text('present_village', null, array('class' => 'form-control', 'placeholder' => 'Present Village', 'required' => '', 'autocomplete' => 'off')) !!}
+                {!! Form::text('present_village', null, array('class' => 'form-control', 'placeholder' => 'Present Village', 'required' => '')) !!}
                 {!! Form::label('present_house', 'Present House *') !!}
-                {!! Form::text('present_house', null, array('class' => 'form-control', 'placeholder' => 'Present House', 'required' => '', 'autocomplete' => 'off')) !!}
+                {!! Form::text('present_house', null, array('class' => 'form-control', 'placeholder' => 'Present House', 'required' => '')) !!}
                 {!! Form::label('present_phone', 'Present Phone *') !!}
-                {!! Form::text('present_phone', null, array('class' => 'form-control', 'placeholder' => 'Present Phone', 'required' => '', 'autocomplete' => 'off')) !!}<br/>
+                {!! Form::text('present_phone', null, array('class' => 'form-control', 'placeholder' => 'Present Phone', 'required' => '')) !!}<br/>
                 {!! Form::label('passbook_fee', 'PassBook Fee') !!}
                 <div class="input-group">
                   <span class="input-group-addon">৳</span>
@@ -159,21 +159,21 @@
                 </div>
               </div>
               <div class="col-md-6">
-                <big><b><u>Permanent Address</u></b></big><br/>
-                {!! Form::label('permanent_district', 'Permanent District *') !!}
-                {!! Form::text('permanent_district', 'Thakurgaon', array('class' => 'form-control', 'placeholder' => 'Permanent District' , 'required' => '', 'autocomplete' => 'off')) !!}
-                {!! Form::label('permanent_upazilla', 'Permanent Upazilla *') !!}
-                {!! Form::text('permanent_upazilla', null, array('class' => 'form-control', 'placeholder' => 'Permanent Upazilla' , 'required' => '', 'autocomplete' => 'off')) !!}
-                {!! Form::label('permanent_union', 'Permanent Union *') !!}
-                {!! Form::text('permanent_union', null, array('class' => 'form-control', 'placeholder' => 'Permanent Union' , 'required' => '', 'autocomplete' => 'off')) !!}
-                {!! Form::label('permanent_post', 'Permanent Post Office *') !!}
-                {!! Form::text('permanent_post', null, array('class' => 'form-control', 'placeholder' => 'Permanent Post Office' , 'required' => '', 'autocomplete' => 'off')) !!}
-                {!! Form::label('permanent_village', 'Permanent Village *') !!}
-                {!! Form::text('permanent_village', null, array('class' => 'form-control', 'placeholder' => 'Permanent Village ' , 'required' => '', 'autocomplete' => 'off')) !!}
-                {!! Form::label('permanent_house', 'Permanent House *') !!}
-                {!! Form::text('permanent_house', null, array('class' => 'form-control', 'placeholder' => 'Permanent House' , 'required' => '', 'autocomplete' => 'off')) !!}
+                <big><b><u>Permanent Address (Optional)</u></b></big><br/>
+                {!! Form::label('permanent_district', 'Permanent District') !!}
+                {!! Form::text('permanent_district', 'Thakurgaon', array('class' => 'form-control', 'placeholder' => 'Permanent District')) !!}
+                {!! Form::label('permanent_upazilla', 'Permanent Upazilla') !!}
+                {!! Form::text('permanent_upazilla', null, array('class' => 'form-control', 'placeholder' => 'Permanent Upazilla')) !!}
+                {!! Form::label('permanent_union', 'Permanent Union') !!}
+                {!! Form::text('permanent_union', null, array('class' => 'form-control', 'placeholder' => 'Permanent Union')) !!}
+                {!! Form::label('permanent_post', 'Permanent Post Office') !!}
+                {!! Form::text('permanent_post', null, array('class' => 'form-control', 'placeholder' => 'Permanent Post Office')) !!}
+                {!! Form::label('permanent_village', 'Permanent Village') !!}
+                {!! Form::text('permanent_village', null, array('class' => 'form-control', 'placeholder' => 'Permanent Village ')) !!}
+                {!! Form::label('permanent_house', 'Permanent House') !!}
+                {!! Form::text('permanent_house', null, array('class' => 'form-control', 'placeholder' => 'Permanent House')) !!}
                 {!! Form::label('permanent_phone', 'Permanent Phone (Optional)') !!}
-                {!! Form::text('permanent_phone', null, array('class' => 'form-control', 'placeholder' => 'Permanent Phone (Optional)' , 'autocomplete' => 'off')) !!}<br/>
+                {!! Form::text('permanent_phone', null, array('class' => 'form-control', 'placeholder' => 'Permanent Phone (Optional)' )) !!}<br/>
                 {!! Form::label('addmission_fee', 'Admission Fee') !!}
                 <div class="input-group">
                   <span class="input-group-addon">৳</span>

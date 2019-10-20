@@ -33,7 +33,7 @@ class GroupController extends Controller
     {
         $group = Group::find($g_id);
         $staff = User::find($s_id);
-        
+
         return view('dashboard.groups.features')
                         ->withGroup($group)
                         ->withStaff($staff);
@@ -41,11 +41,19 @@ class GroupController extends Controller
 	
     public function getGroupTransactions($s_id, $g_id)
     {
+        $groups = Group::all();
         $group = Group::find($g_id);
         $staff = User::find($s_id);
+        $members = Member::where('staff_id', $s_id)
+                         ->where('group_id', $g_id)
+                         ->where('status', 1) // status 1 means member is Active
+                         ->orderBy('passbook', 'asc')
+                         ->get();
 
         return view('dashboard.groups.group_transactions.index')
+                        ->withGroups($groups)
         				->withGroup($group)
-                        ->withStaff($staff);
+                        ->withStaff($staff)
+                        ->withMembers($members);
     }
 }
