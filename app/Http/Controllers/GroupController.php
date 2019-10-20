@@ -32,7 +32,7 @@ class GroupController extends Controller
     public function getGroupFeatures($s_id, $g_id)
     {
         $group = Group::find($g_id);
-        $staff = Staff::find($s_id);
+        $staff = User::find($s_id);
         
         return view('dashboard.groups.features')
                         ->withGroup($group)
@@ -42,10 +42,10 @@ class GroupController extends Controller
     public function getGroupTransactions($s_id, $g_id)
     {
         $group = Group::find($g_id);
-        $staff = Staff::find($s_id);
+        $staff = User::find($s_id);
 
         return view('dashboard.groups.group_transactions.index')
         				->withGroup($group)
-        				->withsid($s_id);
+                        ->withStaff($staff);
     }
 }

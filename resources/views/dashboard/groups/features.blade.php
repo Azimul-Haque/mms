@@ -7,7 +7,7 @@
 @stop
 
 @section('content_header')
-    <h1>Group Features: <b>{{ $group->name }}</b></h1>
+    <h1>Group Features [Staff: <b>{{ $staff->name }}</b>, Group: <b>{{ $group->name }}</b>]</h1>
 @stop
 
 @section('content')
