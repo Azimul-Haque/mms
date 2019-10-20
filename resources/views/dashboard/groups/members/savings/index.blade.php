@@ -39,7 +39,7 @@
                 <tr>
                   <td>{{ $savingaccount->savingname->name }}</td>
                   <td>{{ installment_type($savingaccount->installment_type) }}</td>
-                  <td>{{ date('D, d/m/Y', strtotime($member->admission_date)) }}</td>
+                  <td>{{ date('D, d/m/Y', strtotime($savingaccount->opening_date)) }}</td>
                   <td>{{ meeting_day($savingaccount->meeting_day) }}</td>
                   <td>{{ $savingaccount->minimum_deposit }}</td>
                   <td>{{ $savingaccount->late_fee }}</td>
@@ -47,7 +47,7 @@
                   <td>{{ status($savingaccount->status) }}</td>
                   <td>
                     @if($savingaccount->closing_date != '0000-00-00')
-                      {{ date('D, d/m/Y', strtotime($member->closing_date)) }}
+                      {{ date('D, d/m/Y', strtotime($savingaccount->closing_date)) }}
                     @endif
                   </td>
                   <td>

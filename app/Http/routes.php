@@ -117,6 +117,8 @@ Route::post('/group/{s_id}/{g_id}/{m_id}/member/loan/accounts/store', ['as'=>'da
 Route::put('/group/{s_id}/{g_id}/{m_id}/member/loan/accounts/update/{l_id}', ['as'=>'dashboard.loans.update','uses'=>'MemberController@updateLoanAccount']);
 Route::get('/group/{s_id}/{g_id}/{m_id}/member/loan/accounts/single/{l_id}', ['as'=>'dashboard.loans.single','uses'=>'MemberController@getMemberLoanSingle']);
 
+// group transactions
+Route::get('/group/{s_id}/{g_id}/transactions', ['as'=>'dashboard.grouptransactions','uses'=>'GroupController@getGroupTransactions']);
 
 Route::get('/programs/features', ['as'=>'programs.features','uses'=>'DashboardController@getProgramFeatures']);
 Route::get('/staff/{id}/features', ['as'=>'staff.features','uses'=>'StaffController@getStaffFeatures']); // id dhukbe ekhane

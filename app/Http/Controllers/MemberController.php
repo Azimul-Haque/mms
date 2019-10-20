@@ -23,17 +23,23 @@ use Purifier;
 
 class MemberController extends Controller
 {
+    public function __construct()
+    {
+        parent::__construct();
+        $this->middleware('auth');
+    }
     public function getMembers($s_id, $g_id)
     {
     	$staff = User::find($s_id);
     	$group = Group::find($g_id);
-        $members = Member::where('group_id', $g_id)
-        				 ->orderBy('id', 'asc')->get();
+      
+      $members = Member::where('group_id', $g_id)
+      				 ->orderBy('id', 'asc')->get();
 
-        return view('dashboard.groups.members.index')
-        					->withStaff($staff)
-        					->withGroup($group)
-        					->withMembers($members);
+      return view('dashboard.groups.members.index')
+      					->withStaff($staff)
+      					->withGroup($group)
+      					->withMembers($members);
     }
 
     public function createMember($s_id, $g_id)
@@ -131,7 +137,7 @@ class MemberController extends Controller
         // add a mandatory general account...
         // add a mandatory general account...
         $savingaccount = new Saving;
-        $savingaccount->savingname_id = 1;
+        $savingaccount->savingname_id = 1; // 1 for general account
         $savingaccount->opening_date = date('Y-m-d', strtotime($request->admission_date));
         
         $savingaccount->meeting_day = 1;
@@ -349,7 +355,7 @@ class MemberController extends Controller
         $loan->member_id = $m_id;
         $loan->save();
 
-        $installments_arr = [];
+        // $installments_arr = [];
         // add the installments
         for($i=0; $i<$request->installments; $i++) 
         {
@@ -390,6 +396,19 @@ class MemberController extends Controller
         }
 
         // dd($installments_arr);
+
+        // add a mandatory long term account...
+        // add a mandatory long term account...
+        $savingaccount = new Saving;
+        $savingaccount->savingname_id = 2; // 2 for long term account
+        $savingaccount->opening_date = date('Y-m-d', strtotime($request->disburse_date));
+        
+        $savingaccount->meeting_day = 1;
+        $savingaccount->installment_type = 2;
+        $savingaccount->minimum_deposit = 10;
+        $savingaccount->status = 1; // 1 means active/open
+        $savingaccount->member_id = $m_id;
+        $savingaccount->save();
 
         Session::flash('success', 'Added successfully!'); 
         return redirect()->route('dashboard.member.loans', [$s_id, $g_id, $m_id]);

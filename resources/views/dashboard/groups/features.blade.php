@@ -13,7 +13,7 @@
 @section('content')
     <div class="row">
       <div class="col-md-3 col-sm-6 col-xs-12">
-        <a href="{{ route('dashboard.members.create', [$sid ,$group->id]) }}">
+        <a href="{{ route('dashboard.members.create', [$staff->id ,$group->id]) }}">
           <div class="info-box">
             <span class="info-box-icon bg-aqua"><i class="fa fa-user-plus"></i></span>
             <div class="info-box-content">
@@ -24,7 +24,7 @@
         </a>
       </div>
       <div class="col-md-3 col-sm-6 col-xs-12">
-        <a href="{{ route('dashboard.members', [$sid ,$group->id]) }}">
+        <a href="{{ route('dashboard.members', [$staff->id ,$group->id]) }}">
           <div class="info-box">
             <span class="info-box-icon bg-red"><i class="fa fa-users"></i></span>
             <div class="info-box-content">
@@ -39,16 +39,17 @@
       <div class="clearfix visible-sm-block"></div>
 
       <div class="col-md-3 col-sm-6 col-xs-12">
-       {{--  <a href="#!">
+        <a href="{{ route('dashboard.grouptransactions', [$staff->id ,$group->id]) }}">
           <div class="info-box">
-            <span class="info-box-icon bg-green"><i class="fa fa-paper-plane"></i></span>
+            <span class="info-box-icon bg-green"><i class="fa fa-exchange"></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-text">Transfer</span>
-              <span class="info-box-number">Group</span>
+              <span class="info-box-text">Group</span>
+              <span class="info-box-number">Transaction</span>
             </div>
           </div>
-        </a> --}}
+        </a>
+       
       </div>
       <div class="col-md-3 col-sm-6 col-xs-12">
         {{-- <a href="#!">
@@ -67,7 +68,7 @@
 
     {{-- <div class="row">
       <div class="col-md-3 col-sm-6 col-xs-12">
-        <a href="{{ route('dashboard.members', [$sid ,$group->id]) }}">
+        <a href="{{ route('dashboard.members', [$staff->id ,$group->id]) }}">
           <div class="info-box">
             <span class="info-box-icon bg-aqua"><i class="fa fa-users"></i></span>
             <div class="info-box-content">
@@ -80,11 +81,11 @@
       <div class="col-md-3 col-sm-6 col-xs-12">
         <a href="#!">
           <div class="info-box">
-            <span class="info-box-icon bg-red"><i class="fa fa-exchange"></i></span>
+            <span class="info-box-icon bg-green"><i class="fa fa-paper-plane"></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-text">Group</span>
-              <span class="info-box-number">Transaction</span>
+              <span class="info-box-text">Transfer</span>
+              <span class="info-box-number">Group</span>
             </div>
           </div>
         </a>
@@ -96,7 +97,7 @@
       <div class="col-md-3 col-sm-6 col-xs-12">
         <a href="#!">
           <div class="info-box">
-            <span class="info-box-icon bg-green"><i class="fa fa-paper-plane"></i></span>
+            <span class="info-box-icon bg-red"><i class="fa fa-paper-plane"></i></span>
 
             <div class="info-box-content">
               <span class="info-box-text">Transfer</span>

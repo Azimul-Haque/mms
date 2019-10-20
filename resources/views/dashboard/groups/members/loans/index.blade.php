@@ -39,7 +39,7 @@
                     <a href="{{ route('dashboard.loans.single', [$staff->id, $group->id, $member->id, $loan->id]) }}">{{ $loan->loanname->name }}</a>
                   </td>
                   <td>{{ installment_type($loan->installment_type) }}</td>
-                  <td>{{ date('D, d/m/Y', strtotime($member->disburse_date)) }}</td>
+                  <td>{{ date('D, d/m/Y', strtotime($loan->disburse_date)) }}</td>
                   <td>{{ $loan->installments }}</td>
                   <td>{{ $loan->total_disbursed }}</td>
                   <td>{{ status($loan->status) }}</td>

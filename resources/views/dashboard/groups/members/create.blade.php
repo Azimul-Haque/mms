@@ -199,17 +199,17 @@
   <script type="text/javascript">
     $(function() {
       $("#admission_date").datepicker({
-        format: 'D, dd/mm/yyyy',
+        format: 'MM dd, yyyy',
         todayHighlight: true,
         autoclose: true,
       });
       $("#dob").datepicker({
-        format: 'D, dd/mm/yyyy',
+        format: 'MM dd, yyyy',
         todayHighlight: true,
         autoclose: true,
       });
       $("#closing_date").datepicker({
-        format: 'D, dd/mm/yyyy',
+        format: 'MM dd, yyyy',
         todayHighlight: true,
         autoclose: true,
       });
