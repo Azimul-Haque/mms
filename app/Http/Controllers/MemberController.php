@@ -410,11 +410,17 @@ class MemberController extends Controller
     public function updateLoanAccount(Request $request, $s_id, $g_id, $m_id, $l_id)
     {        
         $this->validate($request, [
-          'total_disbursed'    => 'required',
+          'closing_date'       => 'sometimes',
           'status'             => 'required'
         ]);
 
-       
+        $loan = Loan::find($l_id);
+        $loan->closing_date = date('Y-m-d', strtotime($request->closing_date));
+        $loan->status = $request->status; // 1 means disbursed, 0 means closed
+        $loan->save();
+
+        Session::flash('success', 'Updated successfully!'); 
+        return redirect()->route('dashboard.member.loans', [$s_id, $g_id, $m_id]);
     }
 
     public function getMemberLoanSingle($s_id, $g_id, $m_id, $l_id)
@@ -425,6 +431,9 @@ class MemberController extends Controller
 
       $loan = Loan::where('id', $l_id)
                   ->where('member_id', $member->id)
+                  ->with(['loaninstallments' => function($query){
+                       $query->orderBy('installment_no', 'asc'); // sort by installment_no
+                    }])
                   ->first();
 
       $loannames = Loanname::all();

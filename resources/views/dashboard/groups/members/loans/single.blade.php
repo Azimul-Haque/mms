@@ -152,8 +152,20 @@
               </tr>
             </thead>
             <tbody>
-              @foreach()
-
+              @foreach($loan->loaninstallments as $loaninstallment)
+              <tr>
+                <td>{{ $loaninstallment->installment_no }}</td>
+                <td>{{ $loaninstallment->due_date }}</td>
+                <td>{{ $loaninstallment->installment_principal }}</td>
+                <td>{{ $loaninstallment->installment_interest }}</td>
+                <td>{{ $loaninstallment->installment_total }}</td>
+                <td>{{ $loaninstallment->paid_interest }}</td>
+                <td>{{ $loaninstallment->paid_total }}</td>
+                <td>{{ $loaninstallment->paid_total }}</td>
+                <td>{{ $loaninstallment->outstanding_interest }}</td>
+                <td>{{ $loaninstallment->outstanding_total }}</td>
+                <td>{{ $loaninstallment->outstanding_total }}</td>
+              </tr>
               @endforeach
             </tbody>
           </table>
