@@ -152,7 +152,9 @@
               </tr>
             </thead>
             <tbody>
-              
+              @foreach()
+
+              @endforeach
             </tbody>
           </table>
         </div>
