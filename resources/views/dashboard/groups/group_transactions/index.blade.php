@@ -48,7 +48,7 @@
     <div class="row">
       <div class="col-md-12">
         <div class="table-responsive">
-          <table class="table table-hover table-condensed table-bordered">
+          <table class="table table-hover table-condensed table-bordered" id="editable">
             <thead>
               <tr>
                 <th>P#</th>
@@ -86,6 +86,49 @@
               @endforeach
             </tbody>
           </table>
+          {{-- <br/><br/>
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.1/pure-min.css">
+          <table id="editable" class="pure-table pure-table-bordered">
+              <thead>
+                  <tr>
+                      <th>#</th>
+                      <th>Make</th>
+                      <th>Model</th>
+                      <th>Year</th>
+                  </tr>
+              </thead>
+
+              <tbody>
+                  <tr>
+                      <td>1</td>
+                      <td>Honda</td>
+                      <td>Accord</td>
+                      <td>2009</td>
+                  </tr>
+
+                  <tr>
+                      <td>2</td>
+                      <td>Toyota</td>
+                      <td>Camry</td>
+                      <td>2012</td>
+                  </tr>
+
+                  <tr>
+                      <td>3</td>
+                      <td>Hyundai</td>
+                      <td>Elantra</td>
+                      <td class="uneditable">2010</td>
+                  </tr>
+              </tbody>
+              <tfoot>
+                  <tr>
+                      <th><strong>TOTAL</strong></th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                  </tr>
+              </tfoot>
+          </table> --}}
         </div>
       </div>
     </div>
@@ -130,5 +173,19 @@
     function isEmptyOrSpaces(str){
         return str === null || str.match(/^ *$/) !== null;
     }
+  </script>
+
+
+
+  <script src="{{ asset('js/mindmup-editabletable.js') }}"></script>
+  <!-- <script src="http://mindmup.github.io/editable-table/numeric-input-example.js"></script> -->
+  <script>
+    $(document).ready(function () {
+      $('#editable').editableTableWidget();
+      
+      $('#editable td.uneditable').on('change', function(evt, newValue) {
+        return false;
+      });
+    });
   </script>
 @endsection
