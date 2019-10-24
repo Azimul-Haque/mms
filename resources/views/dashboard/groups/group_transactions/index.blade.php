@@ -73,8 +73,8 @@
                       <th>{{ $member->name }}</th>
                       <th>{{ $loan->loanname->name }}</th>
                       <td id="loaninstallment{{ $member->id }}" onchange='loaninstallment({{ $member->id }})'>{{ $loaninstallment->installment_total }}</td>
-                      <td id="generalsaving{{ $member->id }}" onchange='generalsaving({{ $member->id }})'></td>
-                      <td id="longsaving{{ $member->id }}" onchange='longsaving({{ $member->id }})'></td>
+                      <td id="generalsaving{{ $member->id }}" {{-- onchange='generalsaving({{ $member->id }})' --}}></td>
+                      <td id="longsaving{{ $member->id }}" {{-- onchange='longsaving({{ $member->id }})' --}}></td>
                       <td id="totalcollection{{ $member->id }}"></td>
                       <td></td>
                       <td class="uneditable"></td>
@@ -147,16 +147,17 @@
     });
     // $('#editable td').on('change', function(evt, newValue) {
     //   $('#testt1').text('Test');
-    //   console.log('clicked!');
+    //   console.log(evt);
     //   toastr.success(newValue + ' Added!', 'SUCCESS').css('width', '400px');
     // });
 
     function loaninstallment(id) {
       var loaninstallment = $('#loaninstallment' + id).val() ? $('#loaninstallment' + id).val() : 0;
       var generalsaving = $('#generalsaving' + id).val() ? $('#generalsaving' + id).val() : 0;
-      var longsaving = $('#longsaving' + id).val() ? $('#longsaving' + id).val() ? : 0;
+      var longsaving = $('#longsaving' + id).val() ? $('#longsaving' + id).val() : 0;
       
-      var totalcollection = loaninstallment + 
+      var totalcollection = loaninstallment + generalsaving + longsaving;
+      $('#totalcollection' + id).text(loaninstallment);
     }
 
   </script>
