@@ -13,8 +13,8 @@
 
 @section('content')
     <div class="row">
-      <div class="col-md-3">
-        <select class="form-control" name="group_to_load" id="group_to_load">
+      <div class="col-md-2">
+        <select class="form-control" name="group_to_load" id="group_to_load" required="">
           <option value="" selected="" disabled="">Select Group</option>
           @if(Auth::user()->role == 'admin')
             @foreach($groups as $groupforselect)
@@ -27,11 +27,19 @@
           @endif
         </select><br/>
       </div>
-      <div class="col-md-3">
-        <input class="form-control" type="text" name="date_to_load" id="date_to_load" placeholder="Select Date"><br/>
+      <div class="col-md-2">
+        <select class="form-control" name="loan_type_to_load" id="loan_type_to_load" required="">
+          <option value="" selected="" disabled="">Select Loan Type</option>
+          @foreach($loannames as $loanname)
+            <option value="{{ $loanname->id }}" @if(!empty($loantype) && ($loantype == $loanname->id)) selected="" @endif>{{ $loanname->name }}</option>
+          @endforeach
+        </select><br/>
+      </div>
+      <div class="col-md-2">
+        <input class="form-control" type="text" name="date_to_load" id="date_to_load" @if(!empty($transactiondate)) value="{{ date('F d, Y', strtotime($transactiondate)) }}" @endif placeholder="Select Date" readonly=""><br/>
       </div>
       <div class="col-md-3">
-        <button class="btn btn-success"><i class="fa fa-users"></i> Load</button><br/>
+        <button class="btn btn-success" id="loadTransactions"><i class="fa fa-users"></i> Load</button><br/>
       </div>
       <div class="col-md-3">
         <button class="btn btn-primary pull-right"><i class="fa fa-floppy-o"></i> Save</button><br/>
@@ -40,7 +48,7 @@
     <div class="row">
       <div class="col-md-12">
         <div class="table-responsive">
-          <table class="table table-hover table-condensed">
+          <table class="table table-hover table-condensed table-bordered">
             <thead>
               <tr>
                 <th>P#</th>
@@ -57,24 +65,28 @@
             </thead>
             <tbody>
               @foreach($members as $member)
-              <tr>
-                <td>{{ $member->passbook }}</td>
-                <td>{{ $member->name }}</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
+                @foreach($member->loans as $loan)
+                  @foreach($loan->loaninstallments as $loaninstallment)
+                    @if(!empty($transactiondate))
+                    <tr>
+                      <td>{{ $member->passbook }}</td>
+                      <td>{{ $member->name }}</td>
+                      <td>{{ $loan->loanname->name }}</td>
+                      <td>{{ $loaninstallment->installment_total }}</td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    @endif
+                  @endforeach
+                @endforeach
               @endforeach
             </tbody>
           </table>
         </div>
-
-        কাজ চলছে...
       </div>
     </div>
 @stop
@@ -91,5 +103,32 @@
         autoclose: true,
       });
     });
+
+    $('#loadTransactions').click(function() {
+      var group_to_load =$('#group_to_load').val();
+      var date_to_load =$('#date_to_load').val();
+      var loan_type_to_load =$('#loan_type_to_load').val();
+
+      if(isEmptyOrSpaces(loan_type_to_load)) {
+        if($(window).width() > 768) {
+          toastr.warning('Select Loan Type!', 'WARNING').css('width', '400px');
+        } else {
+          toastr.warning('Select Loan Type!', 'WARNING').css('width', ($(window).width()-25)+'px');
+        }
+      } else if(isEmptyOrSpaces(date_to_load)) {
+        if($(window).width() > 768) {
+          toastr.warning('Select Date!', 'WARNING').css('width', '400px');
+        } else {
+          toastr.warning('Select Date!', 'WARNING').css('width', ($(window).width()-25)+'px');
+        }
+      } else {
+        window.location.href = '/group/{{ $staff->id }}/{{ $group->id }}/transactions/' + loan_type_to_load + '/'+ moment(date_to_load).format('YYYY-MM-DD');
+      }
+    })
+
+    // on enter search
+    function isEmptyOrSpaces(str){
+        return str === null || str.match(/^ *$/) !== null;
+    }
   </script>
 @endsection

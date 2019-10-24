@@ -362,7 +362,7 @@ class MemberController extends Controller
           if($request->installment_type == 1) {
             $dateToPay = $this->addWeekdays(Carbon::parse($request->first_installment_date), $i);
           } else if($request->installment_type == 2) {
-            $dateToPay = Carbon::parse($request->first_installment_date)->adddays(7);
+            $dateToPay = Carbon::parse($request->first_installment_date)->adddays(7*$i);
           } else if($request->installment_type == 3) {
             $dateToPay = Carbon::parse($request->first_installment_date)->addMonths($i);
             if(date('D', strtotime($dateToPay)) == 'Fri') {
@@ -373,6 +373,7 @@ class MemberController extends Controller
               $dateToPay = $dateToPay;
             }
           }
+          // $installments_arr[] = date('d-m-Y', strtotime($dateToPay));
 
           // store the loan installments...
           $loaninstallment = new Loaninstallment;
@@ -394,7 +395,6 @@ class MemberController extends Controller
 
           $loaninstallment->save();
         }
-
         // dd($installments_arr);
 
         // add a mandatory long term account...

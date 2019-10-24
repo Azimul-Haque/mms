@@ -36,14 +36,16 @@ class GroupController extends Controller
 
         return view('dashboard.groups.features')
                         ->withGroup($group)
-                        ->withStaff($staff);
+                        ->withStaff($staff);                        
     }
-	
+    
     public function getGroupTransactions($s_id, $g_id)
     {
         $groups = Group::all();
         $group = Group::find($g_id);
         $staff = User::find($s_id);
+        $loannames = Loanname::all();
+
         $members = Member::where('staff_id', $s_id)
                          ->where('group_id', $g_id)
                          ->where('status', 1) // status 1 means member is Active
@@ -52,8 +54,39 @@ class GroupController extends Controller
 
         return view('dashboard.groups.group_transactions.index')
                         ->withGroups($groups)
+                        ->withGroup($group)
+                        ->withStaff($staff)
+                        ->withMembers($members)
+                        ->withLoannames($loannames);;
+    }
+	
+    public function getGroupTransactionsDate($s_id, $g_id, $loan_type, $transaction_date)
+    {
+        $groups = Group::all();
+        $group = Group::find($g_id);
+        $staff = User::find($s_id);
+        $loannames = Loanname::all();
+
+        $members = Member::where('staff_id', $s_id)
+                         ->where('group_id', $g_id)
+                         ->where('status', 1) // status 1 means member is Active
+                         ->orderBy('passbook', 'asc')
+                         ->with(['loans' => function ($query) use($loan_type, $transaction_date) {
+                             $query->where('loanname_id', $loan_type)
+                                   ->where('status', 1) // 1 means active loan
+                                   ->with(['loaninstallments' => function ($query) use($transaction_date) {
+                                       $query->where('due_date', $transaction_date);
+                                    }]);
+                         }])
+                         ->get();
+        // dd($members);
+        return view('dashboard.groups.group_transactions.index')
+                        ->withGroups($groups)
         				->withGroup($group)
                         ->withStaff($staff)
-                        ->withMembers($members);
+                        ->withMembers($members)
+                        ->withLoannames($loannames)
+                        ->withLoantype($loan_type)
+                        ->withTransactiondate($transaction_date);
     }
 }

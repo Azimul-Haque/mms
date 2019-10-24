@@ -32,7 +32,7 @@
               </div>
               <div class="col-md-6">
                 {!! Form::label('disburse_date', 'Disburse Date *') !!}
-                {!! Form::text('disburse_date', null, array('class' => 'form-control', 'placeholder' => 'Disburse Date', 'required' => '', 'autocomplete' => 'off', 'readonly' => '')) !!}
+                {!! Form::text('disburse_date', date('F d, Y', strtotime($loan->disburse_date)), array('class' => 'form-control', 'placeholder' => 'Disburse Date', 'required' => '', 'autocomplete' => 'off', 'readonly' => '')) !!}
               </div>
             </div>
             <div class="row">
@@ -58,7 +58,7 @@
             <div class="row">
               <div class="col-md-6">
                 {!! Form::label('first_installment_date', 'First Installment Date *') !!}
-                {!! Form::text('first_installment_date', null, array('class' => 'form-control', 'placeholder' => 'First Installment Date', 'required' => '', 'autocomplete' => 'off', 'readonly' => '')) !!}
+                {!! Form::text('first_installment_date', date('F d, Y', strtotime($loan->first_installment_date)), array('class' => 'form-control', 'placeholder' => 'First Installment Date', 'required' => '', 'autocomplete' => 'off', 'readonly' => '')) !!}
               </div>
               <div class="col-md-6">
                 {!! Form::label('schemename_id', 'Scheme *') !!}
