@@ -48,7 +48,7 @@
     <div class="row">
       <div class="col-md-12">
         <div class="table-responsive">
-          <table class="table table-hover table-condensed table-bordered" id="editable">
+          <table class="table table-hover table-condensed table-bordered " id="editable">
             <thead>
               <tr>
                 <th>P#</th>
@@ -76,9 +76,9 @@
                       <td id="generalsaving{{ $member->id }}" onchange="loancalc({{ $member->id }})"></td>
                       <td id="longsaving{{ $member->id }}" onchange="loancalc({{ $member->id }})"></td>
                       <td id="totalcollection{{ $member->id }}" readonly></td>
-                      <td></td>
-                      <td readonly></td>
-                      <td readonly></td>
+                      <td id="generalsavingwd{{ $member->id }}" onchange="loancalc({{ $member->id }})"></td>
+                      <td id="longsavingwd{{ $member->id }}" onchange="loancalc({{ $member->id }})"></td>
+                      <td id="netcollection{{ $member->id }}" readonly></td>
                     </tr>
                     @endif
                   @endforeach
@@ -165,10 +165,15 @@
       var loaninstallment = parseInt($('#loaninstallment' + id).text()) ? parseInt($('#loaninstallment' + id).text()) : 0;
       var generalsaving = parseInt($('#generalsaving' + id).text()) ? parseInt($('#generalsaving' + id).text()) : 0;
       var longsaving = parseInt($('#longsaving' + id).text()) ? parseInt($('#longsaving' + id).text()) : 0;
+      var generalsavingwd = parseInt($('#generalsavingwd' + id).text()) ? parseInt($('#generalsavingwd' + id).text()) : 0;
+      var longsavingwd = parseInt($('#longsavingwd' + id).text()) ? parseInt($('#longsavingwd' + id).text()) : 0;
       
       var totalcollection = loaninstallment + generalsaving + longsaving;
+      var netcollection = totalcollection - generalsavingwd - longsavingwd - 10;
       $('#totalcollection' + id).text(totalcollection);
+      $('#netcollection' + id).text(netcollection);
       console.log(totalcollection);
+      console.log(generalsavingwd);
       toastr.success(totalcollection + ' Added!', 'SUCCESS').css('width', '400px');
     }
 
