@@ -70,15 +70,15 @@
                     @if(!empty($transactiondate))
                     <tr>
                       <td>{{ $member->passbook }}</td>
-                      <td>{{ $member->name }}</td>
-                      <td>{{ $loan->loanname->name }}</td>
-                      <td>{{ $loaninstallment->installment_total }}</td>
+                      <th>{{ $member->name }}</th>
+                      <th>{{ $loan->loanname->name }}</th>
+                      <td id="loaninstallment{{ $member->id }}" onchange='loaninstallment({{ $member->id }})'>{{ $loaninstallment->installment_total }}</td>
+                      <td id="generalsaving{{ $member->id }}" onchange='generalsaving({{ $member->id }})'></td>
+                      <td id="longsaving{{ $member->id }}" onchange='longsaving({{ $member->id }})'></td>
+                      <td id="totalcollection{{ $member->id }}"></td>
                       <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
+                      <td class="uneditable"></td>
+                      <th></th>
                     </tr>
                     @endif
                   @endforeach
@@ -86,49 +86,6 @@
               @endforeach
             </tbody>
           </table>
-          {{-- <br/><br/>
-          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.1/pure-min.css">
-          <table id="editable" class="pure-table pure-table-bordered">
-              <thead>
-                  <tr>
-                      <th>#</th>
-                      <th>Make</th>
-                      <th>Model</th>
-                      <th>Year</th>
-                  </tr>
-              </thead>
-
-              <tbody>
-                  <tr>
-                      <td>1</td>
-                      <td>Honda</td>
-                      <td>Accord</td>
-                      <td>2009</td>
-                  </tr>
-
-                  <tr>
-                      <td>2</td>
-                      <td>Toyota</td>
-                      <td>Camry</td>
-                      <td>2012</td>
-                  </tr>
-
-                  <tr>
-                      <td>3</td>
-                      <td>Hyundai</td>
-                      <td>Elantra</td>
-                      <td class="uneditable">2010</td>
-                  </tr>
-              </tbody>
-              <tfoot>
-                  <tr>
-                      <th><strong>TOTAL</strong></th>
-                      <th></th>
-                      <th></th>
-                      <th></th>
-                  </tr>
-              </tfoot>
-          </table> --}}
         </div>
       </div>
     </div>
@@ -184,8 +141,23 @@
       $('#editable').editableTableWidget();
       
       $('#editable td.uneditable').on('change', function(evt, newValue) {
+        console.log('false clicked!');
         return false;
       });
     });
+    // $('#editable td').on('change', function(evt, newValue) {
+    //   $('#testt1').text('Test');
+    //   console.log('clicked!');
+    //   toastr.success(newValue + ' Added!', 'SUCCESS').css('width', '400px');
+    // });
+
+    function loaninstallment(id) {
+      var loaninstallment = $('#loaninstallment' + id).val() ? $('#loaninstallment' + id).val() : 0;
+      var generalsaving = $('#generalsaving' + id).val() ? $('#generalsaving' + id).val() : 0;
+      var longsaving = $('#longsaving' + id).val() ? $('#longsaving' + id).val() ? : 0;
+      
+      var totalcollection = loaninstallment + 
+    }
+
   </script>
 @endsection
