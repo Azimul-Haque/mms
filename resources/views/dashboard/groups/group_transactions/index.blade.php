@@ -145,20 +145,21 @@
         return false;
       });
     });
-    // $('#editable td').on('change', function(evt, newValue) {
-    //   $('#testt1').text('Test');
-    //   console.log(evt);
-    //   toastr.success(newValue + ' Added!', 'SUCCESS').css('width', '400px');
-    // });
+    $('#editable td').on('change', function(evt, newValue) {
+      $('#testt1').text('Test');
+      console.log(evt);
+      toastr.success(newValue + ' Added!', 'SUCCESS').css('width', '400px');
+    });
 
-    function loaninstallment(id) {
-      var loaninstallment = $('#loaninstallment' + id).val() ? $('#loaninstallment' + id).val() : 0;
-      var generalsaving = $('#generalsaving' + id).val() ? $('#generalsaving' + id).val() : 0;
-      var longsaving = $('#longsaving' + id).val() ? $('#longsaving' + id).val() : 0;
+    // function loaninstallment(id) {
+    //   var loaninstallment = $('#loaninstallment' + id).val() ? $('#loaninstallment' + id).val() : 0;
+    //   var generalsaving = $('#generalsaving' + id).val() ? $('#generalsaving' + id).val() : 0;
+    //   var longsaving = $('#longsaving' + id).val() ? $('#longsaving' + id).val() : 0;
       
-      var totalcollection = loaninstallment + generalsaving + longsaving;
-      $('#totalcollection' + id).text(loaninstallment);
-    }
+    //   var totalcollection = loaninstallment + generalsaving + longsaving;
+    //   $('#totalcollection' + id).text(loaninstallment);
+    //   console.log(loaninstallment);
+    // }
 
   </script>
 @endsection
