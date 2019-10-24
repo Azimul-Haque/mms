@@ -70,7 +70,7 @@
                     @if(!empty($transactiondate))
                     <tr>
                       <td>{{ $member->passbook }}</td>
-                      <td readonly>{{ $member->name }}</td>
+                      <td id="membername{{ $member->id }}" readonly>{{ $member->name }}</td>
                       <td readonly>{{ $loan->loanname->name }}</td>
                       <td id="loaninstallment{{ $member->id }}" onchange="loancalc({{ $member->id }})">{{ $loaninstallment->installment_total }}</td>
                       <td id="generalsaving{{ $member->id }}" onchange="loancalc({{ $member->id }})"></td>
@@ -162,6 +162,7 @@
     });
 
     function loancalc(id, evt, newValue) {
+      var membername = $('#membername' + id).text();
       var loaninstallment = parseInt($('#loaninstallment' + id).text()) ? parseInt($('#loaninstallment' + id).text()) : 0;
       var generalsaving = parseInt($('#generalsaving' + id).text()) ? parseInt($('#generalsaving' + id).text()) : 0;
       var longsaving = parseInt($('#longsaving' + id).text()) ? parseInt($('#longsaving' + id).text()) : 0;
@@ -169,12 +170,12 @@
       var longsavingwd = parseInt($('#longsavingwd' + id).text()) ? parseInt($('#longsavingwd' + id).text()) : 0;
       
       var totalcollection = loaninstallment + generalsaving + longsaving;
-      var netcollection = totalcollection - generalsavingwd - longsavingwd - 10;
+      var netcollection = totalcollection - generalsavingwd - longsavingwd;
       $('#totalcollection' + id).text(totalcollection);
       $('#netcollection' + id).text(netcollection);
       console.log(totalcollection);
       console.log(generalsavingwd);
-      toastr.success(totalcollection + ' Added!', 'SUCCESS').css('width', '400px');
+      toastr.success('Member: <b>' + membername + '</b><br/>Total Collection: <u>৳ ' + totalcollection + '</u>, Net Collection: <u>৳ ' + netcollection , '</u>SUCCESS').css('width', '400px');
     }
 
     $('td[readonly]').on('click dblclick keydown', function(e) {
