@@ -60,8 +60,8 @@
             </div>
             <div class="row">
               <div class="col-md-6">
-                {!! Form::label('minimum_deposit', 'Minimum Deposit *') !!}
-                {!! Form::text('minimum_deposit', null, array('class' => 'form-control', 'placeholder' => 'Minimum Diposit Amount', 'required' => '', 'autocomplete' => 'off')) !!}
+                {!! Form::label('minimum_deposit', 'Minimum Deposit') !!}
+                {!! Form::text('minimum_deposit', null, array('class' => 'form-control', 'placeholder' => 'Minimum Diposit Amount', 'autocomplete' => 'off')) !!}
               </div>
               <div class="col-md-6">
                 {!! Form::label('closing_date', 'Closing Date (Optional)') !!}

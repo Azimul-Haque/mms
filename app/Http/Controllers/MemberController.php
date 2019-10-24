@@ -246,7 +246,7 @@ class MemberController extends Controller
         $checkacc = Saving::where('member_id', $m_id)
                           ->where('savingname_id', $request->savingname_id)->first();
         
-        if($checkacc) {
+        if(!empty($checkacc)) {
           Session::flash('warning', 'This member already has an account like this type.'); 
           return redirect()->route('dashboard.member.savings', [$s_id, $g_id, $m_id]);
         }
@@ -256,7 +256,7 @@ class MemberController extends Controller
           'opening_date'                => 'required',
           'meeting_day'                 => 'required',
           'installment_type'            => 'required',
-          'minimum_deposit'             => 'required',
+          'minimum_deposit'             => 'sometimes',
           'closing_date'                => 'sometimes'
         ]);
 
@@ -322,7 +322,16 @@ class MemberController extends Controller
     }
 
     public function storeLoanAccount(Request $request, $s_id, $g_id, $m_id)
-    {        
+    {
+        $checkacc = Loan::where('member_id', $m_id)
+                        ->where('loanname_id', $request->loanname_id)
+                        ->where('status', 1)->first();
+        
+        if(!empty($checkacc)) {
+          Session::flash('warning', 'This member already has an ACTIVE account like this type.'); 
+          return redirect()->route('dashboard.member.loans', [$s_id, $g_id, $m_id]);
+        }
+
         $this->validate($request, [
           'loanname_id'                 => 'required',
           'disburse_date'               => 'required',
@@ -387,8 +396,6 @@ class MemberController extends Controller
           $loaninstallment->paid_interest = 0.00;
           $loaninstallment->paid_total = 0.00;
 
-          $loaninstallment->outstanding_principal = $loan->principal_amount - $loan->down_payment;
-          $loaninstallment->outstanding_interest = $loan->service_charge;
           $loaninstallment->outstanding_total = $loan->total_disbursed;
 
           $loaninstallment->loan_id = $loan->id;

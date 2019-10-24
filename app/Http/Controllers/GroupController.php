@@ -15,6 +15,7 @@ use App\Loanname;
 use App\Loaninstallment;
 use App\Saving;
 use App\Savingname;
+use App\Savinginstallment;
 
 use Carbon\Carbon;
 use DB, Hash, Auth, Image, File, Session;
@@ -59,7 +60,7 @@ class GroupController extends Controller
                         ->withMembers($members)
                         ->withLoannames($loannames);;
     }
-	
+    
     public function getGroupTransactionsDate($s_id, $g_id, $loan_type, $transaction_date)
     {
         $groups = Group::all();
@@ -82,11 +83,57 @@ class GroupController extends Controller
         // dd($members);
         return view('dashboard.groups.group_transactions.index')
                         ->withGroups($groups)
-        				->withGroup($group)
+                        ->withGroup($group)
                         ->withStaff($staff)
                         ->withMembers($members)
                         ->withLoannames($loannames)
                         ->withLoantype($loan_type)
                         ->withTransactiondate($transaction_date);
+    }
+	
+    public function postInstallmentAPI(Request $request)
+    {
+        // member_id: member_id,
+        // loaninstallment_id: loaninstallment_id,
+        // transactiondate: transactiondate,
+
+        // loaninstallment: loaninstallment,
+
+        // generalsaving: generalsaving,
+        // longsaving: longsaving,
+        // generalsavingwd: generalsavingwd,
+        // longsavingwd: longsavingwd
+        $member = Member::find($request->data['member_id']);
+        $installment = Loaninstallment::find($request->data['loaninstallment_id']);
+
+        // post the installment
+        $installment->paid_principal = $installment->installment_principal; 
+        $installment->paid_interest = $installment->installment_interest;
+        $installment->paid_total = $request->data['loaninstallment']; // assuming the total is paid
+        $installment->save();
+
+        // save the deposits(General and LongTerm)
+        // General Saving
+        $generalsaving = Savinginstallment::where('member_id', $request->data['member_id'])
+                                          ->where('savingname_id', 1) // hard coded!
+                                          ->first();
+        if(!empty($generalsaving)) {
+            $generalsaving->amount = $request->data['generalsaving'];
+            $generalsaving->amount = $request->data['generalsavingwd'];
+        } else {
+
+        }
+        // LongTerm Saving
+        $longsaving = Savinginstallment::where('member_id', $request->data['member_id'])
+                                        ->where('savingname_id', 2) // hard coded!
+                                        ->first();
+        if(!empty($longsaving)) {
+            $longsaving->amount = $request->data['longsaving'];
+            $longsaving->amount = $request->data['longsavingwd'];
+        } else {
+
+        }
+
+        return 'success';
     }
 }

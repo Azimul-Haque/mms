@@ -72,12 +72,12 @@
                       <td>{{ $member->passbook }}</td>
                       <td id="membername{{ $member->id }}" readonly>{{ $member->name }}</td>
                       <td readonly>{{ $loan->loanname->name }}</td>
-                      <td id="loaninstallment{{ $member->id }}" onchange="loancalc({{ $member->id }})">{{ $loaninstallment->installment_total }}</td>
-                      <td id="generalsaving{{ $member->id }}" onchange="loancalc({{ $member->id }})"></td>
-                      <td id="longsaving{{ $member->id }}" onchange="loancalc({{ $member->id }})"></td>
+                      <td id="loaninstallment{{ $member->id }}" onchange="loancalcandpost({{ $member->id }}, {{ $loaninstallment->id }}, '{{ $transactiondate }}')">{{ $loaninstallment->paid_total }}</td>
+                      <td id="generalsaving{{ $member->id }}" onchange="loancalcandpost({{ $member->id }}, {{ $loaninstallment->id }}, '{{ $transactiondate }}')"></td>
+                      <td id="longsaving{{ $member->id }}" onchange="loancalcandpost({{ $member->id }}, {{ $loaninstallment->id }}, '{{ $transactiondate }}')"></td>
                       <td id="totalcollection{{ $member->id }}" readonly></td>
-                      <td id="generalsavingwd{{ $member->id }}" onchange="loancalc({{ $member->id }})"></td>
-                      <td id="longsavingwd{{ $member->id }}" onchange="loancalc({{ $member->id }})"></td>
+                      <td id="generalsavingwd{{ $member->id }}" onchange="loancalcandpost({{ $member->id }}, {{ $loaninstallment->id }}, '{{ $transactiondate }}')"></td>
+                      <td id="longsavingwd{{ $member->id }}" onchange="loancalcandpost({{ $member->id }}, {{ $loaninstallment->id }}, '{{ $transactiondate }}')"></td>
                       <td id="netcollection{{ $member->id }}" readonly></td>
                     </tr>
                     @endif
@@ -132,8 +132,6 @@
     }
   </script>
 
-
-
   <script src="{{ asset('js/mindmup-editabletable.js') }}"></script>
   <!-- <script src="http://mindmup.github.io/editable-table/numeric-input-example.js"></script> -->
   <script>
@@ -161,20 +159,39 @@
       // toastr.success(newValue + ' Added!', 'SUCCESS').css('width', '400px');
     });
 
-    function loancalc(id, evt, newValue) {
-      var membername = $('#membername' + id).text();
-      var loaninstallment = parseInt($('#loaninstallment' + id).text()) ? parseInt($('#loaninstallment' + id).text()) : 0;
-      var generalsaving = parseInt($('#generalsaving' + id).text()) ? parseInt($('#generalsaving' + id).text()) : 0;
-      var longsaving = parseInt($('#longsaving' + id).text()) ? parseInt($('#longsaving' + id).text()) : 0;
-      var generalsavingwd = parseInt($('#generalsavingwd' + id).text()) ? parseInt($('#generalsavingwd' + id).text()) : 0;
-      var longsavingwd = parseInt($('#longsavingwd' + id).text()) ? parseInt($('#longsavingwd' + id).text()) : 0;
+    function loancalcandpost(member_id, loaninstallment_id, transactiondate) {
+      var membername = $('#membername' + member_id).text();
+      var loaninstallment = parseInt($('#loaninstallment' + member_id).text()) ? parseInt($('#loaninstallment' + member_id).text()) : 0;
+      var generalsaving = parseInt($('#generalsaving' + member_id).text()) ? parseInt($('#generalsaving' + member_id).text()) : 0;
+      var longsaving = parseInt($('#longsaving' + member_id).text()) ? parseInt($('#longsaving' + member_id).text()) : 0;
+      var generalsavingwd = parseInt($('#generalsavingwd' + member_id).text()) ? parseInt($('#generalsavingwd' + member_id).text()) : 0;
+      var longsavingwd = parseInt($('#longsavingwd' + member_id).text()) ? parseInt($('#longsavingwd' + member_id).text()) : 0;
       
       var totalcollection = loaninstallment + generalsaving + longsaving;
       var netcollection = totalcollection - generalsavingwd - longsavingwd;
-      $('#totalcollection' + id).text(totalcollection);
-      $('#netcollection' + id).text(netcollection);
+      $('#totalcollection' + member_id).text(totalcollection);
+      $('#netcollection' + member_id).text(netcollection);
+
+      // now post the data
+      $.post("/transaction/store/api", {_token: '{{ csrf_token() }}', _method : 'POST', 
+        data: {
+          member_id: member_id,
+          loaninstallment_id: loaninstallment_id,
+          transactiondate: transactiondate,
+
+          loaninstallment: loaninstallment,
+
+          generalsaving: generalsaving,
+          longsaving: longsaving,
+          generalsavingwd: generalsavingwd,
+          longsavingwd: longsavingwd
+        }},
+        function(data, status){
+        console.log(status);
+        console.log(data);
+      });
       console.log(totalcollection);
-      console.log(generalsavingwd);
+      console.log(member_id);
       toastr.success('Member: <b>' + membername + '</b><br/>Total Collection: <u>৳ ' + totalcollection + '</u>, Net Collection: <u>৳ ' + netcollection , '</u>SUCCESS').css('width', '400px');
     }
 

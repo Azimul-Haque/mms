@@ -12,6 +12,7 @@ return array(
     'CreateLoansTable' => $baseDir . '/database/migrations/2019_10_18_043211_create_loans_table.php',
     'CreateMembersTable' => $baseDir . '/database/migrations/2019_09_30_063220_create_members_table.php',
     'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
+    'CreateSavinginstallmentsTable' => $baseDir . '/database/migrations/2019_10_25_034932_create_savinginstallments_table.php',
     'CreateSavingnamesTable' => $baseDir . '/database/migrations/2019_10_17_015934_create_savingnames_table.php',
     'CreateSavingsTable' => $baseDir . '/database/migrations/2019_10_18_032129_create_savings_table.php',
     'CreateSchemenamesTable' => $baseDir . '/database/migrations/2019_10_17_044957_create_schemenames_table.php',

@@ -120,6 +120,7 @@ Route::get('/group/{s_id}/{g_id}/{m_id}/member/loan/accounts/single/{l_id}', ['a
 // group transactions
 Route::get('/group/{s_id}/{g_id}/transactions', ['as'=>'dashboard.grouptransactions','uses'=>'GroupController@getGroupTransactions']);
 Route::get('/group/{s_id}/{g_id}/transactions/{loan_type}/{date}', ['as'=>'dashboard.grouptransactions.date','uses'=>'GroupController@getGroupTransactionsDate']);
+Route::post('/transaction/store/api', ['as'=>'dashboard.grouptransactions.postinstallmentapi','uses'=>'GroupController@postInstallmentAPI']);
 
 Route::get('/programs/features', ['as'=>'programs.features','uses'=>'DashboardController@getProgramFeatures']);
 Route::get('/staff/{id}/features', ['as'=>'staff.features','uses'=>'StaffController@getStaffFeatures']); // id dhukbe ekhane

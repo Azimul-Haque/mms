@@ -13,4 +13,8 @@ class Saving extends Model
     public function savingname() {
         return $this->belongsTo('App\Savingname');
     }
+
+    public function savinginstallments() {
+        return $this->hasMany('App\Savinginstallment');
+    }
 }

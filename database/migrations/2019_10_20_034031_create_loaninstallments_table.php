@@ -24,8 +24,6 @@ class CreateLoaninstallmentsTable extends Migration
             $table->float('paid_interest')->default(0.00);
             $table->float('paid_total')->default(0.00);
 
-            $table->float('outstanding_principal');
-            $table->float('outstanding_interest');
             $table->float('outstanding_total');
 
             $table->integer('loan_id')->unsigned();
