@@ -70,15 +70,15 @@
                     @if(!empty($transactiondate))
                     <tr>
                       <td>{{ $member->passbook }}</td>
-                      <th>{{ $member->name }}</th>
-                      <th>{{ $loan->loanname->name }}</th>
-                      <td id="loaninstallment{{ $member->id }}" member_id="{{ $member->id }}">{{ $loaninstallment->installment_total }}</td>
-                      <td id="generalsaving{{ $member->id }}"></td>
-                      <td id="longsaving{{ $member->id }}"></td>
-                      <td id="totalcollection{{ $member->id }}"></td>
+                      <td readonly>{{ $member->name }}</td>
+                      <td readonly>{{ $loan->loanname->name }}</td>
+                      <td id="loaninstallment{{ $member->id }}" onchange="loancalc({{ $member->id }})">{{ $loaninstallment->installment_total }}</td>
+                      <td id="generalsaving{{ $member->id }}" onchange="loancalc({{ $member->id }})"></td>
+                      <td id="longsaving{{ $member->id }}" onchange="loancalc({{ $member->id }})"></td>
+                      <td id="totalcollection{{ $member->id }}" readonly></td>
                       <td></td>
-                      <td class="uneditable"></td>
-                      <th></th>
+                      <td readonly></td>
+                      <td readonly></td>
                     </tr>
                     @endif
                   @endforeach
@@ -146,30 +146,36 @@
       });
     });
     $('#editable td').on('change', function(evt, newValue) {
-      console.log(evt);
+      // console.log(evt);
       // console.log($('#'+evt.target.id).attr('member_id'));
-      var member_id = $(this).attr('member_id');
+      // var member_id = $(this).attr('member_id');
 
-      var loaninstallment = $('td #loaninstallment' + member_id).val() ? $('td #loaninstallment' + member_id).val() : 0;
-      var generalsaving = $('td #generalsaving' + member_id).val() ? $('td #generalsaving' + member_id).val() : 0;
-      var longsaving = $('td #longsaving' + member_id).val() ? $('td #longsaving' + member_id).val() : 0;
+      // var loaninstallment = parseInt($('#loaninstallment' + member_id).text()) ? parseInt($('#loaninstallment' + member_id).text()) : 0;
+      // var generalsaving = parseInt($('#generalsaving' + member_id).text()) ? parseInt($('#generalsaving' + member_id).text()) : 0;
+      // var longsaving = parseInt($('#longsaving' + member_id).text()) ? parseInt($('#longsaving' + member_id).text()) : 0;
       
-      var totalcollection = loaninstallment + generalsaving + longsaving;
-      $('#totalcollection' + member_id).text(totalcollection);
-      console.log(newValue);
+      // var totalcollection = loaninstallment + generalsaving + longsaving;
+      // $('#totalcollection' + member_id).text(totalcollection);
+      // console.log(totalcollection);
 
-      toastr.success(newValue + ' Added!', 'SUCCESS').css('width', '400px');
+      // toastr.success(newValue + ' Added!', 'SUCCESS').css('width', '400px');
     });
 
-    // function loaninstallment(id) {
-    //   var loaninstallment = $('#loaninstallment' + id).val() ? $('#loaninstallment' + id).val() : 0;
-    //   var generalsaving = $('#generalsaving' + id).val() ? $('#generalsaving' + id).val() : 0;
-    //   var longsaving = $('#longsaving' + id).val() ? $('#longsaving' + id).val() : 0;
+    function loancalc(id, evt, newValue) {
+      var loaninstallment = parseInt($('#loaninstallment' + id).text()) ? parseInt($('#loaninstallment' + id).text()) : 0;
+      var generalsaving = parseInt($('#generalsaving' + id).text()) ? parseInt($('#generalsaving' + id).text()) : 0;
+      var longsaving = parseInt($('#longsaving' + id).text()) ? parseInt($('#longsaving' + id).text()) : 0;
       
-    //   var totalcollection = loaninstallment + generalsaving + longsaving;
-    //   $('#totalcollection' + id).text(loaninstallment);
-    //   console.log(loaninstallment);
-    // }
+      var totalcollection = loaninstallment + generalsaving + longsaving;
+      $('#totalcollection' + id).text(totalcollection);
+      console.log(totalcollection);
+      toastr.success(totalcollection + ' Added!', 'SUCCESS').css('width', '400px');
+    }
+
+    $('td[readonly]').on('click dblclick keydown', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+    });
 
   </script>
 @endsection
