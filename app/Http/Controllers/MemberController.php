@@ -112,6 +112,8 @@ class MemberController extends Controller
         $member->admission_date = date('Y-m-d', strtotime($request->admission_date));
         if($request->closing_date) {
           $member->closing_date = date('Y-m-d', strtotime($request->closing_date));
+        } else {
+          $member->closing_date = '1970-01-01';
         }
         $member->present_district = $request->present_district;
         $member->present_upazilla = $request->present_upazilla;
@@ -266,7 +268,7 @@ class MemberController extends Controller
         if($request->closing_date != '') {
           $savingaccount->closing_date = date('Y-m-d', strtotime($request->closing_date));
         } else {
-          $savingaccount->closing_date = '';
+          $savingaccount->closing_date = '1970-01-01';
         }
         $savingaccount->meeting_day = $request->meeting_day;
         $savingaccount->installment_type = $request->installment_type;
@@ -406,16 +408,24 @@ class MemberController extends Controller
 
         // add a mandatory long term account...
         // add a mandatory long term account...
-        $savingaccount = new Saving;
-        $savingaccount->savingname_id = 2; // 2 for long term account
-        $savingaccount->opening_date = date('Y-m-d', strtotime($request->disburse_date));
+        $checkacc = Saving::where('member_id', $m_id)
+                          ->where('savingname_id', 2) // hard coded!
+                          ->first();
         
-        $savingaccount->meeting_day = 1;
-        $savingaccount->installment_type = 2;
-        $savingaccount->minimum_deposit = 10;
-        $savingaccount->status = 1; // 1 means active/open
-        $savingaccount->member_id = $m_id;
-        $savingaccount->save();
+        if(!empty($checkacc)) {
+          
+        } else {
+          $savingaccount = new Saving;
+          $savingaccount->savingname_id = 2; // 2 for long term account
+          $savingaccount->opening_date = date('Y-m-d', strtotime($request->disburse_date));
+          
+          $savingaccount->meeting_day = 1;
+          $savingaccount->installment_type = 2;
+          $savingaccount->minimum_deposit = 10;
+          $savingaccount->status = 1; // 1 means active/open
+          $savingaccount->member_id = $m_id;
+          $savingaccount->save();
+        }
 
         Session::flash('success', 'Added successfully!'); 
         return redirect()->route('dashboard.member.loans', [$s_id, $g_id, $m_id]);

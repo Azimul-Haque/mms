@@ -116,22 +116,77 @@ class GroupController extends Controller
         // General Saving
         $generalsaving = Savinginstallment::where('member_id', $request->data['member_id'])
                                           ->where('savingname_id', 1) // hard coded!
+                                          ->where('due_date', $request->data['transactiondate'])
                                           ->first();
         if(!empty($generalsaving)) {
-            $generalsaving->amount = $request->data['generalsaving'];
-            $generalsaving->amount = $request->data['generalsavingwd'];
-        } else {
+            // balance calculation in saving acc
+            $gensavingac = Saving::where('member_id', $request->data['member_id'])
+                              ->where('savingname_id', 1) // hard coded!
+                              ->first();
+            $gensavingac->total_amount = $gensavingac->total_amount - $generalsaving->amount + $request->data['generalsaving'];;
+            $gensavingac->withdraw = $gensavingac->withdraw - $generalsaving->withdraw + $request->data['generalsavingwd'];
+            $gensavingac->save();
 
+            $generalsaving->amount = $request->data['generalsaving'];
+            $generalsaving->withdraw = $request->data['generalsavingwd'];
+            $generalsaving->balance = $gensavingac->total_amount - $gensavingac->withdraw;
+            $generalsaving->save();
+        } else {
+            // balance calculation
+            $gensavingac = Saving::where('member_id', $request->data['member_id'])
+                              ->where('savingname_id', 1) // hard coded!
+                              ->first();
+            $gensavingac->total_amount = $gensavingac->total_amount + $request->data['generalsaving'];;
+            $gensavingac->withdraw = $gensavingac->withdraw + $request->data['generalsavingwd'];
+            $gensavingac->save();
+
+            $newgeneralsaving = new Savinginstallment;
+            $newgeneralsaving->due_date = date('Y-m-d', strtotime($request->data['transactiondate']));
+            $newgeneralsaving->amount = $request->data['generalsaving'];
+            $newgeneralsaving->withdraw = $request->data['generalsavingwd'];
+            $newgeneralsaving->balance = $gensavingac->total_amount - $gensavingac->withdraw;
+            $newgeneralsaving->member_id = $request->data['member_id'];
+            $newgeneralsaving->savingname_id = 1; // hard coded!
+            $newgeneralsaving->saving_id = $gensavingac->id;
+            $newgeneralsaving->save();            
         }
         // LongTerm Saving
+        // General Saving
         $longsaving = Savinginstallment::where('member_id', $request->data['member_id'])
-                                        ->where('savingname_id', 2) // hard coded!
-                                        ->first();
+                                          ->where('savingname_id', 2) // hard coded!
+                                          ->where('due_date', $request->data['transactiondate'])
+                                          ->first();
         if(!empty($longsaving)) {
-            $longsaving->amount = $request->data['longsaving'];
-            $longsaving->amount = $request->data['longsavingwd'];
-        } else {
+            // balance calculation in saving acc
+            $longsavingac = Saving::where('member_id', $request->data['member_id'])
+                              ->where('savingname_id', 2) // hard coded!
+                              ->first();
+            $longsavingac->total_amount = $longsavingac->total_amount - $longsaving->amount + $request->data['longsaving'];;
+            $longsavingac->withdraw = $longsavingac->withdraw - $longsaving->withdraw + $request->data['longsavingwd'];
+            $longsavingac->save();
 
+            $longsaving->amount = $request->data['longsaving'];
+            $longsaving->withdraw = $request->data['longsavingwd'];
+            $longsaving->balance = $longsavingac->total_amount - $longsavingac->withdraw;
+            $longsaving->save();
+        } else {
+            // balance calculation
+            $longsavingac = Saving::where('member_id', $request->data['member_id'])
+                              ->where('savingname_id', 2) // hard coded!
+                              ->first();
+            $longsavingac->total_amount = $longsavingac->total_amount + $request->data['longsaving'];;
+            $longsavingac->withdraw = $longsavingac->withdraw + $request->data['longsavingwd'];
+            $longsavingac->save();
+
+            $newlongsaving = new Savinginstallment;
+            $newlongsaving->due_date = date('Y-m-d', strtotime($request->data['transactiondate']));
+            $newlongsaving->amount = $request->data['longsaving'];
+            $newlongsaving->withdraw = $request->data['longsavingwd'];
+            $newlongsaving->balance = $longsavingac->total_amount - $longsavingac->withdraw;
+            $newlongsaving->member_id = $request->data['member_id'];
+            $newlongsaving->savingname_id = 2; // hard coded!
+            $newlongsaving->saving_id = $longsavingac->id;
+            $newlongsaving->save();            
         }
 
         return 'success';

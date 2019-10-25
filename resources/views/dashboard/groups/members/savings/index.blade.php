@@ -43,10 +43,10 @@
                   <td>{{ meeting_day($savingaccount->meeting_day) }}</td>
                   <td>{{ $savingaccount->minimum_deposit }}</td>
                   <td>{{ $savingaccount->late_fee }}</td>
-                  <td>{{ $savingaccount->total_amount }}</td>
+                  <td>{{ $savingaccount->total_amount - $savingaccount->withdraw }}</td>
                   <td>{{ status($savingaccount->status) }}</td>
                   <td>
-                    @if($savingaccount->closing_date != '0000-00-00')
+                    @if($savingaccount->closing_date != '1970-01-01')
                       {{ date('D, d/m/Y', strtotime($savingaccount->closing_date)) }}
                     @endif
                   </td>

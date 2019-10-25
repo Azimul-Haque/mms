@@ -14,6 +14,10 @@ class Member extends Model
         return $this->hasMany('App\Saving');
     }
 
+    public function savinginstallments() {
+        return $this->hasMany('App\Savinginstallment');
+    }
+
     public function loans() {
         return $this->hasMany('App\Loan');
     }
