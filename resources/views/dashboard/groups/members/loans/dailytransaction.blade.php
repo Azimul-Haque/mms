@@ -173,10 +173,10 @@
     function loancalcandpost(member_id, loaninstallment_id, transactiondate) {
       var membername = $('#membername' + member_id).text();
       var loaninstallment = parseInt($('#loaninstallment' + member_id).text()) ? parseInt($('#loaninstallment' + member_id).text()) : 0;
-      var generalsaving = parseInt($('#generalsaving' + member_id).text()) ? parseInt($('#generalsaving' + member_id).text()) : 0;
-      var longsaving = parseInt($('#longsaving' + member_id).text()) ? parseInt($('#longsaving' + member_id).text()) : 0;
-      var generalsavingwd = parseInt($('#generalsavingwd' + member_id).text()) ? parseInt($('#generalsavingwd' + member_id).text()) : 0;
-      var longsavingwd = parseInt($('#longsavingwd' + member_id).text()) ? parseInt($('#longsavingwd' + member_id).text()) : 0;
+      // var generalsaving = parseInt($('#generalsaving' + member_id).text()) ? parseInt($('#generalsaving' + member_id).text()) : 0;
+      // var longsaving = parseInt($('#longsaving' + member_id).text()) ? parseInt($('#longsaving' + member_id).text()) : 0;
+      // var generalsavingwd = parseInt($('#generalsavingwd' + member_id).text()) ? parseInt($('#generalsavingwd' + member_id).text()) : 0;
+      // var longsavingwd = parseInt($('#longsavingwd' + member_id).text()) ? parseInt($('#longsavingwd' + member_id).text()) : 0;
       
       var totalcollection = loaninstallment + generalsaving + longsaving;
       var netcollection = totalcollection - generalsavingwd - longsavingwd;
@@ -192,10 +192,10 @@
 
           loaninstallment: loaninstallment,
 
-          generalsaving: generalsaving,
-          longsaving: longsaving,
-          generalsavingwd: generalsavingwd,
-          longsavingwd: longsavingwd
+          // generalsaving: generalsaving,
+          // longsaving: longsaving,
+          // generalsavingwd: generalsavingwd,
+          // longsavingwd: longsavingwd
         }},
         function(data, status){
         console.log(status);
