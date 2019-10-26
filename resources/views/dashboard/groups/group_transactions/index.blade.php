@@ -146,7 +146,7 @@
           toastr.warning('Select Date!', 'WARNING').css('width', ($(window).width()-25)+'px');
         }
       } else {
-        window.location.href = '/group/{{ $staff->id }}/{{ $group->id }}/transactions/' + loan_type_to_load + '/'+ moment(date_to_load).format('YYYY-MM-DD');
+        window.location.href = '/group/{{ $staff->id }}/'+ group_to_load +'/transactions/' + loan_type_to_load + '/'+ moment(date_to_load).format('YYYY-MM-DD');
       }
     })
 

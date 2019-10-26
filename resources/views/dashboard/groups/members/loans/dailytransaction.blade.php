@@ -25,7 +25,7 @@
         <input class="form-control" type="text" name="date_to_load" id="date_to_load" @if(!empty($transactiondate)) value="{{ date('F d, Y', strtotime($transactiondate)) }}" @endif placeholder="Select Date" readonly=""><br/>
       </div>
       <div class="col-md-3">
-        <button class="btn btn-success" id="loadTransactions"><i class="fa fa-users"></i> Load</button><br/>
+        <button class="btn btn-success" id="loadTransactions"><i class="fa fa-spinner"></i> Load</button><br/>
       </div>
       <div class="col-md-3">
         <a href="{{ url()->current() }}" class="btn btn-primary pull-right"><i class="fa fa-floppy-o"></i> Save</a><br/>
@@ -39,13 +39,15 @@
               <tr>
                 <th>P#</th>
                 <th>Loan Program</th>
-                <th>Loan <br/>Installment</th>
-                <th>General Savings<br/> Deposit</th>
-                <th>Long Term<br/> Savings</th>
+                <th>Total Disbursed</th>
+                <th>Today's <br/>Collection</th>
+                <th>Total Paid</th>
+                <th>Total Outstanding</th>
+                {{-- <th>Long Term<br/> Savings</th>
                 <th>Total Collection</th>
                 <th>General Savings <br/>Withdraw</th>
-                <th>Long Term <br/>Savings Withdraw</th>
-                <th>Net <br/>Collection</th>
+                <th>Long Term <br/>Savings Withdraw</th> 
+                <th>Net <br/>Collection</th> --}}
               </tr>
             </thead>
             <tbody>
@@ -55,8 +57,11 @@
                   <tr>
                     <td readonly>{{ $member->passbook }}</td>
                     <td readonly>{{ $loan->loanname->name }}</td>
+                    <td readonly>{{ $loan->total_disbursed }}</td>
                     <td id="loaninstallment{{ $member->id }}" onchange="loancalcandpost({{ $member->id }}, {{ $loaninstallment->id }}, '{{ $transactiondate }}')">{{ $loaninstallment->paid_total }}</td>
-                    @php
+                    <td readonly>{{ $loan->total_paid }}</td>
+                    <td readonly>{{ $loan->total_outstanding }}</td>
+                    {{-- @php
                       $generalsaving = 0;
                       if(!empty($member->savinginstallments->where('savingname_id', 1)->where('due_date', $transactiondate)->first())) {
                         $generalsaving = $member->savinginstallments->where('member_id', $member->id)->where('savingname_id', 1)->where('due_date', $transactiondate)->first()->amount;
@@ -85,7 +90,7 @@
                       }
                     @endphp
                     <td id="longsavingwd{{ $member->id }}" onchange="loancalcandpost({{ $member->id }}, {{ $loaninstallment->id }}, '{{ $transactiondate }}')">{{ $longsavingwd }}</td>
-                    <td id="netcollection{{ $member->id }}" readonly>{{ $loaninstallment->paid_total + $generalsaving + $longsaving - $generalsavingwd - $longsavingwd }}</td>
+                    <td id="netcollection{{ $member->id }}" readonly>{{ $loaninstallment->paid_total + $generalsaving + $longsaving - $generalsavingwd - $longsavingwd }}</td> --}}
                   </tr>
                   @endif
                 @endforeach
@@ -111,7 +116,7 @@
     });
 
     $('#loadTransactions').click(function() {
-      var group_to_load =$('#group_to_load').val();
+      // var group_to_load =$('#group_to_load').val();
       var date_to_load =$('#date_to_load').val();
       var loan_type_to_load =$('#loan_type_to_load').val();
 
@@ -128,7 +133,7 @@
           toastr.warning('Select Date!', 'WARNING').css('width', ($(window).width()-25)+'px');
         }
       } else {
-        window.location.href = '/group/{{ $staff->id }}/{{ $group->id }}/transactions/' + loan_type_to_load + '/'+ moment(date_to_load).format('YYYY-MM-DD');
+        window.location.href = '/group/{{ $staff->id }}/{{ $group->id }}/{{ $member->id }}/member/daily/transaction/' + loan_type_to_load + '/'+ moment(date_to_load).format('YYYY-MM-DD');
       }
     })
 

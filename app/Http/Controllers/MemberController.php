@@ -489,13 +489,43 @@ class MemberController extends Controller
     {
       $staff = User::find($s_id);
       $group = Group::find($g_id);
-      $member = Member::find($m_id);
       $loannames = Loanname::all();
+
+      $member = Member::find($m_id);
 
       return view('dashboard.groups.members.loans.dailytransaction')
               ->withStaff($staff)
               ->withGroup($group)
               ->withMember($member)
               ->withLoannames($loannames);
+    }
+
+    public function getDailyTransactionDate($s_id, $g_id, $m_id, $loan_type, $transaction_date)
+    {
+      $staff = User::find($s_id);
+      $group = Group::find($g_id);
+      $loannames = Loanname::all();
+
+      $member = Member::where('id', $m_id)
+                      ->where('group_id', $g_id)
+                      ->where('staff_id', $s_id)
+                      ->where('status', 1) // status 1 means member is Active
+                      ->orderBy('passbook', 'asc')
+                      ->with(['loans' => function ($query) use($loan_type, $transaction_date) {
+                          $query->where('loanname_id', $loan_type)
+                                ->where('status', 1) // 1 means active loan
+                                ->with(['loaninstallments' => function ($query) use($transaction_date) {
+                                    $query->where('due_date', $transaction_date);
+                                 }]);
+                      }])
+                      ->first();
+      // dd($member);
+      return view('dashboard.groups.members.loans.dailytransaction')
+              ->withStaff($staff)
+              ->withGroup($group)
+              ->withLoannames($loannames)
+              ->withMember($member)
+              ->withLoantype($loan_type)
+              ->withTransactiondate($transaction_date);
     }
 }
