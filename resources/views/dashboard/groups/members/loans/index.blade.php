@@ -26,7 +26,9 @@
                 <th>Installment Type</th>
                 <th>Disburse Date</th>
                 <th>Total Installments</th>
-                <th>Disbursed</th>
+                <th>Disbursed (৳)</th>
+                <th>Total Paid (৳)</th>
+                <th>Total Outstanding (৳)</th>
                 <th>Status</th>
                 <th>Closing Date</th>
                 <th>Action</th>
@@ -42,6 +44,8 @@
                   <td>{{ date('D, d/m/Y', strtotime($loan->disburse_date)) }}</td>
                   <td>{{ $loan->installments }}</td>
                   <td>{{ $loan->total_disbursed }}</td>
+                  <td>{{ $loan->total_paid }}</td>
+                  <td>{{ $loan->total_outstanding }}</td>
                   <td>{{ status($loan->status) }}</td>
                   <td>
                     @if($loan->closing_date != '0000-00-00')

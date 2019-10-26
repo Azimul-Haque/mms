@@ -12,6 +12,7 @@ use App\Group;
 use App\Member;
 use App\Saving;
 use App\Savingname;
+use App\Savinginstallment;
 use App\Loan;
 use App\Loaninstallment;
 use App\Loanname;

@@ -143,8 +143,8 @@
                 <th>Paid Amount<br/>(Principal)</th>
                 <th>Paid Amount<br/>(Interest)</th>
                 <th>Paid Amount<br/>(Total)</th>
-                <th>Outstanding Amount<br/>(Principal)</th>
-                <th>Outstanding Amount<br/>(Interest)</th>
+               {{--  <th>Outstanding Amount<br/>(Principal)</th>
+                <th>Outstanding Amount<br/>(Interest)</th> --}}
                 <th>Outstanding Amount<br/>(Total)</th>
                 {{-- <th>Overdue Amount<br/>(Principal)</th>
                 <th>Overdue Amount<br/>(Interest)</th>
@@ -162,8 +162,8 @@
                 <td>{{ $loaninstallment->paid_principal }}</td>
                 <td>{{ $loaninstallment->paid_interest }}</td>
                 <td>{{ $loaninstallment->paid_total }}</td>
-                <td>{{ $loaninstallment->outstanding_principal }}</td>
-                <td>{{ $loaninstallment->outstanding_interest }}</td>
+{{--                 <td>{{ $loaninstallment->outstanding_principal }}</td>
+                <td>{{ $loaninstallment->outstanding_interest }}</td> --}}
                 <td>{{ $loaninstallment->outstanding_total }}</td>
               </tr>
               @endforeach
