@@ -484,4 +484,18 @@ class MemberController extends Controller
               ->withLoannames($loannames)
               ->withSchemenames($schemenames);
     }
+
+    public function getDailyTransaction($s_id, $g_id, $m_id)
+    {
+      $staff = User::find($s_id);
+      $group = Group::find($g_id);
+      $member = Member::find($m_id);
+      $loannames = Loanname::all();
+
+      return view('dashboard.groups.members.loans.dailytransaction')
+              ->withStaff($staff)
+              ->withGroup($group)
+              ->withMember($member)
+              ->withLoannames($loannames);
+    }
 }
