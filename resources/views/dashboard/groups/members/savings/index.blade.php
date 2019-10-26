@@ -26,9 +26,12 @@
                 <th>Installment Type</th>
                 <th>Opening Date</th>
                 <th>Meting Day</th>
-                <th>Minimum Deposit</th>
-                <th>Late Fee</th>
+                {{-- <th>Minimum Deposit</th>
+                <th>Late Fee</th> --}}
+                <th>Total Amount ( ৳)</th>
+                <th>Total Withdraw ( ৳)</th>
                 <th>Balance ( ৳)</th>
+                <th>Interest ( ৳)</th>
                 <th>Status</th>
                 <th>Closing Date</th>
                 <th>Action</th>
@@ -41,9 +44,12 @@
                   <td>{{ installment_type($savingaccount->installment_type) }}</td>
                   <td>{{ date('D, d/m/Y', strtotime($savingaccount->opening_date)) }}</td>
                   <td>{{ meeting_day($savingaccount->meeting_day) }}</td>
-                  <td>{{ $savingaccount->minimum_deposit }}</td>
-                  <td>{{ $savingaccount->late_fee }}</td>
+                  {{-- <td>{{ $savingaccount->minimum_deposit }}</td>
+                  <td>{{ $savingaccount->late_fee }}</td> --}}
+                  <td>{{ $savingaccount->total_amount }}</td>
+                  <td>{{ $savingaccount->withdraw }}</td>
                   <td>{{ $savingaccount->total_amount - $savingaccount->withdraw }}</td>
+                  <td>{{ $savingaccount->interest }}</td>
                   <td>{{ status($savingaccount->status) }}</td>
                   <td>
                     @if($savingaccount->closing_date != '1970-01-01')

@@ -106,12 +106,17 @@ class GroupController extends Controller
         $member = Member::find($request->data['member_id']);
         $installment = Loaninstallment::find($request->data['loaninstallment_id']);
 
+        // calculate outstanding from from loan
+        $installment->loan->total_paid = $installment->loan->total_paid - $installment->paid_total + $request->data['loaninstallment'];
+        $installment->loan->total_outstanding = $installment->loan->total_disbursed - $installment->loan->total_paid;
+        $installment->loan->save();
+
         // post the installment
         $installment->paid_principal = $installment->installment_principal; 
         $installment->paid_interest = $installment->installment_interest;
         $installment->paid_total = $request->data['loaninstallment']; // assuming the total is paid
         $installment->save();
-
+        
         // save the deposits(General and LongTerm)
         // General Saving
         $generalsaving = Savinginstallment::where('member_id', $request->data['member_id'])
