@@ -528,4 +528,29 @@ class MemberController extends Controller
               ->withLoantype($loan_type)
               ->withTransactiondate($transaction_date);
     }
+
+    public function postDailyInstallmentAPI(Request $request)
+    {
+        // member_id: member_id,
+        // loaninstallment_id: loaninstallment_id,
+        // transactiondate: transactiondate,
+
+        // loaninstallment: loaninstallment,
+
+        $member = Member::find($request->data['member_id']);
+        $installment = Loaninstallment::find($request->data['loaninstallment_id']);
+
+        // calculate outstanding from from loan
+        $installment->loan->total_paid = $installment->loan->total_paid - $installment->paid_total + $request->data['loaninstallment'];
+        $installment->loan->total_outstanding = $installment->loan->total_disbursed - $installment->loan->total_paid;
+        $installment->loan->save();
+
+        // post the installment
+        $installment->paid_principal = $installment->installment_principal; 
+        $installment->paid_interest = $installment->installment_interest;
+        $installment->paid_total = $request->data['loaninstallment']; // assuming the total is paid
+        $installment->save();
+
+        return $installment;
+    }
 }

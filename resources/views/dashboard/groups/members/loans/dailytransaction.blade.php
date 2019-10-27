@@ -59,8 +59,8 @@
                     <td readonly>{{ $loan->loanname->name }}</td>
                     <td readonly>{{ $loan->total_disbursed }}</td>
                     <td id="loaninstallment{{ $member->id }}" onchange="loancalcandpost({{ $member->id }}, {{ $loaninstallment->id }}, '{{ $transactiondate }}')">{{ $loaninstallment->paid_total }}</td>
-                    <td readonly>{{ $loan->total_paid }}</td>
-                    <td readonly>{{ $loan->total_outstanding }}</td>
+                    <td readonly id="total_paid{{ $member->id }}">{{ $loan->total_paid }}</td>
+                    <td readonly id="total_outstanding{{ $member->id }}">{{ $loan->total_outstanding }}</td>
                     {{-- @php
                       $generalsaving = 0;
                       if(!empty($member->savinginstallments->where('savingname_id', 1)->where('due_date', $transactiondate)->first())) {
@@ -155,60 +155,33 @@
       });
     });
     $('#editable td').on('change', function(evt, newValue) {
-      // console.log(evt);
-      // console.log($('#'+evt.target.id).attr('member_id'));
-      // var member_id = $(this).attr('member_id');
-
-      // var loaninstallment = parseInt($('#loaninstallment' + member_id).text()) ? parseInt($('#loaninstallment' + member_id).text()) : 0;
-      // var generalsaving = parseInt($('#generalsaving' + member_id).text()) ? parseInt($('#generalsaving' + member_id).text()) : 0;
-      // var longsaving = parseInt($('#longsaving' + member_id).text()) ? parseInt($('#longsaving' + member_id).text()) : 0;
-      
-      // var totalcollection = loaninstallment + generalsaving + longsaving;
-      // $('#totalcollection' + member_id).text(totalcollection);
-      // console.log(totalcollection);
-
       // toastr.success(newValue + ' Added!', 'SUCCESS').css('width', '400px');
     });
 
     function loancalcandpost(member_id, loaninstallment_id, transactiondate) {
       var membername = $('#membername' + member_id).text();
       var loaninstallment = parseInt($('#loaninstallment' + member_id).text()) ? parseInt($('#loaninstallment' + member_id).text()) : 0;
-      // var generalsaving = parseInt($('#generalsaving' + member_id).text()) ? parseInt($('#generalsaving' + member_id).text()) : 0;
-      // var longsaving = parseInt($('#longsaving' + member_id).text()) ? parseInt($('#longsaving' + member_id).text()) : 0;
-      // var generalsavingwd = parseInt($('#generalsavingwd' + member_id).text()) ? parseInt($('#generalsavingwd' + member_id).text()) : 0;
-      // var longsavingwd = parseInt($('#longsavingwd' + member_id).text()) ? parseInt($('#longsavingwd' + member_id).text()) : 0;
       
-      var totalcollection = loaninstallment + generalsaving + longsaving;
-      var netcollection = totalcollection - generalsavingwd - longsavingwd;
-      $('#totalcollection' + member_id).text(totalcollection);
-      $('#netcollection' + member_id).text(netcollection);
-
       // now post the data
-      $.post("/transaction/store/api", {_token: '{{ csrf_token() }}', _method : 'POST', 
+      $.post("/daily/transaction/store/api", {_token: '{{ csrf_token() }}', _method : 'POST', 
         data: {
           member_id: member_id,
           loaninstallment_id: loaninstallment_id,
           transactiondate: transactiondate,
-
           loaninstallment: loaninstallment,
-
-          // generalsaving: generalsaving,
-          // longsaving: longsaving,
-          // generalsavingwd: generalsavingwd,
-          // longsavingwd: longsavingwd
         }},
         function(data, status){
         console.log(status);
-        console.log(data);
+        // console.log(data.loan.total_outstanding);
         if(status == 'success') {
-          toastr.success('Member: <b>' + membername + '</b><br/>Total Collection: <u>৳ ' + totalcollection + '</u>, Net Collection: <u>৳ ' + netcollection , '</u>SUCCESS').css('width', '400px');
+          toastr.success('Member: <b>' + membername + '</b><br/>Daily Collection: <u>৳ ' + loaninstallment, '</u>SUCCESS').css('width', '400px');
         } else {
           toastr.warning('Error!').css('width', '400px');
         }
-        
+        $('#total_paid' + member_id).text(data.loan.total_paid);
+        $('#total_outstanding' + member_id).text(data.loan.total_outstanding);
       });
-      console.log(totalcollection);
-      console.log(member_id);
+      
       
     }
 

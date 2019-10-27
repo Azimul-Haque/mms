@@ -91,7 +91,7 @@ class GroupController extends Controller
                         ->withTransactiondate($transaction_date);
     }
 	
-    public function postInstallmentAPI(Request $request)
+    public function postGroupInstallmentAPI(Request $request)
     {
         // member_id: member_id,
         // loaninstallment_id: loaninstallment_id,
@@ -155,8 +155,9 @@ class GroupController extends Controller
             $newgeneralsaving->saving_id = $gensavingac->id;
             $newgeneralsaving->save();            
         }
-        // LongTerm Saving
         // General Saving
+
+        // LongTerm Saving
         $longsaving = Savinginstallment::where('member_id', $request->data['member_id'])
                                           ->where('savingname_id', 2) // hard coded!
                                           ->where('due_date', $request->data['transactiondate'])
@@ -193,6 +194,7 @@ class GroupController extends Controller
             $newlongsaving->saving_id = $longsavingac->id;
             $newlongsaving->save();            
         }
+        // LongTerm Saving
 
         return 'success';
     }

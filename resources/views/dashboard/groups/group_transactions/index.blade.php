@@ -168,18 +168,6 @@
       });
     });
     $('#editable td').on('change', function(evt, newValue) {
-      // console.log(evt);
-      // console.log($('#'+evt.target.id).attr('member_id'));
-      // var member_id = $(this).attr('member_id');
-
-      // var loaninstallment = parseInt($('#loaninstallment' + member_id).text()) ? parseInt($('#loaninstallment' + member_id).text()) : 0;
-      // var generalsaving = parseInt($('#generalsaving' + member_id).text()) ? parseInt($('#generalsaving' + member_id).text()) : 0;
-      // var longsaving = parseInt($('#longsaving' + member_id).text()) ? parseInt($('#longsaving' + member_id).text()) : 0;
-      
-      // var totalcollection = loaninstallment + generalsaving + longsaving;
-      // $('#totalcollection' + member_id).text(totalcollection);
-      // console.log(totalcollection);
-
       // toastr.success(newValue + ' Added!', 'SUCCESS').css('width', '400px');
     });
 
@@ -197,7 +185,7 @@
       $('#netcollection' + member_id).text(netcollection);
 
       // now post the data
-      $.post("/transaction/store/api", {_token: '{{ csrf_token() }}', _method : 'POST', 
+      $.post("/group/transaction/store/api", {_token: '{{ csrf_token() }}', _method : 'POST', 
         data: {
           member_id: member_id,
           loaninstallment_id: loaninstallment_id,
