@@ -378,8 +378,6 @@ class MemberController extends Controller
           } else if($request->installment_type == 3) {
             $dateToPay = Carbon::parse($request->first_installment_date)->addMonths($i);
             if(date('D', strtotime($dateToPay)) == 'Fri') {
-              $dateToPay = Carbon::parse($dateToPay)->adddays(2);
-            } else if(date('D', strtotime($dateToPay)) == 'Sat') {
               $dateToPay = Carbon::parse($dateToPay)->adddays(1);
             } else {
               $dateToPay = $dateToPay;
@@ -436,8 +434,8 @@ class MemberController extends Controller
       $dateToPay = Carbon::parse($date);
       while ($days > 0) {
         $dateToPay = $dateToPay->adddays(1);
-        // 5 == Fri, 6 = Sat, tai 5 and 6 er moddher gulake grohon korbe
-        if (date('N', strtotime($dateToPay)) < 5 || date('N', strtotime($dateToPay)) > 6) {
+        // 5 == Fri, tai 5 baade baki gulake accept korbe
+        if (date('N', strtotime($dateToPay)) != 5) {
           $days--;
         }
       }

@@ -17,23 +17,55 @@
 
 @section('content')
   <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-8">
         <div class="panel panel-primary">
           <div class="panel-heading">Add Staff</div>
           {!! Form::open(['route' => 'dashboard.staffs.store', 'method' => 'POST']) !!}
           <div class="panel-body">
-            {!! Form::label('name', 'Staff Name *') !!}
-            {!! Form::text('name', null, array('class' => 'form-control', 'placeholder' => 'Staff Name', 'required' => '')) !!}<br/>
+            <div class="row">
+              <div class="col-md-6">
+                {!! Form::label('name', 'Staff Name *') !!}
+                {!! Form::text('name', null, array('class' => 'form-control', 'placeholder' => 'Staff Name', 'required' => '')) !!}<br/>
+              </div>
+              <div class="col-md-6">
+                {!! Form::label('phone', 'Mobile Number (11 Digit) *') !!}
+                {!! Form::text('phone', null, array('class' => 'form-control', 'placeholder' => 'Mobile Number (11 Digit)', 'onkeypress' => 'if(this.value.length==11) return false;', 'required' => '', 'autocomplete' => 'off')) !!}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                {!! Form::label('father', 'Father *') !!}
+                {!! Form::text('father', null, array('class' => 'form-control', 'placeholder' => 'Name of Father', 'required' => '')) !!}<br/>
+              </div>
+              <div class="col-md-6">
+                {!! Form::label('nid', 'NID *') !!}
+                {!! Form::text('nid', null, array('class' => 'form-control', 'placeholder' => 'NID', 'required' => '', 'autocomplete' => 'off')) !!}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                {!! Form::label('bank', 'Bank Name *') !!}
+                {!! Form::text('bank', null, array('class' => 'form-control', 'placeholder' => 'Bank Name', 'required' => '')) !!}<br/>
+              </div>
+              <div class="col-md-4">
+                {!! Form::label('acno', 'Bank Account No *') !!}
+                {!! Form::text('acno', null, array('class' => 'form-control', 'placeholder' => 'Bank Account No', 'required' => '', 'autocomplete' => 'off')) !!}
+              </div>
+              <div class="col-md-4">
+                {!! Form::label('checkno', 'Check No *') !!}
+                {!! Form::text('checkno', null, array('class' => 'form-control', 'placeholder' => 'Check No', 'required' => '', 'autocomplete' => 'off')) !!}
+              </div>
+            </div>
 
-            {!! Form::label('phone', 'Mobile Number (11 Digit) *') !!}
-            {!! Form::text('phone', null, array('class' => 'form-control', 'placeholder' => 'Mobile Number (11 Digit)', 'onkeypress' => 'if(this.value.length==11) return false;', 'required' => '', 'autocomplete' => 'off')) !!}<br/>
-
-
-            {!! Form::label('password', 'Password *') !!}
-            {!! Form::password('password', array('class' => 'form-control', 'placeholder' => 'Password', 'required' => '', 'autocomplete' => 'off')) !!}<br/>
-
-            {!! Form::label('password_confirmation', 'Confirm Password *') !!}
-            {!! Form::password('password_confirmation' , array('class' => 'form-control', 'placeholder' => 'Confirm Password', 'required' => '')) !!}
+            <div class="row">
+              <div class="col-md-6">
+                {!! Form::label('password', 'Password *') !!}
+                {!! Form::password('password', array('class' => 'form-control', 'placeholder' => 'Password', 'required' => '', 'autocomplete' => 'off')) !!}
+              </div>
+              <div class="col-md-6">
+                {!! Form::label('password_confirmation', 'Confirm Password *') !!}
+                {!! Form::password('password_confirmation' , array('class' => 'form-control', 'placeholder' => 'Confirm Password', 'required' => '')) !!}</div>
+            </div>
           </div>
           <div class="panel-footer">
             <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-o"></i> Save</button>
@@ -51,8 +83,8 @@
   <script type="text/javascript">
     setTimeout(function(){ 
       $('#phone').val('');
-    }, 500);
-    setTimeout(function(){ 
+      $('#acno').val('');
+      $('#checkno').val('');
       $('#password').val('');
     }, 500);
   </script>

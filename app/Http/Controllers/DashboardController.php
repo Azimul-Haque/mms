@@ -55,6 +55,11 @@ class DashboardController extends Controller
         $this->validate($request, [
           'name'             => 'required',
           'phone'            => 'required|unique:users',
+          'father'           => 'required',
+          'nid'              => 'required',
+          'bank'             => 'required',
+          'acno'             => 'required',
+          'checkno'          => 'required',
           'password'         => 'required|confirmed|min:6'
         ]);
 
@@ -65,6 +70,11 @@ class DashboardController extends Controller
         $staff->type = 'Member';
         $staff->email = $request->phone . '@surjosomobay.com';
         $staff->phone = $request->phone;
+        $staff->father = $request->father;
+        $staff->nid = $request->nid;
+        $staff->bank = $request->bank;
+        $staff->acno = $request->acno;
+        $staff->checkno = $request->checkno;
         $staff->password = bcrypt($request->password);
         $staff->save();
 
@@ -84,15 +94,60 @@ class DashboardController extends Controller
         $this->validate($request, [
           'name'             => 'required',
           'phone'            => 'required|unique:users,phone,'.$staff->id,
+          'father'           => 'required',
+          'nid'              => 'required',
+          'bank'             => 'required',
+          'acno'             => 'required',
+          'checkno'          => 'required',
           'password'         => 'required|confirmed|min:6'
         ]);
         
         $staff->name = $request->name;
         $staff->phone = $request->phone;
+        $staff->father = $request->father;
+        $staff->nid = $request->nid;
+        $staff->bank = $request->bank;
+        $staff->acno = $request->acno;
+        $staff->checkno = $request->checkno;
         $staff->password = bcrypt($request->password);
         $staff->save();
         
         Session::flash('success', 'Updated successfully!'); 
+        return redirect()->route('dashboard.staffs');
+    }
+
+    public function getAddGroupToStaff($id)
+    {
+        $staff = User::find($id);
+        return view('dashboard.staffs.addgroup')->withStaff($staff);
+    }
+
+    public function addGroupToStaff(Request $request)
+    {
+        $this->validate($request, [
+          'name'               => 'required',
+          'formation'          => 'required',
+          'meeting_day'        => 'required',
+          'village'            => 'required',
+          'min_savings_dep'    => 'sometimes',
+          'min_security_dep'   => 'sometimes',
+          'status'             => 'required',
+          'user_id'            => 'required',
+        ]);
+
+        $group = new Group;
+        $group->name = $request->name;
+        $group->formation = strtotime($request->formation);
+        $group->meeting_day = $request->meeting_day;
+        $group->village = $request->village;
+        // $group->min_savings_dep = $request->min_savings_dep;
+        // $group->min_security_dep = $request->min_security_dep;
+        $group->status = $request->status;
+        $group->status = $request->status;
+        $group->user_id = $request->user_id;
+        $group->save();
+
+        Session::flash('success', 'Added successfully!'); 
         return redirect()->route('dashboard.staffs');
     }
 
@@ -115,8 +170,8 @@ class DashboardController extends Controller
           'formation'          => 'required',
           'meeting_day'        => 'required',
           'village'            => 'required',
-          'min_savings_dep'    => 'required',
-          'min_security_dep'   => 'required',
+          'min_savings_dep'    => 'sometimes',
+          'min_security_dep'   => 'sometimes',
           'status'             => 'required',
           'user_id'            => 'required',
         ]);
@@ -126,8 +181,8 @@ class DashboardController extends Controller
         $group->formation = strtotime($request->formation);
         $group->meeting_day = $request->meeting_day;
         $group->village = $request->village;
-        $group->min_savings_dep = $request->min_savings_dep;
-        $group->min_security_dep = $request->min_security_dep;
+        // $group->min_savings_dep = $request->min_savings_dep;
+        // $group->min_security_dep = $request->min_security_dep;
         $group->status = $request->status;
         $group->status = $request->status;
         $group->user_id = $request->user_id;

@@ -76,6 +76,8 @@ Route::get('/staffs/create', ['as'=>'dashboard.staffs.create','uses'=>'Dashboard
 Route::post('/staffs/store', ['as'=>'dashboard.staffs.store','uses'=>'DashboardController@storeStaff']);
 Route::get('/staffs/{id}/edit', ['as'=>'dashboard.staffs.edit','uses'=>'DashboardController@editStaff']);
 Route::put('/staffs/{id}/update', ['as'=>'dashboard.staffs.update','uses'=>'DashboardController@updateStaff']);
+Route::get('/staffs/add/group/{id}', ['as'=>'dashboard.staffs.getaddgroup','uses'=>'DashboardController@getAddGroupToStaff']);
+Route::post('/staffs/add/group/store', ['as'=>'dashboard.staffs.addgroup','uses'=>'DashboardController@addGroupToStaff']);
 
 Route::get('/groups', ['as'=>'dashboard.groups','uses'=>'DashboardController@getGroups']);
 Route::get('/groups/create', ['as'=>'dashboard.groups.create','uses'=>'DashboardController@createGroup']);

@@ -17,7 +17,7 @@
       <div class="col-md-8">
         <div class="panel panel-primary">
           <div class="panel-heading">Add Group</div>
-          {!! Form::open(['route' => 'dashboard.groups.store', 'method' => 'POST']) !!}
+          {!! Form::open(['route' => 'dashboard.staffs.addgroup', 'method' => 'POST']) !!}
           <div class="panel-body">
             <div class="row">
               <div class="col-md-6">
@@ -72,10 +72,8 @@
               <div class="col-md-6">
                 {!! Form::label('user_id', 'Assign Staff *') !!}
                 <select name="user_id" id="user_id" class="form-control" required>
-                  <option selected="" disabled="">Select Staff</option>
-                  @foreach($staffs as $staff)
-                    <option value="{{ $staff->id }}">{{ $staff->name }}</option>
-                  @endforeach
+                  <option disabled="">Select Staff</option>
+                  <option value="{{ $staff->id }}" selected="">{{ $staff->name }}</option>
                 </select>
               </div>
             </div>

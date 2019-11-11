@@ -121,7 +121,7 @@
             </div>
           </div>
           <div class="panel-footer">
-            <button type="submit" class="btn btn-primary" title="কাজ চলছে" onclick="previewTable();"><i class="fa fa-floppy-o"></i> Save</button> {{-- submit --}}
+            <button type="submit" class="btn btn-primary" title="Disburse Loan" onclick="previewTable();"><i class="fa fa-floppy-o"></i> Save</button> {{-- submit --}}
             <button type="button" class="btn btn-success" id="loadInstallments" onclick="previewTable();"><i class="fa fa-refresh"></i> Load Installments</button>
           </div>
           {!! Form::close() !!}
@@ -209,8 +209,6 @@
         } else if(installment_type == 3) {
           var dateToPay = moment(first_installment_date).add(i*1, 'months').format('ddd, DD/MM/YYYY');
           if(dateToPay.includes('Fri')) {
-            dateToPay = moment(first_installment_date).add(i*1, 'months').add(2, 'days').format('ddd, DD/MM/YYYY');
-          } else if(dateToPay.includes('Sat')) {
             dateToPay = moment(first_installment_date).add(i*1, 'months').add(1, 'days').format('ddd, DD/MM/YYYY');
           } else {
             dateToPay = dateToPay;
@@ -239,8 +237,8 @@
       date = moment(date);
       while (days > 0) {
         date = date.add(1, 'days');
-        // 5 == Fri, 6 = Sat
-        if (date.isoWeekday() !== 5 && date.isoWeekday() !== 6) {
+        // 5 == Fri
+        if (date.isoWeekday() !== 5) {
           days -= 1;
         }
       }
