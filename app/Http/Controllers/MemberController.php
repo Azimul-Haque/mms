@@ -83,12 +83,12 @@ class MemberController extends Controller
           'present_house'         => 'required',
           'present_phone'         => 'required',
 
-          'permanent_district'    => 'required',
-          'permanent_upazilla'    => 'required',
-          'permanent_union'       => 'required',
-          'permanent_post'        => 'required',
-          'permanent_village'     => 'required',
-          'permanent_house'       => 'required',
+          'permanent_district'    => 'sometimes',
+          'permanent_upazilla'    => 'sometimes',
+          'permanent_union'       => 'sometimes',
+          'permanent_post'        => 'sometimes',
+          'permanent_village'     => 'sometimes',
+          'permanent_house'       => 'sometimes',
           'permanent_phone'       => 'sometimes',
         ]);
 
@@ -405,25 +405,27 @@ class MemberController extends Controller
         }
         // dd($installments_arr);
 
-        // add a mandatory long term account...
-        // add a mandatory long term account...
-        $checkacc = Saving::where('member_id', $m_id)
-                          ->where('savingname_id', 2) // hard coded!
-                          ->first();
-        
-        if(!empty($checkacc)) {
+        // add a mandatory long term account only if the installment type is daily...
+        // add a mandatory long term account only if the installment type is daily...
+        if($request->installment_type == 1) {
+          $checkacc = Saving::where('member_id', $m_id)
+                            ->where('savingname_id', 2) // hard coded!
+                            ->first();
           
-        } else {
-          $savingaccount = new Saving;
-          $savingaccount->savingname_id = 2; // 2 for long term account
-          $savingaccount->opening_date = date('Y-m-d', strtotime($request->disburse_date));
-          
-          $savingaccount->meeting_day = 1;
-          $savingaccount->installment_type = 2;
-          $savingaccount->minimum_deposit = 10;
-          $savingaccount->status = 1; // 1 means active/open
-          $savingaccount->member_id = $m_id;
-          $savingaccount->save();
+          if(!empty($checkacc)) {
+            
+          } else {
+            $savingaccount = new Saving;
+            $savingaccount->savingname_id = 2; // 2 for long term account
+            $savingaccount->opening_date = date('Y-m-d', strtotime($request->disburse_date));
+            
+            $savingaccount->meeting_day = 1;
+            $savingaccount->installment_type = 2;
+            $savingaccount->minimum_deposit = 10;
+            $savingaccount->status = 1; // 1 means active/open
+            $savingaccount->member_id = $m_id;
+            $savingaccount->save();
+          }
         }
 
         Session::flash('success', 'Added successfully!'); 

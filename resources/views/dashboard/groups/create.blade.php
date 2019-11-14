@@ -102,6 +102,7 @@
         format: 'MM dd, yyyy',
         todayHighlight: true,
         autoclose: true,
+        clearBtn: true,
       });
     });
 

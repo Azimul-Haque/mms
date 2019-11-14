@@ -86,7 +86,12 @@
                           $longsaving = $member->savinginstallments->where('member_id', $member->id)->where('savingname_id', 2)->where('due_date', $transactiondate)->first()->amount;
                         }
                       @endphp
+                      @if(!empty($member->savings->where('savingname_id', 2)->first()))
                       <td id="longsaving{{ $member->id }}" onchange="loancalcandpost({{ $member->id }}, {{ $loaninstallment->id }}, '{{ $transactiondate }}')">{{ $longsaving }}</td>
+                      @else
+                      <td readonly>N/A</td>
+                      @endif
+
                       <td id="totalcollection{{ $member->id }}" readonly>{{ $loaninstallment->paid_total + $generalsaving + $longsaving }}</td>
                       @php
                         $generalsavingwd = 0;
@@ -101,7 +106,13 @@
                           $longsavingwd = $member->savinginstallments->where('member_id', $member->id)->where('savingname_id', 2)->where('due_date', $transactiondate)->first()->withdraw;
                         }
                       @endphp
+                      
+                      @if(!empty($member->savings->where('savingname_id', 2)->first()))
                       <td id="longsavingwd{{ $member->id }}" onchange="loancalcandpost({{ $member->id }}, {{ $loaninstallment->id }}, '{{ $transactiondate }}')">{{ $longsavingwd }}</td>
+                      @else
+                      <td readonly>N/A</td>
+                      @endif
+                      
                       <td id="netcollection{{ $member->id }}" readonly>{{ $loaninstallment->paid_total + $generalsaving + $longsaving - $generalsavingwd - $longsavingwd }}</td>
                     </tr>
                     @endif

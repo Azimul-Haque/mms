@@ -167,16 +167,19 @@
         format: 'MM dd, yyyy',
         todayHighlight: true,
         autoclose: true,
+        clearBtn: true,
       });
       $("#first_installment_date").datepicker({
         format: 'MM dd, yyyy',
         todayHighlight: true,
         autoclose: true,
+        clearBtn: true,
       });
       $("#closing_date").datepicker({
         format: 'MM dd, yyyy',
         todayHighlight: true,
         autoclose: true,
+        clearBtn: true,
       });
     });
     function calculateTotalDisburse() {

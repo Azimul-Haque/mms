@@ -202,16 +202,19 @@
         format: 'MM dd, yyyy',
         todayHighlight: true,
         autoclose: true,
+        clearBtn: true,
       });
       $("#dob").datepicker({
         format: 'MM dd, yyyy',
         todayHighlight: true,
         autoclose: true,
+        clearBtn: true,
       });
       $("#closing_date").datepicker({
         format: 'MM dd, yyyy',
         todayHighlight: true,
         autoclose: true,
+        clearBtn: true,
       });
     });
 
