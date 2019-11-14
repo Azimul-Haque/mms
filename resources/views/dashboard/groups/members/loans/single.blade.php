@@ -152,6 +152,9 @@
               </tr>
             </thead>
             <tbody>
+              @php
+                $tempoutstandingpaid = 0;
+              @endphp
               @foreach($loan->loaninstallments as $loaninstallment)
               <tr>
                 <td>{{ $loaninstallment->installment_no }}</td>
@@ -163,8 +166,15 @@
                 <td>{{ $loaninstallment->paid_interest }}</td>
                 <td>{{ $loaninstallment->paid_total }}</td>
 {{--                 <td>{{ $loaninstallment->outstanding_principal }}</td>
-                <td>{{ $loaninstallment->outstanding_interest }}</td> --}}
-                <td>{{ $loaninstallment->outstanding_total }}</td>
+                <td>{{ $loaninstallment->outstanding_interest }}</td>
+                <td>{{ $loaninstallment->outstanding_total }}</td> --}}
+                <td>
+                  @php
+                    $tempoutstandingpaid = $tempoutstandingpaid + $loaninstallment->paid_total;
+                    $tempoutstanding = $loaninstallment->loan->total_disbursed - $tempoutstandingpaid;
+                  @endphp
+                  {{ $tempoutstanding }}
+                </td>
               </tr>
               @endforeach
             </tbody>

@@ -115,6 +115,7 @@ class GroupController extends Controller
         $installment->paid_principal = $installment->installment_principal; 
         $installment->paid_interest = $installment->installment_interest;
         $installment->paid_total = $request->data['loaninstallment']; // assuming the total is paid
+        // $installment->outstanding_total = $installment->loan->total_outstanding; // from the main loan account table
         $installment->save();
         
         // save the deposits(General and LongTerm)

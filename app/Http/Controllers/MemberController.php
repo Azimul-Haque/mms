@@ -326,14 +326,17 @@ class MemberController extends Controller
 
     public function storeLoanAccount(Request $request, $s_id, $g_id, $m_id)
     {
-        $checkacc = Loan::where('member_id', $m_id)
-                        ->where('loanname_id', $request->loanname_id)
-                        ->where('status', 1)->first();
-        
-        if(!empty($checkacc)) {
-          Session::flash('warning', 'This member already has an ACTIVE account like this type.'); 
-          return redirect()->route('dashboard.member.loans', [$s_id, $g_id, $m_id]);
+        if($request->loanname_id == 1) {
+          $checkacc = Loan::where('member_id', $m_id)
+                          ->where('loanname_id', 1) // single primary ac, multiple product loan
+                          ->where('status', 1) // 1 means disbursed, 0 means closed
+                          ->first();
+          if(!empty($checkacc)) {
+            Session::flash('warning', 'This member already has an ACTIVE primary account.'); 
+            return redirect()->route('dashboard.member.loans', [$s_id, $g_id, $m_id]);
+          }
         }
+        
 
         $this->validate($request, [
           'loanname_id'                 => 'required',
@@ -549,6 +552,7 @@ class MemberController extends Controller
         $installment->paid_principal = $installment->installment_principal; 
         $installment->paid_interest = $installment->installment_interest;
         $installment->paid_total = $request->data['loaninstallment']; // assuming the total is paid
+        $installment->outstanding_total = $installment->loan->total_outstanding; // from the main loan account table
         $installment->save();
 
         return $installment;
