@@ -54,7 +54,7 @@
       </a>
     </div>
     <div class="col-md-3 col-sm-6 col-xs-12">
-      <a href="{{ route('dashboard.loanandsavingnames') }}">
+      <a href="{{ route('olddata.index') }}">
           <div class="info-box">
             <span class="info-box-icon bg-yellow"><i class="fa fa-address-book-o"></i></span>
 

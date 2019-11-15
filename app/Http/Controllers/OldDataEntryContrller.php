@@ -30,5 +30,22 @@ class OldDataEntryContrller extends Controller
         $this->middleware('auth');
     }
 
-    
+    public function getIndex()
+    {
+      return view('dashboard.olddata.index');
+    }
+
+    public function getCreate()
+    {
+      	$groups = Group::all();
+      	$loannames = Loanname::all();
+      	$savingnames = Savingname::all();
+      	$schemenames = Schemename::all();
+        
+      	return view('dashboard.olddata.create')
+        					->withGroups($groups)
+        					->withLoannames($loannames)
+        					->withSavingnames($savingnames)
+        					->withSchemenames($schemenames);
+    }
 }

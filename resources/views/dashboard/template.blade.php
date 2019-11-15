@@ -10,7 +10,7 @@
     <h1>
       Committees
       <div class="pull-right">
-        <button class="btn btn-success" data-toggle="modal" data-target="#addMemberModal" data-backdrop="static"id=""><i class="fa fa-fw fa-plus" aria-hidden="true"></i> Add Member</button>
+        <button class="btn btn-success" data-toggle="modal" data-target="#addMemberModal" data-backdrop="static" id=""><i class="fa fa-fw fa-plus" aria-hidden="true"></i> Add Member</button>
       </div>
     </h1>
 @stop
