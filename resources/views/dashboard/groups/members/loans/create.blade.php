@@ -186,8 +186,9 @@
       var principal_amount = $('#principal_amount').val() ? $('#principal_amount').val() : 0; // a ? a : 0;
       var down_payment = $('#down_payment').val() ? $('#down_payment').val() : 0; // a ? a : 0;
       var left_pricipal_amount = parseFloat(principal_amount) - parseFloat(down_payment); // if product(!0) or loan(0)
-      var service_charge = $('#service_charge').val() ? $('#service_charge').val() : 0; // a ? a : 0;
+      var service_charge = principal_amount * 0.20; // 20%
       var total_disbursed = parseFloat(left_pricipal_amount) + parseFloat(service_charge);
+      $('#service_charge').val(service_charge);
       $('#total_disbursed').val(total_disbursed);
     };
 

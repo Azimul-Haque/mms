@@ -3,7 +3,7 @@
 @section('title', 'Microfinance Management')
 
 @section('css')
-
+  <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap-datepicker.min.css') }}">
 @stop
 
 @section('content_header')
@@ -274,7 +274,7 @@
               {!! Form::label('product_loanname_id', 'Program') !!}
               <select name="product_loanname_id" class="form-control">
                 <option value="" disabled="">Select Program</option>
-                <option value="1" selected="">PRIMARY LOAN</option>
+                <option value="2" selected="">PRODUCT LOAN</option>
               </select>
               
               {!! Form::label('product_disburse_date', 'Disburse Date') !!}
@@ -349,61 +349,83 @@
             </div>
             <div class="col-md-3">
               <h4>General Saving Account *</h4>
-              {!! Form::label('savingname_id', 'Program *') !!}
-              <select name="savingname_id" class="form-control" required="">
-                <option value="" selected="" disabled="">Select Program</option>
-                @foreach($savingnames as $savingname)
-                  <option value="{{ $savingname->id }}">{{ $savingname->name }}</option>
-                @endforeach
+              {!! Form::label('general_savingname_id', 'Program *') !!}
+              <select name="general_savingname_id" class="form-control" required="">
+                <option value="" disabled="">Select Program</option>
+                <option value="1" selected="">GENERAL ACCOUNT</option>
               </select>
-              <div class="panel-body">
-                <div class="row">
-                  <div class="col-md-6">
-                    
-                  </div>
-                  <div class="col-md-6">
-                    {!! Form::label('opening_date', 'Opening Date *') !!}
-                    {!! Form::text('opening_date', null, array('class' => 'form-control', 'placeholder' => 'Opening Date', 'required' => '', 'autocomplete' => 'off', 'readonly' => '')) !!}
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-6">
-                    {!! Form::label('installment_type', 'Installment Type *') !!}
-                    <select name="installment_type" class="form-control" required="">
-                      <option value="" selected="" disabled="">Select Installment Type</option>
-                      <option value="1">Daily</option>
-                      <option value="2">Weekly</option>
-                      <option value="3">Monthly</option>
-                    </select>
-                  </div>
-                  <div class="col-md-6">
-                    {!! Form::label('meeting_day', 'Meeeting Day *') !!}
-                    <select name="meeting_day" class="form-control" required="">
-                      <option value="" selected="" disabled="">Select Meeeting Day</option>
-                      <option value="1">Saturday</option>
-                      <option value="2">Sunday</option>
-                      <option value="3">Monday</option>
-                      <option value="4">Tuesday</option>
-                      <option value="5">Wednesday</option>
-                      <option value="6">Thursday</option>
-                      <option value="7">Friday</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-6">
-                    {!! Form::label('minimum_deposit', 'Minimum Deposit') !!}
-                    {!! Form::text('minimum_deposit', null, array('class' => 'form-control', 'placeholder' => 'Minimum Diposit Amount', 'autocomplete' => 'off')) !!}
-                  </div>
-                  <div class="col-md-6">
-                    {!! Form::label('closing_date', 'Closing Date (Optional)') !!}
-                    {!! Form::text('closing_date', null, array('class' => 'form-control', 'placeholder' => 'Closing Date', 'autocomplete' => 'off', 'readonly' => '')) !!}
-                  </div>
-                </div>
+
+              {!! Form::label('general_opening_date', 'Opening Date *') !!}
+              {!! Form::text('general_opening_date', null, array('class' => 'form-control', 'placeholder' => 'Opening Date', 'required' => '', 'autocomplete' => 'off', 'readonly' => '')) !!}
+
+              {!! Form::label('general_installment_type', 'Installment Type *') !!}
+              <select name="general_installment_type" class="form-control" required="">
+                <option value="" selected="" disabled="">Select Installment Type</option>
+                <option value="1">Daily</option>
+                <option value="2">Weekly</option>
+                <option value="3">Monthly</option>
+              </select>
+
+              {!! Form::label('general_meeting_day', 'Meeeting Day *') !!}
+              <select name="general_meeting_day" class="form-control" required="">
+                <option value="" selected="" disabled="">Select Meeeting Day</option>
+                <option value="1">Saturday</option>
+                <option value="2">Sunday</option>
+                <option value="3">Monday</option>
+                <option value="4">Tuesday</option>
+                <option value="5">Wednesday</option>
+                <option value="6">Thursday</option>
+                <option value="7">Friday</option>
+              </select>
+
+              {!! Form::label('general_closing_date', 'Closing Date (Optional)') !!}
+              {!! Form::text('general_closing_date', null, array('class' => 'form-control', 'placeholder' => 'Closing Date', 'autocomplete' => 'off', 'readonly' => '')) !!}
+
+              {!! Form::label('general_total_amount_so_far', 'Total Amount Saved') !!}
+              <div class="input-group">
+                <span class="input-group-addon">৳</span>
+                {!! Form::text('general_total_amount_so_far', null, array('class' => 'form-control', 'placeholder' => 'Total Amount Saved', 'autocomplete' => 'off')) !!}
               </div>
             </div>
             <div class="col-md-3">
               <h4>Long Term Saving Account (If Any)</h4>
+              {!! Form::label('longterm_savingname_id', 'Program') !!}
+              <select name="longterm_savingname_id" class="form-control">
+                <option value="" disabled="">Select Program</option>
+                <option value="2" selected="">LONG TERM ACCOUNT</option>
+              </select>
+
+              {!! Form::label('longterm_opening_date', 'Opening Date') !!}
+              {!! Form::text('longterm_opening_date', null, array('class' => 'form-control', 'placeholder' => 'Opening Date', 'autocomplete' => 'off', 'readonly' => '')) !!}
+
+              {!! Form::label('longterm_installment_type', 'Installment Type') !!}
+              <select name="longterm_installment_type" class="form-control">
+                <option value="" selected="" disabled="">Select Installment Type</option>
+                <option value="1">Daily</option>
+                <option value="2">Weekly</option>
+                <option value="3">Monthly</option>
+              </select>
+
+              {!! Form::label('longterm_meeting_day', 'Meeeting Day') !!}
+              <select name="longterm_meeting_day" class="form-control">
+                <option value="" selected="" disabled="">Select Meeeting Day</option>
+                <option value="1">Saturday</option>
+                <option value="2">Sunday</option>
+                <option value="3">Monday</option>
+                <option value="4">Tuesday</option>
+                <option value="5">Wednesday</option>
+                <option value="6">Thursday</option>
+                <option value="7">Friday</option>
+              </select>
+
+              {!! Form::label('longterm_closing_date', 'Closing Date (Optional)') !!}
+              {!! Form::text('longterm_closing_date', null, array('class' => 'form-control', 'placeholder' => 'Closing Date', 'autocomplete' => 'off', 'readonly' => '')) !!}
+
+              {!! Form::label('longterm_total_amount_so_far', 'Total Amount Saved') !!}
+              <div class="input-group">
+                <span class="input-group-addon">৳</span>
+                {!! Form::text('longterm_total_amount_so_far', null, array('class' => 'form-control', 'placeholder' => 'Total Amount Saved', 'autocomplete' => 'off')) !!}
+              </div>
             </div>
           </div>
         </div>
@@ -481,19 +503,45 @@
         autoclose: true,
         clearBtn: true,
       });
+      $("#general_opening_date").datepicker({
+        format: 'MM dd, yyyy',
+        todayHighlight: true,
+        autoclose: true,
+        clearBtn: true,
+      });
+      $("#general_closing_date").datepicker({
+        format: 'MM dd, yyyy',
+        todayHighlight: true,
+        autoclose: true,
+        clearBtn: true,
+      });
+      $("#longterm_opening_date").datepicker({
+        format: 'MM dd, yyyy',
+        todayHighlight: true,
+        autoclose: true,
+        clearBtn: true,
+      });
+      $("#longterm_closing_date").datepicker({
+        format: 'MM dd, yyyy',
+        todayHighlight: true,
+        autoclose: true,
+        clearBtn: true,
+      });
     });
     function primaryCalculateTotalDisburse() {
       var primary_principal_amount = $('#primary_principal_amount').val() ? $('#primary_principal_amount').val() : 0; // a ? a : 0;
-      var primary_service_charge = $('#primary_service_charge').val() ? $('#primary_service_charge').val() : 0; // a ? a : 0;
+      var primary_service_charge = primary_principal_amount * 0.20; // 20%
       var primary_total_disbursed = parseFloat(primary_principal_amount) + parseFloat(primary_service_charge);
+      $('#primary_service_charge').val(primary_service_charge);
       $('#primary_total_disbursed').val(primary_total_disbursed);
     };
     function productCalculateTotalDisburse() {
       var product_principal_amount = $('#product_principal_amount').val() ? $('#product_principal_amount').val() : 0; // a ? a : 0;
       var product_down_payment = $('#product_down_payment').val() ? $('#product_down_payment').val() : 0; // a ? a : 0;
       var product_left_pricipal_amount = parseFloat(product_principal_amount) - parseFloat(product_down_payment); // if product(!0) or loan(0)
-      var product_service_charge = $('#product_service_charge').val() ? $('#product_service_charge').val() : 0; // a ? a : 0;
+      var product_service_charge = product_principal_amount * 0.20; // 20%
       var product_total_disbursed = parseFloat(product_left_pricipal_amount) + parseFloat(product_service_charge);
+      $('#product_service_charge').val(product_service_charge);
       $('#product_total_disbursed').val(product_total_disbursed);
     };
   </script>
