@@ -134,6 +134,7 @@ Route::get('/group/{s_id}/{g_id}/features', ['as'=>'group.features','uses'=>'Gro
 // old data entry
 Route::get('/old/data/entry', ['as'=>'olddata.index','uses'=>'OldDataEntryContrller@getIndex']);
 Route::get('/old/data/entry/create', ['as'=>'olddata.create','uses'=>'OldDataEntryContrller@getCreate']);
+Route::post('/old/data/entry/store', ['as'=>'olddata.store','uses'=>'OldDataEntryContrller@storeOldMember']);
 
 // Route::get('/dashboard/committee', ['as'=>'dashboard.committee','uses'=>'DashboardController@getCommittee']);
 // Route::post('/dashboard/committee', ['as'=>'dashboard.storecommittee','uses'=>'DashboardController@storeCommittee']);

@@ -15,13 +15,13 @@
     <div class="col-md-12">
       <div class="panel panel-primary">
         <div class="panel-heading">Add Member</div>
-        {{-- {!! Form::open(['route' => ['dashboard.members.store', $staff->id, $group->id], 'method' => 'POST']) !!} --}}
+        {!! Form::open(['route' => ['olddata.store'], 'method' => 'POST']) !!}
         <div class="panel-body">
           <div class="row">
             <div class="col-md-4">
               {!! Form::label('group_id', 'Group *') !!}
               <select name="group_id" class="form-control" required>
-                <option selected="" disabled="">Select Group</option>
+                <option value="" selected="" disabled="">Select Group</option>
                 @foreach($groups as $group)
                 <option value="{{ $group->id }}">{{ $group->name }}</option>
                 @endforeach
