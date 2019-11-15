@@ -54,16 +54,16 @@
       </a>
     </div>
     <div class="col-md-3 col-sm-6 col-xs-12">
-      {{-- <a href="#!">
+      <a href="{{ route('dashboard.loanandsavingnames') }}">
           <div class="info-box">
             <span class="info-box-icon bg-yellow"><i class="fa fa-address-book-o"></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-text">At A</span>
-              <span class="info-box-number">Glance</span>
+              <span class="info-box-text">Old Data</span>
+              <span class="info-box-number">Entry</span>
             </div>
           </div>
-      </a> --}}
+      </a>
     </div>
   </div>
   @endif

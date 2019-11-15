@@ -29,6 +29,7 @@ class MemberController extends Controller
         parent::__construct();
         $this->middleware('auth');
     }
+    
     public function getMembers($s_id, $g_id)
     {
     	$staff = User::find($s_id);
