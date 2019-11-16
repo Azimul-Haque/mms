@@ -59,7 +59,7 @@
                   <td>{{ $member->profession }}</td>
                   <td>{{ $member->group->name }}</td>
                   <td>
-                    <a href="#!" class="btn btn-success btn-sm" title="কাজ চলছে!"><i class="fa fa-pencil"></i> Edit</a>
+                    <a href="#!" class="btn btn-success btn-sm" title="See/ Edit Member"><i class="fa fa-pencil"></i> Edit</a>
                     {{-- <button class="btn btn-danger btn-sm" title="Delete Member" disabled><i class="fa fa-trash"></i> Delete</button> --}}
                   </td>
                 </tr>

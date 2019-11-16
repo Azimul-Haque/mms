@@ -53,7 +53,7 @@
                     @endif
                   </td>
                   <td>
-                    <a href="{{ route('dashboard.loans.single', [$staff->id, $group->id, $member->id, $loan->id]) }}" class="btn btn-success btn-sm" title="কাজ চলছে!"><i class="fa fa-pencil"></i> Edit</a>
+                    <a href="{{ route('dashboard.loans.single', [$staff->id, $group->id, $member->id, $loan->id]) }}" class="btn btn-success btn-sm" title="See Loan"><i class="fa fa-pencil"></i> Edit</a>
                     {{-- <button class="btn btn-danger btn-sm" title="Delete Member" disabled><i class="fa fa-trash"></i> Delete</button> --}}
                   </td>
                 </tr>
