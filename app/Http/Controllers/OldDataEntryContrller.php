@@ -183,16 +183,16 @@ class OldDataEntryContrller extends Controller
         		$accugenloaninstallment = new Loaninstallment;
         		$accugenloaninstallment->due_date = date('Y-m-d');
         		$accugenloaninstallment->installment_no = 0; // for being the for being the first one 
-        		$accugenloaninstallment->installment_principal = ($loan->primary_total_paid - ($loan->primary_total_paid * 0.20));
-        		$accugenloaninstallment->installment_interest = ($loan->primary_total_paid * 0.20);
-        		$accugenloaninstallment->installment_total = $loan->primary_total_paid;
+        		$accugenloaninstallment->installment_principal = ($request->primary_total_paid - ($request->primary_total_paid * 0.20));
+        		$accugenloaninstallment->installment_interest = ($request->primary_total_paid * 0.20);
+        		$accugenloaninstallment->installment_total = $request->primary_total_paid;
 
         		// same as above
-        		$accugenloaninstallment->paid_principal = ($loan->primary_total_paid - ($loan->primary_total_paid * 0.20));
-        		$accugenloaninstallment->paid_interest = ($loan->primary_total_paid * 0.20);
-        		$accugenloaninstallment->paid_total = $loan->primary_total_paid;
+        		$accugenloaninstallment->paid_principal = ($request->primary_total_paid - ($request->primary_total_paid * 0.20));
+        		$accugenloaninstallment->paid_interest = ($request->primary_total_paid * 0.20);
+        		$accugenloaninstallment->paid_total = $request->primary_total_paid;
 
-        		$accugenloaninstallment->outstanding_total = $loan->total_outstanding;
+        		$accugenloaninstallment->outstanding_total = $request->primary_total_disbursed - $request->primary_total_paid;
         		$accugenloaninstallment->loan_id = $loan->id;
         		$accugenloaninstallment->save();
 
@@ -273,16 +273,16 @@ class OldDataEntryContrller extends Controller
         	$acculongtloaninstallment = new Loaninstallment;
         	$acculongtloaninstallment->due_date = date('Y-m-d');
         	$acculongtloaninstallment->installment_no = 0; // for being the for being the first one 
-        	$acculongtloaninstallment->installment_principal = ($loan->product_total_paid - ($loan->product_total_paid * $product_service_charge_percent));
-        	$acculongtloaninstallment->installment_interest = ($loan->product_total_paid * $product_service_charge_percent);
-        	$acculongtloaninstallment->installment_total = $loan->product_total_paid;
+        	$acculongtloaninstallment->installment_principal = ($request->product_total_paid - ($request->product_total_paid * $product_service_charge_percent));
+        	$acculongtloaninstallment->installment_interest = ($request->product_total_paid * $product_service_charge_percent);
+        	$acculongtloaninstallment->installment_total = $request->product_total_paid;
 
         	// same as above
-        	$acculongtloaninstallment->paid_principal = ($loan->product_total_paid - ($loan->product_total_paid * $product_service_charge_percent));
-        	$acculongtloaninstallment->paid_interest = ($loan->product_total_paid * $product_service_charge_percent);
-        	$acculongtloaninstallment->paid_total = $loan->product_total_paid;
+        	$acculongtloaninstallment->paid_principal = ($request->product_total_paid - ($request->product_total_paid * $product_service_charge_percent));
+        	$acculongtloaninstallment->paid_interest = ($request->product_total_paid * $product_service_charge_percent);
+        	$acculongtloaninstallment->paid_total = $request->product_total_paid;
 
-        	$acculongtloaninstallment->outstanding_total = $loan->total_outstanding;
+        	$acculongtloaninstallment->outstanding_total = $request->product_total_disbursed - $request->product_total_paid;
         	$acculongtloaninstallment->loan_id = $loan->id;
         	$acculongtloaninstallment->save();
 
