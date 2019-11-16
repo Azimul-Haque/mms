@@ -175,9 +175,25 @@ class OldDataEntryContrller extends Controller
         		$loan->total_disbursed = $request->primary_total_disbursed;
         		$loan->total_paid = $request->primary_total_paid;
         		$loan->total_outstanding = $request->primary_total_disbursed - $request->primary_total_paid;
-        		$loan->status = $request->primary_status; // 1 means disbursed, 0 means closed
+        		$loan->status = $request->primary_status ? $request->primary_status : 1; // 1 means disbursed, 0 means closed
         		$loan->member_id = $member->id;
         		$loan->save();
+
+        		// add the accumulated paid amount as an installment
+        		$acculoaninstallment = new Loaninstallment;
+        		$acculoaninstallment->due_date = date('Y-m-d');
+        		$acculoaninstallment->installment_no = 0; // for being the for being the first one 
+        		$acculoaninstallment->installment_principal = ($loan->primary_total_paid - ($loan->primary_total_paid * 0.20)) / $loan->installments;
+        		$acculoaninstallment->installment_interest = ($loan->primary_total_paid * 0.20) / $loan->installments;
+        		$acculoaninstallment->installment_total = $loan->primary_total_paid / $loan->installments;
+
+        		$acculoaninstallment->paid_principal = ($loan->primary_total_paid - ($loan->primary_total_paid * 0.20)) / $loan->installments;
+        		$acculoaninstallment->paid_interest = ($loan->primary_total_paid * 0.20) / $loan->installments;
+        		$acculoaninstallment->paid_total = 0.00;
+
+        		$acculoaninstallment->outstanding_total = $loan->total_outstanding;
+        		$acculoaninstallment->loan_id = $loan->id;
+        		$acculoaninstallment->save();
 
         		// add the installments of this account
         		for($i=0; $i<$request->primary_installments; $i++) 
@@ -245,7 +261,7 @@ class OldDataEntryContrller extends Controller
         	$loan->total_disbursed = $request->product_total_disbursed;
         	$loan->total_paid = $request->product_total_paid;
         	$loan->total_outstanding = $request->product_total_disbursed - $request->product_total_paid;
-        	$loan->status = $request->product_status; // 1 means disbursed, 0 means closed
+        	$loan->status = $request->product_status ? $request->product_status : 1; // 1 means disbursed, 0 means closed
         	$loan->member_id = $member->id;
         	$loan->save();
 
@@ -326,7 +342,7 @@ class OldDataEntryContrller extends Controller
         		$oldsaving->amount = $request->general_total_amount_so_far;
         		$oldsaving->withdraw = $request->general_total_withdraw_so_far;
         		$oldsaving->balance = $request->general_total_amount_so_far - $request->general_total_withdraw_so_far;
-        		$oldsaving->member_id = $request->data['member_id'];
+        		$oldsaving->member_id = $member->id;
         		$oldsaving->savingname_id = 1; // hard coded, 1 is for general saving!
         		$oldsaving->saving_id = $savingaccount->id;
         		$oldsaving->save();
@@ -371,14 +387,14 @@ class OldDataEntryContrller extends Controller
         	$oldsaving->amount = $request->longterm_total_amount_so_far;
         	$oldsaving->withdraw = $request->longterm_total_withdraw_so_far;
         	$oldsaving->balance = $request->longterm_total_amount_so_far - $request->longterm_total_withdraw_so_far;
-        	$oldsaving->member_id = $request->data['member_id'];
+        	$oldsaving->member_id = $member->id;
         	$oldsaving->savingname_id = 2; // hard coded, 2 is for long term saving!
         	$oldsaving->saving_id = $savingaccount->id;
         	$oldsaving->save();
         }
 
-        // Session::flash('success', 'Added successfully (with a default General Saving Account)!'); 
-        // return redirect()->route('dashboard.members', [$s_id, $g_id]);
+        Session::flash('success', 'Added successfully!'); 
+        return redirect()->route('olddata.index');
     }
 
     public function addWeekdays($date, $days) {
