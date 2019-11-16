@@ -147,20 +147,20 @@ class OldDataEntryContrller extends Controller
         	if(!empty($checkacc)) {
         	  // Session::flash('warning', 'This member already has an ACTIVE primary account.');
         	} else {
-        		$this->validate($request, [
-        		  'primary_loanname_id'                 => 'required',
-        		  'primary_disburse_date'               => 'required',
-        		  'primary_installment_type'            => 'required',
-        		  'primary_installments'                => 'required', // baki installment aar ki...
-        		  'primary_first_installment_date'      => 'required',
-        		  'primary_schemename_id'               => 'required',
-        		  'primary_principal_amount'            => 'required',
-        		  'primary_service_charge'              => 'required',
-        		  'primary_total_disbursed'             => 'required',
-        		  'primary_total_paid'                  => 'required', // aage to kichu pay korse...
-        		  'primary_closing_date'                => 'sometimes',
-        		  'primary_status'                      => 'sometimes'
-        		]);
+        		// $this->validate($request, [
+        		//   'primary_loanname_id'                 => 'required',
+        		//   'primary_disburse_date'               => 'required',
+        		//   'primary_installment_type'            => 'required',
+        		//   'primary_installments'                => 'required', // baki installment aar ki...
+        		//   'primary_first_installment_date'      => 'required',
+        		//   'primary_schemename_id'               => 'required',
+        		//   'primary_principal_amount'            => 'required',
+        		//   'primary_service_charge'              => 'required',
+        		//   'primary_total_disbursed'             => 'required',
+        		//   'primary_total_paid'                  => 'required', // aage to kichu pay korse...
+        		//   'primary_closing_date'                => 'sometimes',
+        		//   'primary_status'                      => 'sometimes'
+        		// ]);
 
         		$loan = new Loan;
         		$loan->loanname_id = $request->primary_loanname_id;
@@ -234,21 +234,6 @@ class OldDataEntryContrller extends Controller
         // add product account if any...
         if(($request->product_disburse_date != null || $request->product_disburse_date != '') && ($request->product_total_disbursed != null || $request->product_total_disbursed != '')) 
         {
-        	$this->validate($request, [
-        	  'product_loanname_id'                 => 'required',
-        	  'product_disburse_date'               => 'required',
-        	  'product_installment_type'            => 'required',
-        	  'product_installments'                => 'required', // baki installment aar ki...
-        	  'product_first_installment_date'      => 'required',
-        	  'product_schemename_id'               => 'required',
-        	  'product_principal_amount'            => 'required',
-        	  'product_service_charge'              => 'required',
-        	  'product_total_disbursed'             => 'required',
-        	  'product_total_paid'                  => 'required', // aage to kichu pay korse...
-        	  'product_closing_date'                => 'sometimes',
-        	  'product_status'                      => 'sometimes'
-        	]);
-
         	$loan = new Loan;
         	$loan->loanname_id = $request->product_loanname_id;
         	$loan->disburse_date = date('Y-m-d', strtotime($request->product_disburse_date));
@@ -329,16 +314,16 @@ class OldDataEntryContrller extends Controller
         	if(!empty($checkacc)) {
         	  // Session::flash('warning', 'This member already has an account like this type.');
         	} else {
-        		$this->validate($request, [
-        		  'general_savingname_id'               => 'required',
-        		  'general_opening_date'                => 'required',
-        		  'general_meeting_day'                 => 'required',
-        		  'general_installment_type'            => 'required',
-        		  'general_minimum_deposit'             => 'sometimes',
-        		  'general_closing_date'                => 'sometimes',
-        		  'general_total_amount_so_far'         => 'sometimes',
-        		  'general_total_withdraw_so_far'       => 'sometimes'
-        		]);
+        		// $this->validate($request, [
+        		//   'general_savingname_id'               => 'required',
+        		//   'general_opening_date'                => 'required',
+        		//   'general_meeting_day'                 => 'required',
+        		//   'general_installment_type'            => 'required',
+        		//   'general_minimum_deposit'             => 'sometimes',
+        		//   'general_closing_date'                => 'sometimes',
+        		//   'general_total_amount_so_far'         => 'sometimes',
+        		//   'general_total_withdraw_so_far'       => 'sometimes'
+        		// ]);
 
         		$savingaccount = new Saving;
         		$savingaccount->savingname_id = $request->general_savingname_id;
@@ -374,17 +359,6 @@ class OldDataEntryContrller extends Controller
         // add long term saving account if any...
         if(($request->longterm_opening_date != null || $request->longterm_opening_date != '') && ($request->longterm_installment_type != null || $request->longterm_installment_type != '')) 
         {
-        	$this->validate($request, [
-        	  'longterm_savingname_id'               => 'required',
-        	  'longterm_opening_date'                => 'required',
-        	  'longterm_meeting_day'                 => 'required',
-        	  'longterm_installment_type'            => 'required',
-        	  'longterm_minimum_deposit'             => 'sometimes',
-        	  'longterm_closing_date'                => 'sometimes',
-        	  'longterm_total_amount_so_far'         => 'sometimes',
-        	  'longterm_total_withdraw_so_far'       => 'sometimes'
-        	]);
-
         	$savingaccount = new Saving;
         	$savingaccount->savingname_id = $request->longterm_savingname_id;
         	$savingaccount->opening_date = date('Y-m-d', strtotime($request->longterm_opening_date));
