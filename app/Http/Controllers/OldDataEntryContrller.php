@@ -313,7 +313,9 @@ class OldDataEntryContrller extends Controller
         		}
         		$savingaccount->meeting_day = $request->general_meeting_day;
         		$savingaccount->installment_type = $request->general_installment_type;
-        		$savingaccount->minimum_deposit = $request->general_minimum_deposit;
+        		$savingaccount->minimum_deposit = 0.00;
+        		$savingaccount->total_amount = $request->general_total_amount_so_far;
+        		$savingaccount->withdraw = $request->general_total_withdraw_so_far;
         		$savingaccount->status = 1; // 1 means active/open
         		$savingaccount->member_id = $member->id;
         		$savingaccount->save();
@@ -322,15 +324,57 @@ class OldDataEntryContrller extends Controller
         		$oldsaving = new Savinginstallment;
         		$oldsaving->due_date = date('Y-m-d');
         		$oldsaving->amount = $request->general_total_amount_so_far;
-        		$oldsaving->withdraw = 0.00;
-        		$oldsaving->balance = $gensavingac->total_amount - $gensavingac->withdraw;
+        		$oldsaving->withdraw = $request->general_total_withdraw_so_far;
+        		$oldsaving->balance = $request->general_total_amount_so_far - $request->general_total_withdraw_so_far;
         		$oldsaving->member_id = $request->data['member_id'];
-        		$oldsaving->savingname_id = 1; // hard coded!
-        		$oldsaving->saving_id = $gensavingac->id;
+        		$oldsaving->savingname_id = 1; // hard coded, 1 is for general saving!
+        		$oldsaving->saving_id = $savingaccount->id;
         		$oldsaving->save();
         	}
+        }
 
-        	
+        // add long term saving account if any...
+        // add long term saving account if any...
+        if(($request->longterm_opening_date != null || $request->longterm_opening_date != '') && ($request->longterm_installment_type != null || $request->longterm_installment_type != '')) 
+        {
+        	$this->validate($request, [
+        	  'longterm_savingname_id'               => 'required',
+        	  'longterm_opening_date'                => 'required',
+        	  'longterm_meeting_day'                 => 'required',
+        	  'longterm_installment_type'            => 'required',
+        	  'longterm_minimum_deposit'             => 'sometimes',
+        	  'longterm_closing_date'                => 'sometimes',
+        	  'longterm_total_amount_so_far'         => 'sometimes',
+        	  'longterm_total_withdraw_so_far'       => 'sometimes'
+        	]);
+
+        	$savingaccount = new Saving;
+        	$savingaccount->savingname_id = $request->longterm_savingname_id;
+        	$savingaccount->opening_date = date('Y-m-d', strtotime($request->longterm_opening_date));
+        	if($request->longterm_closing_date != '') {
+        	  $savingaccount->closing_date = date('Y-m-d', strtotime($request->longterm_closing_date));
+        	} else {
+        	  $savingaccount->closing_date = '1970-01-01';
+        	}
+        	$savingaccount->meeting_day = $request->longterm_meeting_day;
+        	$savingaccount->installment_type = $request->longterm_installment_type;
+        	$savingaccount->minimum_deposit = 0.00;
+        	$savingaccount->total_amount = $request->longterm_total_amount_so_far;
+        	$savingaccount->withdraw = $request->longterm_total_withdraw_so_far;
+        	$savingaccount->status = 1; // 1 means active/open
+        	$savingaccount->member_id = $member->id;
+        	$savingaccount->save();
+
+        	// deposit for the first time, the total amount so far...
+        	$oldsaving = new Savinginstallment;
+        	$oldsaving->due_date = date('Y-m-d');
+        	$oldsaving->amount = $request->longterm_total_amount_so_far;
+        	$oldsaving->withdraw = $request->longterm_total_withdraw_so_far;
+        	$oldsaving->balance = $request->longterm_total_amount_so_far - $request->longterm_total_withdraw_so_far;
+        	$oldsaving->member_id = $request->data['member_id'];
+        	$oldsaving->savingname_id = 2; // hard coded, 2 is for long term saving!
+        	$oldsaving->saving_id = $savingaccount->id;
+        	$oldsaving->save();
         }
 
         // Session::flash('success', 'Added successfully (with a default General Saving Account)!'); 
