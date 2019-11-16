@@ -194,7 +194,6 @@
         var service_charge = $('#service_charge').val() ? $('#service_charge').val() : 0; // a ? a : 0;
       }
       
-      
       var total_disbursed = parseFloat(left_pricipal_amount) + parseFloat(service_charge);
       $('#total_disbursed').val(total_disbursed);
     };

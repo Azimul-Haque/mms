@@ -384,7 +384,13 @@
               {!! Form::label('general_total_amount_so_far', 'Total Amount Saved') !!}
               <div class="input-group">
                 <span class="input-group-addon">৳</span>
-                {!! Form::text('general_total_amount_so_far', null, array('class' => 'form-control', 'placeholder' => 'Total Amount Saved', 'autocomplete' => 'off')) !!}
+                {!! Form::text('general_total_amount_so_far', 0, array('class' => 'form-control', 'placeholder' => 'Total Amount Saved', 'autocomplete' => 'off')) !!}
+              </div>
+
+              {!! Form::label('general_total_withdraw_so_far', 'Total Amount Withdraw') !!}
+              <div class="input-group">
+                <span class="input-group-addon">৳</span>
+                {!! Form::text('general_total_withdraw_so_far', 0, array('class' => 'form-control', 'placeholder' => 'Total Amount Withdraw', 'autocomplete' => 'off')) !!}
               </div>
             </div>
             <div class="col-md-3">
@@ -424,7 +430,13 @@
               {!! Form::label('longterm_total_amount_so_far', 'Total Amount Saved') !!}
               <div class="input-group">
                 <span class="input-group-addon">৳</span>
-                {!! Form::text('longterm_total_amount_so_far', null, array('class' => 'form-control', 'placeholder' => 'Total Amount Saved', 'autocomplete' => 'off')) !!}
+                {!! Form::text('longterm_total_amount_so_far', 0, array('class' => 'form-control', 'placeholder' => 'Total Amount Saved', 'autocomplete' => 'off')) !!}
+              </div>
+
+              {!! Form::label('longterm_total_withdraw_so_far', 'Total Amount Withdraw') !!}
+              <div class="input-group">
+                <span class="input-group-addon">৳</span>
+                {!! Form::text('longterm_total_withdraw_so_far', 0, array('class' => 'form-control', 'placeholder' => 'Total Amount Withdraw', 'autocomplete' => 'off')) !!}
               </div>
             </div>
           </div>

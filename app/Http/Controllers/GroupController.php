@@ -144,6 +144,7 @@ class GroupController extends Controller
                               ->first();
             $gensavingac->total_amount = $gensavingac->total_amount + $request->data['generalsaving'];;
             $gensavingac->withdraw = $gensavingac->withdraw + $request->data['generalsavingwd'];
+            // balance is considered total_amount - withdraw
             $gensavingac->save();
 
             $newgeneralsaving = new Savinginstallment;
