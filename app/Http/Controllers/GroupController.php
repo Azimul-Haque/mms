@@ -93,18 +93,10 @@ class GroupController extends Controller
 	
     public function postGroupInstallmentAPI(Request $request)
     {
-        // member_id: member_id,
-        // loaninstallment_id: loaninstallment_id,
-        // transactiondate: transactiondate,
-
-        // loaninstallment: loaninstallment,
-
-        // generalsaving: generalsaving,
-        // longsaving: longsaving,
-        // generalsavingwd: generalsavingwd,
-        // longsavingwd: longsavingwd
         $member = Member::find($request->data['member_id']);
-        $installment = Loaninstallment::find($request->data['loaninstallment_id']);
+        $installment = Loaninstallment::where('id', $request->data['loaninstallment_id'])
+                                      ->where('installment_no', $request->data['installment_no'])
+                                      ->first();
 
         // calculate outstanding from from loan
         $installment->loan->total_paid = $installment->loan->total_paid - $installment->paid_total + $request->data['loaninstallment'];
