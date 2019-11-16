@@ -44,7 +44,9 @@
               @foreach($members as $member)
                 <tr>
                   <td>{{ $member->passbook }}</td>
-                  <td><a href="{{ route('dashboard.member.single', [$staff->id, $group->id, $member->id]) }}"><i class="fa fa-user"></i> {{ $member->name }} </a></td>
+                  <td>
+                    <a href="{{ route('dashboard.member.single', [$staff->id, $group->id, $member->id]) }}" @if($member->loans->count() > 0) style="color: #DD4B39;" @else style="color: #000000;" @endif><i class="fa fa-user"></i> {{ $member->name }} </a>
+                  </td>
                   <td>{{ $member->fhusband }}</td>
                   <td>{{ ishusband($member->ishusband) }}</td>
                   <td><span class="label label-{{ statuscolor($member->status) }}">{{ status($member->status) }}</span></td>
