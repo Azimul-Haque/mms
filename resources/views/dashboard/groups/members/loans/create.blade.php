@@ -23,7 +23,7 @@
             <div class="row">
               <div class="col-md-6">
                 {!! Form::label('loanname_id', 'Program *') !!}
-                <select name="loanname_id" class="form-control" required="">
+                <select name="loanname_id" id="loanname_id" class="form-control" required="">
                   <option value="" selected="" disabled="">Select Program</option>
                   @foreach($loannames as $loanname)
                     <option value="{{ $loanname->id }}">{{ $loanname->name }}</option>
@@ -186,9 +186,16 @@
       var principal_amount = $('#principal_amount').val() ? $('#principal_amount').val() : 0; // a ? a : 0;
       var down_payment = $('#down_payment').val() ? $('#down_payment').val() : 0; // a ? a : 0;
       var left_pricipal_amount = parseFloat(principal_amount) - parseFloat(down_payment); // if product(!0) or loan(0)
-      var service_charge = principal_amount * 0.20; // 20%
+
+      if($('#loanname_id').val() && $('#loanname_id').val() == 1) {
+        var service_charge = principal_amount * 0.20; // 20%
+        $('#service_charge').val(service_charge);
+      } else {
+        var service_charge = $('#service_charge').val() ? $('#service_charge').val() : 0; // a ? a : 0;
+      }
+      
+      
       var total_disbursed = parseFloat(left_pricipal_amount) + parseFloat(service_charge);
-      $('#service_charge').val(service_charge);
       $('#total_disbursed').val(total_disbursed);
     };
 

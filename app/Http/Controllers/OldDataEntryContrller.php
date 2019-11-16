@@ -138,10 +138,98 @@ class OldDataEntryContrller extends Controller
 
         // add general account if any...
         // add general account if any...
-        if($request->loanname_id == 1) {
+        if(($request->primary_disburse_date != null || $request->primary_disburse_date != '') && ($request->product_total_disbursed != null || $request->product_total_disbursed != '')) 
+        {
+
+        	$checkacc = Loan::where('member_id', $member->id)
+        	                ->where('loanname_id', 1) // single primary ac, multiple product loan
+        	                ->where('status', 1) // 1 means disbursed, 0 means closed
+        	                ->first();
+        	if(!empty($checkacc)) {
+        	  // Session::flash('warning', 'This member already has an ACTIVE primary account.');
+        	} else {
+        		$this->validate($request, [
+        		  'primary_loanname_id'                 => 'required',
+        		  'primary_disburse_date'               => 'required',
+        		  'primary_installment_type'            => 'required',
+        		  'primary_installments'                => 'required', // baki installment aar ki...
+        		  'primary_first_installment_date'      => 'required',
+        		  'primary_schemename_id'               => 'required',
+        		  'primary_principal_amount'            => 'required',
+        		  'primary_service_charge'              => 'required',
+        		  'primary_total_disbursed'             => 'required',
+        		  'primary_total_paid'                  => 'required', // aage to kichu pay korse...
+        		  'primary_closing_date'                => 'sometimes',
+        		  'primary_status'                      => 'sometimes'
+        		]);
+
+        		$loan = new Loan;
+        		$loan->loanname_id = $request->primary_loanname_id;
+        		$loan->disburse_date = date('Y-m-d', strtotime($request->primary_disburse_date));
+        		$loan->installment_type = $request->primary_installment_type;
+        		$loan->installments = $request->primary_installments;
+        		$loan->first_installment_date = date('Y-m-d', strtotime($request->primary_first_installment_date));
+        		$loan->schemename_id = $request->primary_schemename_id;
+        		$loan->principal_amount = $request->primary_principal_amount ? $request->primary_principal_amount : 0;
+        		$loan->service_charge = $request->primary_service_charge ? $request->primary_service_charge : 0;
+        		$loan->down_payment = 0.00; //$request->primary_down_payment ? $request->primary_down_payment : 0;
+        		$loan->total_disbursed = $request->primary_total_disbursed;
+        		$loan->total_paid = $request->primary_total_paid;
+        		$loan->total_outstanding = $request->primary_total_disbursed - $request->primary_total_paid;
+        		$loan->status = $request->primary_status; // 1 means disbursed, 0 means closed
+        		$loan->member_id = $member->id;
+        		$loan->save();
+
+        		// add the installments of this account
+        		for($i=0; $i<$request->primary_installments; $i++) 
+        		{
+        		  if($request->primary_installment_type == 1) {
+        		    $dateToPay = $this->addWeekdays(Carbon::parse($request->primary_first_installment_date), $i);
+        		  } else if($request->primary_installment_type == 2) {
+        		    $dateToPay = Carbon::parse($request->primary_first_installment_date)->adddays(7*$i);
+        		  } else if($request->primary_installment_type == 3) {
+        		    $dateToPay = Carbon::parse($request->primary_first_installment_date)->addMonths($i);
+        		    if(date('D', strtotime($dateToPay)) == 'Fri') {
+        		      $dateToPay = Carbon::parse($dateToPay)->adddays(1);
+        		    } else {
+        		      $dateToPay = $dateToPay;
+        		    }
+        		  }
+        		  // store the loan installments...
+        		  $loaninstallment = new Loaninstallment;
+        		  $loaninstallment->due_date = date('Y-m-d', strtotime($dateToPay));
+        		  $loaninstallment->installment_no = $i + 1;
+        		  $loaninstallment->installment_principal = ($loan->total_outstanding - ($loan->total_outstanding * 0.20)) / $loan->installments;
+        		  $loaninstallment->installment_interest = ($loan->total_outstanding * 0.20) / $loan->installments;
+        		  $loaninstallment->installment_total = $loan->total_outstanding / $loan->installments;
+
+        		  $loaninstallment->paid_principal = 0.00;
+        		  $loaninstallment->paid_interest = 0.00;
+        		  $loaninstallment->paid_total = 0.00;
+
+        		  $loaninstallment->outstanding_total = $loan->total_disbursed;
+
+        		  $loaninstallment->loan_id = $loan->id;
+
+        		  $loaninstallment->save();
+        		}
+        	}
+        }
         
 
         // Session::flash('success', 'Added successfully (with a default General Saving Account)!'); 
         // return redirect()->route('dashboard.members', [$s_id, $g_id]);
+    }
+
+    public function addWeekdays($date, $days) {
+      $dateToPay = Carbon::parse($date);
+      while ($days > 0) {
+        $dateToPay = $dateToPay->adddays(1);
+        // 5 == Fri, tai 5 baade baki gulake accept korbe
+        if (date('N', strtotime($dateToPay)) != 5) {
+          $days--;
+        }
+      }
+      return $dateToPay;
     }
 }

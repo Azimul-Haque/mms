@@ -224,8 +224,8 @@
                 @endfor
               </select>
 
-              {!! Form::label('primary_first_installment_date', 'First Installment Date') !!}
-              {!! Form::text('primary_first_installment_date', null, array('class' => 'form-control', 'placeholder' => 'First Installment Date', 'autocomplete' => 'off', 'readonly' => '')) !!}
+              {!! Form::label('primary_first_installment_date', 'First Installment Date from Software') !!}
+              {!! Form::text('primary_first_installment_date', null, array('class' => 'form-control', 'placeholder' => 'First Installment Date from Software', 'autocomplete' => 'off', 'readonly' => '')) !!}
 
               {!! Form::label('primary_schemename_id', 'Scheme') !!}
               <select name="primary_schemename_id" id="primary_schemename_id" class="form-control">
@@ -256,7 +256,7 @@
               {!! Form::label('primary_total_paid', 'Total Paid') !!}
               <div class="input-group">
                 <span class="input-group-addon">৳</span>
-                {!! Form::text('primary_total_paid', null, array('class' => 'form-control', 'placeholder' => 'Total Paid', 'autocomplete' => 'off')) !!}
+                {!! Form::text('primary_total_paid', 0, array('class' => 'form-control', 'placeholder' => 'Total Paid', 'autocomplete' => 'off')) !!}
               </div>
 
               {!! Form::label('primary_closing_date', 'Closing Date (Optional)') !!}
@@ -296,8 +296,8 @@
                 @endfor
               </select>
 
-              {!! Form::label('product_first_installment_date', 'First Installment Date') !!}
-              {!! Form::text('product_first_installment_date', null, array('class' => 'form-control', 'placeholder' => 'First Installment Date', 'autocomplete' => 'off', 'readonly' => '')) !!}
+              {!! Form::label('product_first_installment_date', 'First Installment Date from Software') !!}
+              {!! Form::text('product_first_installment_date', null, array('class' => 'form-control', 'placeholder' => 'First Installment Date from Software', 'autocomplete' => 'off', 'readonly' => '')) !!}
 
               {!! Form::label('product_schemename_id', 'Scheme') !!}
               <select name="product_schemename_id" id="product_schemename_id" class="form-control">
@@ -334,7 +334,7 @@
               {!! Form::label('product_total_paid', 'Total Paid') !!}
               <div class="input-group">
                 <span class="input-group-addon">৳</span>
-                {!! Form::text('product_total_paid', null, array('class' => 'form-control', 'placeholder' => 'Total Paid', 'autocomplete' => 'off')) !!}
+                {!! Form::text('product_total_paid', 0, array('class' => 'form-control', 'placeholder' => 'Total Paid', 'autocomplete' => 'off')) !!}
               </div>
 
               {!! Form::label('product_closing_date', 'Closing Date (Optional)') !!}
@@ -539,9 +539,8 @@
       var product_principal_amount = $('#product_principal_amount').val() ? $('#product_principal_amount').val() : 0; // a ? a : 0;
       var product_down_payment = $('#product_down_payment').val() ? $('#product_down_payment').val() : 0; // a ? a : 0;
       var product_left_pricipal_amount = parseFloat(product_principal_amount) - parseFloat(product_down_payment); // if product(!0) or loan(0)
-      var product_service_charge = product_principal_amount * 0.20; // 20%
+      var product_service_charge = $('#product_service_charge').val() ? $('#product_service_charge').val() : 0; // a ? a : 0;
       var product_total_disbursed = parseFloat(product_left_pricipal_amount) + parseFloat(product_service_charge);
-      $('#product_service_charge').val(product_service_charge);
       $('#product_total_disbursed').val(product_total_disbursed);
     };
   </script>
