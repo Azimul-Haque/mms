@@ -180,20 +180,21 @@ class OldDataEntryContrller extends Controller
         		$loan->save();
 
         		// add the accumulated paid amount as an installment
-        		$acculoaninstallment = new Loaninstallment;
-        		$acculoaninstallment->due_date = date('Y-m-d');
-        		$acculoaninstallment->installment_no = 0; // for being the for being the first one 
-        		$acculoaninstallment->installment_principal = ($loan->primary_total_paid - ($loan->primary_total_paid * 0.20)) / $loan->installments;
-        		$acculoaninstallment->installment_interest = ($loan->primary_total_paid * 0.20) / $loan->installments;
-        		$acculoaninstallment->installment_total = $loan->primary_total_paid / $loan->installments;
+        		$accugenloaninstallment = new Loaninstallment;
+        		$accugenloaninstallment->due_date = date('Y-m-d');
+        		$accugenloaninstallment->installment_no = 0; // for being the for being the first one 
+        		$accugenloaninstallment->installment_principal = ($loan->primary_total_paid - ($loan->primary_total_paid * 0.20));
+        		$accugenloaninstallment->installment_interest = ($loan->primary_total_paid * 0.20);
+        		$accugenloaninstallment->installment_total = $loan->primary_total_paid;
 
-        		$acculoaninstallment->paid_principal = ($loan->primary_total_paid - ($loan->primary_total_paid * 0.20)) / $loan->installments;
-        		$acculoaninstallment->paid_interest = ($loan->primary_total_paid * 0.20) / $loan->installments;
-        		$acculoaninstallment->paid_total = 0.00;
+        		// same as above
+        		$accugenloaninstallment->paid_principal = ($loan->primary_total_paid - ($loan->primary_total_paid * 0.20));
+        		$accugenloaninstallment->paid_interest = ($loan->primary_total_paid * 0.20);
+        		$accugenloaninstallment->paid_total = $loan->primary_total_paid;
 
-        		$acculoaninstallment->outstanding_total = $loan->total_outstanding;
-        		$acculoaninstallment->loan_id = $loan->id;
-        		$acculoaninstallment->save();
+        		$accugenloaninstallment->outstanding_total = $loan->total_outstanding;
+        		$accugenloaninstallment->loan_id = $loan->id;
+        		$accugenloaninstallment->save();
 
         		// add the installments of this account
         		for($i=0; $i<$request->primary_installments; $i++) 
@@ -257,13 +258,33 @@ class OldDataEntryContrller extends Controller
         	$loan->schemename_id = $request->product_schemename_id;
         	$loan->principal_amount = $request->product_principal_amount ? $request->product_principal_amount : 0;
         	$loan->service_charge = $request->product_service_charge ? $request->product_service_charge : 0;
+        	// for the installments, here we nee service charge percentage
+        	$product_service_charge_percent = $loan->service_charge / $loan->principal_amount;
+        	// for the installments, here we nee service charge percentage
         	$loan->down_payment = $request->product_down_payment ? $request->product_down_payment : 0;
-        	$loan->total_disbursed = $request->product_total_disbursed;
+        	$loan->total_disbursed = $request->product_total_disbursed; // already deduced by down payment in view form
         	$loan->total_paid = $request->product_total_paid;
         	$loan->total_outstanding = $request->product_total_disbursed - $request->product_total_paid;
         	$loan->status = $request->product_status ? $request->product_status : 1; // 1 means disbursed, 0 means closed
         	$loan->member_id = $member->id;
         	$loan->save();
+
+        	// add the accumulated paid amount as an installment
+        	$acculongtloaninstallment = new Loaninstallment;
+        	$acculongtloaninstallment->due_date = date('Y-m-d');
+        	$acculongtloaninstallment->installment_no = 0; // for being the for being the first one 
+        	$acculongtloaninstallment->installment_principal = ($loan->product_total_paid - ($loan->product_total_paid * $product_service_charge_percent));
+        	$acculongtloaninstallment->installment_interest = ($loan->product_total_paid * $product_service_charge_percent);
+        	$acculongtloaninstallment->installment_total = $loan->product_total_paid;
+
+        	// same as above
+        	$acculongtloaninstallment->paid_principal = ($loan->product_total_paid - ($loan->product_total_paid * $product_service_charge_percent));
+        	$acculongtloaninstallment->paid_interest = ($loan->product_total_paid * $product_service_charge_percent);
+        	$acculongtloaninstallment->paid_total = $loan->product_total_paid;
+
+        	$acculongtloaninstallment->outstanding_total = $loan->total_outstanding;
+        	$acculongtloaninstallment->loan_id = $loan->id;
+        	$acculongtloaninstallment->save();
 
         	// add the installments of this account
         	for($i=0; $i<$request->product_installments; $i++) 
@@ -284,8 +305,8 @@ class OldDataEntryContrller extends Controller
         	  $loaninstallment = new Loaninstallment;
         	  $loaninstallment->due_date = date('Y-m-d', strtotime($dateToPay));
         	  $loaninstallment->installment_no = $i + 1;
-        	  $loaninstallment->installment_principal = ($loan->total_outstanding - ($loan->total_outstanding * 0.20)) / $loan->installments;
-        	  $loaninstallment->installment_interest = ($loan->total_outstanding * 0.20) / $loan->installments;
+        	  $loaninstallment->installment_principal = ($loan->total_outstanding - ($loan->total_outstanding * $product_service_charge_percent)) / $loan->installments;
+        	  $loaninstallment->installment_interest = ($loan->total_outstanding * $product_service_charge_percent) / $loan->installments;
         	  $loaninstallment->installment_total = $loan->total_outstanding / $loan->installments;
 
         	  $loaninstallment->paid_principal = 0.00;
