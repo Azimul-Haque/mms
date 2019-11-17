@@ -309,7 +309,8 @@ class OldDataEntryContrller extends Controller
         if(($request->general_opening_date != null || $request->general_opening_date != '') && ($request->general_installment_type != null || $request->general_installment_type != '')) 
         {
         	$checkacc = Saving::where('member_id', $member->id)
-        	                  ->where('savingname_id', $request->general_savingname_id)->first();
+        	                  ->where('savingname_id', $request->general_savingname_id)
+                              ->first();
         	
         	if(!empty($checkacc)) {
         	  // Session::flash('warning', 'This member already has an account like this type.');
