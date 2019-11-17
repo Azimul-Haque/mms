@@ -138,7 +138,7 @@ class OldDataEntryContrller extends Controller
 
         // add general account if any...
         // add general account if any...
-        if(($request->primary_disburse_date != null || $request->primary_disburse_date != '') && ($request->product_total_disbursed != null || $request->product_total_disbursed != '')) 
+        if(($request->primary_disburse_date != null || $request->primary_disburse_date != '') && ($request->primary_total_disbursed != null || $request->primary_total_disbursed != '')) 
         {
         	$checkacc = Loan::where('member_id', $member->id)
         	                ->where('loanname_id', 1) // single primary ac, multiple product loan
