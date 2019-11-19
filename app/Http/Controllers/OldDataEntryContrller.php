@@ -147,21 +147,6 @@ class OldDataEntryContrller extends Controller
         	if(!empty($checkacc)) {
         	  // Session::flash('warning', 'This member already has an ACTIVE primary account.');
         	} else {
-        		// $this->validate($request, [
-        		//   'primary_loanname_id'                 => 'required',
-        		//   'primary_disburse_date'               => 'required',
-        		//   'primary_installment_type'            => 'required',
-        		//   'primary_installments'                => 'required', // baki installment aar ki...
-        		//   'primary_first_installment_date'      => 'required',
-        		//   'primary_schemename_id'               => 'required',
-        		//   'primary_principal_amount'            => 'required',
-        		//   'primary_service_charge'              => 'required',
-        		//   'primary_total_disbursed'             => 'required',
-        		//   'primary_total_paid'                  => 'required', // aage to kichu pay korse...
-        		//   'primary_closing_date'                => 'sometimes',
-        		//   'primary_status'                      => 'sometimes'
-        		// ]);
-
         		$loan = new Loan;
         		$loan->loanname_id = $request->primary_loanname_id;
         		$loan->disburse_date = date('Y-m-d', strtotime($request->primary_disburse_date));
