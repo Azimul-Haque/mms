@@ -132,6 +132,9 @@ class MemberController extends Controller
         $member->permanent_village = $request->permanent_village;
         // $member->permanent_house = $request->permanent_house;
         $member->permanent_phone = $request->permanent_phone;
+        
+        $member->passbook_fee = $request->passbook_fee;
+        $member->addmission_fee = $request->addmission_fee;
 
         $member->status = 1; // auto active
         $member->staff_id = $s_id;
