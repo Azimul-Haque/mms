@@ -52,7 +52,7 @@
                   <td><span class="label label-{{ statuscolor($member->status) }}">{{ status($member->status) }}</span></td>
                   {{-- <td>{{ date('D, d/m/Y', strtotime($member->dob)) }}, <b>{{ Carbon::createFromTimestampUTC(strtotime($member->dob))->diff(Carbon::now())->format('%y years') }}</b></td> --}}
                   <td>{{ date('D, d/m/Y', strtotime($member->admission_date)) }}</td>
-                  <td>{{ date('D, d/m/Y', strtotime($member->closing)) }}</td>
+                  <td>{{ date('D, d/m/Y', strtotime($member->closing_date)) }}</td>
                   {{-- <td>{{ marital_status($member->marital_status) }}</td> --}}
                   <td>{{ religion($member->religion) }}</td>
                   {{-- <td>{{ ethnicity($member->ethnicity) }}</td> --}}

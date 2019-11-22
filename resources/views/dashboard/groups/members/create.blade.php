@@ -149,8 +149,8 @@
               {!! Form::text('present_post', null, array('class' => 'form-control', 'placeholder' => 'Present Post Office', 'required' => '')) !!}
               {!! Form::label('present_village', 'Present Village *') !!}
               {!! Form::text('present_village', null, array('class' => 'form-control', 'placeholder' => 'Present Village', 'required' => '')) !!}
-              {!! Form::label('present_house', 'Present House *') !!}
-              {{-- {!! Form::text('present_house', null, array('class' => 'form-control', 'placeholder' => 'Present House', 'required' => '')) !!} --}}
+              {{-- {!! Form::label('present_house', 'Present House *') !!}
+              {!! Form::text('present_house', null, array('class' => 'form-control', 'placeholder' => 'Present House', 'required' => '')) !!} --}}
               {!! Form::label('present_phone', 'Present Phone *') !!}
               {!! Form::text('present_phone', null, array('class' => 'form-control', 'placeholder' => 'Present Phone', 'required' => '')) !!}<br/>
               {!! Form::label('passbook_fee', 'PassBook Fee') !!}
