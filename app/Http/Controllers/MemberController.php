@@ -62,16 +62,16 @@ class MemberController extends Controller
           'ishusband'             => 'required',
           'mother'                => 'required',
           'gender'                => 'required',
-          'marital_status'        => 'required',
+          // 'marital_status'        => 'required',
           'religion'              => 'required',
-          'ethnicity'             => 'required',
-          'guardian'              => 'required',
-          'guardianrelation'      => 'required',
+          // 'ethnicity'             => 'required',
+          // 'guardian'              => 'required',
+          // 'guardianrelation'      => 'required',
           'residence_type'        => 'sometimes',
-          'landlord_name'         => 'sometimes',
+          // 'landlord_name'         => 'sometimes',
           'education'             => 'required',
           'profession'            => 'required',
-          'dob'                   => 'required',
+          // 'dob'                   => 'required',
           'nid'                   => 'required',
           'admission_date'        => 'required',
           'closing_date'          => 'sometimes',
@@ -81,7 +81,7 @@ class MemberController extends Controller
           'present_union'         => 'required',
           'present_post'          => 'required',
           'present_village'       => 'required',
-          'present_house'         => 'required',
+          // 'present_house'         => 'required',
           'present_phone'         => 'required',
 
           'permanent_district'    => 'sometimes',
@@ -89,7 +89,7 @@ class MemberController extends Controller
           'permanent_union'       => 'sometimes',
           'permanent_post'        => 'sometimes',
           'permanent_village'     => 'sometimes',
-          'permanent_house'       => 'sometimes',
+          // 'permanent_house'       => 'sometimes',
           'permanent_phone'       => 'sometimes',
         ]);
 
@@ -100,16 +100,16 @@ class MemberController extends Controller
         $member->ishusband = $request->ishusband;
         $member->mother = $request->mother;
         $member->gender = $request->gender;
-        $member->marital_status = $request->marital_status;
+        // $member->marital_status = $request->marital_status;
         $member->religion = $request->religion;
-        $member->ethnicity = $request->ethnicity;
-        $member->guardian = $request->guardian;
-        $member->guardianrelation = $request->guardianrelation;
+        // $member->ethnicity = $request->ethnicity;
+        // $member->guardian = $request->guardian;
+        // $member->guardianrelation = $request->guardianrelation;
         $member->residence_type = $request->residence_type;
-        $member->landlord_name = $request->landlord_name;
+        // $member->landlord_name = $request->landlord_name;
         $member->education = $request->education;
         $member->profession = $request->profession;
-        $member->dob = date('Y-m-d', strtotime($request->dob));
+        // $member->dob = date('Y-m-d', strtotime($request->dob));
         $member->nid = $request->nid;
         $member->admission_date = date('Y-m-d', strtotime($request->admission_date));
         if($request->closing_date) {
@@ -122,7 +122,7 @@ class MemberController extends Controller
         $member->present_union = $request->present_union;
         $member->present_post = $request->present_post;
         $member->present_village = $request->present_village;
-        $member->present_house = $request->present_house;
+        // $member->present_house = $request->present_house;
         $member->present_phone = $request->present_phone;
 
         $member->permanent_district = $request->permanent_district;
@@ -130,7 +130,7 @@ class MemberController extends Controller
         $member->permanent_union = $request->permanent_union;
         $member->permanent_post = $request->permanent_post;
         $member->permanent_village = $request->permanent_village;
-        $member->permanent_house = $request->permanent_house;
+        // $member->permanent_house = $request->permanent_house;
         $member->permanent_phone = $request->permanent_phone;
 
         $member->status = 1; // auto active

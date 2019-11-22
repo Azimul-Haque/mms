@@ -27,12 +27,12 @@
                 <th>Father/Husband</th>
                 <th>Is Husband</th>
                 <th>Status</th>
-                <th>Date of Birth</th>
+                {{-- <th>Date of Birth</th> --}}
                 <th>Admission Date</th>
                 <th>Closing Date</th>
-                <th>Marital Status</th>
+                {{-- <th>Marital Status</th> --}}
                 <th>Religion</th>
-                <th>Ethnicity</th>
+                {{-- <th>Ethnicity</th> --}}
                 <th>NID</th>
                 <th>Education</th>
                 <th>Profession</th>
@@ -50,12 +50,12 @@
                   <td>{{ $member->fhusband }}</td>
                   <td>{{ ishusband($member->ishusband) }}</td>
                   <td><span class="label label-{{ statuscolor($member->status) }}">{{ status($member->status) }}</span></td>
-                  <td>{{ date('D, d/m/Y', strtotime($member->dob)) }}, <b>{{ Carbon::createFromTimestampUTC(strtotime($member->dob))->diff(Carbon::now())->format('%y years') }}</b></td>
+                  {{-- <td>{{ date('D, d/m/Y', strtotime($member->dob)) }}, <b>{{ Carbon::createFromTimestampUTC(strtotime($member->dob))->diff(Carbon::now())->format('%y years') }}</b></td> --}}
                   <td>{{ date('D, d/m/Y', strtotime($member->admission_date)) }}</td>
                   <td>{{ date('D, d/m/Y', strtotime($member->closing)) }}</td>
-                  <td>{{ marital_status($member->marital_status) }}</td>
+                  {{-- <td>{{ marital_status($member->marital_status) }}</td> --}}
                   <td>{{ religion($member->religion) }}</td>
-                  <td>{{ ethnicity($member->ethnicity) }}</td>
+                  {{-- <td>{{ ethnicity($member->ethnicity) }}</td> --}}
                   <td>{{ $member->nid }}</td>
                   <td>{{ $member->ecuation }}</td>
                   <td>{{ $member->profession }}</td>

@@ -171,8 +171,8 @@
               {!! Form::text('permanent_post', null, array('class' => 'form-control', 'placeholder' => 'Permanent Post Office')) !!}
               {!! Form::label('permanent_village', 'Permanent Village') !!}
               {!! Form::text('permanent_village', null, array('class' => 'form-control', 'placeholder' => 'Permanent Village ')) !!}
-              {!! Form::label('permanent_house', 'Permanent House') !!}
-              {!! Form::text('permanent_house', null, array('class' => 'form-control', 'placeholder' => 'Permanent House')) !!}
+              {{-- {!! Form::label('permanent_house', 'Permanent House') !!}
+              {!! Form::text('permanent_house', null, array('class' => 'form-control', 'placeholder' => 'Permanent House')) !!} --}}
               {!! Form::label('permanent_phone', 'Permanent Phone (Optional)') !!}
               {!! Form::text('permanent_phone', null, array('class' => 'form-control', 'placeholder' => 'Permanent Phone (Optional)' )) !!}<br/>
               {!! Form::label('addmission_fee', 'Admission Fee') !!}
