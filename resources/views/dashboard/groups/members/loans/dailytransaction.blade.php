@@ -82,9 +82,9 @@
                     <td readonly>{{ $member->passbook }}</td>
                     <td readonly>{{ $loan->loanname->name }}</td>
                     <td readonly>{{ $loan->total_disbursed }}</td>
-                    <td id="loaninstallment{{ $loan->id }}" onchange="oldloancalcandpost({{ $member->id }}, {{ $loan->id }} '{{ $transactiondate }}')">0</td>
-                    <td readonly id="total_paid{{ $loan->id }}">{{ $loan->total_paid }}</td>
-                    <td readonly id="total_outstanding{{ $loan->id }}">{{ $loan->total_outstanding }}</td>
+                    <td id="old_loaninstallment{{ $loan->id }}" onchange="oldloancalcandpost({{ $member->id }}, {{ $loan->id }} '{{ $transactiondate }}')">0</td>
+                    <td readonly id="old_total_paid{{ $loan->id }}">{{ $loan->total_paid }}</td>
+                    <td readonly id="old_total_outstanding{{ $loan->id }}">{{ $loan->total_outstanding }}</td>
                     {{-- @php
                       $generalsaving = 0;
                       if(!empty($member->savinginstallments->where('savingname_id', 1)->where('due_date', $transactiondate)->first())) {
@@ -190,12 +190,13 @@
 
     function oldloancalcandpost(member_id, loan_id, transactiondate) {
       var membername = $('#membername' + loan_id).text();
-      var loaninstallment = parseInt($('#loaninstallment' + loan_id).text()) ? parseInt($('#loaninstallment' + loan_id).text()) : 0;
+      var loaninstallment = parseInt($('#old_loaninstallment' + loan_id).text()) ? parseInt($('#old_loaninstallment' + loan_id).text()) : 0;
       
       // now post the data
       $.post("/old/daily/transaction/store/api", {_token: '{{ csrf_token() }}', _method : 'POST', 
         data: {
           member_id: member_id,
+          loan_id: loan_id,
           transactiondate: transactiondate,
           loaninstallment: loaninstallment,
         }},
@@ -207,8 +208,8 @@
         } else {
           toastr.warning('Error!').css('width', '400px');
         }
-        $('#total_paid' + loan_id).text(data.loan.total_paid);
-        $('#total_outstanding' + loan_id).text(data.loan.total_outstanding);
+        $('#old_total_paid' + loan_id).text(data.loan.total_paid);
+        $('#old_total_outstanding' + loan_id).text(data.loan.total_outstanding);
       });
     }
 

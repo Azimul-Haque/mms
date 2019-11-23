@@ -562,4 +562,51 @@ class MemberController extends Controller
 
         return $installment;
     }
+
+    public function postOldDailyInstallmentAPI(Request $request)
+    {
+        // member_id: member_id,
+        // loan_id: loan_id,
+        // transactiondate: transactiondate,
+
+        // loaninstallment: loaninstallment,
+
+        $member = Member::find($request->data['member_id']);
+
+        $loan = Loan::find($request->data['loaninstallment_id']);
+
+        $installment = new Loaninstallment;
+        $installment->due_date = date('Y-m-d', strtotime($request->data['transactiondate']));
+
+        $checkloanlastinstallmentid = Loaninstallment::where('')
+
+        $installment->installment_no = 0; // for being the for being the first one 
+        $installment->installment_principal = ($request->primary_total_paid - ($request->primary_total_paid * 0.20));
+        $installment->installment_interest = ($request->primary_total_paid * 0.20);
+        $installment->installment_total = $request->primary_total_paid;
+        // same as above
+        $installment->paid_principal = ($request->primary_total_paid - ($request->primary_total_paid * 0.20));
+        $installment->paid_interest = ($request->primary_total_paid * 0.20);
+        $installment->paid_total = $request->primary_total_paid;
+
+        $installment->outstanding_total = $request->primary_total_disbursed - $request->primary_total_paid;
+        $installment->loan_id = $loan->id;
+        $installment->save();
+
+        $installment = Loaninstallment::find($request->data['loaninstallment_id']);
+
+        // calculate outstanding from from loan
+        $installment->loan->total_paid = $installment->loan->total_paid - $installment->paid_total + $request->data['loaninstallment'];
+        $installment->loan->total_outstanding = $installment->loan->total_disbursed - $installment->loan->total_paid;
+        $installment->loan->save();
+
+        // post the installment
+        $installment->paid_principal = $installment->installment_principal; 
+        $installment->paid_interest = $installment->installment_interest;
+        $installment->paid_total = $request->data['loaninstallment']; // assuming the total is paid
+        $installment->outstanding_total = $installment->loan->total_outstanding; // from the main loan account table
+        $installment->save();
+
+        return $installment;
+    }
 }
