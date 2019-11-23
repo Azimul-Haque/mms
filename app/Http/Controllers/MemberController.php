@@ -542,7 +542,6 @@ class MemberController extends Controller
         // member_id: member_id,
         // loaninstallment_id: loaninstallment_id,
         // transactiondate: transactiondate,
-
         // loaninstallment: loaninstallment,
 
         $member = Member::find($request->data['member_id']);
@@ -568,45 +567,42 @@ class MemberController extends Controller
         // member_id: member_id,
         // loan_id: loan_id,
         // transactiondate: transactiondate,
-
         // loaninstallment: loaninstallment,
 
         $member = Member::find($request->data['member_id']);
 
-        $loan = Loan::find($request->data['loaninstallment_id']);
+        $loan = Loan::find($request->data['loan_id']);
+        $service_charge_percentage = $loan->service_charge/$loan->principal_amount;
 
         $installment = new Loaninstallment;
         $installment->due_date = date('Y-m-d', strtotime($request->data['transactiondate']));
 
-        $checkloanlastinstallmentid = Loaninstallment::where('')
+        $checkloanlastinstallmentid = Loaninstallment::where('loan_id', $request->data['loan_id'])
+                                                     ->orderBy('installment_no', 'desc')
+                                                     ->first();
+        if(!empty($checkloanlastinstallmentid)) {
+          $installment->installment_no = $checkloanlastinstallmentid->installment_no + 1;
+        } else {
+          $installment->installment_no = 1;
+        }
+        $installment->installment_principal = $loan->principal_amount / $loan->installments;
+        $installment->installment_interest = $loan->service_charge / $loan->installments;
+        $installment->installment_total = $installment->installment_principal + $installment->installment_interest;
+        
+        // calculate outstanding from from loan
+        $loan->total_paid = $loan->total_paid + $request->data['loaninstallment'];
+        $loan->total_outstanding = $loan->total_disbursed - $loan->total_paid;
+        $loan->save();
 
-        $installment->installment_no = 0; // for being the for being the first one 
-        $installment->installment_principal = ($request->primary_total_paid - ($request->primary_total_paid * 0.20));
-        $installment->installment_interest = ($request->primary_total_paid * 0.20);
-        $installment->installment_total = $request->primary_total_paid;
-        // same as above
-        $installment->paid_principal = ($request->primary_total_paid - ($request->primary_total_paid * 0.20));
-        $installment->paid_interest = ($request->primary_total_paid * 0.20);
-        $installment->paid_total = $request->primary_total_paid;
-
-        $installment->outstanding_total = $request->primary_total_disbursed - $request->primary_total_paid;
+        $installment->paid_principal = $installment->installment_principal;
+        $installment->paid_interest = $installment->installment_interest;
+        $installment->paid_total = $request->data['loaninstallment'];
+        $installment->outstanding_total = $loan->total_outstanding;
         $installment->loan_id = $loan->id;
         $installment->save();
 
-        $installment = Loaninstallment::find($request->data['loaninstallment_id']);
-
-        // calculate outstanding from from loan
-        $installment->loan->total_paid = $installment->loan->total_paid - $installment->paid_total + $request->data['loaninstallment'];
-        $installment->loan->total_outstanding = $installment->loan->total_disbursed - $installment->loan->total_paid;
-        $installment->loan->save();
-
-        // post the installment
-        $installment->paid_principal = $installment->installment_principal; 
-        $installment->paid_interest = $installment->installment_interest;
-        $installment->paid_total = $request->data['loaninstallment']; // assuming the total is paid
-        $installment->outstanding_total = $installment->loan->total_outstanding; // from the main loan account table
-        $installment->save();
-
+        $installment->load('loan');
+        
         return $installment;
     }
 }

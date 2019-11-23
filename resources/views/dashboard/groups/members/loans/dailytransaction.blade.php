@@ -55,7 +55,7 @@
                 @foreach($loan->loaninstallments as $loaninstallment)
                   @if(!empty($transactiondate))
                   <tr>
-                    <td readonly>{{ $member->passbook }}</td>
+                    <td readonly>{{ $member->passbook }} N</td>
                     <td readonly>{{ $loan->loanname->name }}</td>
                     <td readonly>{{ $loan->total_disbursed }}</td>
                     <td id="loaninstallment{{ $loaninstallment->id }}" onchange="loancalcandpost({{ $member->id }}, {{ $loaninstallment->id }}, '{{ $transactiondate }}')">{{ $loaninstallment->paid_total }}</td>
@@ -79,10 +79,10 @@
                 @if($loan->loan_new == 0)
                   @if(!empty($transactiondate) && empty($loan->loaninstallments->first()->due_date))
                   <tr>
-                    <td readonly>{{ $member->passbook }}</td>
+                    <td readonly>{{ $member->passbook }} O</td>
                     <td readonly>{{ $loan->loanname->name }}</td>
                     <td readonly>{{ $loan->total_disbursed }}</td>
-                    <td id="old_loaninstallment{{ $loan->id }}" onchange="oldloancalcandpost({{ $member->id }}, {{ $loan->id }} '{{ $transactiondate }}')">0</td>
+                    <td id="old_loaninstallment{{ $loan->id }}" onchange="oldloancalcandpost({{ $member->id }}, {{ $loan->id }}, '{{ $transactiondate }}')">0</td>
                     <td readonly id="old_total_paid{{ $loan->id }}">{{ $loan->total_paid }}</td>
                     <td readonly id="old_total_outstanding{{ $loan->id }}">{{ $loan->total_outstanding }}</td>
                     {{-- @php
