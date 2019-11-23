@@ -77,7 +77,7 @@
                     <tr>
                       <td readonly>{{ $member->passbook }}</td>
                       <td id="membername{{ $loaninstallment->id }}" readonly>{{ $member->name }}</td>
-                      <td readonly>{{ $loan->loanname->name }}-{{ $loan->schemename->name }}</td>
+                      <td readonly>{{ $loan->loanname->name }} (Scheme: {{ $loan->schemename->name }})</td>
                       <td id="loaninstallment{{ $loaninstallment->id }}" onchange="loancalcandpost({{ $member->id }}, {{ $loaninstallment->id }}, '{{ $transactiondate }}', {{ $loaninstallment->installment_no }})">{{ $loaninstallment->paid_total }}</td>
 
                       @if(!empty($loantype) && $loantype == 1) {{-- if primary then show savings only --}}

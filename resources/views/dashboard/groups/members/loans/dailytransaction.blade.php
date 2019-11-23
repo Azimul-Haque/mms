@@ -58,16 +58,16 @@
                     <td readonly>{{ $member->passbook }}</td>
                     <td readonly>{{ $loan->loanname->name }}</td>
                     <td readonly>{{ $loan->total_disbursed }}</td>
-                    <td id="loaninstallment{{ $member->id }}" onchange="loancalcandpost({{ $member->id }}, {{ $loaninstallment->id }}, '{{ $transactiondate }}')">{{ $loaninstallment->paid_total }}</td>
-                    <td readonly id="total_paid{{ $member->id }}">{{ $loan->total_paid }}</td>
-                    <td readonly id="total_outstanding{{ $member->id }}">{{ $loan->total_outstanding }}</td>
+                    <td id="loaninstallment{{ $loaninstallment->id }}" onchange="loancalcandpost({{ $member->id }}, {{ $loaninstallment->id }}, '{{ $transactiondate }}')">{{ $loaninstallment->paid_total }}</td>
+                    <td readonly id="total_paid{{ $loaninstallment->id }}">{{ $loan->total_paid }}</td>
+                    <td readonly id="total_outstanding{{ $loaninstallment->id }}">{{ $loan->total_outstanding }}</td>
                     {{-- @php
                       $generalsaving = 0;
                       if(!empty($member->savinginstallments->where('savingname_id', 1)->where('due_date', $transactiondate)->first())) {
                         $generalsaving = $member->savinginstallments->where('member_id', $member->id)->where('savingname_id', 1)->where('due_date', $transactiondate)->first()->amount;
                       }
                     @endphp
-                    <td id="generalsaving{{ $member->id }}" onchange="loancalcandpost({{ $member->id }}, {{ $loaninstallment->id }}, '{{ $transactiondate }}')">{{ $generalsaving }}</td> --}}
+                    <td id="generalsaving{{ $loaninstallment->id }}" onchange="loancalcandpost({{ $member->id }}, {{ $loaninstallment->id }}, '{{ $transactiondate }}')">{{ $generalsaving }}</td> --}}
                   </tr>
                   @endif
                 @endforeach
@@ -82,16 +82,16 @@
                     <td readonly>{{ $member->passbook }}</td>
                     <td readonly>{{ $loan->loanname->name }}</td>
                     <td readonly>{{ $loan->total_disbursed }}</td>
-                    <td id="loaninstallment{{ $member->id }}" onchange="oldloancalcandpost({{ $member->id }}, '{{ $transactiondate }}')">0</td>
-                    <td readonly id="total_paid{{ $member->id }}">{{ $loan->total_paid }}</td>
-                    <td readonly id="total_outstanding{{ $member->id }}">{{ $loan->total_outstanding }}</td>
+                    <td id="loaninstallment{{ $loan->id }}" onchange="oldloancalcandpost({{ $member->id }}, {{ $loan->id }} '{{ $transactiondate }}')">0</td>
+                    <td readonly id="total_paid{{ $loan->id }}">{{ $loan->total_paid }}</td>
+                    <td readonly id="total_outstanding{{ $loan->id }}">{{ $loan->total_outstanding }}</td>
                     {{-- @php
                       $generalsaving = 0;
                       if(!empty($member->savinginstallments->where('savingname_id', 1)->where('due_date', $transactiondate)->first())) {
                         $generalsaving = $member->savinginstallments->where('member_id', $member->id)->where('savingname_id', 1)->where('due_date', $transactiondate)->first()->amount;
                       }
                     @endphp
-                    <td id="generalsaving{{ $member->id }}" onchange="oldloancalcandpost({{ $member->id }}, {{ $loaninstallment->id }}, '{{ $transactiondate }}')">{{ $generalsaving }}</td> --}}
+                    <td id="generalsaving{{ $loan->id }}" onchange="oldloancalcandpost({{ $member->id }}, {{ $loaninstallment->id }}, '{{ $transactiondate }}')">{{ $generalsaving }}</td> --}}
                   </tr>
                   @endif
 
@@ -164,8 +164,8 @@
     });
 
     function loancalcandpost(member_id, loaninstallment_id, transactiondate) {
-      var membername = $('#membername' + member_id).text();
-      var loaninstallment = parseInt($('#loaninstallment' + member_id).text()) ? parseInt($('#loaninstallment' + member_id).text()) : 0;
+      var membername = $('#membername' + loaninstallment_id).text();
+      var loaninstallment = parseInt($('#loaninstallment' + loaninstallment_id).text()) ? parseInt($('#loaninstallment' + loaninstallment_id).text()) : 0;
       
       // now post the data
       $.post("/daily/transaction/store/api", {_token: '{{ csrf_token() }}', _method : 'POST', 
@@ -183,17 +183,17 @@
         } else {
           toastr.warning('Error!').css('width', '400px');
         }
-        $('#total_paid' + member_id).text(data.loan.total_paid);
-        $('#total_outstanding' + member_id).text(data.loan.total_outstanding);
+        $('#total_paid' + loaninstallment_id).text(data.loan.total_paid);
+        $('#total_outstanding' + loaninstallment_id).text(data.loan.total_outstanding);
       });
     }
 
-    function oldloancalcandpost(member_id, transactiondate) {
-      var membername = $('#membername' + member_id).text();
-      var loaninstallment = parseInt($('#loaninstallment' + member_id).text()) ? parseInt($('#loaninstallment' + member_id).text()) : 0;
+    function oldloancalcandpost(member_id, loan_id, transactiondate) {
+      var membername = $('#membername' + loan_id).text();
+      var loaninstallment = parseInt($('#loaninstallment' + loan_id).text()) ? parseInt($('#loaninstallment' + loan_id).text()) : 0;
       
       // now post the data
-      $.post("/daily/transaction/store/api", {_token: '{{ csrf_token() }}', _method : 'POST', 
+      $.post("/old/daily/transaction/store/api", {_token: '{{ csrf_token() }}', _method : 'POST', 
         data: {
           member_id: member_id,
           transactiondate: transactiondate,
@@ -207,8 +207,8 @@
         } else {
           toastr.warning('Error!').css('width', '400px');
         }
-        $('#total_paid' + member_id).text(data.loan.total_paid);
-        $('#total_outstanding' + member_id).text(data.loan.total_outstanding);
+        $('#total_paid' + loan_id).text(data.loan.total_paid);
+        $('#total_outstanding' + loan_id).text(data.loan.total_outstanding);
       });
     }
 
