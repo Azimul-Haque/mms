@@ -31,6 +31,8 @@
         <a href="{{ url()->current() }}" class="btn btn-primary pull-right"><i class="fa fa-floppy-o"></i> Save</a><br/>
       </div>
     </div>
+    
+    <b>Loan Program</b>
     <div class="row">
       <div class="col-md-12">
         <div class="table-responsive">
@@ -83,7 +85,7 @@
                     <td readonly>{{ $loan->loanname->name }}</td>
                     <td readonly>{{ $loan->total_disbursed }}</td>
                     @if($loan->total_outstanding <= 0)
-                      <td readonly>Payment Complete</td>
+                      <td title="Total Dis" readonly>0</td>
                     @else
                       <td id="old_loaninstallment{{ $loan->id }}" onchange="oldloancalcandpost({{ $member->id }}, {{ $loan->id }}, '{{ $transactiondate }}')">0</td>
                     @endif
@@ -104,6 +106,34 @@
                   @endforeach
                 @endif
               @endforeach
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <b>Saving Program</b>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="table-responsive">
+          <table class="table table-hover table-condensed table-bordered table-striped " id="editable">
+            <thead>
+              <tr>
+                <th>P#</th>
+                <th>Saving Program</th>
+                <th>Balance</th>
+                <th>Today's <br/>Deposit</th>
+                <th>Today's <br/>Withdrawn</th>
+                <th>Total Collection</th>
+                {{-- <th>Long Term<br/> Savings</th>
+                <th>Total Collection</th>
+                <th>General Savings <br/>Withdraw</th>
+                <th>Long Term <br/>Savings Withdraw</th> 
+                <th>Net <br/>Collection</th> --}}
+              </tr>
+            </thead>
+            <tbody>
+              
             </tbody>
           </table>
         </div>
