@@ -152,41 +152,43 @@ class GroupController extends Controller
         // General Saving
 
         // LongTerm Saving
-        $longsaving = Savinginstallment::where('member_id', $request->data['member_id'])
-                                          ->where('savingname_id', 2) // hard coded!
-                                          ->where('due_date', $request->data['transactiondate'])
-                                          ->first();
-        if(!empty($longsaving)) {
-            // balance calculation in saving acc
-            $longsavingac = Saving::where('member_id', $request->data['member_id'])
-                              ->where('savingname_id', 2) // hard coded!
-                              ->first();
-            $longsavingac->total_amount = $longsavingac->total_amount - $longsaving->amount + $request->data['longsaving'];;
-            $longsavingac->withdraw = $longsavingac->withdraw - $longsaving->withdraw + $request->data['longsavingwd'];
-            $longsavingac->save();
+        if(!empty($request->data['longsaving'])) { // eta karo karo nao thakte paare...
+          $longsaving = Savinginstallment::where('member_id', $request->data['member_id'])
+                                            ->where('savingname_id', 2) // hard coded!
+                                            ->where('due_date', $request->data['transactiondate'])
+                                            ->first();
+          if(!empty($longsaving)) {
+              // balance calculation in saving acc
+              $longsavingac = Saving::where('member_id', $request->data['member_id'])
+                                ->where('savingname_id', 2) // hard coded!
+                                ->first();
+              $longsavingac->total_amount = $longsavingac->total_amount - $longsaving->amount + $request->data['longsaving'];
+              $longsavingac->withdraw = $longsavingac->withdraw - $longsaving->withdraw + $request->data['longsavingwd'];
+              $longsavingac->save();
 
-            $longsaving->amount = $request->data['longsaving'];
-            $longsaving->withdraw = $request->data['longsavingwd'];
-            $longsaving->balance = $longsavingac->total_amount - $longsavingac->withdraw;
-            $longsaving->save();
-        } else {
-            // balance calculation
-            $longsavingac = Saving::where('member_id', $request->data['member_id'])
-                              ->where('savingname_id', 2) // hard coded!
-                              ->first();
-            $longsavingac->total_amount = $longsavingac->total_amount + $request->data['longsaving'];;
-            $longsavingac->withdraw = $longsavingac->withdraw + $request->data['longsavingwd'];
-            $longsavingac->save();
+              $longsaving->amount = $request->data['longsaving'];
+              $longsaving->withdraw = $request->data['longsavingwd'];
+              $longsaving->balance = $longsavingac->total_amount - $longsavingac->withdraw;
+              $longsaving->save();
+          } else {
+              // balance calculation
+              $longsavingac = Saving::where('member_id', $request->data['member_id'])
+                                ->where('savingname_id', 2) // hard coded!
+                                ->first();
+              $longsavingac->total_amount = $longsavingac->total_amount + $request->data['longsaving'];;
+              $longsavingac->withdraw = $longsavingac->withdraw + $request->data['longsavingwd'];
+              $longsavingac->save();
 
-            $newlongsaving = new Savinginstallment;
-            $newlongsaving->due_date = date('Y-m-d', strtotime($request->data['transactiondate']));
-            $newlongsaving->amount = $request->data['longsaving'];
-            $newlongsaving->withdraw = $request->data['longsavingwd'];
-            $newlongsaving->balance = $longsavingac->total_amount - $longsavingac->withdraw;
-            $newlongsaving->member_id = $request->data['member_id'];
-            $newlongsaving->savingname_id = 2; // hard coded!
-            $newlongsaving->saving_id = $longsavingac->id;
-            $newlongsaving->save();            
+              $newlongsaving = new Savinginstallment;
+              $newlongsaving->due_date = date('Y-m-d', strtotime($request->data['transactiondate']));
+              $newlongsaving->amount = $request->data['longsaving'];
+              $newlongsaving->withdraw = $request->data['longsavingwd'];
+              $newlongsaving->balance = $longsavingac->total_amount - $longsavingac->withdraw;
+              $newlongsaving->member_id = $request->data['member_id'];
+              $newlongsaving->savingname_id = 2; // hard coded!
+              $newlongsaving->saving_id = $longsavingac->id;
+              $newlongsaving->save();            
+          }
         }
         // LongTerm Saving
 
