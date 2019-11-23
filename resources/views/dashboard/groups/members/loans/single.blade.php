@@ -125,7 +125,7 @@
             </div>
           </div>
           <div class="panel-footer">
-            <button type="submit" class="btn btn-primary" title="কাজ চলছে"><i class="fa fa-floppy-o"></i> Save</button>
+            <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-o"></i> Save</button>
           </div>
           {!! Form::close() !!}
         </div>

@@ -59,7 +59,7 @@ class OldDataEntryContrller extends Controller
           'ishusband'             => 'required',
           'mother'                => 'required',
           'gender'                => 'required',
-          'marital_status'        => 'required',
+          // 'marital_status'        => 'required',
           'religion'              => 'required',
           // 'ethnicity'             => 'required',
           // 'guardian'              => 'required',
@@ -152,6 +152,7 @@ class OldDataEntryContrller extends Controller
         	  // Session::flash('warning', 'This member already has an ACTIVE primary account.');
         	} else {
         		$loan = new Loan;
+                $loan->loan_new = 0; // 0 means old
         		$loan->loanname_id = $request->primary_loanname_id;
         		$loan->disburse_date = date('Y-m-d', strtotime($request->primary_disburse_date));
         		$loan->installment_type = $request->primary_installment_type;
@@ -224,6 +225,7 @@ class OldDataEntryContrller extends Controller
         if(($request->product_disburse_date != null || $request->product_disburse_date != '') && ($request->product_total_disbursed != null || $request->product_total_disbursed != '')) 
         {
         	$loan = new Loan;
+            $loan->loan_new = 0; // 0 means old
         	$loan->loanname_id = $request->product_loanname_id;
         	$loan->disburse_date = date('Y-m-d', strtotime($request->product_disburse_date));
         	$loan->installment_type = $request->product_installment_type;
@@ -322,7 +324,7 @@ class OldDataEntryContrller extends Controller
         		} else {
         		  $savingaccount->closing_date = '1970-01-01';
         		}
-        		$savingaccount->meeting_day = $request->general_meeting_day;
+        		// $savingaccount->meeting_day = $request->general_meeting_day;
         		$savingaccount->installment_type = $request->general_installment_type;
         		$savingaccount->minimum_deposit = 0.00;
         		$savingaccount->total_amount = $request->general_total_amount_so_far;
@@ -356,7 +358,7 @@ class OldDataEntryContrller extends Controller
         	} else {
         	  $savingaccount->closing_date = '1970-01-01';
         	}
-        	$savingaccount->meeting_day = $request->longterm_meeting_day;
+        	// $savingaccount->meeting_day = $request->longterm_meeting_day;
         	$savingaccount->installment_type = $request->longterm_installment_type;
         	$savingaccount->minimum_deposit = 0.00;
         	$savingaccount->total_amount = $request->longterm_total_amount_so_far;

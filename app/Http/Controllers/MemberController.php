@@ -358,6 +358,7 @@ class MemberController extends Controller
         ]);
 
         $loan = new Loan;
+        $loan->loan_new = 1; // 1 means new
         $loan->loanname_id = $request->loanname_id;
         $loan->disburse_date = date('Y-m-d', strtotime($request->disburse_date));
         $loan->installment_type = $request->installment_type;
