@@ -83,7 +83,7 @@
                     <td readonly>{{ $loan->loanname->name }}</td>
                     <td readonly>{{ $loan->total_disbursed }}</td>
                     @if($loan->total_outstanding <= 0)
-                      <td title="Payment Completed!" readonly>0</td>
+                      <td readonly>Payment Complete</td>
                     @else
                       <td id="old_loaninstallment{{ $loan->id }}" onchange="oldloancalcandpost({{ $member->id }}, {{ $loan->id }}, '{{ $transactiondate }}')">0</td>
                     @endif

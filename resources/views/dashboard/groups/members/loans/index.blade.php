@@ -46,7 +46,13 @@
                   <td>{{ $loan->total_disbursed }}</td>
                   <td>{{ $loan->total_paid }}</td>
                   <td>{{ $loan->total_outstanding }}</td>
-                  <td>{{ status($loan->status) }}</td>
+                  <td>
+                    @if($loan->status == 1)
+                      <span class="badge badge-primary"><i class="fa fa-hourglass-half"></i> {{ status($loan->status) }}</span>
+                    @else
+                      <span class="badge badge-primary"><i class="fa fa-check"></i> {{ status($loan->status) }}</span>
+                    @endif
+                  </td>
                   <td>
                     @if($loan->closing_date != '0000-00-00')
                       {{ date('D, d/m/Y', strtotime($member->closing_date)) }}
