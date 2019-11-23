@@ -48,9 +48,9 @@
                   <td>{{ $loan->total_outstanding }}</td>
                   <td>
                     @if($loan->status == 1)
-                      <span class="badge badge-primary"><i class="fa fa-hourglass-half"></i> {{ status($loan->status) }}</span>
+                      <span class="badge badge-warning"><i class="fa fa-hourglass-half"></i> {{ status($loan->status) }}</span>
                     @else
-                      <span class="badge badge-primary"><i class="fa fa-check"></i> {{ status($loan->status) }}</span>
+                      <span class="badge badge-success"><i class="fa fa-check"></i> {{ status($loan->status) }}</span>
                     @endif
                   </td>
                   <td>
