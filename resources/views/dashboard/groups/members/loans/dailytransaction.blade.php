@@ -82,7 +82,11 @@
                     <td readonly>{{ $member->passbook }} O</td>
                     <td readonly>{{ $loan->loanname->name }}</td>
                     <td readonly>{{ $loan->total_disbursed }}</td>
-                    <td id="old_loaninstallment{{ $loan->id }}" onchange="oldloancalcandpost({{ $member->id }}, {{ $loan->id }}, '{{ $transactiondate }}')">0</td>
+                    @if($loan->total_outstanding <= 0)
+                      <td title="Payment Completed!" readonly>0</td>
+                    @else
+                      <td id="old_loaninstallment{{ $loan->id }}" onchange="oldloancalcandpost({{ $member->id }}, {{ $loan->id }}, '{{ $transactiondate }}')">0</td>
+                    @endif
                     <td readonly id="old_total_paid{{ $loan->id }}">{{ $loan->total_paid }}</td>
                     <td readonly id="old_total_outstanding{{ $loan->id }}">{{ $loan->total_outstanding }}</td>
                     {{-- @php
