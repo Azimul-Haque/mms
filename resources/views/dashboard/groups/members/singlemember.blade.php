@@ -7,7 +7,7 @@
 @stop
 
 @section('content_header')
-    <h1>Member: <b>{{ $member->name }}</b>, Group: <b>{{ $group->name }}</b>, Staff: <b>{{ $staff->name }}</b></h1>
+    <h1>Member: <b>{{ $member->name }}-{{ $member->fhusband }}</b>, Group: <b>{{ $group->name }}</b>, Staff: <b>{{ $staff->name }}</b></h1>
 @stop
 
 @section('content')

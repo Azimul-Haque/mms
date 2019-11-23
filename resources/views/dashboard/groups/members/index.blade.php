@@ -24,7 +24,6 @@
               <tr>
                 <th>Passbook #</th>
                 <th>Name</th>
-                <th>Father/Husband</th>
                 <th>Is Husband</th>
                 <th>Status</th>
                 {{-- <th>Date of Birth</th> --}}
@@ -45,9 +44,8 @@
                 <tr>
                   <td>{{ $member->passbook }}</td>
                   <td>
-                    <a href="{{ route('dashboard.member.single', [$staff->id, $group->id, $member->id]) }}" @if($member->loans->count() > 0) style="color: #DD4B39;" @else style="color: #000000;" @endif><i class="fa fa-user"></i> {{ $member->name }} </a>
+                    <a href="{{ route('dashboard.member.single', [$staff->id, $group->id, $member->id]) }}" @if($member->loans->count() > 0) style="color: #DD4B39;" @else style="color: #000000;" @endif><i class="fa fa-user"></i> {{ $member->name }}-{{ $member->fhusband }} </a>
                   </td>
-                  <td>{{ $member->fhusband }}</td>
                   <td>{{ ishusband($member->ishusband) }}</td>
                   <td><span class="label label-{{ statuscolor($member->status) }}">{{ status($member->status) }}</span></td>
                   {{-- <td>{{ date('D, d/m/Y', strtotime($member->dob)) }}, <b>{{ Carbon::createFromTimestampUTC(strtotime($member->dob))->diff(Carbon::now())->format('%y years') }}</b></td> --}}

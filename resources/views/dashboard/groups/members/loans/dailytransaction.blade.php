@@ -8,7 +8,7 @@
 @stop
 
 @section('content_header')
-    <h1>Daily Transaction [Staff: <b>{{ $staff->name }}</b>, Group: <b>{{ $group->name }}</b>, , Staff: <b>{{ $member->name }}</b>]</h1>
+    <h1>Daily Transaction [Staff: <b>{{ $staff->name }}</b>, Group: <b>{{ $group->name }}</b>, , Staff: <b>{{ $member->name }}-{{ $member->fhusband }}</b>]</h1>
 @stop
 
 @section('content')
@@ -67,30 +67,7 @@
                         $generalsaving = $member->savinginstallments->where('member_id', $member->id)->where('savingname_id', 1)->where('due_date', $transactiondate)->first()->amount;
                       }
                     @endphp
-                    <td id="generalsaving{{ $member->id }}" onchange="loancalcandpost({{ $member->id }}, {{ $loaninstallment->id }}, '{{ $transactiondate }}')">{{ $generalsaving }}</td>
-                    @php
-                      $longsaving = 0;
-                      if(!empty($member->savinginstallments->where('savingname_id', 2)->where('due_date', $transactiondate)->first())) {
-                        $longsaving = $member->savinginstallments->where('member_id', $member->id)->where('savingname_id', 2)->where('due_date', $transactiondate)->first()->amount;
-                      }
-                    @endphp
-                    <td id="longsaving{{ $member->id }}" onchange="loancalcandpost({{ $member->id }}, {{ $loaninstallment->id }}, '{{ $transactiondate }}')">{{ $longsaving }}</td>
-                    <td id="totalcollection{{ $member->id }}" readonly>{{ $loaninstallment->paid_total + $generalsaving + $longsaving }}</td>
-                    @php
-                      $generalsavingwd = 0;
-                      if(!empty($member->savinginstallments->where('savingname_id', 1)->where('due_date', $transactiondate)->first())) {
-                        $generalsavingwd = $member->savinginstallments->where('member_id', $member->id)->where('savingname_id', 1)->where('due_date', $transactiondate)->first()->withdraw;
-                      }
-                    @endphp
-                    <td id="generalsavingwd{{ $member->id }}" onchange="loancalcandpost({{ $member->id }}, {{ $loaninstallment->id }}, '{{ $transactiondate }}')">{{ $generalsavingwd }}</td>
-                    @php
-                      $longsavingwd = 0;
-                      if(!empty($member->savinginstallments->where('savingname_id', 2)->where('due_date', $transactiondate)->first())) {
-                        $longsavingwd = $member->savinginstallments->where('member_id', $member->id)->where('savingname_id', 2)->where('due_date', $transactiondate)->first()->withdraw;
-                      }
-                    @endphp
-                    <td id="longsavingwd{{ $member->id }}" onchange="loancalcandpost({{ $member->id }}, {{ $loaninstallment->id }}, '{{ $transactiondate }}')">{{ $longsavingwd }}</td>
-                    <td id="netcollection{{ $member->id }}" readonly>{{ $loaninstallment->paid_total + $generalsaving + $longsaving - $generalsavingwd - $longsavingwd }}</td> --}}
+                    <td id="generalsaving{{ $member->id }}" onchange="loancalcandpost({{ $member->id }}, {{ $loaninstallment->id }}, '{{ $transactiondate }}')">{{ $generalsaving }}</td> --}}
                   </tr>
                   @endif
                 @endforeach

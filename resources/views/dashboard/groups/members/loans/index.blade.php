@@ -8,7 +8,7 @@
 
 @section('content_header')
     <h1>
-      Loan Accounts [Member: <b>{{ $member->name }}</b>, Group: <b>{{ $group->name }}</b>, Staff: <b>{{ $staff->name }}</b>]
+      Loan Accounts [Member: <b>{{ $member->name }}-{{ $member->fhusband }}</b>, Group: <b>{{ $group->name }}</b>, Staff: <b>{{ $staff->name }}</b>]
       <div class="pull-right">
         <a href="{{ route('dashboard.loans.create', [$staff->id, $group->id, $member->id]) }}" class="btn btn-primary" title="Add a New Loan Account"><i class="fa fa-plus"></i> Add Loan Account</a>
       </div>
