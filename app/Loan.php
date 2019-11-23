@@ -10,6 +10,10 @@ class Loan extends Model
         return $this->belongsTo('App\Loanname');
     }
 
+    public function schemename() {
+        return $this->belongsTo('App\Schemename');
+    }
+
     public function member() {
         return $this->belongsTo('App\Member');
     }
