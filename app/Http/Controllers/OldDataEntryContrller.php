@@ -61,14 +61,14 @@ class OldDataEntryContrller extends Controller
           'gender'                => 'required',
           'marital_status'        => 'required',
           'religion'              => 'required',
-          'ethnicity'             => 'required',
-          'guardian'              => 'required',
-          'guardianrelation'      => 'required',
+          // 'ethnicity'             => 'required',
+          // 'guardian'              => 'required',
+          // 'guardianrelation'      => 'required',
           'residence_type'        => 'sometimes',
-          'landlord_name'         => 'sometimes',
+          // 'landlord_name'         => 'sometimes',
           'education'             => 'required',
           'profession'            => 'required',
-          'dob'                   => 'required',
+          // 'dob'                   => 'required',
           'nid'                   => 'required',
           'admission_date'        => 'required',
           'closing_date'          => 'sometimes',
@@ -78,7 +78,7 @@ class OldDataEntryContrller extends Controller
           'present_union'         => 'required',
           'present_post'          => 'required',
           'present_village'       => 'required',
-          'present_house'         => 'required',
+          // 'present_house'         => 'required',
           'present_phone'         => 'required',
 
           'permanent_district'    => 'sometimes',
@@ -86,7 +86,7 @@ class OldDataEntryContrller extends Controller
           'permanent_union'       => 'sometimes',
           'permanent_post'        => 'sometimes',
           'permanent_village'     => 'sometimes',
-          'permanent_house'       => 'sometimes',
+          // 'permanent_house'       => 'sometimes',
           'permanent_phone'       => 'sometimes',
         ]);
 
@@ -97,16 +97,16 @@ class OldDataEntryContrller extends Controller
         $member->ishusband = $request->ishusband;
         $member->mother = $request->mother;
         $member->gender = $request->gender;
-        $member->marital_status = $request->marital_status;
+        // $member->marital_status = $request->marital_status;
         $member->religion = $request->religion;
-        $member->ethnicity = $request->ethnicity;
-        $member->guardian = $request->guardian;
-        $member->guardianrelation = $request->guardianrelation;
+        // $member->ethnicity = $request->ethnicity;
+        // $member->guardian = $request->guardian;
+        // $member->guardianrelation = $request->guardianrelation;
         $member->residence_type = $request->residence_type;
-        $member->landlord_name = $request->landlord_name;
+        // $member->landlord_name = $request->landlord_name;
         $member->education = $request->education;
         $member->profession = $request->profession;
-        $member->dob = date('Y-m-d', strtotime($request->dob));
+        // $member->dob = date('Y-m-d', strtotime($request->dob));
         $member->nid = $request->nid;
         $member->admission_date = date('Y-m-d', strtotime($request->admission_date));
         if($request->closing_date) {
@@ -119,7 +119,7 @@ class OldDataEntryContrller extends Controller
         $member->present_union = $request->present_union;
         $member->present_post = $request->present_post;
         $member->present_village = $request->present_village;
-        $member->present_house = $request->present_house;
+        // $member->present_house = $request->present_house;
         $member->present_phone = $request->present_phone;
 
         $member->permanent_district = $request->permanent_district;
@@ -127,7 +127,7 @@ class OldDataEntryContrller extends Controller
         $member->permanent_union = $request->permanent_union;
         $member->permanent_post = $request->permanent_post;
         $member->permanent_village = $request->permanent_village;
-        $member->permanent_house = $request->permanent_house;
+        // $member->permanent_house = $request->permanent_house;
         $member->permanent_phone = $request->permanent_phone;
 
         $member->passbook_fee = $request->passbook_fee;
@@ -175,7 +175,6 @@ class OldDataEntryContrller extends Controller
         		$accugenloaninstallment->installment_principal = ($request->primary_total_paid - ($request->primary_total_paid * 0.20));
         		$accugenloaninstallment->installment_interest = ($request->primary_total_paid * 0.20);
         		$accugenloaninstallment->installment_total = $request->primary_total_paid;
-
         		// same as above
         		$accugenloaninstallment->paid_principal = ($request->primary_total_paid - ($request->primary_total_paid * 0.20));
         		$accugenloaninstallment->paid_interest = ($request->primary_total_paid * 0.20);
@@ -186,36 +185,36 @@ class OldDataEntryContrller extends Controller
         		$accugenloaninstallment->save();
 
         		// add the installments of this account
-        		for($i=0; $i<$request->primary_installments; $i++) 
-        		{
-        		  if($request->primary_installment_type == 1) {
-        		    $dateToPay = $this->addWeekdays(Carbon::parse($request->primary_first_installment_date), $i);
-        		  } else if($request->primary_installment_type == 2) {
-        		    $dateToPay = Carbon::parse($request->primary_first_installment_date)->adddays(7*$i);
-        		  } else if($request->primary_installment_type == 3) {
-        		    $dateToPay = Carbon::parse($request->primary_first_installment_date)->addMonths($i);
-        		    if(date('D', strtotime($dateToPay)) == 'Fri') {
-        		      $dateToPay = Carbon::parse($dateToPay)->adddays(1);
-        		    } else {
-        		      $dateToPay = $dateToPay;
-        		    }
-        		  }
-        		  // store the loan installments...
-        		  $loaninstallment = new Loaninstallment;
-        		  $loaninstallment->due_date = date('Y-m-d', strtotime($dateToPay));
-        		  $loaninstallment->installment_no = $i + 1;
-        		  $loaninstallment->installment_principal = ($loan->total_outstanding - ($loan->total_outstanding * 0.20)) / $loan->installments;
-        		  $loaninstallment->installment_interest = ($loan->total_outstanding * 0.20) / $loan->installments;
-        		  $loaninstallment->installment_total = $loan->total_outstanding / $loan->installments;
+        		// for($i=0; $i<$request->primary_installments; $i++) 
+        		// {
+        		//   if($request->primary_installment_type == 1) {
+        		//     $dateToPay = $this->addWeekdays(Carbon::parse($request->primary_first_installment_date), $i);
+        		//   } else if($request->primary_installment_type == 2) {
+        		//     $dateToPay = Carbon::parse($request->primary_first_installment_date)->adddays(7*$i);
+        		//   } else if($request->primary_installment_type == 3) {
+        		//     $dateToPay = Carbon::parse($request->primary_first_installment_date)->addMonths($i);
+        		//     if(date('D', strtotime($dateToPay)) == 'Fri') {
+        		//       $dateToPay = Carbon::parse($dateToPay)->adddays(1);
+        		//     } else {
+        		//       $dateToPay = $dateToPay;
+        		//     }
+        		//   }
+        		//   // store the loan installments...
+        		//   $loaninstallment = new Loaninstallment;
+        		//   $loaninstallment->due_date = date('Y-m-d', strtotime($dateToPay));
+        		//   $loaninstallment->installment_no = $i + 1;
+        		//   $loaninstallment->installment_principal = ($loan->total_outstanding - ($loan->total_outstanding * 0.20)) / $loan->installments;
+        		//   $loaninstallment->installment_interest = ($loan->total_outstanding * 0.20) / $loan->installments;
+        		//   $loaninstallment->installment_total = $loan->total_outstanding / $loan->installments;
 
-        		  $loaninstallment->paid_principal = 0.00;
-        		  $loaninstallment->paid_interest = 0.00;
-        		  $loaninstallment->paid_total = 0.00;
+        		//   $loaninstallment->paid_principal = 0.00;
+        		//   $loaninstallment->paid_interest = 0.00;
+        		//   $loaninstallment->paid_total = 0.00;
 
-        		  $loaninstallment->outstanding_total = $loan->total_outstanding;
-        		  $loaninstallment->loan_id = $loan->id;
-        		  $loaninstallment->save();
-        		}
+        		//   $loaninstallment->outstanding_total = $loan->total_outstanding;
+        		//   $loaninstallment->loan_id = $loan->id;
+        		//   $loaninstallment->save();
+        		// }
         	}
         }
 
@@ -251,7 +250,6 @@ class OldDataEntryContrller extends Controller
         	$acculongtloaninstallment->installment_principal = ($request->product_total_paid - ($request->product_total_paid * $product_service_charge_percent));
         	$acculongtloaninstallment->installment_interest = ($request->product_total_paid * $product_service_charge_percent);
         	$acculongtloaninstallment->installment_total = $request->product_total_paid;
-
         	// same as above
         	$acculongtloaninstallment->paid_principal = ($request->product_total_paid - ($request->product_total_paid * $product_service_charge_percent));
         	$acculongtloaninstallment->paid_interest = ($request->product_total_paid * $product_service_charge_percent);
@@ -262,36 +260,36 @@ class OldDataEntryContrller extends Controller
         	$acculongtloaninstallment->save();
 
         	// add the installments of this account
-        	for($i=0; $i<$request->product_installments; $i++) 
-        	{
-        	  if($request->product_installment_type == 1) {
-        	    $dateToPay = $this->addWeekdays(Carbon::parse($request->product_first_installment_date), $i);
-        	  } else if($request->product_installment_type == 2) {
-        	    $dateToPay = Carbon::parse($request->product_first_installment_date)->adddays(7*$i);
-        	  } else if($request->product_installment_type == 3) {
-        	    $dateToPay = Carbon::parse($request->product_first_installment_date)->addMonths($i);
-        	    if(date('D', strtotime($dateToPay)) == 'Fri') {
-        	      $dateToPay = Carbon::parse($dateToPay)->adddays(1);
-        	    } else {
-        	      $dateToPay = $dateToPay;
-        	    }
-        	  }
-        	  // store the loan installments...
-        	  $loaninstallment = new Loaninstallment;
-        	  $loaninstallment->due_date = date('Y-m-d', strtotime($dateToPay));
-        	  $loaninstallment->installment_no = $i + 1;
-        	  $loaninstallment->installment_principal = ($loan->total_outstanding - ($loan->total_outstanding * $product_service_charge_percent)) / $loan->installments;
-        	  $loaninstallment->installment_interest = ($loan->total_outstanding * $product_service_charge_percent) / $loan->installments;
-        	  $loaninstallment->installment_total = $loan->total_outstanding / $loan->installments;
+        	// for($i=0; $i<$request->product_installments; $i++) 
+        	// {
+        	//   if($request->product_installment_type == 1) {
+        	//     $dateToPay = $this->addWeekdays(Carbon::parse($request->product_first_installment_date), $i);
+        	//   } else if($request->product_installment_type == 2) {
+        	//     $dateToPay = Carbon::parse($request->product_first_installment_date)->adddays(7*$i);
+        	//   } else if($request->product_installment_type == 3) {
+        	//     $dateToPay = Carbon::parse($request->product_first_installment_date)->addMonths($i);
+        	//     if(date('D', strtotime($dateToPay)) == 'Fri') {
+        	//       $dateToPay = Carbon::parse($dateToPay)->adddays(1);
+        	//     } else {
+        	//       $dateToPay = $dateToPay;
+        	//     }
+        	//   }
+        	//   // store the loan installments...
+        	//   $loaninstallment = new Loaninstallment;
+        	//   $loaninstallment->due_date = date('Y-m-d', strtotime($dateToPay));
+        	//   $loaninstallment->installment_no = $i + 1;
+        	//   $loaninstallment->installment_principal = ($loan->total_outstanding - ($loan->total_outstanding * $product_service_charge_percent)) / $loan->installments;
+        	//   $loaninstallment->installment_interest = ($loan->total_outstanding * $product_service_charge_percent) / $loan->installments;
+        	//   $loaninstallment->installment_total = $loan->total_outstanding / $loan->installments;
 
-        	  $loaninstallment->paid_principal = 0.00;
-        	  $loaninstallment->paid_interest = 0.00;
-        	  $loaninstallment->paid_total = 0.00;
+        	//   $loaninstallment->paid_principal = 0.00;
+        	//   $loaninstallment->paid_interest = 0.00;
+        	//   $loaninstallment->paid_total = 0.00;
 
-        	  $loaninstallment->outstanding_total = $loan->total_outstanding;
-        	  $loaninstallment->loan_id = $loan->id;
-        	  $loaninstallment->save();
-        	}
+        	//   $loaninstallment->outstanding_total = $loan->total_outstanding;
+        	//   $loaninstallment->loan_id = $loan->id;
+        	//   $loaninstallment->save();
+        	// }
         }
         
         // add general saving account if any...

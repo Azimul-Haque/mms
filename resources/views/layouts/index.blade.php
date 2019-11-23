@@ -3,8 +3,8 @@
 
 <head>
     <title>@yield('title')</title>
-    <meta name="description" content="Official website of Killa Consultancy. Developed by A. H. M. Azimul Haque and Md. Abdul Mannan.">
-    <meta name="keywords" content="Killa, Killa Consultancy, Killa BD, KillaBD">
+    <meta name="description" content="Official website of Sujo Somobay Samity. Developed by A. H. M. Azimul Haque and Md. Abdul Mannan.">
+    <meta name="keywords" content="Surjo Somobay Samity, SurjoSSL, Somobay Somiti">
     <meta charset="utf-8">
     <meta name="author" content="A. H. M. Azimul Haque">
     <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1" />
