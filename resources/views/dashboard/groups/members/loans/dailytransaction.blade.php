@@ -72,6 +72,34 @@
                   @endif
                 @endforeach
               @endforeach
+
+              {{-- old data entry, anyday --}}
+              {{-- old data entry, anyday --}}
+              @foreach($member->loans as $loan)
+                @if($loan->loan_new == 0)
+                  @if(!empty($transactiondate) && empty($loan->loaninstallments->first()->due_date))
+                  <tr>
+                    <td readonly>{{ $member->passbook }}</td>
+                    <td readonly>{{ $loan->loanname->name }}</td>
+                    <td readonly>{{ $loan->total_disbursed }}</td>
+                    <td id="loaninstallment{{ $member->id }}" onchange="oldloancalcandpost({{ $member->id }}, '{{ $transactiondate }}')">0</td>
+                    <td readonly id="total_paid{{ $member->id }}">{{ $loan->total_paid }}</td>
+                    <td readonly id="total_outstanding{{ $member->id }}">{{ $loan->total_outstanding }}</td>
+                    {{-- @php
+                      $generalsaving = 0;
+                      if(!empty($member->savinginstallments->where('savingname_id', 1)->where('due_date', $transactiondate)->first())) {
+                        $generalsaving = $member->savinginstallments->where('member_id', $member->id)->where('savingname_id', 1)->where('due_date', $transactiondate)->first()->amount;
+                      }
+                    @endphp
+                    <td id="generalsaving{{ $member->id }}" onchange="oldloancalcandpost({{ $member->id }}, {{ $loaninstallment->id }}, '{{ $transactiondate }}')">{{ $generalsaving }}</td> --}}
+                  </tr>
+                  @endif
+
+                  @foreach($loan->loaninstallments as $loaninstallment)
+                    
+                  @endforeach
+                @endif
+              @endforeach
             </tbody>
           </table>
         </div>
@@ -158,8 +186,30 @@
         $('#total_paid' + member_id).text(data.loan.total_paid);
         $('#total_outstanding' + member_id).text(data.loan.total_outstanding);
       });
+    }
+
+    function oldloancalcandpost(member_id, transactiondate) {
+      var membername = $('#membername' + member_id).text();
+      var loaninstallment = parseInt($('#loaninstallment' + member_id).text()) ? parseInt($('#loaninstallment' + member_id).text()) : 0;
       
-      
+      // now post the data
+      $.post("/daily/transaction/store/api", {_token: '{{ csrf_token() }}', _method : 'POST', 
+        data: {
+          member_id: member_id,
+          transactiondate: transactiondate,
+          loaninstallment: loaninstallment,
+        }},
+        function(data, status){
+        console.log(status);
+        // console.log(data.loan.total_outstanding);
+        if(status == 'success') {
+          toastr.success('Member: <b>' + membername + '</b><br/>Daily Collection: <u>৳ ' + loaninstallment, '</u>SUCCESS').css('width', '400px');
+        } else {
+          toastr.warning('Error!').css('width', '400px');
+        }
+        $('#total_paid' + member_id).text(data.loan.total_paid);
+        $('#total_outstanding' + member_id).text(data.loan.total_outstanding);
+      });
     }
 
     $('td[readonly]').on('click dblclick keydown', function(e) {
