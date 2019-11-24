@@ -26,6 +26,8 @@ class CreateLoansTable extends Migration
             $table->float('total_disbursed');
             $table->float('total_paid')->default(0.00);
             $table->float('total_outstanding')->default(0.00);
+            $table->float('insurance')->default(0.00);
+            $table->float('processing_fee')->default(0.00);
 
             $table->date('closing_date');
             $table->integer('status');

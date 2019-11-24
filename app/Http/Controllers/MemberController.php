@@ -353,6 +353,8 @@ class MemberController extends Controller
           'service_charge'              => 'required',
           'down_payment'                => 'sometimes',
           'total_disbursed'             => 'required',
+          'insurance'                   => 'sometimes',
+          'processing_fee'              => 'sometimes',
           'closing_date'                => 'sometimes',
           'status'                      => 'sometimes'
         ]);
@@ -371,6 +373,10 @@ class MemberController extends Controller
         $loan->total_disbursed = $request->total_disbursed;
         $loan->total_paid = 0.00; // jodi bole pore tobe down payment add kore deoa hobe
         $loan->total_outstanding = $request->total_disbursed;
+        if($request->loanname_id == 1) { // if orimary loan
+          $loan->insurance = $request->insurance;
+          $loan->processing_fee = $request->processing_fee;
+        }
         $loan->status = $request->status; // 1 means disbursed, 0 means closed
         $loan->member_id = $m_id;
         $loan->save();

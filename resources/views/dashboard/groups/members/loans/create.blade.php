@@ -91,10 +91,12 @@
             <div class="row">
               <br/>
               <div class="col-md-6">
-                {!! Form::label('down_payment', 'Down Payment (If PRODUCT) *') !!}
-                <div class="input-group">
-                  <span class="input-group-addon">৳</span>
-                  {!! Form::text('down_payment', null, array('class' => 'form-control', 'placeholder' => 'Down Payment (If PRODUCT)', 'autocomplete' => 'off', 'onchange' => 'calculateTotalDisburse();')) !!}
+                <div id="show_down_payment">
+                  {!! Form::label('down_payment', 'Down Payment (If PRODUCT) *') !!}
+                  <div class="input-group">
+                    <span class="input-group-addon">৳</span>
+                    {!! Form::text('down_payment', null, array('class' => 'form-control', 'placeholder' => 'Down Payment (If PRODUCT)', 'autocomplete' => 'off', 'onchange' => 'calculateTotalDisburse();')) !!}
+                  </div>
                 </div>
               </div>
               <div class="col-md-6">
@@ -102,6 +104,23 @@
                 <div class="input-group">
                   <span class="input-group-addon">৳</span>
                   {!! Form::text('total_disbursed', null, array('class' => 'form-control', 'placeholder' => 'Total Disbursed Amount', 'required' => '', 'autocomplete' => 'off')) !!}
+                </div>
+              </div>
+            </div>
+            <div class="row" id="show_insur_proc_fee">
+              <br/>
+              <div class="col-md-6">
+                {!! Form::label('insurance', 'Insurance (If PRIMARY LOAN) *') !!}
+                <div class="input-group">
+                  <span class="input-group-addon">৳</span>
+                  {!! Form::text('insurance', null, array('class' => 'form-control', 'placeholder' => 'Insurance (If PRIMARY LOAN) ', 'autocomplete' => 'off', 'onchange' => 'calculateTotalDisburse();')) !!}
+                </div>
+              </div>
+              <div class="col-md-6">
+                {!! Form::label('processing_fee', 'Processing Fee (If PRIMARY LOAN) *') !!}
+                <div class="input-group">
+                  <span class="input-group-addon">৳</span>
+                  {!! Form::text('processing_fee', 15, array('class' => 'form-control', 'placeholder' => 'Total Disbursed Amount', 'autocomplete' => 'off')) !!}
                 </div>
               </div>
             </div>
@@ -182,6 +201,20 @@
         clearBtn: true,
       });
     });
+
+    // by default hide the show_insur_proc_fee, show_down_payment
+    $('#show_insur_proc_fee').hide();
+    $('#show_down_payment').hide();
+    $('#loanname_id').change(function() {
+      if($('#loanname_id').val() == 1){
+        $('#show_insur_proc_fee').show();
+        $('#show_down_payment').hide();
+      } else {
+        $('#show_insur_proc_fee').hide();
+        $('#show_down_payment').show();
+      }
+    })
+
     function calculateTotalDisburse() {
       var principal_amount = $('#principal_amount').val() ? $('#principal_amount').val() : 0; // a ? a : 0;
       var down_payment = $('#down_payment').val() ? $('#down_payment').val() : 0; // a ? a : 0;
@@ -190,6 +223,7 @@
       if($('#loanname_id').val() && $('#loanname_id').val() == 1) {
         var service_charge = principal_amount * 0.20; // 20%
         $('#service_charge').val(service_charge);
+        $('#insurance').val(principal_amount * 0.01);
       } else {
         var service_charge = $('#service_charge').val() ? $('#service_charge').val() : 0; // a ? a : 0;
       }

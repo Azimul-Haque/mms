@@ -105,6 +105,25 @@
                 </div>
               </div>
             </div>
+            @if($loan->schemename_id == 1)
+            <div class="row">
+              <br/>
+              <div class="col-md-6">
+                {!! Form::label('insurance', 'Insurance (If PRIMARY LOAN) *') !!}
+                <div class="input-group">
+                  <span class="input-group-addon">৳</span>
+                  {!! Form::text('insurance', null, array('class' => 'form-control', 'placeholder' => 'Insurance (If PRIMARY LOAN) ', 'readonly' => '', 'autocomplete' => 'off')) !!}
+                </div>
+              </div>
+              <div class="col-md-6">
+                {!! Form::label('processing_fee', 'Processing Fee (If PRIMARY LOAN) *') !!}
+                <div class="input-group">
+                  <span class="input-group-addon">৳</span>
+                  {!! Form::text('processing_fee', 15, array('class' => 'form-control', 'placeholder' => 'Total Disbursed Amount', 'readonly' => '', 'autocomplete' => 'off')) !!}
+                </div>
+              </div>
+            </div>
+            @endif
             <div class="row">
               <div class="col-md-6">
                 {!! Form::label('closing_date', 'Closing Date (Optional)') !!}
