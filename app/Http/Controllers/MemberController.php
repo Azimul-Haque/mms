@@ -617,4 +617,50 @@ class MemberController extends Controller
         
         return $installment;
     }
+
+    public function postDailyInstallmentOldSavingAPI(Request $request)
+    {
+        $member = Member::find($request->data['member_id']);
+        $savinginstallment = Savinginstallment::find($request->data['savinginstallment_id']);
+
+        // calculate outstanding from from loan
+        $savinginstallment->savingsingle->total_amount = $savinginstallment->savingsingle->total_amount - $savinginstallment->amount + $request->data['old_savinginstallment'];
+        $savinginstallment->savingsingle->withdraw = $savinginstallment->savingsingle->withdraw - $savinginstallment->withdraw + $request->data['old_savingwithdraw'];
+        $savinginstallment->savingsingle->save();
+
+        // post the installment
+        $savinginstallment->amount = $request->data['old_savinginstallment'];
+        $savinginstallment->withdraw = $request->data['old_savingwithdraw'];
+        $savinginstallment->balance = $savinginstallment->savingsingle->total_amount - $savinginstallment->savingsingle->withdraw;
+        $savinginstallment->save();
+
+        return $savinginstallment;
+    }
+
+    public function postDailyInstallmentNewSavingAPI(Request $request)
+    {
+        $member = Member::find($request->data['member_id']);
+        $saving = Saving::find($request->data['saving_id']);
+
+        // calculate outstanding from from loan
+        $savinginstallment = new Savinginstallment;
+        $savinginstallment->due_date = date('Y-m-d', strtotime($request->data['transactiondate']));
+        
+        $saving->total_amount = $saving->total_amount + $request->data['new_savinginstallment'];
+        $saving->withdraw = $saving->withdraw + $request->data['new_savingwithdraw'];
+        $saving->save();
+
+        // post the installment
+        $savinginstallment->amount = $request->data['new_savinginstallment'];
+        $savinginstallment->withdraw = $request->data['new_savingwithdraw'];
+        $savinginstallment->balance = $saving->total_amount - $saving->withdraw;
+        $savinginstallment->member_id = $member->id;
+        $savinginstallment->savingname_id = $saving->savingname_id;
+        $savinginstallment->saving_id = $saving->id;
+        $savinginstallment->save();
+
+        $savinginstallment->load('savingsingle');
+
+        return $savinginstallment;
+    }
 }

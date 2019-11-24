@@ -138,7 +138,7 @@
                 @foreach($saving->savinginstallments as $savinginstallment)
                   @if(!empty($transactiondate))
                   <tr>
-                    <td readonly>{{ $member->passbook }}</td>
+                    <td readonly>{{ $member->passbook }}O</td>
                     <td readonly>{{ $saving->savingname->name }}</td>
                     <td readonly id="old_savingbalance{{ $savinginstallment->id }}">{{ $saving->total_amount - $saving->withdraw }}</td>
                     <td id="old_savinginstallment{{ $savinginstallment->id }}" onchange="oldsavingcalcandpost({{ $member->id }}, {{ $savinginstallment->id }}, '{{ $transactiondate }}')">{{ $savinginstallment->amount }}</td>
@@ -152,7 +152,7 @@
               @foreach($member->savings as $saving)
                 @if(!empty($transactiondate) && empty($saving->savinginstallments->first()->due_date))
                 <tr>
-                  <td readonly>{{ $member->passbook }}</td>
+                  <td readonly>{{ $member->passbook }}N</td>
                   <td readonly>{{ $saving->savingname->name }}</td>
                   <td readonly id="new_savingbalance{{ $saving->id }}">{{ $saving->total_amount - $saving->withdraw }}</td>
                   <td id="new_savinginstallment{{ $saving->id }}" onchange="newsavingcalcandpost({{ $member->id }}, {{ $saving->id }}, '{{ $transactiondate }}')">0</td>
@@ -233,7 +233,7 @@
     });
 
     function loancalcandpost(member_id, loaninstallment_id, transactiondate) {
-      var membername = $('#membername' + loaninstallment_id).text();
+      var membername = '{{ $member->name }}';
       var loaninstallment = parseInt($('#loaninstallment' + loaninstallment_id).text()) ? parseInt($('#loaninstallment' + loaninstallment_id).text()) : 0;
       
       // now post the data
@@ -259,7 +259,7 @@
 
 
     function oldloancalcandpost(member_id, loan_id, transactiondate) {
-      var membername = $('#membername' + loan_id).text();
+      var membername = '{{ $member->name }}';
       var loaninstallment = parseInt($('#old_loaninstallment' + loan_id).text()) ? parseInt($('#old_loaninstallment' + loan_id).text()) : 0;
       
       // now post the data
@@ -283,28 +283,59 @@
       });
     }
 
-    function oldsavingcalcandpost(member_id, loaninstallment_id, transactiondate) {
-      var membername = $('#membername' + loaninstallment_id).text();
-      var loaninstallment = parseInt($('#loaninstallment' + loaninstallment_id).text()) ? parseInt($('#loaninstallment' + loaninstallment_id).text()) : 0;
+    function oldsavingcalcandpost(member_id, savinginstallment_id, transactiondate) {
+      var membername = '{{ $member->name }}';
+      var old_savinginstallment = parseInt($('#old_savinginstallment' + savinginstallment_id).text()) ? parseInt($('#old_savinginstallment' + savinginstallment_id).text()) : 0;
+      var old_savingwithdraw = parseInt($('#old_savingwithdraw' + savinginstallment_id).text()) ? parseInt($('#old_savingwithdraw' + savinginstallment_id).text()) : 0;
       
       // now post the data
-      $.post("/daily/transaction/store/api", {_token: '{{ csrf_token() }}', _method : 'POST', 
+      $.post("/daily/transaction/oldsaving/store/api", {_token: '{{ csrf_token() }}', _method : 'POST', 
         data: {
           member_id: member_id,
-          loaninstallment_id: loaninstallment_id,
+          savinginstallment_id: savinginstallment_id,
+          old_savinginstallment: old_savinginstallment,
+          old_savingwithdraw: old_savingwithdraw,
           transactiondate: transactiondate,
-          loaninstallment: loaninstallment,
         }},
         function(data, status){
         console.log(status);
         // console.log(data.loan.total_outstanding);
         if(status == 'success') {
-          toastr.success('Member: <b>' + membername + '</b><br/>Daily Collection: <u>৳ ' + loaninstallment, '</u>SUCCESS').css('width', '400px');
+          toastr.success('Member: <b>' + membername + '</b><br/>Daily Collection: <u>৳ ' + old_savinginstallment - old_savingwithdraw, '</u>SUCCESS').css('width', '400px');
         } else {
           toastr.warning('Error!').css('width', '400px');
         }
-        $('#total_paid' + loaninstallment_id).text(data.loan.total_paid);
-        $('#total_outstanding' + loaninstallment_id).text(data.loan.total_outstanding);
+        collectiontoday = old_savinginstallment - old_savingwithdraw;
+        $('#old_savingbalance' + savinginstallment_id).text(data.savingsingle.total_amount - data.savingsingle.withdraw);
+        $('#old_savingcollection' + savinginstallment_id).text(collectiontoday);
+      });
+    }
+
+    function newsavingcalcandpost(member_id, saving_id, transactiondate) {
+      var membername = '{{ $member->name }}';
+      var new_savinginstallment = parseInt($('#new_savinginstallment' + saving_id).text()) ? parseInt($('#new_savinginstallment' + saving_id).text()) : 0;
+      var new_savingwithdraw = parseInt($('#new_savingwithdraw' + saving_id).text()) ? parseInt($('#new_savingwithdraw' + saving_id).text()) : 0;
+      
+      // now post the data
+      $.post("/daily/transaction/newsaving/store/api", {_token: '{{ csrf_token() }}', _method : 'POST', 
+        data: {
+          member_id: member_id,
+          saving_id: saving_id,
+          new_savinginstallment: new_savinginstallment,
+          new_savingwithdraw: new_savingwithdraw,
+          transactiondate: transactiondate,
+        }},
+        function(data, status){
+        console.log(status);
+        // console.log(data.loan.total_outstanding);
+        if(status == 'success') {
+          toastr.success('Member: <b>' + membername + '</b><br/>Daily Collection: <u>৳ ' + new_savinginstallment - new_savingwithdraw, '</u>SUCCESS').css('width', '400px');
+        } else {
+          toastr.warning('Error!').css('width', '400px');
+        }
+        collectiontoday = new_savinginstallment - new_savingwithdraw;
+        $('#new_savingbalance' + saving_id).text(data.savingsingle.total_amount - data.savingsingle.withdraw);
+        $('#new_savingcollection' + saving_id).text(collectiontoday);
       });
     }
 
