@@ -60,7 +60,7 @@
                 @foreach($loan->loaninstallments as $loaninstallment)
                   @if(!empty($transactiondate))
                   <tr>
-                    <td readonly>{{ $loancounter }}</td>
+                    <td readonly>{{ $loancounter++ }}</td>
                     <td readonly>{{ $loan->loanname->name }}</td>
                     <td readonly>{{ $loan->total_disbursed }}</td>
                     <td id="loaninstallment{{ $loaninstallment->id }}" onchange="loancalcandpost({{ $member->id }}, {{ $loaninstallment->id }}, '{{ $transactiondate }}')">{{ $loaninstallment->paid_total }}</td>
@@ -75,9 +75,6 @@
                     <td id="generalsaving{{ $loaninstallment->id }}" onchange="loancalcandpost({{ $member->id }}, {{ $loaninstallment->id }}, '{{ $transactiondate }}')">{{ $generalsaving }}</td> --}}
                   </tr>
                   @endif
-                  @php
-                    $loancounter++;
-                  @endphp
                 @endforeach
               @endforeach
 
@@ -134,11 +131,14 @@
               </tr>
             </thead>
             <tbody>
+              @php
+                $savingcounter = 1;
+              @endphp
               @foreach($member->savings as $saving)
                 @foreach($saving->savinginstallments as $savinginstallment)
                   @if(!empty($transactiondate))
                   <tr>
-                    <td readonly>{{ $member->passbook }}O</td>
+                    <td readonly>{{ $savingcounter++ }}</td>
                     <td readonly>{{ $saving->savingname->name }}</td>
                     <td readonly id="old_savingbalance{{ $savinginstallment->id }}">{{ $saving->total_amount - $saving->withdraw }}</td>
                     <td id="old_savinginstallment{{ $savinginstallment->id }}" onchange="oldsavingcalcandpost({{ $member->id }}, {{ $savinginstallment->id }}, '{{ $transactiondate }}')">{{ $savinginstallment->amount }}</td>
@@ -152,7 +152,7 @@
               @foreach($member->savings as $saving)
                 @if(!empty($transactiondate) && empty($saving->savinginstallments->first()->due_date))
                 <tr>
-                  <td readonly>{{ $member->passbook }}N</td>
+                  <td readonly>{{ $savingcounter++ }}</td>
                   <td readonly>{{ $saving->savingname->name }}</td>
                   <td readonly id="new_savingbalance{{ $saving->id }}">{{ $saving->total_amount - $saving->withdraw }}</td>
                   <td id="new_savinginstallment{{ $saving->id }}" onchange="newsavingcalcandpost({{ $member->id }}, {{ $saving->id }}, '{{ $transactiondate }}')">0</td>
