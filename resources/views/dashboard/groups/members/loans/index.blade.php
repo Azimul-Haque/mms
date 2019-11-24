@@ -54,8 +54,8 @@
                     @endif
                   </td>
                   <td>
-                    @if($loan->closing_date != '0000-00-00')
-                      {{ date('D, d/m/Y', strtotime($member->closing_date)) }}
+                    @if($loan->closing_date != '1970-01-01')
+                      {{ date('D, d/m/Y', strtotime($loan->closing_date)) }}
                     @endif
                   </td>
                   <td>

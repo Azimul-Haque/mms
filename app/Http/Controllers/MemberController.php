@@ -466,7 +466,8 @@ class MemberController extends Controller
         ]);
 
         $loan = Loan::find($l_id);
-        $loan->closing_date = date('Y-m-d', strtotime($request->closing_date));
+        $loan->closing_date = date('Y-m-d', strtotime($request->closing_date ? $request->closing_date : '1970-01-01'));
+        // dd($loan->closing_date);
         $loan->status = $request->status; // 1 means disbursed, 0 means closed
         $loan->save();
 
@@ -696,12 +697,12 @@ class MemberController extends Controller
           'status'             => 'required'
         ]);
 
-        $loan = Loan::find($l_id);
-        $loan->closing_date = date('Y-m-d', strtotime($request->closing_date));
-        $loan->status = $request->status; // 1 means disbursed, 0 means closed
-        $loan->save();
+        $saving = Saving::find($sv_id);
+        $saving->closing_date = date('Y-m-d', strtotime($request->closing_date ? $request->closing_date : '1970-01-01'));
+        $saving->status = $request->status; // 1 means active, 0 means closed
+        $saving->save();
 
         Session::flash('success', 'Updated successfully!'); 
-        return redirect()->route('dashboard.member.loans', [$s_id, $g_id, $m_id]);
+        return redirect()->route('dashboard.member.savings', [$s_id, $g_id, $m_id]);
     }
 }

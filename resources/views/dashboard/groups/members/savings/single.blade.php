@@ -22,7 +22,7 @@
             <div class="row">
               <div class="col-md-6">
                 {!! Form::label('savingname_id', 'Program *') !!}
-                <select name="savingname_id" class="form-control" required="">
+                <select name="savingname_id" class="form-control" disabled="">
                   <option value="" selected="" disabled="">Select Program</option>
                   @foreach($savingnames as $savingname)
                     <option value="{{ $savingname->id }}" @if($saving->savingname_id == $savingname->id) selected="" @endif>{{ $savingname->name }}</option>
@@ -31,13 +31,13 @@
               </div>
               <div class="col-md-6">
                 {!! Form::label('opening_date', 'Opening Date *') !!}
-                {!! Form::text('opening_date', date('F d, Y', strtotime($saving->opening_date)), array('class' => 'form-control', 'placeholder' => 'Opening Date', 'required' => '', 'autocomplete' => 'off', 'readonly' => '')) !!}
+                {!! Form::text('opening_date', date('F d, Y', strtotime($saving->opening_date)), array('class' => 'form-control', 'placeholder' => 'Opening Date', 'autocomplete' => 'off', 'readonly' => '')) !!}
               </div>
             </div>
             <div class="row">
               <div class="col-md-6">
                 {!! Form::label('installment_type', 'Installment Type *') !!}
-                <select name="installment_type" class="form-control" required="">
+                <select name="installment_type" class="form-control" disabled="">
                   <option value="" selected="" disabled="">Select Installment Type</option>
                   <option value="1" @if($saving->installment_type == 1) selected="" @endif>Daily</option>
                   <option value="2" @if($saving->installment_type == 2) selected="" @endif>Weekly</option>
@@ -46,7 +46,7 @@
               </div>
               {{-- <div class="col-md-6">
                 {!! Form::label('meeting_day', 'Meeeting Day *') !!}
-                <select name="meeting_day" class="form-control" required="">
+                <select name="meeting_day" class="form-control">
                   <option value="" selected="" disabled="">Select Meeeting Day</option>
                   <option value="1">Saturday</option>
                   <option value="2">Sunday</option>
@@ -69,7 +69,15 @@
             <div class="row">
               <div class="col-md-6">
                 {!! Form::label('minimum_deposit', 'Minimum Deposit') !!}
-                {!! Form::text('minimum_deposit', null, array('class' => 'form-control', 'placeholder' => 'Minimum Diposit Amount', 'autocomplete' => 'off')) !!}
+                {!! Form::text('minimum_deposit', null, array('class' => 'form-control', 'placeholder' => 'Minimum Diposit Amount', 'autocomplete' => 'off', 'readonly' => '')) !!}
+              </div>
+              <div class="col-md-6">
+                {!! Form::label('status', 'Installment Type *') !!}
+                <select name="status" class="form-control">
+                  <option value="" selected="" disabled="">Select Status</option>
+                  <option value="1" @if($saving->status == 1) selected="" @endif>Active</option>
+                  <option value="0" @if($saving->status == 0) selected="" @endif>Closed</option>
+                </select>
               </div>
             </div>
           </div>
@@ -79,8 +87,40 @@
           {!! Form::close() !!}
         </div>
       </div>
-      <div class="col-md-4">
-
+      <div class="col-md-6">
+        <div class="table-responsive" style="height: 550px; overflow-y: auto; display: block;">
+          <table class="table table-condensed" id="installmentsTable">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Date</th>
+                <th>Saving Installment <br/>Amount</th>
+                <th>Withdraw Installment <br/>Amount</th>
+                <th>Total<br/>Collection</th>
+                <th>Balance</th>
+              </tr>
+            </thead>
+            <tbody>
+              @php
+                $savingcounter = 1;
+                $balanceaccu = 0;
+              @endphp
+              @foreach($saving->savinginstallments as $savinginstallment)
+              <tr>
+                <td>{{ $savingcounter++ }}</td>
+                <td>{{ date('D, d/m/Y', strtotime($savinginstallment->due_date)) }}</td>
+                <td>{{ $savinginstallment->amount }}</td>
+                <td>{{ $savinginstallment->withdraw }}</td>
+                <td>{{ $savinginstallment->amount - $savinginstallment->withdraw }}</td>
+                @php
+                  $balanceaccu = $balanceaccu + $savinginstallment->amount - $savinginstallment->withdraw;
+                @endphp
+                <td>{{ $balanceaccu }}</td>
+              </tr>
+              @endforeach
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
 @stop
