@@ -532,6 +532,12 @@ class MemberController extends Controller
                                     $query->where('due_date', $transaction_date);
                                  }]);
                       }])
+                      ->with(['savings' => function ($query) use($transaction_date) {
+                          $query->where('status', 1) // 1 means active loan
+                                ->with(['savinginstallments' => function ($query) use($transaction_date) {
+                                    $query->where('due_date', $transaction_date);
+                                 }]);
+                      }])
                       ->first();
       // dd($member);
       return view('dashboard.groups.members.loans.dailytransaction')

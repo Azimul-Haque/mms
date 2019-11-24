@@ -140,13 +140,26 @@
                   <tr>
                     <td readonly>{{ $member->passbook }}</td>
                     <td readonly>{{ $saving->savingname->name }}</td>
-                    <td readonly>{{ $saving->total_amount - $saving->withdraw }}</td>
-                    <td id="savinginstallment{{ $savinginstallment->id }}" onchange="savingcalcandpost({{ $member->id }}, {{ $savinginstallment->id }}, '{{ $transactiondate }}')">{{ $savinginstallment->amount }}</td>
-                    <td id="savingwithdraw{{ $savinginstallment->id }}" onchange="savingcalcandpost({{ $member->id }}, {{ $savinginstallment->id }}, '{{ $transactiondate }}')">{{ $savinginstallment->withdraw }}</td>
-                    <td readonly id="savingcollection{{ $savinginstallment->id }}">{{ $savinginstallment->amount - $savinginstallment->withdraw }}</td>
+                    <td readonly id="old_savingbalance{{ $savinginstallment->id }}">{{ $saving->total_amount - $saving->withdraw }}</td>
+                    <td id="old_savinginstallment{{ $savinginstallment->id }}" onchange="oldsavingcalcandpost({{ $member->id }}, {{ $savinginstallment->id }}, '{{ $transactiondate }}')">{{ $savinginstallment->amount }}</td>
+                    <td id="old_savingwithdraw{{ $savinginstallment->id }}" onchange="oldsavingcalcandpost({{ $member->id }}, {{ $savinginstallment->id }}, '{{ $transactiondate }}')">{{ $savinginstallment->withdraw }}</td>
+                    <td readonly id="old_savingcollection{{ $savinginstallment->id }}">{{ $savinginstallment->amount - $savinginstallment->withdraw }}</td>
                   </tr>
                   @endif
                 @endforeach
+              @endforeach
+
+              @foreach($member->savings as $saving)
+                @if(!empty($transactiondate) && empty($saving->savinginstallments->first()->due_date))
+                <tr>
+                  <td readonly>{{ $member->passbook }}</td>
+                  <td readonly>{{ $saving->savingname->name }}</td>
+                  <td readonly id="new_savingbalance{{ $saving->id }}">{{ $saving->total_amount - $saving->withdraw }}</td>
+                  <td id="new_savinginstallment{{ $saving->id }}" onchange="newsavingcalcandpost({{ $member->id }}, {{ $saving->id }}, '{{ $transactiondate }}')">0</td>
+                  <td id="new_savingwithdraw{{ $saving->id }}" onchange="newsavingcalcandpost({{ $member->id }}, {{ $saving->id }}, '{{ $transactiondate }}')">0</td>
+                  <td readonly id="new_savingcollection{{ $saving->id }}">0</td>
+                </tr>
+                @endif
               @endforeach
             </tbody>
           </table>
@@ -244,6 +257,7 @@
       });
     }
 
+
     function oldloancalcandpost(member_id, loan_id, transactiondate) {
       var membername = $('#membername' + loan_id).text();
       var loaninstallment = parseInt($('#old_loaninstallment' + loan_id).text()) ? parseInt($('#old_loaninstallment' + loan_id).text()) : 0;
@@ -266,6 +280,31 @@
         }
         $('#old_total_paid' + loan_id).text(data.loan.total_paid);
         $('#old_total_outstanding' + loan_id).text(data.loan.total_outstanding);
+      });
+    }
+
+    function oldsavingcalcandpost(member_id, loaninstallment_id, transactiondate) {
+      var membername = $('#membername' + loaninstallment_id).text();
+      var loaninstallment = parseInt($('#loaninstallment' + loaninstallment_id).text()) ? parseInt($('#loaninstallment' + loaninstallment_id).text()) : 0;
+      
+      // now post the data
+      $.post("/daily/transaction/store/api", {_token: '{{ csrf_token() }}', _method : 'POST', 
+        data: {
+          member_id: member_id,
+          loaninstallment_id: loaninstallment_id,
+          transactiondate: transactiondate,
+          loaninstallment: loaninstallment,
+        }},
+        function(data, status){
+        console.log(status);
+        // console.log(data.loan.total_outstanding);
+        if(status == 'success') {
+          toastr.success('Member: <b>' + membername + '</b><br/>Daily Collection: <u>৳ ' + loaninstallment, '</u>SUCCESS').css('width', '400px');
+        } else {
+          toastr.warning('Error!').css('width', '400px');
+        }
+        $('#total_paid' + loaninstallment_id).text(data.loan.total_paid);
+        $('#total_outstanding' + loaninstallment_id).text(data.loan.total_outstanding);
       });
     }
 
