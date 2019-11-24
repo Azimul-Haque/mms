@@ -39,7 +39,7 @@
           <table class="table table-hover table-condensed table-bordered table-striped " id="editable">
             <thead>
               <tr>
-                <th>P#</th>
+                <th>S#</th>
                 <th>Loan Program</th>
                 <th>Total Disbursed</th>
                 <th>Today's <br/>Collection</th>
@@ -53,11 +53,14 @@
               </tr>
             </thead>
             <tbody>
+              @php
+                $loancounter = 1;
+              @endphp
               @foreach($member->loans as $loan)
                 @foreach($loan->loaninstallments as $loaninstallment)
                   @if(!empty($transactiondate))
                   <tr>
-                    <td readonly>{{ $member->passbook }} N</td>
+                    <td readonly>{{ $loancounter }}</td>
                     <td readonly>{{ $loan->loanname->name }}</td>
                     <td readonly>{{ $loan->total_disbursed }}</td>
                     <td id="loaninstallment{{ $loaninstallment->id }}" onchange="loancalcandpost({{ $member->id }}, {{ $loaninstallment->id }}, '{{ $transactiondate }}')">{{ $loaninstallment->paid_total }}</td>
@@ -72,6 +75,9 @@
                     <td id="generalsaving{{ $loaninstallment->id }}" onchange="loancalcandpost({{ $member->id }}, {{ $loaninstallment->id }}, '{{ $transactiondate }}')">{{ $generalsaving }}</td> --}}
                   </tr>
                   @endif
+                  @php
+                    $loancounter++;
+                  @endphp
                 @endforeach
               @endforeach
 
@@ -81,7 +87,7 @@
                 @if($loan->loan_new == 0)
                   @if(!empty($transactiondate) && empty($loan->loaninstallments->first()->due_date))
                   <tr>
-                    <td readonly>{{ $member->passbook }} O</td>
+                    <td readonly>{{ $loancounter++ }}</td>
                     <td readonly>{{ $loan->loanname->name }}</td>
                     <td readonly>{{ $loan->total_disbursed }}</td>
                     @if($loan->total_outstanding <= 0)
@@ -116,24 +122,32 @@
     <div class="row">
       <div class="col-md-12">
         <div class="table-responsive">
-          <table class="table table-hover table-condensed table-bordered table-striped " id="editable">
+          <table class="table table-hover table-condensed table-bordered table-striped " id="editable2">
             <thead>
               <tr>
-                <th>P#</th>
+                <th>S#</th>
                 <th>Saving Program</th>
                 <th>Balance</th>
                 <th>Today's <br/>Deposit</th>
                 <th>Today's <br/>Withdrawn</th>
                 <th>Total Collection</th>
-                {{-- <th>Long Term<br/> Savings</th>
-                <th>Total Collection</th>
-                <th>General Savings <br/>Withdraw</th>
-                <th>Long Term <br/>Savings Withdraw</th> 
-                <th>Net <br/>Collection</th> --}}
               </tr>
             </thead>
             <tbody>
-              
+              @foreach($member->savings as $saving)
+                @foreach($saving->savinginstallments as $savinginstallment)
+                  @if(!empty($transactiondate))
+                  <tr>
+                    <td readonly>{{ $member->passbook }}</td>
+                    <td readonly>{{ $saving->savingname->name }}</td>
+                    <td readonly>{{ $saving->total_amount - $saving->withdraw }}</td>
+                    <td id="savinginstallment{{ $savinginstallment->id }}" onchange="savingcalcandpost({{ $member->id }}, {{ $savinginstallment->id }}, '{{ $transactiondate }}')">{{ $savinginstallment->amount }}</td>
+                    <td id="savingwithdraw{{ $savinginstallment->id }}" onchange="savingcalcandpost({{ $member->id }}, {{ $savinginstallment->id }}, '{{ $transactiondate }}')">{{ $savinginstallment->withdraw }}</td>
+                    <td readonly id="savingcollection{{ $savinginstallment->id }}">{{ $savinginstallment->amount - $savinginstallment->withdraw }}</td>
+                  </tr>
+                  @endif
+                @endforeach
+              @endforeach
             </tbody>
           </table>
         </div>
@@ -187,13 +201,21 @@
   <script>
     $(document).ready(function () {
       $('#editable').editableTableWidget();
+      $('#editable2').editableTableWidget();
       
       $('#editable td.uneditable').on('change', function(evt, newValue) {
         console.log('false clicked!');
         return false;
       });
+      $('#editable2 td.uneditable').on('change', function(evt, newValue) {
+        console.log('false clicked!');
+        return false;
+      });
     });
     $('#editable td').on('change', function(evt, newValue) {
+      // toastr.success(newValue + ' Added!', 'SUCCESS').css('width', '400px');
+    });
+    $('#editable2 td').on('change', function(evt, newValue) {
       // toastr.success(newValue + ' Added!', 'SUCCESS').css('width', '400px');
     });
 
