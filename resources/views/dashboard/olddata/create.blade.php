@@ -559,6 +559,7 @@
       var primary_total_disbursed = parseFloat(primary_principal_amount) + parseFloat(primary_service_charge);
       $('#primary_service_charge').val(primary_service_charge);
       $('#primary_total_disbursed').val(primary_total_disbursed);
+      $('#primary_insurance').val(primary_principal_amount * 0.01);
     };
     function productCalculateTotalDisburse() {
       var product_principal_amount = $('#product_principal_amount').val() ? $('#product_principal_amount').val() : 0; // a ? a : 0;

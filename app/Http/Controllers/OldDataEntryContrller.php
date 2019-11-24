@@ -164,7 +164,9 @@ class OldDataEntryContrller extends Controller
         		$loan->down_payment = 0.00; //$request->primary_down_payment ? $request->primary_down_payment : 0;
         		$loan->total_disbursed = $request->primary_total_disbursed;
         		$loan->total_paid = $request->primary_total_paid;
-        		$loan->total_outstanding = $request->primary_total_disbursed - $request->primary_total_paid;
+                $loan->total_outstanding = $request->primary_total_disbursed - $request->primary_total_paid;
+                $loan->insurance = $request->primary_insurance;
+        		$loan->processing_fee = $request->primary_processing_fee ? $request->primary_processing_fee : 0;
         		$loan->status = $request->primary_status ? $request->primary_status : 1; // 1 means disbursed, 0 means closed
         		$loan->member_id = $member->id;
         		$loan->save();
