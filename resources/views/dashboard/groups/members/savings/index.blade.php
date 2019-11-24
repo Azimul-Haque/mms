@@ -40,7 +40,11 @@
             <tbody>
               @foreach($savings as $savingaccount)
                 <tr>
-                  <td>{{ $savingaccount->savingname->name }}</td>
+                  <td>
+                    <a href="{{ route('dashboard.savings.single', [$staff->id, $group->id, $member->id, $savingaccount->id]) }}">
+                      {{ $savingaccount->savingname->name }}
+                    </a>
+                  </td>
                   <td>{{ installment_type($savingaccount->installment_type) }}</td>
                   <td>{{ date('D, d/m/Y', strtotime($savingaccount->opening_date)) }}</td>
                   {{-- <td>{{ meeting_day($savingaccount->meeting_day) }}</td> --}}
@@ -57,7 +61,7 @@
                     @endif
                   </td>
                   <td>
-                    <a href="#!" class="btn btn-success btn-sm" title="কাজ চলছে!"><i class="fa fa-pencil"></i> Edit</a>
+                    <a href="{{ route('dashboard.savings.single', [$staff->id, $group->id, $member->id, $savingaccount->id]) }}" class="btn btn-success btn-sm" title="See Saving Account"><i class="fa fa-pencil"></i> Edit</a>
                     {{-- <button class="btn btn-danger btn-sm" title="Delete Member" disabled><i class="fa fa-trash"></i> Delete</button> --}}
                   </td>
                 </tr>

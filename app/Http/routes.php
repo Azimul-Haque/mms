@@ -111,6 +111,8 @@ Route::get('/group/{s_id}/{g_id}/{m_id}/member', ['as'=>'dashboard.member.single
 Route::get('/group/{s_id}/{g_id}/{m_id}/member/saving/accounts', ['as'=>'dashboard.member.savings','uses'=>'MemberController@getMemberSavings']);
 Route::get('/group/{s_id}/{g_id}/{m_id}/member/saving/accounts/create', ['as'=>'dashboard.savings.create','uses'=>'MemberController@createSavingAccount']);
 Route::post('/group/{s_id}/{g_id}/{m_id}/member/saving/accounts/store', ['as'=>'dashboard.savings.store','uses'=>'MemberController@storeSavingAccount']);
+Route::put('/group/{s_id}/{g_id}/{m_id}/member/saving/accounts/update/{sv_id}', ['as'=>'dashboard.savings.update','uses'=>'MemberController@updateSavingAccount']);
+Route::get('/group/{s_id}/{g_id}/{m_id}/member/saving/accounts/single/{sv_id}', ['as'=>'dashboard.savings.single','uses'=>'MemberController@getMemberSavingSingle']);
 
 // loan accounts
 Route::get('/group/{s_id}/{g_id}/{m_id}/member/loan/accounts', ['as'=>'dashboard.member.loans','uses'=>'MemberController@getMemberLoans']);
@@ -118,6 +120,7 @@ Route::get('/group/{s_id}/{g_id}/{m_id}/member/loan/accounts/create', ['as'=>'da
 Route::post('/group/{s_id}/{g_id}/{m_id}/member/loan/accounts/store', ['as'=>'dashboard.loans.store','uses'=>'MemberController@storeLoanAccount']);
 Route::put('/group/{s_id}/{g_id}/{m_id}/member/loan/accounts/update/{l_id}', ['as'=>'dashboard.loans.update','uses'=>'MemberController@updateLoanAccount']);
 Route::get('/group/{s_id}/{g_id}/{m_id}/member/loan/accounts/single/{l_id}', ['as'=>'dashboard.loans.single','uses'=>'MemberController@getMemberLoanSingle']);
+
 Route::get('/group/{s_id}/{g_id}/{m_id}/member/daily/transaction', ['as'=>'dashboard.member.dailytransaction','uses'=>'MemberController@getDailyTransaction']);
 Route::get('/group/{s_id}/{g_id}/{m_id}/member/daily/transaction/{loan_type}/{date}', ['as'=>'dashboard.member.dailytransaction.date','uses'=>'MemberController@getDailyTransactionDate']);
 Route::post('/daily/transaction/store/api', ['as'=>'dashboard.dailytransactions.postinstallmentapi','uses'=>'MemberController@postDailyInstallmentAPI']);

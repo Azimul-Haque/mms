@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Add Saving Account | Microfinance Management')
+@section('title', 'Saving Account | Microfinance Management')
 
 @section('css')
   <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap-datepicker.min.css') }}">
@@ -8,16 +8,16 @@
 
 @section('content_header')
     <h1>
-      Add Saving Account [Member: <b>{{ $member->name }}-{{ $member->fhusband }}</b>, Group: <b>{{ $group->name }}</b>, Staff: <b>{{ $staff->name }}</b>]
+      Saving Account [Member: <b>{{ $member->name }}-{{ $member->fhusband }}</b>, Group: <b>{{ $group->name }}</b>, Staff: <b>{{ $staff->name }}</b>]
     </h1>
 @stop
 
 @section('content')
   <div class="row">
-      <div class="col-md-12">
+      <div class="col-md-6">
         <div class="panel panel-primary">
-          <div class="panel-heading">Add Saving Account</div>
-          {!! Form::open(['route' => ['dashboard.savings.store', $staff->id, $group->id, $member->id], 'method' => 'POST']) !!}
+          <div class="panel-heading">Saving Account</div>
+          {!! Form::model($saving, ['route' => ['dashboard.savings.update', $staff->id, $group->id, $member->id, $saving->id], 'method' => 'PUT']) !!}
           <div class="panel-body">
             <div class="row">
               <div class="col-md-6">
@@ -25,13 +25,13 @@
                 <select name="savingname_id" class="form-control" required="">
                   <option value="" selected="" disabled="">Select Program</option>
                   @foreach($savingnames as $savingname)
-                    <option value="{{ $savingname->id }}">{{ $savingname->name }}</option>
+                    <option value="{{ $savingname->id }}" @if($saving->savingname_id == $savingname->id) selected="" @endif>{{ $savingname->name }}</option>
                   @endforeach
                 </select>
               </div>
               <div class="col-md-6">
                 {!! Form::label('opening_date', 'Opening Date *') !!}
-                {!! Form::text('opening_date', null, array('class' => 'form-control', 'placeholder' => 'Opening Date', 'required' => '', 'autocomplete' => 'off', 'readonly' => '')) !!}
+                {!! Form::text('opening_date', date('F d, Y', strtotime($saving->opening_date)), array('class' => 'form-control', 'placeholder' => 'Opening Date', 'required' => '', 'autocomplete' => 'off', 'readonly' => '')) !!}
               </div>
             </div>
             <div class="row">
@@ -39,9 +39,9 @@
                 {!! Form::label('installment_type', 'Installment Type *') !!}
                 <select name="installment_type" class="form-control" required="">
                   <option value="" selected="" disabled="">Select Installment Type</option>
-                  <option value="1">Daily</option>
-                  <option value="2">Weekly</option>
-                  <option value="3">Monthly</option>
+                  <option value="1" @if($saving->installment_type == 1) selected="" @endif>Daily</option>
+                  <option value="2" @if($saving->installment_type == 2) selected="" @endif>Weekly</option>
+                  <option value="3" @if($saving->installment_type == 3) selected="" @endif>Monthly</option>
                 </select>
               </div>
               {{-- <div class="col-md-6">
@@ -59,7 +59,11 @@
               </div> --}}
               <div class="col-md-6">
                 {!! Form::label('closing_date', 'Closing Date (Optional)') !!}
-                {!! Form::text('closing_date', null, array('class' => 'form-control', 'placeholder' => 'Closing Date', 'autocomplete' => 'off', 'readonly' => '')) !!}
+                @if($saving->closing_date == '1970-01-01')
+                  {!! Form::text('closing_date', '', array('class' => 'form-control', 'placeholder' => 'Closing Date', 'autocomplete' => 'off', 'readonly' => '')) !!}
+                @else
+                  {!! Form::text('closing_date', date('F d, Y', strtotime($saving->closing_date)), array('class' => 'form-control', 'placeholder' => 'Closing Date', 'autocomplete' => 'off', 'readonly' => '')) !!}
+                @endif
               </div>
             </div>
             <div class="row">

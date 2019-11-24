@@ -127,10 +127,10 @@
             <div class="row">
               <div class="col-md-6">
                 {!! Form::label('closing_date', 'Closing Date (Optional)') !!}
-                @if($loan->closing_date != '0000-00-00')
-                {!! Form::text('closing_date', null, array('class' => 'form-control', 'placeholder' => 'Closing Date (Optional)', 'autocomplete' => 'off', 'readonly' => '')) !!}
+                @if($loan->closing_date == '1970-01-01')
+                  {!! Form::text('closing_date', '', array('class' => 'form-control', 'placeholder' => 'Closing Date', 'autocomplete' => 'off', 'readonly' => '')) !!}
                 @else
-                {!! Form::text('closing_date', '', array('class' => 'form-control', 'placeholder' => 'Closing Date (Optional)', 'autocomplete' => 'off', 'readonly' => '')) !!}
+                  {!! Form::text('closing_date', date('F d, Y', strtotime($loan->closing_date)), array('class' => 'form-control', 'placeholder' => 'Closing Date', 'autocomplete' => 'off', 'readonly' => '')) !!}
                 @endif
               </div>
               <div class="col-md-6">
@@ -213,16 +213,19 @@
         format: 'MM dd, yyyy',
         todayHighlight: true,
         autoclose: true,
+        clearBtn: true,
       });
       $("#first_installment_date").datepicker({
         format: 'MM dd, yyyy',
         todayHighlight: true,
         autoclose: true,
+        clearBtn: true,
       });
       $("#closing_date").datepicker({
         format: 'MM dd, yyyy',
         todayHighlight: true,
         autoclose: true,
+        clearBtn: true,
       });
     });
     function calculateTotalDisburse() {

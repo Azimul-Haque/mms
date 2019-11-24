@@ -261,7 +261,7 @@ class MemberController extends Controller
         $this->validate($request, [
           'savingname_id'               => 'required',
           'opening_date'                => 'required',
-          'meeting_day'                 => 'required',
+          'meeting_day'                 => 'sometimes',
           'installment_type'            => 'required',
           'minimum_deposit'             => 'sometimes',
           'closing_date'                => 'sometimes'
@@ -275,7 +275,7 @@ class MemberController extends Controller
         } else {
           $savingaccount->closing_date = '1970-01-01';
         }
-        $savingaccount->meeting_day = $request->meeting_day;
+        $savingaccount->meeting_day = $request->meeting_day ? $request->meeting_day : 1;
         $savingaccount->installment_type = $request->installment_type;
         $savingaccount->minimum_deposit = $request->minimum_deposit;
         $savingaccount->status = 1; // 1 means active/open
@@ -662,5 +662,46 @@ class MemberController extends Controller
         $savinginstallment->load('savingsingle');
 
         return $savinginstallment;
+    }
+
+    public function getMemberSavingSingle($s_id, $g_id, $m_id, $sv_id)
+    {
+      $staff = User::find($s_id);
+      $group = Group::find($g_id);
+      $member = Member::find($m_id);
+
+      $saving = Saving::where('id', $sv_id)
+                  ->where('member_id', $member->id)
+                  ->with(['savinginstallments' => function($query){
+                       $query->orderBy('due_date', 'asc'); // sort by due_date
+                    }])
+                  ->first();
+
+      $savingnames = Savingname::all();
+      $schemenames = Schemename::all();
+
+      return view('dashboard.groups.members.savings.single')
+              ->withStaff($staff)
+              ->withGroup($group)
+              ->withMember($member)
+              ->withSaving($saving)
+              ->withSavingnames($savingnames)
+              ->withSchemenames($schemenames);
+    }
+
+    public function updateSavingAccount(Request $request, $s_id, $g_id, $m_id, $sv_id)
+    {        
+        $this->validate($request, [
+          'closing_date'       => 'sometimes',
+          'status'             => 'required'
+        ]);
+
+        $loan = Loan::find($l_id);
+        $loan->closing_date = date('Y-m-d', strtotime($request->closing_date));
+        $loan->status = $request->status; // 1 means disbursed, 0 means closed
+        $loan->save();
+
+        Session::flash('success', 'Updated successfully!'); 
+        return redirect()->route('dashboard.member.loans', [$s_id, $g_id, $m_id]);
     }
 }
