@@ -260,6 +260,18 @@
                 {!! Form::text('primary_total_paid', 0, array('class' => 'form-control', 'placeholder' => 'Total Paid', 'autocomplete' => 'off')) !!}
               </div>
 
+              {!! Form::label('primary_insurance', 'Insurance') !!}
+              <div class="input-group">
+                <span class="input-group-addon">৳</span>
+                {!! Form::text('primary_insurance', 0, array('class' => 'form-control', 'placeholder' => 'Total Paid', 'autocomplete' => 'off')) !!}
+              </div>
+
+              {!! Form::label('primary_processing_fee', 'Processing Fee') !!}
+              <div class="input-group">
+                <span class="input-group-addon">৳</span>
+                {!! Form::text('primary_processing_fee', 15, array('class' => 'form-control', 'placeholder' => 'Total Paid', 'autocomplete' => 'off')) !!}
+              </div>
+
               {!! Form::label('primary_closing_date', 'Closing Date (Optional)') !!}
               {!! Form::text('primary_closing_date', null, array('class' => 'form-control', 'placeholder' => 'Closing Date (Optional)', 'autocomplete' => 'off', 'readonly' => '')) !!}
 
