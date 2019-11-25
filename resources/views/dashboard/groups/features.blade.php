@@ -66,20 +66,20 @@
     </div>
 
 
-    {{-- <div class="row">
+    <div class="row">
       <div class="col-md-3 col-sm-6 col-xs-12">
-        <a href="{{ route('dashboard.members', [$staff->id ,$group->id]) }}">
+        <a href="#!">
           <div class="info-box">
-            <span class="info-box-icon bg-aqua"><i class="fa fa-users"></i></span>
+            <span class="info-box-icon bg-aqua"><i class="fa fa-percent"></i></span>
             <div class="info-box-content">
-              <span class="info-box-text">Member</span>
-              <span class="info-box-number">List</span>
+              <span class="info-box-text">Savings</span>
+              <span class="info-box-number">Interest</span>
             </div>
           </div>
         </a>
       </div>
       <div class="col-md-3 col-sm-6 col-xs-12">
-        <a href="#!">
+        <a href="{{ route('dashboard.group.transfer', $group->id) }}">
           <div class="info-box">
             <span class="info-box-icon bg-green"><i class="fa fa-paper-plane"></i></span>
 
@@ -89,12 +89,12 @@
             </div>
           </div>
         </a>
-      </div> --}}
+      </div>
 
       <!-- fix for small devices only -->
-      {{-- <div class="clearfix visible-sm-block"></div>
+      <div class="clearfix visible-sm-block"></div>
 
-      <div class="col-md-3 col-sm-6 col-xs-12">
+     {{--  <div class="col-md-3 col-sm-6 col-xs-12">
         <a href="#!">
           <div class="info-box">
             <span class="info-box-icon bg-red"><i class="fa fa-paper-plane"></i></span>

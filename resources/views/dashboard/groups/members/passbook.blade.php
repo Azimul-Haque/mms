@@ -65,7 +65,7 @@
     });
 
     function updatepassbook(member) {
-      var passbook = parseInt($('#passbook' + member.id).text()) ? parseInt($('#passbook' + member.id).text()) : null;
+      var passbook = parseInt($('#passbook' + member.id).text()) ? parseInt($('#passbook' + member.id).text()) : member.passbook;
       console.log(passbook);
       // now post the data
       $.post("/group/members/update/passbook/api", {_token: '{{ csrf_token() }}', _method : 'POST', 
