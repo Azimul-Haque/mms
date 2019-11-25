@@ -340,7 +340,6 @@ class MemberController extends Controller
             return redirect()->route('dashboard.member.loans', [$s_id, $g_id, $m_id]);
           }
         }
-        
 
         $this->validate($request, [
           'loanname_id'                 => 'required',
@@ -722,11 +721,37 @@ class MemberController extends Controller
 
     public function updatePassBook(Request $request)
     {     
-        $member = Member::find($request->data['member_id']);
-        if($request->data['member_id'] != null) {
-          $member->passbook = $request->data['passbook'];
-        }
-        $member->save();
-        return 'success';
+      $member = Member::find($request->data['member_id']);
+      if($request->data['member_id'] != null) {
+        $member->passbook = $request->data['passbook'];
+      }
+      $member->save();
+      return 'success';
+    }
+
+    public function getGroupTransfer($s_id, $g_id)
+    {
+      $staff = User::find($s_id);
+      $group = Group::find($g_id);
+      $staffs = User::where('role', 'staff')->get();
+
+      return view('dashboard.groups.transfer')
+                ->withStaff($staff)
+                ->withGroup($group)
+                ->withStaffs($staffs);
+    }
+
+    public function transferGroup(Request $request, $id)
+    { 
+      $this->validate($request, [
+        'user_id'       => 'required'
+      ]);
+
+      $group = Group::find($id);
+      $group->user_id = $request->user_id;
+      $group->save();
+
+      Session::flash('success', 'Updated successfully!'); 
+      return redirect()->route('group.features', [$group->user_id, $group->id]);
     }
 }

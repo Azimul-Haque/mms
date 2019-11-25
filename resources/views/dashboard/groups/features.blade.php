@@ -79,7 +79,7 @@
         </a>
       </div>
       <div class="col-md-3 col-sm-6 col-xs-12">
-        <a href="{{ route('dashboard.group.transfer', $group->id) }}">
+        <a href="{{ route('dashboard.group.gertransferpage', [$staff->id ,$group->id]) }}">
           <div class="info-box">
             <span class="info-box-icon bg-green"><i class="fa fa-paper-plane"></i></span>
 
