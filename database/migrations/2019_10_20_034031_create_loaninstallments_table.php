@@ -27,6 +27,7 @@ class CreateLoaninstallmentsTable extends Migration
             $table->float('outstanding_total');
 
             $table->integer('loan_id')->unsigned();
+            $table->integer('user_id')->unsigned();
             $table->timestamps();
         });
     }

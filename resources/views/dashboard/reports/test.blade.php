@@ -1,10 +1,18 @@
+<style type="text/css">
+	table tr > th, table tr > td {
+		border: 1px solid #000000;
+	}
+	table tr > th {
+		background-color: #C0C0C0;
+	}
+</style>
 <table>
 	<thead>
 		<tr>
 			<th colspan="3" align="center">Users</th>
 		</tr>
 		<tr>
-			<th>Id</th>
+			<th>ID</th>
 			<th>Name</th>
 			<th>Contact</th>
 		</tr>

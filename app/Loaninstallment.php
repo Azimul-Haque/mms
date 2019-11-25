@@ -13,4 +13,8 @@ class Loaninstallment extends Model
     public function member() {
         return $this->belongsTo('App\Member');
     }
+
+    public function user() {
+        return $this->belongsTo('App\User');
+    }
 }

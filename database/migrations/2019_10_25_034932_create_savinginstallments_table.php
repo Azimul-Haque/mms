@@ -21,6 +21,7 @@ class CreateSavinginstallmentsTable extends Migration
             $table->integer('member_id')->unsigned();
             $table->integer('savingname_id')->unsigned();
             $table->integer('saving_id')->unsigned();
+            $table->integer('user_id')->unsigned();
             $table->timestamps();
         });
     }

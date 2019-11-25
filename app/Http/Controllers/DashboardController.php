@@ -363,6 +363,6 @@ class DashboardController extends Controller
 
     public function getProgramFeatures()
     {
-        return view('programs.features');
+        return view('dashboard.programs.features');
     }
 }

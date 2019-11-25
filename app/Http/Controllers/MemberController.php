@@ -413,6 +413,7 @@ class MemberController extends Controller
           $loaninstallment->outstanding_total = $loan->total_disbursed;
 
           $loaninstallment->loan_id = $loan->id;
+          $loaninstallment->user_id = $s_id;
 
           $loaninstallment->save();
         }
@@ -569,6 +570,7 @@ class MemberController extends Controller
         $installment->paid_interest = $installment->installment_interest;
         $installment->paid_total = $request->data['loaninstallment']; // assuming the total is paid
         $installment->outstanding_total = $installment->loan->total_outstanding; // from the main loan account table
+        $installment->user_id = $member->staff_id;
         $installment->save();
 
         return $installment;
@@ -611,6 +613,7 @@ class MemberController extends Controller
         $installment->paid_total = $request->data['loaninstallment'];
         $installment->outstanding_total = $loan->total_outstanding;
         $installment->loan_id = $loan->id;
+        $installment->user_id = $member->staff_id;
         $installment->save();
 
         $installment->load('loan');
@@ -632,6 +635,7 @@ class MemberController extends Controller
         $savinginstallment->amount = $request->data['old_savinginstallment'];
         $savinginstallment->withdraw = $request->data['old_savingwithdraw'];
         $savinginstallment->balance = $savinginstallment->savingsingle->total_amount - $savinginstallment->savingsingle->withdraw;
+        $savinginstallment->user_id = $member->staff_id;
         $savinginstallment->save();
 
         return $savinginstallment;
@@ -657,6 +661,7 @@ class MemberController extends Controller
         $savinginstallment->member_id = $member->id;
         $savinginstallment->savingname_id = $saving->savingname_id;
         $savinginstallment->saving_id = $saving->id;
+        $savinginstallment->user_id = $member->staff_id;
         $savinginstallment->save();
 
         $savinginstallment->load('savingsingle');
@@ -748,6 +753,11 @@ class MemberController extends Controller
       ]);
 
       $group = Group::find($id);
+
+      foreach ($group->members as $member) {
+        $member->staff_id = $request->user_id;
+        $member->save();
+      }
       $group->user_id = $request->user_id;
       $group->save();
 

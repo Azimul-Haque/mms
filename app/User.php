@@ -10,6 +10,14 @@ class User extends Authenticatable
         return $this->hasMany('App\Group');
     }
 
+    public function loaninstallments() {
+        return $this->hasMany('App\Loaninstallment');
+    }
+
+    public function savinginstallments() {
+        return $this->hasMany('App\Savinginstallment');
+    }
+
     // protected $fillable = [
     //     'name', 'email', 'password',
     // ];

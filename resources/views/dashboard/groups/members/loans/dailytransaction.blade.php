@@ -247,7 +247,7 @@
         }},
         function(data, status){
         console.log(status);
-        // console.log(data.loan.total_outstanding);
+        // console.log(data.user_id);
         if(status == 'success') {
           toastr.success('Member: <b>' + membername + '</b><br/>Daily Collection: <u>৳ ' + loaninstallment, '</u>SUCCESS').css('width', '400px');
         } else {
