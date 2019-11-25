@@ -27,8 +27,15 @@ class ReportController extends Controller
 {
     public function test()
     {
-      Excel::create('Filename', function($excel) {
+    	$staffs = User::where('role', 'staff')->get();
 
-      })->export('xlsx');
+	    Excel::create('test_file', function($excel) use($staffs) {
+	    	$excel->sheet('New sheet', function($sheet) use($staffs) {
+
+		        $sheet->loadView('dashboard.reports.test')->withStaffs($staffs);
+
+		    });
+
+	    })->export('xlsx');
     }
 }
