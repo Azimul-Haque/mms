@@ -33,7 +33,7 @@
             <tbody>
               @foreach($members as $member)
                 <tr>
-                  <td>{{ $member->passbook }}</td>
+                  <td id="passbook{{ $member->id }}" onchange="updatepassbook({{ $member }})">{{ $member->passbook }}</td>
                   <td readonly>
                     <a href="{{ route('dashboard.member.single', [$staff->id, $group->id, $member->id]) }}" @if($member->loans->count() > 0) style="color: #DD4B39;" @else style="color: #000000;" @endif><i class="fa fa-user"></i> {{ $member->name }}</a>
                   </td>
@@ -63,6 +63,27 @@
     $('#editable td').on('change', function(evt, newValue) {
       // toastr.success(newValue + ' Added!', 'SUCCESS').css('width', '400px');
     });
+
+    function updatepassbook(member) {
+      var passbook = parseInt($('#passbook' + member.id).text()) ? parseInt($('#passbook' + member.id).text()) : null;
+      console.log(passbook);
+      // now post the data
+      $.post("/group/members/update/passbook/api", {_token: '{{ csrf_token() }}', _method : 'POST', 
+        data: {
+          member_id: member.id,
+          passbook: passbook
+        }},
+        function(data, status){
+        console.log(status);
+        console.log(data);
+        if(status == 'success') {
+          toastr.success('Member: <b>' + member.name + '</b><br/>PassBook no updated!').css('width', '400px');
+        } else {
+          toastr.warning('Error!').css('width', '400px');
+        }
+      });
+      
+    }
 
     $('td[readonly]').on('click dblclick keydown', function(e) {
       e.preventDefault();

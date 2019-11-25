@@ -101,6 +101,7 @@ Route::put('/schemenames/{id}/update', ['as'=>'dashboard.schemenames.update','us
 
 Route::get('/group/{s_id}/{g_id}/members', ['as'=>'dashboard.members','uses'=>'MemberController@getMembers']);
 Route::get('/group/{s_id}/{g_id}/members/passbook', ['as'=>'dashboard.members.passbooklist','uses'=>'MemberController@getMembersPassbook']);
+Route::post('/group/members/update/passbook/api', ['as'=>'dashboard.members.store','uses'=>'MemberController@updatePassBook']);
 Route::get('/group/{s_id}/{g_id}/members/create', ['as'=>'dashboard.members.create','uses'=>'MemberController@createMember']);
 Route::post('/group/{s_id}/{g_id}/members/store', ['as'=>'dashboard.members.store','uses'=>'MemberController@storeMember']);
 Route::get('/group/{s_id}/{g_id}/members/{id}/edit', ['as'=>'dashboard.members.edit','uses'=>'MemberController@editMember']);

@@ -337,6 +337,7 @@
         collectiontoday = new_savinginstallment - new_savingwithdraw;
         $('#new_savingbalance' + saving_id).text(data.savingsingle.total_amount - data.savingsingle.withdraw);
         $('#new_savingcollection' + saving_id).text(collectiontoday);
+        location.reload();
       });
     }
 

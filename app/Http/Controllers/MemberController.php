@@ -719,4 +719,14 @@ class MemberController extends Controller
                 ->withGroup($group)
                 ->withMembers($members);
     }
+
+    public function updatePassBook(Request $request)
+    {     
+        $member = Member::find($request->data['member_id']);
+        if($request->data['member_id'] != null) {
+          $member->passbook = $request->data['passbook'];
+        }
+        $member->save();
+        return 'success';
+    }
 }
