@@ -147,6 +147,9 @@ Route::get('/old/data/entry', ['as'=>'olddata.index','uses'=>'OldDataEntryContrl
 Route::get('/old/data/entry/create', ['as'=>'olddata.create','uses'=>'OldDataEntryContrller@getCreate']);
 Route::post('/old/data/entry/store', ['as'=>'olddata.store','uses'=>'OldDataEntryContrller@storeOldMember']);
 
+// reports
+Route::get('/report/test', ['as'=>'report.test','uses'=>'ReportController@test']);
+
 // Route::get('/dashboard/committee', ['as'=>'dashboard.committee','uses'=>'DashboardController@getCommittee']);
 // Route::post('/dashboard/committee', ['as'=>'dashboard.storecommittee','uses'=>'DashboardController@storeCommittee']);
 // Route::put('/dashboard/committee/{id}', ['as'=>'dashboard.updatecommittee','uses'=>'DashboardController@updateCommittee']);
