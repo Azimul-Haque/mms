@@ -59,7 +59,7 @@ class ReportController extends Controller
     {
     	$staffs = User::where('role', 'staff')->get();
 
-	    Excel::create('test_file', function($excel) use($staffs) {
+	    Excel::create('Program Top Sheet', function($excel) use($staffs) {
 	    	$excel->sheet('Sheet1', function($sheet) use($staffs) {
 
 		        $sheet->loadView('dashboard.reports.branchtopsheetprimary')->withStaffs($staffs);
