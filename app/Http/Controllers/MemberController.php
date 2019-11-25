@@ -32,16 +32,16 @@ class MemberController extends Controller
     
     public function getMembers($s_id, $g_id)
     {
-    	$staff = User::find($s_id);
-    	$group = Group::find($g_id);
+      $staff = User::find($s_id);
+      $group = Group::find($g_id);
       
       $members = Member::where('group_id', $g_id)
-      				 ->orderBy('id', 'asc')->get();
+               ->orderBy('id', 'asc')->get();
 
       return view('dashboard.groups.members.index')
-      					->withStaff($staff)
-      					->withGroup($group)
-      					->withMembers($members);
+                ->withStaff($staff)
+                ->withGroup($group)
+                ->withMembers($members);
     }
 
     public function createMember($s_id, $g_id)
@@ -704,5 +704,19 @@ class MemberController extends Controller
 
         Session::flash('success', 'Updated successfully!'); 
         return redirect()->route('dashboard.member.savings', [$s_id, $g_id, $m_id]);
+    }
+
+    public function getMembersPassbook($s_id, $g_id)
+    {
+      $staff = User::find($s_id);
+      $group = Group::find($g_id);
+      
+      $members = Member::where('group_id', $g_id)
+               ->orderBy('id', 'asc')->get();
+
+      return view('dashboard.groups.members.passbook')
+                ->withStaff($staff)
+                ->withGroup($group)
+                ->withMembers($members);
     }
 }

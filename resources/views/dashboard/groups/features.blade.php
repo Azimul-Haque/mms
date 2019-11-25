@@ -52,7 +52,7 @@
        
       </div>
       <div class="col-md-3 col-sm-6 col-xs-12">
-        {{-- <a href="#!">
+        <a href="{{ route('dashboard.members.passbooklist', [$staff->id ,$group->id]) }}">
           <div class="info-box">
             <span class="info-box-icon bg-yellow"><i class="fa fa-pencil-square"></i></span>
 
@@ -61,7 +61,7 @@
               <span class="info-box-number">PassBook</span>
             </div>
           </div>
-        </a> --}}
+        </a>
       </div>
     </div>
 

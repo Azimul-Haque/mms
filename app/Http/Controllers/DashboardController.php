@@ -152,7 +152,7 @@ class DashboardController extends Controller
         Session::flash('success', 'Added successfully!');
         if($request->routeto == 'staffslist') {
             return redirect()->route('dashboard.staffs');
-        } elseif($request->routeto == '') {
+        } elseif($request->routeto == 'stafffeature') {
             return redirect()->route('staff.features', $request->user_id);
         }
     }
