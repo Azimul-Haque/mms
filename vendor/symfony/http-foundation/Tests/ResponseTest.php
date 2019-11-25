@@ -126,7 +126,7 @@ class ResponseTest extends ResponseTestCase
 
     public function testSetNotModified()
     {
-        $response = new Response();
+        $response = new Response('foo');
         $modified = $response->setNotModified();
         $this->assertObjectHasAttribute('headers', $modified);
         $this->assertObjectHasAttribute('content', $modified);
@@ -135,6 +135,11 @@ class ResponseTest extends ResponseTestCase
         $this->assertObjectHasAttribute('statusText', $modified);
         $this->assertObjectHasAttribute('charset', $modified);
         $this->assertEquals(304, $modified->getStatusCode());
+
+        ob_start();
+        $modified->sendContent();
+        $string = ob_get_clean();
+        $this->assertEmpty($string);
     }
 
     public function testIsSuccessful()
@@ -276,8 +281,10 @@ class ResponseTest extends ResponseTestCase
         $this->assertEquals($now->getTimestamp(), $date->getTimestamp(), '->getDate() returns the date when the header has been modified');
 
         $response = new Response('', 200);
+        $now = $this->createDateTimeNow();
         $response->headers->remove('Date');
-        $this->assertInstanceOf('\DateTime', $response->getDate());
+        $date = $response->getDate();
+        $this->assertEquals($now->getTimestamp(), $date->getTimestamp(), '->getDate() returns the current Date when the header has previously been removed');
     }
 
     public function testGetMaxAge()
@@ -355,6 +362,11 @@ class ResponseTest extends ResponseTestCase
         $response->headers->set('Expires', -1);
         $response->expire();
         $this->assertNull($response->headers->get('Age'), '->expire() does not set the Age when the response is expired');
+
+        $response = new Response();
+        $response->headers->set('Expires', date(DATE_RFC2822, time() + 600));
+        $response->expire();
+        $this->assertNull($response->headers->get('Expires'), '->expire() removes the Expires header when the response is fresh');
     }
 
     public function testGetTtl()
@@ -442,7 +454,7 @@ class ResponseTest extends ResponseTestCase
 
     public function testDefaultContentType()
     {
-        $headerMock = $this->getMock('Symfony\Component\HttpFoundation\ResponseHeaderBag', array('set'));
+        $headerMock = $this->getMockBuilder('Symfony\Component\HttpFoundation\ResponseHeaderBag')->setMethods(array('set'))->getMock();
         $headerMock->expects($this->at(0))
             ->method('set')
             ->with('Content-Type', 'text/html');
@@ -881,6 +893,67 @@ class ResponseTest extends ResponseTestCase
     protected function provideResponse()
     {
         return new Response();
+    }
+
+    /**
+     * @see       http://github.com/zendframework/zend-diactoros for the canonical source repository
+     *
+     * @author    Fábio Pacheco
+     * @copyright Copyright (c) 2015-2016 Zend Technologies USA Inc. (http://www.zend.com)
+     * @license   https://github.com/zendframework/zend-diactoros/blob/master/LICENSE.md New BSD License
+     */
+    public function ianaCodesReasonPhrasesProvider()
+    {
+        if (!\in_array('https', stream_get_wrappers(), true)) {
+            $this->markTestSkipped('The "https" wrapper is not available');
+        }
+
+        $ianaHttpStatusCodes = new \DOMDocument();
+
+        libxml_set_streams_context(stream_context_create(array(
+            'http' => array(
+                'method' => 'GET',
+                'timeout' => 30,
+            ),
+        )));
+
+        $ianaHttpStatusCodes->load('https://www.iana.org/assignments/http-status-codes/http-status-codes.xml');
+        if (!$ianaHttpStatusCodes->relaxNGValidate(__DIR__.'/schema/http-status-codes.rng')) {
+            self::fail('Invalid IANA\'s HTTP status code list.');
+        }
+
+        $ianaCodesReasonPhrases = array();
+
+        $xpath = new \DOMXPath($ianaHttpStatusCodes);
+        $xpath->registerNamespace('ns', 'http://www.iana.org/assignments');
+
+        $records = $xpath->query('//ns:record');
+        foreach ($records as $record) {
+            $value = $xpath->query('.//ns:value', $record)->item(0)->nodeValue;
+            $description = $xpath->query('.//ns:description', $record)->item(0)->nodeValue;
+
+            if (\in_array($description, array('Unassigned', '(Unused)'), true)) {
+                continue;
+            }
+
+            if (preg_match('/^([0-9]+)\s*\-\s*([0-9]+)$/', $value, $matches)) {
+                for ($value = $matches[1]; $value <= $matches[2]; ++$value) {
+                    $ianaCodesReasonPhrases[] = array($value, $description);
+                }
+            } else {
+                $ianaCodesReasonPhrases[] = array($value, $description);
+            }
+        }
+
+        return $ianaCodesReasonPhrases;
+    }
+
+    /**
+     * @dataProvider ianaCodesReasonPhrasesProvider
+     */
+    public function testReasonPhraseDefaultsAgainstIana($code, $reasonPhrase)
+    {
+        $this->assertEquals($reasonPhrase, Response::$statusTexts[$code]);
     }
 }
 

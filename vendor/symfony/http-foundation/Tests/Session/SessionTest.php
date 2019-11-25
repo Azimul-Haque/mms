@@ -11,9 +11,10 @@
 
 namespace Symfony\Component\HttpFoundation\Tests\Session;
 
-use Symfony\Component\HttpFoundation\Session\Session;
-use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Session\Attribute\AttributeBag;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 
 /**
@@ -23,7 +24,7 @@ use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
  * @author Robert Schönthal <seroscho@googlemail.com>
  * @author Drak <drak@zikula.org>
  */
-class SessionTest extends \PHPUnit_Framework_TestCase
+class SessionTest extends TestCase
 {
     /**
      * @var \Symfony\Component\HttpFoundation\Session\Storage\SessionStorageInterface
@@ -67,6 +68,27 @@ class SessionTest extends \PHPUnit_Framework_TestCase
         $this->session->setId('0123456789abcdef');
         $this->session->start();
         $this->assertEquals('0123456789abcdef', $this->session->getId());
+    }
+
+    public function testSetIdAfterStart()
+    {
+        $this->session->start();
+        $id = $this->session->getId();
+
+        $e = null;
+        try {
+            $this->session->setId($id);
+        } catch (\Exception $e) {
+        }
+
+        $this->assertNull($e);
+
+        try {
+            $this->session->setId('different');
+        } catch (\Exception $e) {
+        }
+
+        $this->assertInstanceOf('\LogicException', $e);
     }
 
     public function testSetName()
@@ -176,6 +198,8 @@ class SessionTest extends \PHPUnit_Framework_TestCase
     {
         $this->session->start();
         $this->session->save();
+
+        $this->assertFalse($this->session->isStarted());
     }
 
     public function testGetId()
@@ -203,7 +227,7 @@ class SessionTest extends \PHPUnit_Framework_TestCase
             ++$i;
         }
 
-        $this->assertEquals(count($attributes), $i);
+        $this->assertEquals(\count($attributes), $i);
     }
 
     public function testGetCount()

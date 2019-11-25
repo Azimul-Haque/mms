@@ -11,6 +11,7 @@
 
 namespace Symfony\Component\HttpFoundation\Tests\Session\Flash;
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
 
 /**
@@ -18,16 +19,13 @@ use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
  *
  * @author Drak <drak@zikula.org>
  */
-class FlashBagTest extends \PHPUnit_Framework_TestCase
+class FlashBagTest extends TestCase
 {
     /**
      * @var \Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface
      */
     private $bag;
 
-    /**
-     * @var array
-     */
     protected $array = array();
 
     protected function setUp()
@@ -76,6 +74,18 @@ class FlashBagTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(array('A previous flash message'), $this->bag->peek('notice'));
     }
 
+    public function testAdd()
+    {
+        $tab = array('bar' => 'baz');
+        $this->bag->add('string_message', 'lorem');
+        $this->bag->add('object_message', new \stdClass());
+        $this->bag->add('array_message', $tab);
+
+        $this->assertEquals(array('lorem'), $this->bag->get('string_message'));
+        $this->assertEquals(array(new \stdClass()), $this->bag->get('object_message'));
+        $this->assertEquals(array($tab), $this->bag->get('array_message'));
+    }
+
     public function testGet()
     {
         $this->assertEquals(array(), $this->bag->get('non_existing'));
@@ -114,6 +124,19 @@ class FlashBagTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(array('notice'), $this->bag->keys());
     }
 
+    public function testSetAll()
+    {
+        $this->bag->add('one_flash', 'Foo');
+        $this->bag->add('another_flash', 'Bar');
+        $this->assertTrue($this->bag->has('one_flash'));
+        $this->assertTrue($this->bag->has('another_flash'));
+        $this->bag->setAll(array('unique_flash' => 'FooBar'));
+        $this->assertFalse($this->bag->has('one_flash'));
+        $this->assertFalse($this->bag->has('another_flash'));
+        $this->assertSame(array('unique_flash' => 'FooBar'), $this->bag->all());
+        $this->assertSame(array(), $this->bag->all());
+    }
+
     public function testPeekAll()
     {
         $this->bag->set('notice', 'Foo');
@@ -130,5 +153,25 @@ class FlashBagTest extends \PHPUnit_Framework_TestCase
             'error' => array('Bar'),
             ), $this->bag->peekAll()
         );
+    }
+
+    /**
+     * @group legacy
+     */
+    public function testLegacyGetIterator()
+    {
+        $flashes = array('hello' => 'world', 'beep' => 'boop', 'notice' => 'nope');
+        foreach ($flashes as $key => $val) {
+            $this->bag->set($key, $val);
+        }
+
+        $i = 0;
+        foreach ($this->bag as $key => $val) {
+            $this->assertEquals(array($flashes[$key]), $val);
+            ++$i;
+        }
+
+        $this->assertEquals(\count($flashes), $i);
+        $this->assertCount(0, $this->bag->all());
     }
 }

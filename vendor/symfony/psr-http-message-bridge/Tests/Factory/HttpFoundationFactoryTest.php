@@ -19,6 +19,7 @@ use Symfony\Bridge\PsrHttpMessage\Tests\Fixtures\ServerRequest;
 use Symfony\Bridge\PsrHttpMessage\Tests\Fixtures\Stream;
 use Symfony\Bridge\PsrHttpMessage\Tests\Fixtures\UploadedFile;
 use Symfony\Bridge\PsrHttpMessage\Tests\Fixtures\Uri;
+use Symfony\Component\HttpFoundation\Cookie;
 
 /**
  * @author Kévin Dunglas <dunglas@gmail.com>
@@ -146,11 +147,12 @@ class HttpFoundationFactoryTest extends TestCase
     {
         $uploadedFile = $this->createUploadedFile('An uploaded file.', UPLOAD_ERR_OK, 'myfile.txt', 'text/plain');
         $symfonyUploadedFile = $this->callCreateUploadedFile($uploadedFile);
+        $size = $symfonyUploadedFile->getSize();
 
         $uniqid = uniqid();
         $symfonyUploadedFile->move($this->tmpDir, $uniqid);
 
-        $this->assertEquals($uploadedFile->getSize(), $symfonyUploadedFile->getClientSize());
+        $this->assertEquals($uploadedFile->getSize(), $size);
         $this->assertEquals(UPLOAD_ERR_OK, $symfonyUploadedFile->getError());
         $this->assertEquals('myfile.txt', $symfonyUploadedFile->getClientOriginalName());
         $this->assertEquals('txt', $symfonyUploadedFile->getClientOriginalExtension());
@@ -198,7 +200,7 @@ class HttpFoundationFactoryTest extends TestCase
                 'Set-Cookie' => array(
                     'theme=light',
                     'test',
-                    'ABC=AeD; Domain=dunglas.fr; Path=/kevin; Expires=Wed, 13 Jan 2021 22:23:01 GMT; Secure; HttpOnly',
+                    'ABC=AeD; Domain=dunglas.fr; Path=/kevin; Expires=Wed, 13 Jan 2021 22:23:01 GMT; Secure; HttpOnly; SameSite=Strict',
                 ),
             ),
             new Stream('The response body'),
@@ -229,6 +231,9 @@ class HttpFoundationFactoryTest extends TestCase
         $this->assertEquals('/kevin', $cookies[2]->getPath());
         $this->assertTrue($cookies[2]->isSecure());
         $this->assertTrue($cookies[2]->isHttpOnly());
+        if (defined('Symfony\Component\HttpFoundation\Cookie::SAMESITE_STRICT')) {
+            $this->assertEquals(Cookie::SAMESITE_STRICT, $cookies[2]->getSameSite());
+        }
 
         $this->assertEquals('The response body', $symfonyResponse->getContent());
         $this->assertEquals(200, $symfonyResponse->getStatusCode());
