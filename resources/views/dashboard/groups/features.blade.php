@@ -81,22 +81,6 @@
       <div class="col-md-3 col-sm-6 col-xs-12">
         <a href="{{ route('dashboard.group.gertransferpage', [$staff->id ,$group->id]) }}">
           <div class="info-box">
-            <span class="info-box-icon bg-green"><i class="fa fa-paper-plane"></i></span>
-
-            <div class="info-box-content">
-              <span class="info-box-text">Transfer</span>
-              <span class="info-box-number">Group</span>
-            </div>
-          </div>
-        </a>
-      </div>
-
-      <!-- fix for small devices only -->
-      <div class="clearfix visible-sm-block"></div>
-
-     {{--  <div class="col-md-3 col-sm-6 col-xs-12">
-        <a href="#!">
-          <div class="info-box">
             <span class="info-box-icon bg-red"><i class="fa fa-paper-plane"></i></span>
 
             <div class="info-box-content">
@@ -106,17 +90,4 @@
           </div>
         </a>
       </div>
-      <div class="col-md-3 col-sm-6 col-xs-12">
-        <a href="#!">
-          <div class="info-box">
-            <span class="info-box-icon bg-yellow"><i class="fa fa-pencil-square"></i></span>
-
-            <div class="info-box-content">
-              <span class="info-box-text">Update</span>
-              <span class="info-box-number">PassBook</span>
-            </div>
-          </div>
-        </a>
-      </div>
-    </div> --}}
 @stop

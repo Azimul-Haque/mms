@@ -36,14 +36,14 @@
           </div>
         </a>
       </div>
-{{--       <div class="col-md-3 col-sm-6 col-xs-12">
+      {{-- <div class="col-md-3 col-sm-6 col-xs-12">
         <a href="#!">
           <div class="info-box">
-            <span class="info-box-icon bg-red"><i class="fa fa-exchange"></i></span>
+            <span class="info-box-icon bg-red"><i class="fa fa-edit"></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-text">Balance</span>
-              <span class="info-box-number">Sheet</span>
+              <span class="info-box-text">Edit</span>
+              <span class="info-box-number">Group</span>
             </div>
           </div>
         </a>
