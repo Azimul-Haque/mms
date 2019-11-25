@@ -149,6 +149,7 @@ Route::post('/old/data/entry/store', ['as'=>'olddata.store','uses'=>'OldDataEntr
 
 // reports
 Route::get('/report/test', ['as'=>'report.test','uses'=>'ReportController@test']);
+Route::get('/report/program/top/sheet/primary', ['as'=>'report.program.topsheetprimary','uses'=>'ReportController@generateProgramTopSheetPrimary']);
 
 // Route::get('/dashboard/committee', ['as'=>'dashboard.committee','uses'=>'DashboardController@getCommittee']);
 // Route::post('/dashboard/committee', ['as'=>'dashboard.storecommittee','uses'=>'DashboardController@storeCommittee']);

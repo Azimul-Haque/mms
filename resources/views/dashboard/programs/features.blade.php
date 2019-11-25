@@ -13,13 +13,14 @@
 @section('content')
     <div class="row">
       <div class="col-md-3 col-sm-6 col-xs-12">
-        <a href="#!">
+        <a href="{{ route('report.program.topsheetprimary') }}">
         	<div class="info-box">
         	  <span class="info-box-icon bg-aqua"><i class="fa fa-file-text-o"></i></span>
 
         	  <div class="info-box-content">
-        	    <span class="info-box-text">Monthly</span>
-        	    <span class="info-box-number">Report</span>
+        	    <span class="info-box-text">Program</span>
+              <span class="info-box-number">Top Sheet</span>
+        	    <span class="info-box-number">(Primary)</span>
         	  </div>
         	</div>
         </a>
