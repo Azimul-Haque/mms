@@ -47,7 +47,7 @@
                 </td>
                 <td>
                   <a href="{{ route('dashboard.staffs.edit', $staff->id) }}" class="btn btn-success btn-sm" title="Edit User"><i class="fa fa-pencil"></i> Edit</a> 
-                  <a href="{{ route('dashboard.staffs.getaddgroup', $staff->id) }}" class="btn btn-primary btn-sm" title="Add New Group"><i class="fa fa-plus"></i> Add Group</a>
+                  <a href="{{ route('dashboard.staffs.getaddgroup', [$staff->id, 'staffslist']) }}" class="btn btn-primary btn-sm" title="Add New Group"><i class="fa fa-plus"></i> Add Group</a>
                   {{-- <button class="btn btn-danger btn-sm" title="Delete User" disabled><i class="fa fa-trash"></i> Delete</button> --}}
                 </td>
               </tr>

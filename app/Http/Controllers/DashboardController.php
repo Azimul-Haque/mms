@@ -116,10 +116,12 @@ class DashboardController extends Controller
         return redirect()->route('dashboard.staffs');
     }
 
-    public function getAddGroupToStaff($id)
+    public function getAddGroupToStaff($id, $routeto)
     {
         $staff = User::find($id);
-        return view('dashboard.staffs.addgroup')->withStaff($staff);
+        return view('dashboard.staffs.addgroup')
+                                ->withStaff($staff)
+                                ->withRouteto($routeto);
     }
 
     public function addGroupToStaff(Request $request)
@@ -147,8 +149,12 @@ class DashboardController extends Controller
         $group->user_id = $request->user_id;
         $group->save();
 
-        Session::flash('success', 'Added successfully!'); 
-        return redirect()->route('dashboard.staffs');
+        Session::flash('success', 'Added successfully!');
+        if($request->routeto == 'staffslist') {
+            return redirect()->route('dashboard.staffs');
+        } elseif($request->routeto == '') {
+            return redirect()->route('staff.features', $request->user_id);
+        }
     }
 
     public function getGroups()

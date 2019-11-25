@@ -21,8 +21,11 @@
           <div class="panel-body">
             <div class="row">
               <div class="col-md-6">
+
+
                 {!! Form::label('name', 'Group Name *') !!}
                 {!! Form::text('name', null, array('class' => 'form-control', 'required' => '')) !!}
+                {!! Form::hidden('routeto', $routeto) !!}
               </div>
               <div class="col-md-6">
                 {!! Form::label('formation', 'Formation Date *') !!}
