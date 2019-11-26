@@ -17,7 +17,7 @@
 		<tr>
 			<th rowspan="3" class="lightgray">S# </th>
 			<th rowspan="3" class="lightgray">Loan Officer</th>
-			<th colspan="6" class="lightgray" align="center">Primary Loan</th>
+			<th colspan="6" class="lightgray" align="center">Product Loan</th>
 		</tr>
 		<tr>
 			<td colspan="2" class="lightgray">Disbursed Amount Dummy</td>
@@ -65,7 +65,7 @@
 						$totaldisbursed = 0;
 						foreach ($staff->groups as $group) {
 							foreach ($group->members as $member) {
-								foreach ($member->loans->where('loanname_id', 1) as $loan) {
+								foreach ($member->loans->where('loanname_id', 2) as $loan) {
 									$totaldisbursed = $totaldisbursed + $loan->total_disbursed;
 								}
 							}
@@ -81,7 +81,7 @@
 						foreach ($staff->groups as $group) {
 							foreach ($group->members as $member) {
 								$memberoutstanding = 0;
-								foreach ($member->loans->where('loanname_id', 1) as $loan) {
+								foreach ($member->loans->where('loanname_id', 2) as $loan) {
 									$totaloutstanding = $totaloutstanding + $loan->total_outstanding;
 									$memberoutstanding = $memberoutstanding + $loan->total_outstanding;
 								}
@@ -103,7 +103,7 @@
 						foreach ($staff->groups as $group) {
 							foreach ($group->members as $member) {
 								$memberoverdue = 0;
-								foreach ($member->loans->where('loanname_id', 1) as $loan) {
+								foreach ($member->loans->where('loanname_id', 2) as $loan) {
 									foreach ($loan->loaninstallments as $installment) {
 										if((strtotime($installment->due_date) < strtotime(date('Y-m-d'))) && ($installment->paid_total == 0.00) && ($loan->total_outstanding > 0)) {
 											$totaloverdue = $totaloverdue + $installment->installment_total;

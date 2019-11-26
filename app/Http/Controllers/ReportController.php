@@ -59,10 +59,58 @@ class ReportController extends Controller
     {
     	$staffs = User::where('role', 'staff')->get();
 
-	    Excel::create('Program Top Sheet', function($excel) use($staffs) {
+	    Excel::create('Program Top Sheet (Primary)', function($excel) use($staffs) {
 	    	$excel->sheet('Sheet1', function($sheet) use($staffs) {
 
 		        $sheet->loadView('dashboard.reports.branchtopsheetprimary')->withStaffs($staffs);
+		        $sheet->setStyle(array(
+		            'font' => array(
+		                'name'      =>  'Arial',
+		                'size'      =>  10
+		            )
+		        ));
+		    });
+	    	// $excel->sheet('Sheet2', function($sheet) use($staffs) {
+
+		    //     $sheet->loadView('dashboard.reports.test')->withStaffs($staffs);
+
+		    // });
+
+	    })->export('xlsx');
+    }
+
+    public function generateProgramTopSheetProduct()
+    {
+    	$staffs = User::where('role', 'staff')->get();
+
+	    Excel::create('Program Top Sheet (Product)', function($excel) use($staffs) {
+	    	$excel->sheet('Sheet1', function($sheet) use($staffs) {
+
+		        $sheet->loadView('dashboard.reports.branchtopsheetproduct')->withStaffs($staffs);
+		        $sheet->setStyle(array(
+		            'font' => array(
+		                'name'      =>  'Arial',
+		                'size'      =>  10
+		            )
+		        ));
+		    });
+	    	// $excel->sheet('Sheet2', function($sheet) use($staffs) {
+
+		    //     $sheet->loadView('dashboard.reports.test')->withStaffs($staffs);
+
+		    // });
+
+	    })->export('xlsx');
+    }
+
+    public function generateProgramTopSheetsavings()
+    {
+    	$staffs = User::where('role', 'staff')->get();
+
+	    Excel::create('Program Top Sheet (Savings)', function($excel) use($staffs) {
+	    	$excel->sheet('Sheet1', function($sheet) use($staffs) {
+
+		        $sheet->loadView('dashboard.reports.branchtopsheetsavings')->withStaffs($staffs);
 		        $sheet->setStyle(array(
 		            'font' => array(
 		                'name'      =>  'Arial',
