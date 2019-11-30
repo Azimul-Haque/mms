@@ -22,7 +22,7 @@
         <a href="{{ route('dashboard.loannames.create') }}" class="btn btn-primary btn-sm" title="Add a New Loan Name"><i class="fa fa-plus"></i> Add Loan Name</a>
       </div>
       <div class="table-responsive">
-        <table class="table">
+        <table class="table table-bordered">
           <thead>
             <tr>
               <th>Loan Name</th>
@@ -48,7 +48,7 @@
         <a href="{{ route('dashboard.savingnames.create') }}" class="btn btn-success btn-sm" title="Add a New Loan Name"><i class="fa fa-plus"></i> Add Saving Name</a>
       </div>
       <div class="table-responsive">
-        <table class="table">
+        <table class="table table-bordered">
           <thead>
             <tr>
               <th>Saving Name</th>
@@ -76,7 +76,7 @@
         <a href="{{ route('dashboard.schemenames.create') }}" class="btn btn-primary btn-sm" title="Add a New Scheme Name"><i class="fa fa-plus"></i> Add Scheme Name</a>
       </div>
       <div class="table-responsive">
-        <table class="table">
+        <table class="table table-bordered">
           <thead>
             <tr>
               <th>Scheme Name</th>
