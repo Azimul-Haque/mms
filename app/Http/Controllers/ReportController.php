@@ -126,4 +126,34 @@ class ReportController extends Controller
 
 	    })->export('xlsx');
     }
+
+    public function generateTransactionSummary()
+    {
+    	$staffs = User::where('role', 'staff')->get();
+    	$datetocalc = date('Y-m-d');
+
+	    // return view('dashboard.reports.transactionsummary')
+	    //                 ->withStaffs($staffs)
+	    //                 ->withDatetocalc($datetocalc);
+
+	    Excel::create('Transaction Summary', function($excel) use($staffs, $datetocalc) {
+	    	$excel->sheet('Loan Collection', function($sheet) use($staffs, $datetocalc) {
+
+		        $sheet->loadView('dashboard.reports.transactionsummary')->withStaffs($staffs)
+	                    												->withDatetocalc($datetocalc);
+		        $sheet->setStyle(array(
+		            'font' => array(
+		                'name'      =>  'Arial',
+		                'size'      =>  10
+		            )
+		        ));
+		    });
+	    	// $excel->sheet('Sheet2', function($sheet) use($staffs) {
+
+		    //     $sheet->loadView('dashboard.reports.test')->withStaffs($staffs);
+
+		    // });
+
+	    })->export('xlsx');
+    }
 }
