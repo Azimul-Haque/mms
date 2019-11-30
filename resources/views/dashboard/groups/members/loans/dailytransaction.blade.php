@@ -36,7 +36,7 @@
     <div class="row">
       <div class="col-md-12">
         <div class="table-responsive">
-          <table class="table table-hover table-condensed table-bordered table-striped " id="editable">
+          <table class="table table-hover table-condensed table-bordered table-striped" id="editable">
             <thead>
               <tr>
                 <th>S#</th>
