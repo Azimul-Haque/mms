@@ -83,9 +83,11 @@
 							$primaryrealisablegroup = 0;
 							foreach ($group->members as $member) {
 								foreach ($member->loans->where('loanname_id', 1) as $loan) {
-									foreach ($loan->loaninstallments as $loaninstallment) {
-										if($loaninstallment->due_date == $datetocalc) {
-											$primaryrealisablegroup = $primaryrealisablegroup + $loaninstallment->installment_total;
+									if($loan->status == 1) {
+										foreach ($loan->loaninstallments as $loaninstallment) {
+											if($loaninstallment->due_date == $datetocalc) {
+												$primaryrealisablegroup = $primaryrealisablegroup + $loaninstallment->installment_total;
+											}
 										}
 									}
 								}
@@ -99,9 +101,11 @@
 							$primarycashgroup = 0;
 							foreach ($group->members as $member) {
 								foreach ($member->loans->where('loanname_id', 1) as $loan) {
-									foreach ($loan->loaninstallments as $loaninstallment) {
-										if($loaninstallment->due_date == $datetocalc) {
-											$primarycashgroup = $primarycashgroup + $loaninstallment->paid_total;
+									if($loan->status == 1) {
+										foreach ($loan->loaninstallments as $loaninstallment) {
+											if($loaninstallment->due_date == $datetocalc) {
+												$primarycashgroup = $primarycashgroup + $loaninstallment->paid_total;
+											}
 										}
 									}
 								}
@@ -118,9 +122,11 @@
 							$productrealisablegroup = 0;
 							foreach ($group->members as $member) {
 								foreach ($member->loans->where('loanname_id', 2) as $loan) {
-									foreach ($loan->loaninstallments as $loaninstallment) {
-										if($loaninstallment->due_date == $datetocalc) {
-											$productrealisablegroup = $productrealisablegroup + $loaninstallment->installment_total;
+									if($loan->status == 1) {
+										foreach ($loan->loaninstallments as $loaninstallment) {
+											if($loaninstallment->due_date == $datetocalc) {
+												$productrealisablegroup = $productrealisablegroup + $loaninstallment->installment_total;
+											}
 										}
 									}
 								}
@@ -134,9 +140,11 @@
 							$productcashgroup = 0;
 							foreach ($group->members as $member) {
 								foreach ($member->loans->where('loanname_id', 2) as $loan) {
-									foreach ($loan->loaninstallments as $loaninstallment) {
-										if($loaninstallment->due_date == $datetocalc) {
-											$productcashgroup = $productcashgroup + $loaninstallment->paid_total;
+									if($loan->status == 1) {
+										foreach ($loan->loaninstallments as $loaninstallment) {
+											if($loaninstallment->due_date == $datetocalc) {
+												$productcashgroup = $productcashgroup + $loaninstallment->paid_total;
+											}
 										}
 									}
 								}
