@@ -53,7 +53,7 @@
         <!-- DataTables with bootstrap 3 style -->
         <link rel="stylesheet" href="//cdn.datatables.net/v/bs/dt-1.10.18/datatables.min.css">
     @endif
-    {!!Html::style('css/dashboardstylesheet.css')!!}
+    {!!Html::style('css/dashboardstylesheet.css?date=' . date('Y-m'))!!}
     @yield('adminlte_css')
 
     <!--[if lt IE 9]>
