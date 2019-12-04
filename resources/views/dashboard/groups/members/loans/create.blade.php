@@ -32,7 +32,7 @@
               </div>
               <div class="col-md-6">
                 {!! Form::label('disburse_date', 'Disburse Date *') !!}
-                {!! Form::text('disburse_date', null, array('class' => 'form-control', 'placeholder' => 'Disburse Date', 'required' => '', 'autocomplete' => 'off', 'readonly' => '')) !!}
+                {!! Form::text('disburse_date', date('F d, Y'), array('class' => 'form-control', 'placeholder' => 'Disburse Date', 'required' => '', 'autocomplete' => 'off', 'readonly' => '')) !!}
               </div>
             </div>
             <div class="row">
@@ -288,5 +288,13 @@
       }
       return date;
     }
+
+    $('#installment_type').change(function() {
+      if($('#installment_type').val() == 1) {
+        $('#installments').val(120);
+      } else if($('#installment_type').val() == 2) {
+        $('#installments').val(16);
+      }
+    })
   </script>
 @endsection
