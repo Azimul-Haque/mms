@@ -121,7 +121,7 @@ class GroupController extends Controller
             $gensavingac = Saving::where('member_id', $request->data['member_id'])
                               ->where('savingname_id', 1) // hard coded!
                               ->first();
-            $gensavingac->total_amount = $gensavingac->total_amount - $generalsaving->amount + $request->data['generalsaving'];;
+            $gensavingac->total_amount = $gensavingac->total_amount - $generalsaving->amount + $request->data['generalsaving'];
             $gensavingac->withdraw = $gensavingac->withdraw - $generalsaving->withdraw + $request->data['generalsavingwd'];
             $gensavingac->save();
 
@@ -134,7 +134,7 @@ class GroupController extends Controller
             $gensavingac = Saving::where('member_id', $request->data['member_id'])
                               ->where('savingname_id', 1) // hard coded!
                               ->first();
-            $gensavingac->total_amount = $gensavingac->total_amount + $request->data['generalsaving'];;
+            $gensavingac->total_amount = $gensavingac->total_amount + $request->data['generalsaving'];
             $gensavingac->withdraw = $gensavingac->withdraw + $request->data['generalsavingwd'];
             // balance is considered total_amount - withdraw
             $gensavingac->save();

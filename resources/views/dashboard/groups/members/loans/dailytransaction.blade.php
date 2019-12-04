@@ -8,7 +8,7 @@
 @stop
 
 @section('content_header')
-    <h1>Daily Transaction [Staff: <b>{{ $staff->name }}</b>, Group: <b>{{ $group->name }}</b>, , Staff: <b>{{ $member->name }}-{{ $member->fhusband }}</b>]</h1>
+    <h1>Daily Transaction [Staff: <b>{{ $staff->name }}</b>, Group: <b>{{ $group->name }}</b>, Staff: <b>{{ $member->name }}-{{ $member->fhusband }}</b>]</h1>
 @stop
 
 @section('content')
@@ -22,7 +22,7 @@
         </select><br/>
       </div>
       <div class="col-md-2">
-        <input class="form-control" type="text" name="date_to_load" id="date_to_load" @if(!empty($transactiondate)) value="{{ date('F d, Y', strtotime($transactiondate)) }}" @endif placeholder="Select Date" readonly=""><br/>
+        <input class="form-control" type="text" name="date_to_load" id="date_to_load" @if(!empty($transactiondate)) value="{{ date('F d, Y', strtotime($transactiondate)) }}" @else value="{{ date('F d, Y') }}" @endif placeholder="Select Date" readonly=""><br/>
       </div>
       <div class="col-md-3">
         <button class="btn btn-success" id="loadTransactions"><i class="fa fa-spinner"></i> Load</button><br/>

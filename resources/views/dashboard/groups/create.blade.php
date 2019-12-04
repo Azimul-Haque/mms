@@ -26,7 +26,7 @@
               </div>
               <div class="col-md-6">
                 {!! Form::label('formation', 'Formation Date *') !!}
-                {!! Form::text('formation', null, array('class' => 'form-control', 'required' => '', 'autocomplete' => 'off', 'readonly' => '')) !!}
+                {!! Form::text('formation', date('F d, Y'), array('class' => 'form-control', 'required' => '', 'autocomplete' => 'off', 'readonly' => '')) !!}
               </div>
             </div>
             <div class="row">

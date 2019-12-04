@@ -43,6 +43,18 @@
             </div>
           </div>
           <div class="row">
+          {{--   <div class="col-md-4">
+              {!! Form::label('dob', 'Date of Birth *') !!}
+              {!! Form::text('dob', null, array('class' => 'form-control', 'placeholder' => 'Date of Birth', 'required' => '', 'autocomplete' => 'off', 'readonly' => '')) !!}
+            </div> --}}
+            <div class="col-md-4">
+              {!! Form::label('admission_date', 'Admission Date *') !!}
+              {!! Form::text('admission_date', date('F d, Y'), array('class' => 'form-control', 'placeholder' => 'Admission Date', 'required' => '', 'autocomplete' => 'off', 'readonly' => '')) !!}
+            </div>
+            <div class="col-md-4">
+              {!! Form::label('closing_date', 'Closing Date (Optional)') !!}
+              {!! Form::text('closing_date', null, array('class' => 'form-control', 'placeholder' => 'Closing Date (Optional)', 'autocomplete' => 'off', 'readonly' => '')) !!}
+            </div>
             <div class="col-md-4">
               {!! Form::label('ishusband', 'Is Husband *') !!}<br/>
               <label class="radio-inline">
@@ -52,34 +64,7 @@
                 <input type="radio" name="ishusband" id="ishusband" value="0"> No
               </label>
             </div>
-            <div class="col-md-4">
-              {!! Form::label('mother', 'Mother Name *') !!}
-              {!! Form::text('mother', null, array('class' => 'form-control', 'placeholder' => 'Mother Name', 'required' => '')) !!}
-            </div>
-            <div class="col-md-4">
-              {!! Form::label('gender', 'Gender *') !!}
-              <select name="gender" class="form-control" required="">
-                <option value="" selected="" disabled="">Select Gender</option>
-                <option value="1">Male</option>
-                <option value="2">Female</option>
-                <option value="0">Other</option>
-              </select>
-            </div>
-          </div>
-          <div class="row">
-          {{--   <div class="col-md-4">
-              {!! Form::label('dob', 'Date of Birth *') !!}
-              {!! Form::text('dob', null, array('class' => 'form-control', 'placeholder' => 'Date of Birth', 'required' => '', 'autocomplete' => 'off', 'readonly' => '')) !!}
-            </div> --}}
-            <div class="col-md-4">
-              {!! Form::label('admission_date', 'Admission Date *') !!}
-              {!! Form::text('admission_date', null, array('class' => 'form-control', 'placeholder' => 'Admission Date', 'required' => '', 'autocomplete' => 'off', 'readonly' => '')) !!}
-            </div>
-            <div class="col-md-4">
-              {!! Form::label('closing_date', 'Closing Date (Optional)') !!}
-              {!! Form::text('closing_date', null, array('class' => 'form-control', 'placeholder' => 'Closing Date (Optional)', 'autocomplete' => 'off', 'readonly' => '')) !!}
-            </div>
-            <div class="col-md-4">
+            {{-- <div class="col-md-4">
               {!! Form::label('religion', 'Religion *') !!}
               <select name="religion" class="form-control" required>
                 <option selected="" disabled="">Select Religion</option>
@@ -89,7 +74,7 @@
                 <option value="3">Buddhism</option>
                 <option value="4">Others</option>
               </select>
-            </div>
+            </div> --}}
           </div>
           <div class="row">
             {{-- <div class="col-md-4">
@@ -126,7 +111,7 @@
               {!! Form::label('landlord_name', 'Landlord Name (Optional)') !!}
               {!! Form::text('landlord_name', null, array('class' => 'form-control', 'placeholder' => 'Landlord Name (Optional)', 'autocomplete' => 'off')) !!}
             </div> --}}
-            <div class="col-md-4">
+            {{-- <div class="col-md-4">
               {!! Form::label('residence_type', 'Residence Type (Optional)') !!}
               {!! Form::text('residence_type', null, array('class' => 'form-control', 'placeholder' => 'Residence Type (Optional)', 'autocomplete' => 'off')) !!}
             </div>
@@ -137,38 +122,49 @@
             <div class="col-md-4">
               {!! Form::label('profession', 'Profession *') !!}
               {!! Form::text('profession', null, array('class' => 'form-control', 'placeholder' => 'Profession', 'required' => '', 'autocomplete' => 'off')) !!}
-            </div>
+            </div> --}}
           </div>
           <div class="row">
-            <div class="col-md-4">
+            {{-- <div class="col-md-4">
               {!! Form::label('nid', 'National ID No *') !!}
               {!! Form::text('nid', null, array('class' => 'form-control', 'placeholder' => 'National ID No', 'required' => '', 'autocomplete' => 'off', 'onkeypress' => 'if(this.value.length==17) return false;')) !!}
-            </div>
+            </div> --}}
           </div>
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12"><br/>
               <big><b><u>Present Address</u></b></big><br/>
+            </div>
+            <div class="col-md-4">
               {!! Form::label('present_district', 'Present District *') !!}
               {!! Form::text('present_district', 'Thakurgaon', array('class' => 'form-control', 'placeholder' => 'Present District', 'required' => '')) !!}
+            </div>
+            <div class="col-md-4">
               {!! Form::label('present_upazilla', 'Present Upazilla *') !!}
-              {!! Form::text('present_upazilla', null, array('class' => 'form-control', 'placeholder' => 'Present Upazilla', 'required' => '')) !!}
-              {!! Form::label('present_union', 'Present Union *') !!}
-              {!! Form::text('present_union', null, array('class' => 'form-control', 'placeholder' => 'Present Union', 'required' => '')) !!}
-              {!! Form::label('present_post', 'Present Post Office *') !!}
-              {!! Form::text('present_post', null, array('class' => 'form-control', 'placeholder' => 'Present Post Office', 'required' => '')) !!}
+              {!! Form::text('present_upazilla', 'Thakurgaon Sadar', array('class' => 'form-control', 'placeholder' => 'Present Upazilla', 'required' => '')) !!}
+            </div>
+            <div class="col-md-4">
               {!! Form::label('present_village', 'Present Village *') !!}
               {!! Form::text('present_village', null, array('class' => 'form-control', 'placeholder' => 'Present Village', 'required' => '')) !!}
-              {{-- {!! Form::label('present_house', 'Present House *') !!}
-              {!! Form::text('present_house', null, array('class' => 'form-control', 'placeholder' => 'Present House', 'required' => '')) !!} --}}
+            </div>
+            <div class="col-md-4">
               {!! Form::label('present_phone', 'Present Phone *') !!}
-              {!! Form::text('present_phone', null, array('class' => 'form-control', 'placeholder' => 'Present Phone', 'required' => '')) !!}<br/>
+              {!! Form::text('present_phone', null, array('class' => 'form-control', 'placeholder' => 'Present Phone', 'required' => '')) !!}
+            </div>
+            <div class="col-md-4">
               {!! Form::label('passbook_fee', 'PassBook Fee') !!}
               <div class="input-group">
                 <span class="input-group-addon">৳</span>
                 <input id="passbook_fee" type="text" class="form-control" name="passbook_fee" placeholder="PassBook Fee" value="20">
               </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
+              {!! Form::label('addmission_fee', 'Admission Fee') !!}
+              <div class="input-group">
+                <span class="input-group-addon">৳</span>
+                <input id="addmission_fee" type="text" class="form-control" name="addmission_fee" placeholder="Admission Fee" value="30">
+              </div>
+            </div>
+            {{-- <div class="col-md-6">
               <big><b><u>Permanent Address (Optional)</u></b></big><br/>
               {!! Form::label('permanent_district', 'Permanent District') !!}
               {!! Form::text('permanent_district', 'Thakurgaon', array('class' => 'form-control', 'placeholder' => 'Permanent District')) !!}
@@ -180,16 +176,9 @@
               {!! Form::text('permanent_post', null, array('class' => 'form-control', 'placeholder' => 'Permanent Post Office')) !!}
               {!! Form::label('permanent_village', 'Permanent Village') !!}
               {!! Form::text('permanent_village', null, array('class' => 'form-control', 'placeholder' => 'Permanent Village ')) !!}
-              {{-- {!! Form::label('permanent_house', 'Permanent House') !!}
-              {!! Form::text('permanent_house', null, array('class' => 'form-control', 'placeholder' => 'Permanent House')) !!} --}}
               {!! Form::label('permanent_phone', 'Permanent Phone (Optional)') !!}
               {!! Form::text('permanent_phone', null, array('class' => 'form-control', 'placeholder' => 'Permanent Phone (Optional)' )) !!}<br/>
-              {!! Form::label('addmission_fee', 'Admission Fee') !!}
-              <div class="input-group">
-                <span class="input-group-addon">৳</span>
-                <input id="addmission_fee" type="text" class="form-control" name="addmission_fee" placeholder="Admission Fee" value="30">
-              </div>
-            </div>
+            </div> --}}
           </div>
 
           <div class="row">
@@ -569,5 +558,21 @@
       var product_total_disbursed = parseFloat(product_left_pricipal_amount) + parseFloat(product_service_charge);
       $('#product_total_disbursed').val(product_total_disbursed);
     };
+
+    $('#primary_installment_type').change(function() {
+      if($('#primary_installment_type').val() == 1) {
+        $('#primary_installments').val(120);
+      } else if($('#primary_installment_type').val() == 2) {
+        $('#primary_installments').val(16);
+      }
+    })
+
+    $('#product_installment_type').change(function() {
+      if($('#product_installment_type').val() == 1) {
+        $('#product_installments').val(120);
+      } else if($('#product_installment_type').val() == 2) {
+        $('#product_installments').val(16);
+      }
+    })
   </script>
 @endsection

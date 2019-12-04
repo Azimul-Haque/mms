@@ -159,8 +159,8 @@
                 <th>Installment Amount<br/>(Principal)</th>
                 <th>Installment Amount<br/>(Interest)</th>
                 <th>Installment Amount<br/>(Total)</th>
-                <th>Paid Amount<br/>(Principal)</th>
-                <th>Paid Amount<br/>(Interest)</th>
+                {{-- <th>Paid Amount<br/>(Principal)</th>
+                <th>Paid Amount<br/>(Interest)</th> --}}
                 <th>Paid Amount<br/>(Total)</th>
                {{--  <th>Outstanding Amount<br/>(Principal)</th>
                 <th>Outstanding Amount<br/>(Interest)</th> --}}
@@ -181,8 +181,8 @@
                 <td>{{ $loaninstallment->installment_principal }}</td>
                 <td>{{ $loaninstallment->installment_interest }}</td>
                 <td>{{ $loaninstallment->installment_total }}</td>
-                <td>{{ $loaninstallment->paid_principal }}</td>
-                <td>{{ $loaninstallment->paid_interest }}</td>
+                {{-- <td>{{ $loaninstallment->paid_principal }}</td>
+                <td>{{ $loaninstallment->paid_interest }}</td> --}}
                 <td>{{ $loaninstallment->paid_total }}</td>
 {{--                 <td>{{ $loaninstallment->outstanding_principal }}</td>
                 <td>{{ $loaninstallment->outstanding_interest }}</td>

@@ -31,7 +31,7 @@
               </div>
               <div class="col-md-6">
                 {!! Form::label('opening_date', 'Opening Date *') !!}
-                {!! Form::text('opening_date', null, array('class' => 'form-control', 'placeholder' => 'Opening Date', 'required' => '', 'autocomplete' => 'off', 'readonly' => '')) !!}
+                {!! Form::text('opening_date', date('F d, Y'), array('class' => 'form-control', 'placeholder' => 'Opening Date', 'required' => '', 'autocomplete' => 'off', 'readonly' => '')) !!}
               </div>
             </div>
             <div class="row">

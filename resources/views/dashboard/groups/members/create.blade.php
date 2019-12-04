@@ -64,7 +64,7 @@
             </div> --}}
             <div class="col-md-4">
               {!! Form::label('admission_date', 'Admission Date *') !!}
-              {!! Form::text('admission_date', null, array('class' => 'form-control', 'placeholder' => 'Admission Date', 'required' => '', 'autocomplete' => 'off', 'readonly' => '')) !!}
+              {!! Form::text('admission_date', date('F d, Y'), array('class' => 'form-control', 'placeholder' => 'Admission Date', 'required' => '', 'autocomplete' => 'off', 'readonly' => '')) !!}
             </div>
             <div class="col-md-4">
               {!! Form::label('closing_date', 'Closing Date (Optional)') !!}

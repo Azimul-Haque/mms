@@ -36,7 +36,7 @@
         </select><br/>
       </div>
       <div class="col-md-2">
-        <input class="form-control" type="text" name="date_to_load" id="date_to_load" @if(!empty($transactiondate)) value="{{ date('F d, Y', strtotime($transactiondate)) }}" @endif placeholder="Select Date" readonly=""><br/>
+        <input class="form-control" type="text" name="date_to_load" id="date_to_load" @if(!empty($transactiondate)) value="{{ date('F d, Y', strtotime($transactiondate)) }}" @else value="{{ date('F d, Y') }}" @endif placeholder="Select Date" readonly=""><br/>
       </div>
       <div class="col-md-3">
         <button class="btn btn-success" id="loadTransactions"><i class="fa fa-users"></i> Load</button><br/>
@@ -53,13 +53,13 @@
               <tr>
                 <th>P#</th>
                 <th>Member Name</th>
-                <th>Loan Program</th>
                 <th>Loan <br/>Installment</th>
                 @if(!empty($loantype) && $loantype == 1) {{-- if primary then show savings only --}}
                   <th>General Savings<br/> Deposit</th>
                   <th>Long Term<br/> Savings</th>
                 @endif
                 
+                <th>Loan Program</th>
                 <th>Total Collection</th>
                 
                 @if(!empty($loantype) && $loantype == 1) {{-- if primary then show savings only --}}
@@ -78,7 +78,7 @@
                       <td readonly>{{ $member->passbook }}</td>
                       <td id="membername{{ $loaninstallment->id }}" readonly>{{ $member->name }}</td>
                       <td readonly>{{ $loan->loanname->name }} (Scheme: {{ $loan->schemename->name }})</td>
-                      <td id="loaninstallment{{ $loaninstallment->id }}" onchange="loancalcandpost({{ $member->id }}, {{ $loaninstallment->id }}, '{{ $transactiondate }}', {{ $loaninstallment->installment_no }})">{{ $loaninstallment->paid_total }}</td>
+                      
 
                       @if(!empty($loantype) && $loantype == 1) {{-- if primary then show savings only --}}
                         @php
@@ -99,7 +99,7 @@
                         @else
                         <td readonly>N/A</td>
                         @endif
-
+                        <td id="loaninstallment{{ $loaninstallment->id }}" onchange="loancalcandpost({{ $member->id }}, {{ $loaninstallment->id }}, '{{ $transactiondate }}', {{ $loaninstallment->installment_no }})">{{ $loaninstallment->paid_total }}</td>
                         <td id="totalcollection{{ $loaninstallment->id }}" readonly>{{ $loaninstallment->paid_total + $generalsaving + $longsaving }}</td>
 
                         @php
@@ -123,6 +123,7 @@
                         @endif
                         <td id="netcollection{{ $loaninstallment->id }}" readonly>{{ $loaninstallment->paid_total + $generalsaving + $longsaving - $generalsavingwd - $longsavingwd }}</td>
                       @else
+                        <td id="loaninstallment{{ $loaninstallment->id }}" onchange="loancalcandpost({{ $member->id }}, {{ $loaninstallment->id }}, '{{ $transactiondate }}', {{ $loaninstallment->installment_no }})">{{ $loaninstallment->paid_total }}</td>
                         <td id="totalcollection{{ $loaninstallment->id }}" readonly>{{ $loaninstallment->paid_total }}</td>
                         <td id="netcollection{{ $loaninstallment->id }}" readonly>{{ $loaninstallment->paid_total }}</td>
                       @endif
