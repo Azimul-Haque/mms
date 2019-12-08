@@ -9,69 +9,49 @@
 <table>
 	<thead>
 		<tr>
-			<th colspan="9" {{-- align="center" style="font-size: 30px;" --}}>Transaction Summary: Groupwise Savings, Admission Fee, PassBook Fee, Loan Insurance</th>
+			<th colspan="10" {{-- align="center" style="font-size: 30px;" --}}>Transaction Summary: Groupwise Savings, Admission Fee, PassBook Fee, Loan Insurance</th>
 		</tr>
 		<tr>
-			<th colspan="9" align="left">Date: {{ date('D, d/m/Y') }}</th>
+			<th colspan="10" align="left">Date: {{ date('D, d/m/Y') }}</th>
 		</tr>
 		<tr>
 			<th rowspan="2" class="lightgray">Loan Officer</th>
 			<th rowspan="2" class="lightgray">Group Name</th>
 			<th colspan="2" class="lightgray" align="center">GENERAL SAVINGS</th>
 			<th colspan="2" class="lightgray" align="center">LONG TERM SAVINGS</th>
+			<th rowspan="2" class="lightgray" align="center">Admission Fee</th>
+			<th rowspan="2" class="lightgray" align="center">PassBook Fee</th>
+			<th rowspan="2" class="lightgray" align="center">Loan Insurance</th>
 			<th rowspan="2" class="lightgray" align="center">Total</th>
 		</tr>
 		<tr>
 			{{-- <td colspan="2" class="lightgray" align="center"><b>Dummy</b></td> --}}
 
-			<td class="lightgray" align="center"><b>Realisable</b></td>
-			<td colspan="3" class="lightgray" align="center"><b>Realised</b></td>
-			<td class="lightgray" align="center"><b>Realisable</b></td>
-			<td colspan="3" class="lightgray" align="center"><b>Realised</b></td>
-			<td class="lightgray" align="center"><b>Realisable</b></td>
-			<td colspan="3" class="lightgray" align="center"><b>Realised</b></td>
-		</tr>
-		<tr>
-			<td colspan="2" class="lightgray"><b></b></td>
-			
-			<td class="lightgray" align="center"><b></b></td>
-			<td class="lightgray" align="center"><b>Cash</b></td>
-			<td class="lightgray" align="center"><b>Overdue</b></td>
-			<td class="lightgray" align="center"><b>Advance</b></td>
-
-			<td class="lightgray" align="center"><b></b></td>
-			<td class="lightgray" align="center"><b>Cash</b></td>
-			<td class="lightgray" align="center"><b>Overdue</b></td>
-			<td class="lightgray" align="center"><b>Advance</b></td>
-
-			<td class="lightgray" align="center"><b></b></td>
-			<td class="lightgray" align="center"><b>Cash</b></td>
-			<td class="lightgray" align="center"><b>Overdue</b></td>
-			<td class="lightgray" align="center"><b>Advance</b></td>
+			<td class="lightgray" align="center"><b>Collection</b></td>
+			<td class="lightgray" align="center"><b>Withdrawal</b></td>
+			<td class="lightgray" align="center"><b>Collection</b></td>
+			<td class="lightgray" align="center"><b>Withdrawal</b></td>
 		</tr>
 	</thead>
 	<tbody>
 		@php			
-			$primaryrealisabletotal = 0;
-			$primarycashtotal = 0;
-			$primaryoverduetotal = 0;
-			$primaryadvancedtotal = 0;
+			$generalcolltotal = 0;
+			$generalwithdrawtotal = 0;
 
-			$productrealisabletotal = 0;
-			$productcashtotal = 0;
-			$productoverduetotal = 0;
-			$productadvancedtotal = 0;
+			$longtermcolltotal = 0;
+			$longtermwithdrawtotal = 0;
+
 		@endphp
 		@foreach($staffs as $staff)
 			@if($staff->groups->count() > 0)
 			@php
-				$primaryrealisablestaff = 0;
-				$primarycashstaff = 0;
+				$generalcollstaff = 0;
+				$generalwithdrawstaff = 0;
 				$primaryoverduestaff = 0;
 				$primaryadvancedstaff = 0;
 
-				$productrealisablestaff = 0;
-				$productcashstaff = 0;
+				$longtermcollstaff = 0;
+				$longtermwithdrawstaff = 0;
 				$productoverduestaff = 0;
 				$productadvancedstaff = 0;
 			@endphp
@@ -81,154 +61,79 @@
 					<td align="left">{{ $group->name }}</td>
 					<td align="right">
 						@php
-							$primaryrealisablegroup = 0;
+							$generalcollgroup = 0;
 							foreach ($group->members as $member) {
-								foreach ($member->loans->where('loanname_id', 1) as $loan) {
-									if($loan->status == 1) {
-										foreach ($loan->loaninstallments as $loaninstallment) {
-											if($loaninstallment->due_date == $datetocalc) {
-												$primaryrealisablegroup = $primaryrealisablegroup + $loaninstallment->installment_total;
+								foreach ($member->savings->where('savingname_id', 1) as $saving) {
+									if($saving->status == 1) {
+										foreach ($saving->savinginstallments as $savinginstallment) {
+											if($savinginstallment->due_date == $datetocalc) {
+												$generalcollgroup = $generalcollgroup + $savinginstallment->amount;
 											}
 										}
 									}
 								}
 							}
-							$primaryrealisablestaff = $primaryrealisablestaff + $primaryrealisablegroup;
+							$generalcollstaff = $generalcollstaff + $generalcollgroup;
 						@endphp
-						{{ $primaryrealisablegroup }}
+						{{ $generalcollgroup }}
 					</td>
 					<td align="right">
 						@php
-							$primarycashgroup = 0;
+							$generalwithdrawgroup = 0;
 							foreach ($group->members as $member) {
-								foreach ($member->loans->where('loanname_id', 1) as $loan) {
-									if($loan->status == 1) {
-										foreach ($loan->loaninstallments as $loaninstallment) {
-											if($loaninstallment->due_date == $datetocalc) {
-												$primarycashgroup = $primarycashgroup + $loaninstallment->paid_total;
+								foreach ($member->savings->where('savingname_id', 1) as $saving) {
+									if($saving->status == 1) {
+										foreach ($saving->savinginstallments as $savinginstallment) {
+											if($savinginstallment->due_date == $datetocalc) {
+												$generalwithdrawgroup = $generalwithdrawgroup + $savinginstallment->withdraw;
 											}
 										}
 									}
 								}
 							}
-							$primarycashstaff = $primarycashstaff + $primarycashgroup;
+							$generalwithdrawstaff = $generalwithdrawstaff + $generalwithdrawgroup;
 						@endphp
-						{{ $primarycashgroup }}
+						{{ $generalwithdrawgroup }}
 					</td>
 					<td align="right">
 						@php
-							$primaryoverduegroup = 0;
+							$longtermcollgroup = 0;
 							foreach ($group->members as $member) {
-								foreach ($member->loans->where('loanname_id', 1) as $loan) {
-									if($loan->status == 1) {
-										foreach ($loan->loaninstallments as $loaninstallment) {
-											if(($loaninstallment->due_date == $datetocalc) && ($loaninstallment->installment_total - $loaninstallment->paid_total > 0)) {
-												$primaryoverduegroup = $primaryoverduegroup + ($loaninstallment->installment_total - $loaninstallment->paid_total);
+								foreach ($member->savings->where('savingname_id', 2) as $saving) {
+									if($saving->status == 1) {
+										foreach ($saving->savinginstallments as $savinginstallment) {
+											if($savinginstallment->due_date == $datetocalc) {
+												$longtermcollgroup = $longtermcollgroup + $savinginstallment->amount;
 											}
 										}
 									}
 								}
 							}
-							$primaryoverduestaff = $primaryoverduestaff + $primaryoverduegroup;
+							$longtermcollstaff = $longtermcollstaff + $longtermcollgroup;
 						@endphp
-						{{ $primaryoverduegroup }}
+						{{ $longtermcollgroup }}
 					</td>
 					<td align="right">
 						@php
-							$primaryadvancedgroup = 0;
+							$longtermwithdrawgroup = 0;
 							foreach ($group->members as $member) {
-								foreach ($member->loans->where('loanname_id', 1) as $loan) {
-									if($loan->status == 1) {
-										foreach ($loan->loaninstallments as $loaninstallment) {
-											if(($loaninstallment->due_date == $datetocalc) && ($loaninstallment->paid_total - $loaninstallment->installment_total > 0)) {
-												$primaryadvancedgroup = $primaryadvancedgroup + ($loaninstallment->paid_total - $loaninstallment->installment_total);
+								foreach ($member->savings->where('savingname_id', 2) as $saving) {
+									if($saving->status == 1) {
+										foreach ($saving->savinginstallments as $savinginstallment) {
+											if($savinginstallment->due_date == $datetocalc) {
+												$longtermwithdrawgroup = $longtermwithdrawgroup + $savinginstallment->withdraw;
 											}
 										}
 									}
 								}
 							}
-							$primaryadvancedstaff = $primaryadvancedstaff + $primaryadvancedgroup;
+							$longtermwithdrawstaff = $longtermwithdrawstaff + $longtermwithdrawgroup;
 						@endphp
-						{{ $primaryadvancedgroup }}
-					</td>
-
-					<td align="right">
-						@php
-							$productrealisablegroup = 0;
-							foreach ($group->members as $member) {
-								foreach ($member->loans->where('loanname_id', 2) as $loan) {
-									if($loan->status == 1) {
-										foreach ($loan->loaninstallments as $loaninstallment) {
-											if($loaninstallment->due_date == $datetocalc) {
-												$productrealisablegroup = $productrealisablegroup + $loaninstallment->installment_total;
-											}
-										}
-									}
-								}
-							}
-							$productrealisablestaff = $productrealisablestaff + $productrealisablegroup;
-						@endphp
-						{{ $productrealisablegroup }}
-					</td>
-					<td align="right">
-						@php
-							$productcashgroup = 0;
-							foreach ($group->members as $member) {
-								foreach ($member->loans->where('loanname_id', 2) as $loan) {
-									if($loan->status == 1) {
-										foreach ($loan->loaninstallments as $loaninstallment) {
-											if($loaninstallment->due_date == $datetocalc) {
-												$productcashgroup = $productcashgroup + $loaninstallment->paid_total;
-											}
-										}
-									}
-								}
-							}
-							$productcashstaff = $productcashstaff + $productcashgroup;
-						@endphp
-						{{ $productcashgroup }}
-					</td>
-					<td align="right">
-						@php
-							$productoverduegroup = 0;
-							foreach ($group->members as $member) {
-								foreach ($member->loans->where('loanname_id', 2) as $loan) {
-									if($loan->status == 1) {
-										foreach ($loan->loaninstallments as $loaninstallment) {
-											if(($loaninstallment->due_date == $datetocalc) && ($loaninstallment->installment_total - $loaninstallment->paid_total > 0)) {
-												$productoverduegroup = $productoverduegroup + ($loaninstallment->installment_total - $loaninstallment->paid_total);
-											}
-										}
-									}
-								}
-							}
-							$productoverduestaff = $productoverduestaff + $productoverduegroup;
-						@endphp
-						{{ $productoverduegroup }}
-					</td>
-					<td align="right">
-						@php
-							$productadvancedgroup = 0;
-							foreach ($group->members as $member) {
-								foreach ($member->loans->where('loanname_id', 2) as $loan) {
-									if($loan->status == 1) {
-										foreach ($loan->loaninstallments as $loaninstallment) {
-											if(($loaninstallment->due_date == $datetocalc) && ($loaninstallment->paid_total - $loaninstallment->installment_total > 0)) {
-												$productadvancedgroup = $productadvancedgroup + ($loaninstallment->paid_total - $loaninstallment->installment_total);
-											}
-										}
-									}
-								}
-							}
-							$productadvancedstaff = $productadvancedstaff + $productadvancedgroup;
-						@endphp
-						{{ $productadvancedgroup }}
+						{{ $longtermwithdrawgroup }}
 					</td>
 					
-					<td align="right">{{ $primaryrealisablegroup + $productrealisablegroup }}</td>
-					<td align="right">{{ $primarycashgroup + $productcashgroup }}</td>
-					<td align="right">{{ $primaryoverduegroup + $productoverduegroup }}</td>
-					<td align="right">{{ $primaryadvancedgroup + $productadvancedgroup }}</td>
+					
+					<td align="right">{{ $generalcollgroup + $longtermcollgroup }} {{ $generalwithdrawgroup + $longtermwithdrawgroup }}</td>
 				</tr>
 			@endforeach
 			<tr>
@@ -236,79 +141,51 @@
 				<th align="right">Total</th>
 
 				<th align="right">
-					{{ $primaryrealisablestaff }}
+					{{ $generalcollstaff }}
 					@php
-						$primaryrealisabletotal = $primaryrealisabletotal + $primaryrealisablestaff;
+						$generalcolltotal = $generalcolltotal + $generalcollstaff;
 					@endphp
 				</th>
 				<th align="right">
-					{{ $primarycashstaff }}
+					{{ $generalwithdrawstaff }}
 					@php
-						$primarycashtotal = $primarycashtotal + $primarycashstaff;
-					@endphp
-				</th>
-				<th align="right">
-					{{ $primaryoverduestaff }}
-					@php
-						$primaryoverduetotal = $primaryoverduetotal + $primaryoverduestaff;
-					@endphp
-				</th>
-				<th align="right">
-					{{ $primaryadvancedstaff }}
-					@php
-						$primaryadvancedtotal = $primaryadvancedtotal + $primaryadvancedstaff;
-					@endphp
-				</th>
-
-				<th align="right">
-					{{ $productrealisablestaff }}
-					@php
-						$productrealisabletotal = $productrealisabletotal + $productrealisablestaff;
-					@endphp
-				</th>
-				<th align="right">
-					{{ $productcashstaff }}
-					@php
-						$productcashtotal = $productcashtotal + $productcashstaff;
-					@endphp
-				</th>
-				<th align="right">
-					{{ $productoverduestaff }}
-					@php
-						$productoverduetotal = $productoverduetotal + $productoverduestaff;
-					@endphp
-				</th>
-				<th align="right">
-					{{ $productadvancedstaff }}
-					@php
-						$productadvancedtotal = $productadvancedtotal + $productadvancedstaff;
+						$generalwithdrawtotal = $generalwithdrawtotal + $generalwithdrawstaff;
 					@endphp
 				</th>
 				
-				<th align="right">{{ $primaryrealisablestaff + $productrealisablestaff }}</th>
-				<th align="right">{{ $primarycashstaff + $productcashstaff }}</th>
-				<th align="right">{{ $primaryoverduestaff + $productoverduestaff }}</th>
-				<th align="right">{{ $primaryadvancedstaff + $productadvancedstaff }}</th>
+
+				<th align="right">
+					{{ $longtermcollstaff }}
+					@php
+						$longtermcolltotal = $longtermcolltotal + $longtermcollstaff;
+					@endphp
+				</th>
+				<th align="right">
+					{{ $longtermwithdrawstaff }}
+					@php
+						$longtermwithdrawtotal = $longtermwithdrawtotal + $longtermwithdrawstaff;
+					@endphp
+				</th>
+				
+				
+				<th align="right">{{ $generalcollstaff + $longtermcollstaff }} {{ $generalwithdrawstaff + $longtermwithdrawstaff }}</th>
+				
 			</tr>
 			@endif
 		@endforeach
 		<tr>
 			<th></th>
 			<th align="center">Grand Total</th>
-			<th align="right">{{ $primaryrealisabletotal }}</th>
-			<th align="right">{{ $primarycashtotal }}</th>
-			<th align="right">{{ $primaryoverduetotal }}</th>
-			<th align="right">{{ $primaryadvancedtotal }}</th>
+			<th align="right">{{ $generalcolltotal }}</th>
+			<th align="right">{{ $generalwithdrawtotal }}</th>
+			
 
-			<th align="right">{{ $productrealisabletotal }}</th>
-			<th align="right">{{ $productcashtotal }}</th>
-			<th align="right">{{ $productoverduetotal }}</th>
-			<th align="right">{{ $productadvancedtotal }}</th>
+			<th align="right">{{ $longtermcolltotal }}</th>
+			<th align="right">{{ $longtermwithdrawtotal }}</th>
+			
 
-			<th align="right">{{ $primaryrealisabletotal + $productrealisabletotal }}</th>
-			<th align="right">{{ $primarycashtotal + $productcashtotal }}</th>
-			<th align="right">{{ $primaryoverduetotal + $productoverduetotal }}</th>
-			<th align="right">{{ $primaryadvancedtotal + $productadvancedtotal }}</th>
+			<th align="right">{{ $generalcolltotal + $longtermcolltotal }} {{ $generalwithdrawtotal + $longtermwithdrawtotal }}</th>
+			
 		</tr>
 	</tbody>
 </table>
