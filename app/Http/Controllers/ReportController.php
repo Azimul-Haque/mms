@@ -207,4 +207,44 @@ class ReportController extends Controller
 		    });
 	    })->export('xlsx');
     }
+
+    public function generateGroupSavingBalanceSheet($s_id, $g_id)
+    {
+    	$staff = User::find($s_id);
+    	$group = Group::find($g_id);
+    	$datetocalc = date('Y-m-d');
+
+	    return view('dashboard.reports.savingbalancesheet1')
+	                    ->withStaff($staff)
+	                    ->withGroup($group)
+	                    ->withDatetocalc($datetocalc);
+
+	    Excel::create('Loan Balance Sheet', function($excel) use($staff, $group, $datetocalc) 
+	    {
+	    	$excel->sheet('Primary Loan', function($sheet) use($staff, $group, $datetocalc) 
+	    	{
+		        $sheet->loadView('dashboard.reports.loanbalancesheet1')->withStaff($staff)
+												                      ->withGroup($group)
+												                      ->withDatetocalc($datetocalc);
+		        $sheet->setStyle(array(
+		            'font' => array(
+		                'name'      =>  'Arial',
+		                'size'      =>  10
+		            )
+		        ));
+		    });
+		    $excel->sheet('Product Loan', function($sheet) use($staff, $group, $datetocalc) 
+	    	{
+		        $sheet->loadView('dashboard.reports.loanbalancesheet2')->withStaff($staff)
+												                      ->withGroup($group)
+												                      ->withDatetocalc($datetocalc);
+		        $sheet->setStyle(array(
+		            'font' => array(
+		                'name'      =>  'Arial',
+		                'size'      =>  10
+		            )
+		        ));
+		    });
+	    })->export('xlsx');
+    }
 }
