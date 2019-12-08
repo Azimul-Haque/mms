@@ -9,20 +9,20 @@
 <table>
 	<thead>
 		<tr>
-			<th colspan="14" align="center">Transaction Summary</th>
+			<th colspan="9" {{-- align="center" style="font-size: 30px;" --}}>Transaction Summary: Groupwise Savings, Admission Fee, PassBook Fee, Loan Insurance</th>
 		</tr>
 		<tr>
-			<th colspan="14" align="left">Date: {{ date('D, d/m/Y') }}</th>
+			<th colspan="9" align="left">Date: {{ date('D, d/m/Y') }}</th>
 		</tr>
 		<tr>
-			<th rowspan="3" class="lightgray">Loan Officer</th>
-			<th rowspan="3" class="lightgray">Group Name</th>
-			<th colspan="4" class="lightgray" align="center">PRIMARY LOAN</th>
-			<th colspan="4" class="lightgray" align="center">PRODUCT LOAN</th>
-			<th colspan="4" class="lightgray" align="center">Total</th>
+			<th rowspan="2" class="lightgray">Loan Officer</th>
+			<th rowspan="2" class="lightgray">Group Name</th>
+			<th colspan="2" class="lightgray" align="center">GENERAL SAVINGS</th>
+			<th colspan="2" class="lightgray" align="center">LONG TERM SAVINGS</th>
+			<th rowspan="2" class="lightgray" align="center">Total</th>
 		</tr>
 		<tr>
-			<td colspan="2" class="lightgray" align="center"><b>Dummy</b></td>
+			{{-- <td colspan="2" class="lightgray" align="center"><b>Dummy</b></td> --}}
 
 			<td class="lightgray" align="center"><b>Realisable</b></td>
 			<td colspan="3" class="lightgray" align="center"><b>Realised</b></td>

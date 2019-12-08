@@ -136,9 +136,9 @@ class ReportController extends Controller
 	    //                 ->withStaffs($staffs)
 	    //                 ->withDatetocalc($datetocalc);
 
-	    // return view('dashboard.reports.transactionsummary')
-	    //                 ->withStaffs($staffs)
-	    //                 ->withDatetocalc($datetocalc);
+	    return view('dashboard.reports.transactionsummary2')
+	                    ->withStaffs($staffs)
+	                    ->withDatetocalc($datetocalc);
 
 	    Excel::create('Transaction Summary', function($excel) use($staffs, $datetocalc) 
 	    {

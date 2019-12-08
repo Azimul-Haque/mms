@@ -9,7 +9,7 @@
 <table>
 	<thead>
 		<tr>
-			<th colspan="14" align="center" style="font-size: 30px;">Transaction Summary: Groupwise Loan Collection Information</th>
+			<th colspan="14" align="center" style="font-size: 30px;"><big>Transaction Summary: Groupwise Loan Collection Information</big></th>
 		</tr>
 		<tr>
 			<th colspan="14" align="left">Date: {{ date('D, d/m/Y') }}</th>
