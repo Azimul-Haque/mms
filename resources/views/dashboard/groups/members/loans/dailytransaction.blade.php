@@ -88,7 +88,7 @@
                     <td readonly>{{ $loan->loanname->name }}</td>
                     <td readonly>{{ $loan->total_disbursed }}</td>
                     @if($loan->total_outstanding <= 0)
-                      <td title="Total Dis" readonly>0</td>
+                      <td readonly>0</td>
                     @else
                       <td id="old_loaninstallment{{ $loan->id }}" onchange="oldloancalcandpost({{ $member->id }}, {{ $loan->id }}, '{{ $transactiondate }}')">0</td>
                     @endif
@@ -281,6 +281,7 @@
         }
         $('#old_total_paid' + loan_id).text(data.loan.total_paid);
         $('#old_total_outstanding' + loan_id).text(data.loan.total_outstanding);
+        location.reload();
       });
     }
 

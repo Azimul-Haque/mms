@@ -192,8 +192,8 @@
                 </td>
                 <td>
                   @php
-                    if(($loaninstallment->installment_total - $loaninstallment->paid_total > 0)  && (date('Y-m-d', strtotime($loaninstallment->due_date)) < date('Y-m-d') )) {
-                      $totaloverdue = ($loaninstallment->installment_total - $loaninstallment->paid_total);
+                    if(($loaninstallment->installment_total - $loaninstallment->paid_total > 0)  && (date('Y-m-d', strtotime($loaninstallment->due_date)) <= date('Y-m-d') )) {
+                      $totaloverdue = $loaninstallment->installment_total - $loaninstallment->paid_total;
                     } else {
                       $totaloverdue = 0;
                     }
@@ -202,8 +202,8 @@
                 </td>
                 <td>
                   @php
-                    if(($loaninstallment->paid_total - $loaninstallment->installment_total > 0)  && (date('Y-m-d', strtotime($loaninstallment->due_date)) < date('Y-m-d') )) {
-                      $tempadvanced = ($loaninstallment->paid_total - $loaninstallment->installment_total);
+                    if(($loaninstallment->paid_total - $loaninstallment->installment_total > 0)  && (date('Y-m-d', strtotime($loaninstallment->due_date)) <= date('Y-m-d') )) {
+                      $tempadvanced = $loaninstallment->paid_total - $loaninstallment->installment_total;
                     } else {
                       $tempadvanced = 0;
                     }

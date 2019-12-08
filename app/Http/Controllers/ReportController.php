@@ -132,14 +132,20 @@ class ReportController extends Controller
     	$staffs = User::where('role', 'staff')->get();
     	$datetocalc = date('Y-m-d');
 
+	    // return view('dashboard.reports.transactionsummary1')
+	    //                 ->withStaffs($staffs)
+	    //                 ->withDatetocalc($datetocalc);
+
 	    // return view('dashboard.reports.transactionsummary')
 	    //                 ->withStaffs($staffs)
 	    //                 ->withDatetocalc($datetocalc);
 
-	    Excel::create('Transaction Summary', function($excel) use($staffs, $datetocalc) {
-	    	$excel->sheet('Loan Collection', function($sheet) use($staffs, $datetocalc) {
+	    Excel::create('Transaction Summary', function($excel) use($staffs, $datetocalc) 
+	    {
+	    	$excel->sheet('Loan Collection', function($sheet) use($staffs, $datetocalc) 
+	    	{
 
-		        $sheet->loadView('dashboard.reports.transactionsummary')->withStaffs($staffs)
+		        $sheet->loadView('dashboard.reports.transactionsummary1')->withStaffs($staffs)
 	                    												->withDatetocalc($datetocalc);
 		        $sheet->setStyle(array(
 		            'font' => array(
@@ -148,11 +154,18 @@ class ReportController extends Controller
 		            )
 		        ));
 		    });
-	    	// $excel->sheet('Sheet2', function($sheet) use($staffs) {
+	    	$excel->sheet('Savings and Others', function($sheet) use($staffs, $datetocalc) 
+	    	{
 
-		    //     $sheet->loadView('dashboard.reports.test')->withStaffs($staffs);
-
-		    // });
+		        $sheet->loadView('dashboard.reports.transactionsummary2')->withStaffs($staffs)
+	                    												->withDatetocalc($datetocalc);
+		        $sheet->setStyle(array(
+		            'font' => array(
+		                'name'      =>  'Arial',
+		                'size'      =>  10
+		            )
+		        ));
+		    });
 
 	    })->export('xlsx');
     }

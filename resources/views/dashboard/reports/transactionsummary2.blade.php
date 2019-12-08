@@ -36,43 +36,44 @@
 			
 			<td class="lightgray" align="center"><b></b></td>
 			<td class="lightgray" align="center"><b>Cash</b></td>
-			<td class="lightgray" align="center"><b>Adjust</b></td>
+			<td class="lightgray" align="center"><b>Overdue</b></td>
 			<td class="lightgray" align="center"><b>Advance</b></td>
 
 			<td class="lightgray" align="center"><b></b></td>
 			<td class="lightgray" align="center"><b>Cash</b></td>
-			<td class="lightgray" align="center"><b>Adjust</b></td>
+			<td class="lightgray" align="center"><b>Overdue</b></td>
 			<td class="lightgray" align="center"><b>Advance</b></td>
 
 			<td class="lightgray" align="center"><b></b></td>
 			<td class="lightgray" align="center"><b>Cash</b></td>
-			<td class="lightgray" align="center"><b>Adjust</b></td>
+			<td class="lightgray" align="center"><b>Overdue</b></td>
 			<td class="lightgray" align="center"><b>Advance</b></td>
 		</tr>
 	</thead>
 	<tbody>
-		@php
-			$membercounter = 1;
-			$grosstotalmembersgeneral = 0;
-			$grosstotalgeneral = 0;
-			$grosstotalmemberslongterm = 0;
-			$grosstotallongterm = 0;
-			$grosstotalmembersoverdue = 0;
-			$grosstotaloverdue = 0;
-
-			
+		@php			
 			$primaryrealisabletotal = 0;
 			$primarycashtotal = 0;
+			$primaryoverduetotal = 0;
+			$primaryadvancedtotal = 0;
+
 			$productrealisabletotal = 0;
 			$productcashtotal = 0;
+			$productoverduetotal = 0;
+			$productadvancedtotal = 0;
 		@endphp
 		@foreach($staffs as $staff)
 			@if($staff->groups->count() > 0)
 			@php
 				$primaryrealisablestaff = 0;
 				$primarycashstaff = 0;
+				$primaryoverduestaff = 0;
+				$primaryadvancedstaff = 0;
+
 				$productrealisablestaff = 0;
 				$productcashstaff = 0;
+				$productoverduestaff = 0;
+				$productadvancedstaff = 0;
 			@endphp
 			@foreach($staff->groups as $group)
 				<tr>
@@ -114,8 +115,42 @@
 						@endphp
 						{{ $primarycashgroup }}
 					</td>
-					<td align="right">0</td>
-					<td align="right">0</td>
+					<td align="right">
+						@php
+							$primaryoverduegroup = 0;
+							foreach ($group->members as $member) {
+								foreach ($member->loans->where('loanname_id', 1) as $loan) {
+									if($loan->status == 1) {
+										foreach ($loan->loaninstallments as $loaninstallment) {
+											if(($loaninstallment->due_date == $datetocalc) && ($loaninstallment->installment_total - $loaninstallment->paid_total > 0)) {
+												$primaryoverduegroup = $primaryoverduegroup + ($loaninstallment->installment_total - $loaninstallment->paid_total);
+											}
+										}
+									}
+								}
+							}
+							$primaryoverduestaff = $primaryoverduestaff + $primaryoverduegroup;
+						@endphp
+						{{ $primaryoverduegroup }}
+					</td>
+					<td align="right">
+						@php
+							$primaryadvancedgroup = 0;
+							foreach ($group->members as $member) {
+								foreach ($member->loans->where('loanname_id', 1) as $loan) {
+									if($loan->status == 1) {
+										foreach ($loan->loaninstallments as $loaninstallment) {
+											if(($loaninstallment->due_date == $datetocalc) && ($loaninstallment->paid_total - $loaninstallment->installment_total > 0)) {
+												$primaryadvancedgroup = $primaryadvancedgroup + ($loaninstallment->paid_total - $loaninstallment->installment_total);
+											}
+										}
+									}
+								}
+							}
+							$primaryadvancedstaff = $primaryadvancedstaff + $primaryadvancedgroup;
+						@endphp
+						{{ $primaryadvancedgroup }}
+					</td>
 
 					<td align="right">
 						@php
@@ -153,13 +188,47 @@
 						@endphp
 						{{ $productcashgroup }}
 					</td>
-					<td align="right">0</td>
-					<td align="right">0</td>
+					<td align="right">
+						@php
+							$productoverduegroup = 0;
+							foreach ($group->members as $member) {
+								foreach ($member->loans->where('loanname_id', 2) as $loan) {
+									if($loan->status == 1) {
+										foreach ($loan->loaninstallments as $loaninstallment) {
+											if(($loaninstallment->due_date == $datetocalc) && ($loaninstallment->installment_total - $loaninstallment->paid_total > 0)) {
+												$productoverduegroup = $productoverduegroup + ($loaninstallment->installment_total - $loaninstallment->paid_total);
+											}
+										}
+									}
+								}
+							}
+							$productoverduestaff = $productoverduestaff + $productoverduegroup;
+						@endphp
+						{{ $productoverduegroup }}
+					</td>
+					<td align="right">
+						@php
+							$productadvancedgroup = 0;
+							foreach ($group->members as $member) {
+								foreach ($member->loans->where('loanname_id', 2) as $loan) {
+									if($loan->status == 1) {
+										foreach ($loan->loaninstallments as $loaninstallment) {
+											if(($loaninstallment->due_date == $datetocalc) && ($loaninstallment->paid_total - $loaninstallment->installment_total > 0)) {
+												$productadvancedgroup = $productadvancedgroup + ($loaninstallment->paid_total - $loaninstallment->installment_total);
+											}
+										}
+									}
+								}
+							}
+							$productadvancedstaff = $productadvancedstaff + $productadvancedgroup;
+						@endphp
+						{{ $productadvancedgroup }}
+					</td>
 					
 					<td align="right">{{ $primaryrealisablegroup + $productrealisablegroup }}</td>
 					<td align="right">{{ $primarycashgroup + $productcashgroup }}</td>
-					<td align="right">0</td>
-					<td align="right">0</td>
+					<td align="right">{{ $primaryoverduegroup + $productoverduegroup }}</td>
+					<td align="right">{{ $primaryadvancedgroup + $productadvancedgroup }}</td>
 				</tr>
 			@endforeach
 			<tr>
@@ -178,8 +247,18 @@
 						$primarycashtotal = $primarycashtotal + $primarycashstaff;
 					@endphp
 				</th>
-				<th align="right">0</th>
-				<th align="right">0</th>
+				<th align="right">
+					{{ $primaryoverduestaff }}
+					@php
+						$primaryoverduetotal = $primaryoverduetotal + $primaryoverduestaff;
+					@endphp
+				</th>
+				<th align="right">
+					{{ $primaryadvancedstaff }}
+					@php
+						$primaryadvancedtotal = $primaryadvancedtotal + $primaryadvancedstaff;
+					@endphp
+				</th>
 
 				<th align="right">
 					{{ $productrealisablestaff }}
@@ -193,13 +272,23 @@
 						$productcashtotal = $productcashtotal + $productcashstaff;
 					@endphp
 				</th>
-				<th align="right">0</th>
-				<th align="right">0</th>
+				<th align="right">
+					{{ $productoverduestaff }}
+					@php
+						$productoverduetotal = $productoverduetotal + $productoverduestaff;
+					@endphp
+				</th>
+				<th align="right">
+					{{ $productadvancedstaff }}
+					@php
+						$productadvancedtotal = $productadvancedtotal + $productadvancedstaff;
+					@endphp
+				</th>
 				
 				<th align="right">{{ $primaryrealisablestaff + $productrealisablestaff }}</th>
 				<th align="right">{{ $primarycashstaff + $productcashstaff }}</th>
-				<th align="right">0</th>
-				<th align="right">0</th>
+				<th align="right">{{ $primaryoverduestaff + $productoverduestaff }}</th>
+				<th align="right">{{ $primaryadvancedstaff + $productadvancedstaff }}</th>
 			</tr>
 			@endif
 		@endforeach
@@ -208,18 +297,18 @@
 			<th align="center">Grand Total</th>
 			<th align="right">{{ $primaryrealisabletotal }}</th>
 			<th align="right">{{ $primarycashtotal }}</th>
-			<th align="right">0</th>
-			<th align="right">0</th>
+			<th align="right">{{ $primaryoverduetotal }}</th>
+			<th align="right">{{ $primaryadvancedtotal }}</th>
 
 			<th align="right">{{ $productrealisabletotal }}</th>
 			<th align="right">{{ $productcashtotal }}</th>
-			<th align="right">0</th>
-			<th align="right">0</th>
+			<th align="right">{{ $productoverduetotal }}</th>
+			<th align="right">{{ $productadvancedtotal }}</th>
 
 			<th align="right">{{ $primaryrealisabletotal + $productrealisabletotal }}</th>
 			<th align="right">{{ $primarycashtotal + $productcashtotal }}</th>
-			<th align="right">0</th>
-			<th align="right">0</th>
+			<th align="right">{{ $primaryoverduetotal + $productoverduetotal }}</th>
+			<th align="right">{{ $primaryadvancedtotal + $productadvancedtotal }}</th>
 		</tr>
 	</tbody>
 </table>
