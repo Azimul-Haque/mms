@@ -9,7 +9,7 @@
 <table>
 	<thead>
 		<tr>
-			<th colspan="10" {{-- align="center" style="font-size: 30px;" --}}>Transaction Summary: Groupwise Savings, Admission Fee, PassBook Fee, Loan Insurance</th>
+			<th colspan="10" align="center" {{-- style="font-size: 30px;" --}}>Transaction Summary: Groupwise Savings, Admission Fee, PassBook Fee, Loan Insurance</th>
 		</tr>
 		<tr>
 			<th colspan="10" align="left">Date: {{ date('D, d/m/Y') }}</th>
@@ -19,18 +19,22 @@
 			<th rowspan="2" class="lightgray">Group Name</th>
 			<th colspan="2" class="lightgray" align="center">GENERAL SAVINGS</th>
 			<th colspan="2" class="lightgray" align="center">LONG TERM SAVINGS</th>
-			<th rowspan="2" class="lightgray" align="center">Admission Fee</th>
-			<th rowspan="2" class="lightgray" align="center">PassBook Fee</th>
-			<th rowspan="2" class="lightgray" align="center">Loan Insurance</th>
-			<th rowspan="2" class="lightgray" align="center">Total</th>
+			<th class="lightgray" align="center">Admission Fee</th>
+			<th class="lightgray" align="center">PassBook Fee</th>
+			<th class="lightgray" align="center">Loan Insurance</th>
+			<th class="lightgray" align="center"></th>
 		</tr>
 		<tr>
-			{{-- <td colspan="2" class="lightgray" align="center"><b>Dummy</b></td> --}}
+			<td colspan="2" class="lightgray" align="center"><b>Dummy</b></td>
 
 			<td class="lightgray" align="center"><b>Collection</b></td>
 			<td class="lightgray" align="center"><b>Withdrawal</b></td>
 			<td class="lightgray" align="center"><b>Collection</b></td>
 			<td class="lightgray" align="center"><b>Withdrawal</b></td>
+			<td class="lightgray" align="center"><b>Total</b></td>
+			<td class="lightgray" align="center"><b>Total</b></td>
+			<td class="lightgray" align="center"><b>Total</b></td>
+			<td class="lightgray" align="center"><b>Total</b></td>
 		</tr>
 	</thead>
 	<tbody>
@@ -139,19 +143,39 @@
 						@php
 							$admissionfeegroup = 0;
 							foreach ($group->members as $member) {
-								foreach ($member->savings->where('savingname_id', 2) as $saving) {
-									if($saving->status == 1) {
-										foreach ($saving->savinginstallments as $savinginstallment) {
-											if($savinginstallment->due_date == $datetocalc) {
-												$admissionfeegroup = $admissionfeegroup + $savinginstallment->withdraw;
-											}
-										}
-									}
+								if(($member->status == 1) && ($member->admission_date == $datetocalc)) {
+									$admissionfeegroup = $admissionfeegroup + $member->admission_fee;
 								}
 							}
 							$admissionfeestaff = $admissionfeestaff + $admissionfeegroup;
 						@endphp
 						{{ $admissionfeegroup }}
+					</td>
+					<td align="right">
+						@php
+							$passbookfeegroup = 0;
+							foreach ($group->members as $member) {
+								if(($member->status == 1) && ($member->admission_date == $datetocalc)) {
+									$passbookfeegroup = $passbookfeegroup + $member->passbook_fee;
+								}
+							}
+							$passbookfeestaff = $passbookfeestaff + $passbookfeegroup;
+						@endphp
+						{{ $passbookfeegroup }}
+					</td>
+					<td align="right">
+						@php
+							$loaninsurancegroup = 0;
+							foreach ($group->members as $member) {
+								foreach ($member->loans->where('loanname_id', 1) as $loan) {
+									if(($loan->status == 1) && ($loan->disburse_date == $datetocalc)) {
+										$loaninsurancegroup = $loaninsurancegroup + $loan->insurance;
+									}
+								}
+							}
+							$loaninsurancestaff = $loaninsurancestaff + $loaninsurancegroup;
+						@endphp
+						{{ $loaninsurancegroup }}
 					</td>
 					
 					<td align="right">{{ $generalcollgroup + $longtermcollgroup }} {{ $generalwithdrawgroup + $longtermwithdrawgroup }}</td>
@@ -187,10 +211,29 @@
 						$longtermwithdrawtotal = $longtermwithdrawtotal + $longtermwithdrawstaff;
 					@endphp
 				</th>
+
+				<th align="right">
+					{{ $admissionfeestaff }}
+					@php
+						$admissionfeetotal = $admissionfeetotal + $admissionfeestaff;
+					@endphp
+				</th>
+				<th align="right">
+					{{ $passbookfeestaff }}
+					@php
+						$passbookfeetotal = $passbookfeetotal + $passbookfeestaff;
+					@endphp
+				</th>
+				<th align="right">
+					{{ $loaninsurancestaff }}
+					@php
+						$loaninsurancetotal = $loaninsurancetotal + $loaninsurancestaff;
+					@endphp
+				</th>
 				
-				
-				<th align="right">{{ $generalcollstaff + $longtermcollstaff }} {{ $generalwithdrawstaff + $longtermwithdrawstaff }}</th>
-				
+				<th align="right">
+					{{ ($generalcollstaff + $longtermcollstaff + $admissionfeestaff + $passbookfeestaff + $loaninsurancestaff) - ($generalwithdrawstaff + $longtermwithdrawstaff) }}
+				</th>
 			</tr>
 			@endif
 		@endforeach
@@ -200,12 +243,14 @@
 			<th align="right">{{ $generalcolltotal }}</th>
 			<th align="right">{{ $generalwithdrawtotal }}</th>
 			
-
 			<th align="right">{{ $longtermcolltotal }}</th>
 			<th align="right">{{ $longtermwithdrawtotal }}</th>
-			
 
-			<th align="right">{{ $generalcolltotal + $longtermcolltotal }} {{ $generalwithdrawtotal + $longtermwithdrawtotal }}</th>
+			<th align="right">{{ $admissionfeetotal }}</th>
+			<th align="right">{{ $passbookfeetotal }}</th>
+			<th align="right">{{ $loaninsurancetotal }}</th>
+
+			<th align="right">{{ ($generalcolltotal + $longtermcolltotal + $admissionfeetotal + $passbookfeetotal + $loaninsurancetotal) - ($generalwithdrawtotal + $longtermwithdrawtotal) }}</th>
 			
 		</tr>
 	</tbody>
