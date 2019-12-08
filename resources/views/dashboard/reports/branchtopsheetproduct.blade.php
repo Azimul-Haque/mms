@@ -105,9 +105,9 @@
 								$memberoverdue = 0;
 								foreach ($member->loans->where('loanname_id', 2) as $loan) {
 									foreach ($loan->loaninstallments as $installment) {
-										if((strtotime($installment->due_date) < strtotime(date('Y-m-d'))) && ($installment->paid_total == 0.00) && ($loan->total_outstanding > 0)) {
-											$totaloverdue = $totaloverdue + $installment->installment_total;
-											$memberoverdue = $memberoverdue + $installment->installment_total;
+										if((strtotime($installment->due_date) <= strtotime(date('Y-m-d'))) && ($installment->installment_total - $installment->paid_total > 0) && ($loan->total_outstanding > 0)) {
+											$totaloverdue = $totaloverdue + ($installment->installment_total - $installment->paid_total);
+											$memberoverdue = $memberoverdue + ($installment->installment_total - $installment->paid_total);
 										}
 									}
 								}

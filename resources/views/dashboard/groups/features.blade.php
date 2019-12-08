@@ -90,4 +90,36 @@
           </div>
         </a>
       </div>
+      
+
+      <!-- fix for small devices only -->
+      <div class="clearfix visible-sm-block"></div>
+
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <a href="{{ route('report.group.loanbalancesheet', [$staff->id ,$group->id]) }}">
+          <div class="info-box">
+            <span class="info-box-icon bg-green"><i class="fa fa-book"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Loan</span>
+              <span class="info-box-number">Balance Sheet</span>
+            </div>
+          </div>
+        </a>
+       
+      </div>
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <a href="{{ route('report.group.savingbalancesheet', [$staff->id ,$group->id]) }}">
+          <div class="info-box">
+            <span class="info-box-icon bg-yellow"><i class="fa fa-database"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Savings</span>
+              <span class="info-box-number">Balance Sheet</span>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+
 @stop
