@@ -54,8 +54,8 @@
           <div class="info-box">
             <span class="info-box-icon bg-yellow"><i class="fa fa-address-book-o"></i></span>
             <div class="info-box-content">
-              <span class="info-box-text">View</span>
-              <span class="info-box-number">Member</span>
+              <span class="info-box-text">Member</span>
+              <span class="info-box-number">Summary</span>
             </div>
           </div>
         </a>
