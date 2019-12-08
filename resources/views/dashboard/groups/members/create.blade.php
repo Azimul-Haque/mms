@@ -175,10 +175,10 @@
               {!! Form::text('permanent_house', null, array('class' => 'form-control', 'placeholder' => 'Permanent House')) !!} --}}
               {!! Form::label('permanent_phone', 'Permanent Phone (Optional)') !!}
               {!! Form::text('permanent_phone', null, array('class' => 'form-control', 'placeholder' => 'Permanent Phone (Optional)' )) !!}<br/>
-              {!! Form::label('addmission_fee', 'Admission Fee') !!}
+              {!! Form::label('admission_fee', 'Admission Fee') !!}
               <div class="input-group">
                 <span class="input-group-addon">৳</span>
-                <input id="addmission_fee" type="text" class="form-control" name="addmission_fee" placeholder="Admission Fee" value="30">
+                <input id="admission_fee" type="text" class="form-control" name="admission_fee" placeholder="Admission Fee" value="30">
               </div>
             </div>
           </div>

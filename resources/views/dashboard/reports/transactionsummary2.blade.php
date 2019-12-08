@@ -41,19 +41,23 @@
 			$longtermcolltotal = 0;
 			$longtermwithdrawtotal = 0;
 
+			$admissionfeetotal = 0;
+			$passbookfeetotal = 0;
+			$loaninsurancetotal = 0;
+
 		@endphp
 		@foreach($staffs as $staff)
 			@if($staff->groups->count() > 0)
 			@php
 				$generalcollstaff = 0;
 				$generalwithdrawstaff = 0;
-				$primaryoverduestaff = 0;
-				$primaryadvancedstaff = 0;
 
 				$longtermcollstaff = 0;
 				$longtermwithdrawstaff = 0;
-				$productoverduestaff = 0;
-				$productadvancedstaff = 0;
+
+				$admissionfeestaff = 0;
+				$passbookfeestaff = 0;
+				$loaninsurancestaff = 0;
 			@endphp
 			@foreach($staff->groups as $group)
 				<tr>
@@ -131,7 +135,24 @@
 						@endphp
 						{{ $longtermwithdrawgroup }}
 					</td>
-					
+					<td align="right">
+						@php
+							$admissionfeegroup = 0;
+							foreach ($group->members as $member) {
+								foreach ($member->savings->where('savingname_id', 2) as $saving) {
+									if($saving->status == 1) {
+										foreach ($saving->savinginstallments as $savinginstallment) {
+											if($savinginstallment->due_date == $datetocalc) {
+												$admissionfeegroup = $admissionfeegroup + $savinginstallment->withdraw;
+											}
+										}
+									}
+								}
+							}
+							$admissionfeestaff = $admissionfeestaff + $admissionfeegroup;
+						@endphp
+						{{ $admissionfeegroup }}
+					</td>
 					
 					<td align="right">{{ $generalcollgroup + $longtermcollgroup }} {{ $generalwithdrawgroup + $longtermwithdrawgroup }}</td>
 				</tr>

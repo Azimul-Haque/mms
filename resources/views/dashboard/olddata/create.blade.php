@@ -158,10 +158,10 @@
               </div>
             </div>
             <div class="col-md-4">
-              {!! Form::label('addmission_fee', 'Admission Fee') !!}
+              {!! Form::label('admission_fee', 'Admission Fee') !!}
               <div class="input-group">
                 <span class="input-group-addon">৳</span>
-                <input id="addmission_fee" type="text" class="form-control" name="addmission_fee" placeholder="Admission Fee" value="30">
+                <input id="admission_fee" type="text" class="form-control" name="admission_fee" placeholder="Admission Fee" value="30">
               </div>
             </div>
             {{-- <div class="col-md-6">
