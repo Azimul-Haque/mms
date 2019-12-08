@@ -81,7 +81,7 @@
               {{-- old data entry, anyday --}}
               {{-- old data entry, anyday --}}
               @foreach($member->loans as $loan)
-                @if($loan->loan_new == 0)
+                @if($loan->loan_new == 0 || $loan->loan_new == 1)
                   @if(!empty($transactiondate) && empty($loan->loaninstallments->first()->due_date))
                   <tr>
                     <td readonly>{{ $loancounter++ }}</td>
