@@ -14,7 +14,7 @@
 		<tr>
 			<th colspan="2" align="left">{{ date('D, d/m/Y') }}</th>
 			<th colspan="4" align="center">Loan Officer: {{ $staff->name }}</th>
-			<th colspan="2" align="right">GENERAL SAVING</th>
+			<th colspan="2" align="right">LONG TERM SAVING</th>
 		</tr>
 		<tr>
 			<th class="lightgray">S #</th>
@@ -35,14 +35,14 @@
 			$totalbalance = 0;
 		@endphp
 		@foreach($group->members as $member)
-			@foreach($member->savings->where('savingname_id', 1) as $saving)
+			@foreach($member->savings->where('savingname_id', 2) as $saving)
 				@if($saving->status == 1)
 					<tr>
 						<td>{{ $counter++ }}</td>
 						<td>{{ $group->name }}</td>
 						<td>{{ $member->name }}-{{ $member->fhusband }}</td>
 						<td>{{ $member->present_phone }}</td>
-						<td>GENERAL SAVING</td>
+						<td>LONG TERM SAVING</td>
 						<td align="right">{{ $saving->total_amount }}</td>
 						<td align="right">{{ $saving->withdraw }}</td>
 						<td align="right">{{ $saving->total_amount - $saving->withdraw }}</td>

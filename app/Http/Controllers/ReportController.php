@@ -214,16 +214,16 @@ class ReportController extends Controller
     	$group = Group::find($g_id);
     	$datetocalc = date('Y-m-d');
 
-	    return view('dashboard.reports.savingbalancesheet1')
-	                    ->withStaff($staff)
-	                    ->withGroup($group)
-	                    ->withDatetocalc($datetocalc);
+	    // return view('dashboard.reports.savingbalancesheet1')
+	    //                 ->withStaff($staff)
+	    //                 ->withGroup($group)
+	    //                 ->withDatetocalc($datetocalc);
 
-	    Excel::create('Loan Balance Sheet', function($excel) use($staff, $group, $datetocalc) 
+	    Excel::create('Saving Balance Sheet', function($excel) use($staff, $group, $datetocalc) 
 	    {
-	    	$excel->sheet('Primary Loan', function($sheet) use($staff, $group, $datetocalc) 
+	    	$excel->sheet('General Saving', function($sheet) use($staff, $group, $datetocalc) 
 	    	{
-		        $sheet->loadView('dashboard.reports.loanbalancesheet1')->withStaff($staff)
+		        $sheet->loadView('dashboard.reports.savingbalancesheet1')->withStaff($staff)
 												                      ->withGroup($group)
 												                      ->withDatetocalc($datetocalc);
 		        $sheet->setStyle(array(
@@ -233,9 +233,9 @@ class ReportController extends Controller
 		            )
 		        ));
 		    });
-		    $excel->sheet('Product Loan', function($sheet) use($staff, $group, $datetocalc) 
+		    $excel->sheet('Long Term Saving', function($sheet) use($staff, $group, $datetocalc) 
 	    	{
-		        $sheet->loadView('dashboard.reports.loanbalancesheet2')->withStaff($staff)
+		        $sheet->loadView('dashboard.reports.savingbalancesheet2')->withStaff($staff)
 												                      ->withGroup($group)
 												                      ->withDatetocalc($datetocalc);
 		        $sheet->setStyle(array(

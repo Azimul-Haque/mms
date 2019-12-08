@@ -12,7 +12,7 @@
 			<th colspan="8" align="center" {{-- style="font-size: 30px;" --}}>Program Balance Sheet: LOAN</th>
 		</tr>
 		<tr>
-			<th colspan="2" align="left">Date: {{ date('D, d/m/Y') }}</th>
+			<th colspan="2" align="left">{{ date('D, d/m/Y') }}</th>
 			<th colspan="4" align="center">Loan Officer: {{ $staff->name }}</th>
 			<th colspan="2" align="right">PRODUCT LOAN</th>
 		</tr>
