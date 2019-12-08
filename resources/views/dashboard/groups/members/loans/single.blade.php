@@ -162,17 +162,16 @@
                 {{-- <th>Paid Amount<br/>(Principal)</th>
                 <th>Paid Amount<br/>(Interest)</th> --}}
                 <th>Paid Amount<br/>(Total)</th>
-               {{--  <th>Outstanding Amount<br/>(Principal)</th>
-                <th>Outstanding Amount<br/>(Interest)</th> --}}
                 <th>Outstanding Amount<br/>(Total)</th>
-                {{-- <th>Overdue Amount<br/>(Principal)</th>
-                <th>Overdue Amount<br/>(Interest)</th>
-                <th>Overdue Amount<br/>(Total)</th> --}}
+                <th>Overdue<br/>Amount</th>
+                <th>Advanced<br/>Amount</th>
               </tr>
             </thead>
             <tbody>
               @php
                 $tempoutstandingpaid = 0;
+                $totaloverdue = 0;
+                $tempadvanced = 0;
               @endphp
               @foreach($loan->loaninstallments as $loaninstallment)
               <tr>
@@ -184,15 +183,32 @@
                 {{-- <td>{{ $loaninstallment->paid_principal }}</td>
                 <td>{{ $loaninstallment->paid_interest }}</td> --}}
                 <td>{{ $loaninstallment->paid_total }}</td>
-{{--                 <td>{{ $loaninstallment->outstanding_principal }}</td>
-                <td>{{ $loaninstallment->outstanding_interest }}</td>
-                <td>{{ $loaninstallment->outstanding_total }}</td> --}}
                 <td>
                   @php
                     $tempoutstandingpaid = $tempoutstandingpaid + $loaninstallment->paid_total;
                     $tempoutstanding = $loaninstallment->loan->total_disbursed - $tempoutstandingpaid;
                   @endphp
                   {{ $tempoutstanding }}
+                </td>
+                <td>
+                  @php
+                    if(($loaninstallment->installment_total - $loaninstallment->paid_total > 0)  && (date('Y-m-d', strtotime($loaninstallment->due_date)) < date('Y-m-d') )) {
+                      $totaloverdue = ($loaninstallment->installment_total - $loaninstallment->paid_total);
+                    } else {
+                      $totaloverdue = 0;
+                    }
+                  @endphp
+                  {{ $totaloverdue }}
+                </td>
+                <td>
+                  @php
+                    if(($loaninstallment->paid_total - $loaninstallment->installment_total > 0)  && (date('Y-m-d', strtotime($loaninstallment->due_date)) < date('Y-m-d') )) {
+                      $tempadvanced = ($loaninstallment->paid_total - $loaninstallment->installment_total);
+                    } else {
+                      $tempadvanced = 0;
+                    }
+                  @endphp
+                  {{ $tempadvanced }}
                 </td>
               </tr>
               @endforeach
