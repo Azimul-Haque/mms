@@ -95,9 +95,9 @@
                           }
                         @endphp
                         @if(!empty($member->savings->where('savingname_id', 2)->first()))
-                        <td id="longsaving{{ $loaninstallment->id }}" onchange="loancalcandpost({{ $member->id }}, {{ $loaninstallment->id }}, '{{ $transactiondate }}', {{ $loaninstallment->installment_no }})">{{ $longsaving }}</td>
+                          <td id="longsaving{{ $loaninstallment->id }}" onchange="loancalcandpost({{ $member->id }}, {{ $loaninstallment->id }}, '{{ $transactiondate }}', {{ $loaninstallment->installment_no }})">{{ $longsaving }}</td>
                         @else
-                        <td readonly>N/A</td>
+                          <td readonly>N/A</td>
                         @endif
                         <td id="loaninstallment{{ $loaninstallment->id }}" onchange="loancalcandpost({{ $member->id }}, {{ $loaninstallment->id }}, '{{ $transactiondate }}', {{ $loaninstallment->installment_no }})">{{ $loaninstallment->paid_total }}</td>
                         <td id="totalcollection{{ $loaninstallment->id }}" readonly>{{ $loaninstallment->paid_total + $generalsaving + $longsaving }}</td>
@@ -127,11 +127,72 @@
                         <td id="totalcollection{{ $loaninstallment->id }}" readonly>{{ $loaninstallment->paid_total }}</td>
                         <td id="netcollection{{ $loaninstallment->id }}" readonly>{{ $loaninstallment->paid_total }}</td>
                       @endif
-                      
-                      
                     </tr>
                     @endif
                   @endforeach
+                  
+                  {{-- jader installment oidin nai, tao dekhabe --}}
+                  {{-- jader installment oidin nai, tao dekhabe --}}
+                  {{-- jader installment oidin nai, tao dekhabe --}}
+                  @if(empty($loan->loaninstallments) || $loan->loaninstallments->count() == 0) 
+                  <tr>
+                    <td readonly>{{ $member->passbook }}</td>
+                    <td id="membername{{ $loan->id }}" readonly>{{ $member->name }}</td>
+                    <td readonly>{{ $loan->loanname->name }} (Scheme: {{ $loan->schemename->name }})</td>
+
+                    @if(!empty($loantype) && $loantype == 1) {{-- if primary then show savings only --}}
+                        @php
+                          $generalsaving = 0;
+                          if(!empty($member->savinginstallments->where('savingname_id', 1)->where('due_date', $transactiondate)->first())) {
+                            $generalsaving = $member->savinginstallments->where('member_id', $member->id)->where('savingname_id', 1)->where('due_date', $transactiondate)->first()->amount;
+                          }
+                        @endphp
+                        <td id="generalsaving{{ $loan->id }}{{ $member->id }}" onchange="brandnewloancalcandpost({{ $member->id }}, {{ $loan->id }}, '{{ $transactiondate }}')">{{ $generalsaving }}</td>
+                        @php
+                          $longsaving = 0;
+                          if(!empty($member->savinginstallments->where('savingname_id', 2)->where('due_date', $transactiondate)->first())) {
+                            $longsaving = $member->savinginstallments->where('member_id', $member->id)->where('savingname_id', 2)->where('due_date', $transactiondate)->first()->amount;
+                          }
+                        @endphp
+                        @if(!empty($member->savings->where('savingname_id', 2)->first()))
+                          <td id="longsaving{{ $loan->id }}{{ $member->id }}" onchange="brandnewloancalcandpost({{ $member->id }}, {{ $loan->id }}, '{{ $transactiondate }}')">{{ $longsaving }}</td>
+                        @else
+                          <td readonly>N/A</td>
+                        @endif
+                        <td id="loaninstallment{{ $loan->id }}{{ $member->id }}" onchange="brandnewloancalcandpost({{ $member->id }}, {{ $loan->id }}, '{{ $transactiondate }}')">0</td>
+                        <td id="brandnewtotalcollection{{ $loan->id }}" readonly>{{ $generalsaving + $longsaving }}</td>
+
+                        @php
+                          $generalsavingwd = 0;
+                          if(!empty($member->savinginstallments->where('savingname_id', 1)->where('due_date', $transactiondate)->first())) {
+                            $generalsavingwd = $member->savinginstallments->where('member_id', $member->id)->where('savingname_id', 1)->where('due_date', $transactiondate)->first()->withdraw;
+                          }
+                        @endphp
+                        <td id="generalsavingwd{{ $loan->id }}{{ $member->id }}" onchange="brandnewloancalcandpost({{ $member->id }}, {{ $loan->id }}, '{{ $transactiondate }}')">{{ $generalsavingwd }}</td>
+                        @php
+                          $longsavingwd = 0;
+                          if(!empty($member->savinginstallments->where('savingname_id', 2)->where('due_date', $transactiondate)->first())) {
+                            $longsavingwd = $member->savinginstallments->where('member_id', $member->id)->where('savingname_id', 2)->where('due_date', $transactiondate)->first()->withdraw;
+                          }
+                        @endphp
+                        
+                        @if(!empty($member->savings->where('savingname_id', 2)->first()))
+                        <td id="longsavingwd{{ $loan->id }}{{ $member->id }}" onchange="brandnewloancalcandpost({{ $member->id }}, {{ $loan->id }}, '{{ $transactiondate }}')">{{ $longsavingwd }}</td>
+                        @else
+                        <td readonly>N/A</td>
+                        @endif
+                        <td id="brandnewnetcollection{{ $loan->id }}" readonly>{{ $generalsaving + $longsaving - $generalsavingwd - $longsavingwd }}</td>
+                      @else
+                        <td id="loaninstallment{{ $loan->id }}{{ $member->id }}" onchange="brandnewloancalcandpost({{ $member->id }}, {{ $loan->id }}, '{{ $transactiondate }}')">0</td>
+                        <td id="brandnewtotalcollection{{ $loan->id }}" readonly>0</td>
+                        <td id="brandnewnetcollection{{ $loan->id }}" readonly>0</td>
+                      @endif
+                  </tr>
+                  @endif
+                  {{-- jader installment oidin nai, tao dekhabe --}}
+                  {{-- jader installment oidin nai, tao dekhabe --}}
+                  {{-- jader installment oidin nai, tao dekhabe --}}
+                  
                 @endforeach
               @endforeach
             </tbody>
@@ -238,6 +299,48 @@
       console.log(totalcollection);
       console.log(member_id);
       
+    }
+
+    function brandnewloancalcandpost(member_id, loan_id, transactiondate) {
+      var membername = $('#membername' + loan_id).text();
+      var loaninstallment = parseInt($('#loaninstallment' + loan_id + member_id).text()) ? parseInt($('#loaninstallment' + loan_id + member_id).text()) : 0;
+      var generalsaving = parseInt($('#generalsaving' + loan_id + member_id).text()) ? parseInt($('#generalsaving' + loan_id + member_id).text()) : 0;
+      var longsaving = parseInt($('#longsaving' + loan_id + member_id).text()) ? parseInt($('#longsaving' + loan_id + member_id).text()) : 0;
+      var generalsavingwd = parseInt($('#generalsavingwd' + loan_id + member_id).text()) ? parseInt($('#generalsavingwd' + loan_id + member_id).text()) : 0;
+      var longsavingwd = parseInt($('#longsavingwd' + loan_id + member_id).text()) ? parseInt($('#longsavingwd' + loan_id + member_id).text()) : 0;
+      
+      var totalcollection = loaninstallment + generalsaving + longsaving;
+      var netcollection = totalcollection - generalsavingwd - longsavingwd;
+      $('#brandnewtotalcollection' + loan_id).text(totalcollection);
+      $('#brandnewnetcollection' + loan_id).text(netcollection);
+      // console.log(generalsavingwd);
+      // now post the data
+      $.post("/group/brand/new/transaction/store/api", {_token: '{{ csrf_token() }}', _method : 'POST', 
+        data: {
+          member_id: member_id,
+          loan_id: loan_id,
+          transactiondate: transactiondate,
+
+          loaninstallment: loaninstallment,
+
+          generalsaving: generalsaving,
+          longsaving: longsaving,
+          generalsavingwd: generalsavingwd,
+          longsavingwd: longsavingwd
+        }},
+        function(data, status){
+        console.log(status);
+        console.log(data);
+        if(status == 'success') {
+          toastr.success('Member: <b>' + membername + '</b><br/>Total Collection: <u>৳ ' + totalcollection + '</u>, Net Collection: <u>৳ ' + netcollection , '</u>SUCCESS').css('width', '400px');
+        } else {
+          toastr.warning('Error!').css('width', '400px');
+        }
+        
+      });
+      console.log(totalcollection);
+      console.log(member_id);
+      location.reload();
     }
 
     $('td[readonly]').on('click dblclick keydown', function(e) {

@@ -137,6 +137,7 @@ Route::post('/daily/transaction/newsaving/store/api', ['as'=>'dashboard.dailytra
 Route::get('/group/{s_id}/{g_id}/transactions', ['as'=>'dashboard.grouptransactions','uses'=>'GroupController@getGroupTransactions']);
 Route::get('/group/{s_id}/{g_id}/transactions/{loan_type}/{date}', ['as'=>'dashboard.grouptransactions.date','uses'=>'GroupController@getGroupTransactionsDate']);
 Route::post('/group/transaction/store/api', ['as'=>'dashboard.grouptransactions.postinstallmentapi','uses'=>'GroupController@postGroupInstallmentAPI']);
+Route::post('/group/brand/new/transaction/store/api', ['as'=>'dashboard.grouptransactions.brandnew.postinstallmentapi','uses'=>'GroupController@postGroupBrandNewInstallmentAPI']);
 
 Route::get('/programs/features', ['as'=>'programs.features','uses'=>'DashboardController@getProgramFeatures']);
 Route::get('/staff/{id}/features', ['as'=>'staff.features','uses'=>'StaffController@getStaffFeatures']); // id dhukbe ekhane

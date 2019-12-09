@@ -39,7 +39,7 @@
       <div class="clearfix visible-sm-block"></div>
 
       <div class="col-md-3 col-sm-6 col-xs-12">
-        <a href="{{ route('dashboard.grouptransactions', [$staff->id ,$group->id]) }}">
+        <a href="{{ route('dashboard.grouptransactions.date', [$staff->id ,$group->id, 1, date('Y-m-d')]) }}">
           <div class="info-box">
             <span class="info-box-icon bg-green"><i class="fa fa-exchange"></i></span>
 
