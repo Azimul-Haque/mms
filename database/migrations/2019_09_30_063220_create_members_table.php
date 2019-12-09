@@ -52,6 +52,7 @@ class CreateMembersTable extends Migration
 
             $table->float('passbook_fee');
             $table->float('admission_fee');
+            $table->float('shared_deposit');
 
             $table->integer('status');
             $table->integer('group_id')->unsigned();

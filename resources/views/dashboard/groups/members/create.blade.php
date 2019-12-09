@@ -157,6 +157,11 @@
               <div class="input-group">
                 <span class="input-group-addon">৳</span>
                 <input id="passbook_fee" type="text" class="form-control" name="passbook_fee" placeholder="PassBook Fee" value="20">
+              </div><br/>
+              {!! Form::label('shared_deposit', 'Shared Deposit *') !!}
+              <div class="input-group">
+                <span class="input-group-addon">৳</span>
+                <input id="shared_deposit" type="text" class="form-control" name="shared_deposit" placeholder="Shared Deposit" required="">
               </div>
             </div>
             <div class="col-md-6">

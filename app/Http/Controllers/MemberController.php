@@ -75,6 +75,7 @@ class MemberController extends Controller
           'nid'                   => 'required',
           'admission_date'        => 'required',
           'closing_date'          => 'sometimes',
+          'closing_date'          => 'sometimes',
 
           'present_district'      => 'required',
           'present_upazilla'      => 'required',
@@ -91,6 +92,7 @@ class MemberController extends Controller
           'permanent_village'     => 'sometimes',
           // 'permanent_house'       => 'sometimes',
           'permanent_phone'       => 'sometimes',
+          'shared_deposit'        => 'required',
         ]);
 
         $member = new Member;
@@ -135,6 +137,7 @@ class MemberController extends Controller
         
         $member->passbook_fee = $request->passbook_fee;
         $member->admission_fee = $request->admission_fee;
+        $member->shared_deposit = $request->shared_deposit;
 
         $member->status = 1; // auto active
         $member->staff_id = $s_id;

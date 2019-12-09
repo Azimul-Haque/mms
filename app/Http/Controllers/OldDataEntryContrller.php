@@ -80,6 +80,7 @@ class OldDataEntryContrller extends Controller
           'present_village'       => 'required',
           // 'present_house'         => 'required',
           'present_phone'         => 'required',
+          'shared_deposit'         => 'required',
 
           // 'permanent_district'    => 'sometimes',
           // 'permanent_upazilla'    => 'sometimes',
@@ -132,6 +133,7 @@ class OldDataEntryContrller extends Controller
 
         $member->passbook_fee = $request->passbook_fee;
         $member->admission_fee = $request->admission_fee;
+        $member->shared_deposit = $request->shared_deposit;
         
         $member->status = 1; // auto active
         $groupforstaff = Group::find($request->group_id);

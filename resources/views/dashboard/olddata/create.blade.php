@@ -164,6 +164,13 @@
                 <input id="admission_fee" type="text" class="form-control" name="admission_fee" placeholder="Admission Fee" value="30">
               </div>
             </div>
+            <div class="col-md-4">
+              {!! Form::label('shared_deposit', 'Shared Deposit *') !!}
+              <div class="input-group">
+                <span class="input-group-addon">৳</span>
+                <input id="shared_deposit" type="text" class="form-control" name="shared_deposit" placeholder="Shared Deposit" required="">
+              </div>
+            </div>
             {{-- <div class="col-md-6">
               <big><b><u>Permanent Address (Optional)</u></b></big><br/>
               {!! Form::label('permanent_district', 'Permanent District') !!}
