@@ -221,8 +221,8 @@
                 @endfor
               </select>
 
-              {!! Form::label('primary_first_installment_date', 'First Installment Date from Software') !!}
-              {!! Form::text('primary_first_installment_date', null, array('class' => 'form-control', 'placeholder' => 'First Installment Date from Software', 'autocomplete' => 'off', 'readonly' => '')) !!}
+              {{-- {!! Form::label('primary_first_installment_date', 'First Installment Date from Software') !!}
+              {!! Form::text('primary_first_installment_date', null, array('class' => 'form-control', 'placeholder' => 'First Installment Date from Software', 'autocomplete' => 'off', 'readonly' => '')) !!} --}}
 
               {!! Form::label('primary_schemename_id', 'Scheme') !!}
               <select name="primary_schemename_id" id="primary_schemename_id" class="form-control">
@@ -305,8 +305,8 @@
                 @endfor
               </select>
 
-              {!! Form::label('product_first_installment_date', 'First Installment Date from Software') !!}
-              {!! Form::text('product_first_installment_date', null, array('class' => 'form-control', 'placeholder' => 'First Installment Date from Software', 'autocomplete' => 'off', 'readonly' => '')) !!}
+              {{-- {!! Form::label('product_first_installment_date', 'First Installment Date from Software') !!}
+              {!! Form::text('product_first_installment_date', null, array('class' => 'form-control', 'placeholder' => 'First Installment Date from Software', 'autocomplete' => 'off', 'readonly' => '')) !!} --}}
 
               {!! Form::label('product_schemename_id', 'Scheme') !!}
               <select name="product_schemename_id" id="product_schemename_id" class="form-control">
