@@ -159,7 +159,7 @@ class OldDataEntryContrller extends Controller
         		$loan->disburse_date = date('Y-m-d', strtotime($request->primary_disburse_date));
         		$loan->installment_type = $request->primary_installment_type;
         		$loan->installments = $request->primary_installments;
-        		$loan->first_installment_date = date('Y-m-d', strtotime($request->primary_first_installment_date));
+        		$loan->first_installment_date = date('Y-m-d');
         		$loan->schemename_id = $request->primary_schemename_id;
         		$loan->principal_amount = $request->primary_principal_amount ? $request->primary_principal_amount : 0;
         		$loan->service_charge = $request->primary_service_charge ? $request->primary_service_charge : 0;
@@ -234,7 +234,7 @@ class OldDataEntryContrller extends Controller
         	$loan->disburse_date = date('Y-m-d', strtotime($request->product_disburse_date));
         	$loan->installment_type = $request->product_installment_type;
         	$loan->installments = $request->product_installments;
-        	$loan->first_installment_date = date('Y-m-d', strtotime($request->product_first_installment_date));
+        	$loan->first_installment_date = date('Y-m-d');
         	$loan->schemename_id = $request->product_schemename_id;
         	$loan->principal_amount = $request->product_principal_amount ? $request->product_principal_amount : 0;
         	$loan->service_charge = $request->product_service_charge ? $request->product_service_charge : 0;
