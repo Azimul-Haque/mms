@@ -340,7 +340,7 @@
       });
       console.log(totalcollection);
       console.log(member_id);
-      // location.reload();
+      location.reload();
     }
 
     $('td[readonly]').on('click dblclick keydown', function(e) {
