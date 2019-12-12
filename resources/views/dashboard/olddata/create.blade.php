@@ -203,7 +203,7 @@
               </select>
               
               {!! Form::label('primary_disburse_date', 'Disburse Date') !!}
-              {!! Form::text('primary_disburse_date', null, array('class' => 'form-control', 'placeholder' => 'Disburse Date', 'autocomplete' => 'off', 'readonly' => '')) !!}
+              {!! Form::text('primary_disburse_date', date('F d, Y'), array('class' => 'form-control', 'placeholder' => 'Disburse Date', 'autocomplete' => 'off', 'readonly' => '')) !!}
               
               {!! Form::label('primary_installment_type', 'Installment Type') !!}
               <select name="primary_installment_type" id="primary_installment_type" class="form-control">
@@ -287,7 +287,7 @@
               </select>
               
               {!! Form::label('product_disburse_date', 'Disburse Date') !!}
-              {!! Form::text('product_disburse_date', null, array('class' => 'form-control', 'placeholder' => 'Disburse Date', 'autocomplete' => 'off', 'readonly' => '')) !!}
+              {!! Form::text('product_disburse_date', date('F d, Y'), array('class' => 'form-control', 'placeholder' => 'Disburse Date', 'autocomplete' => 'off', 'readonly' => '')) !!}
               
               {!! Form::label('product_installment_type', 'Installment Type') !!}
               <select name="product_installment_type" id="product_installment_type" class="form-control">
@@ -365,7 +365,7 @@
               </select>
 
               {!! Form::label('general_opening_date', 'Opening Date *') !!}
-              {!! Form::text('general_opening_date', null, array('class' => 'form-control', 'placeholder' => 'Opening Date', 'required' => '', 'autocomplete' => 'off', 'readonly' => '')) !!}
+              {!! Form::text('general_opening_date', date('F d, Y'), array('class' => 'form-control', 'placeholder' => 'Opening Date', 'required' => '', 'autocomplete' => 'off', 'readonly' => '')) !!}
 
               {!! Form::label('general_installment_type', 'Installment Type *') !!}
               <select name="general_installment_type" class="form-control" required="">
@@ -411,7 +411,7 @@
               </select>
 
               {!! Form::label('longterm_opening_date', 'Opening Date') !!}
-              {!! Form::text('longterm_opening_date', null, array('class' => 'form-control', 'placeholder' => 'Opening Date', 'autocomplete' => 'off', 'readonly' => '')) !!}
+              {!! Form::text('longterm_opening_date', date('F d, Y'), array('class' => 'form-control', 'placeholder' => 'Opening Date', 'autocomplete' => 'off', 'readonly' => '')) !!}
 
               {!! Form::label('longterm_installment_type', 'Installment Type') !!}
               <select name="longterm_installment_type" class="form-control">
