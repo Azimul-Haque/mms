@@ -109,6 +109,14 @@
                   @endforeach
                 @endif
               @endforeach
+              <tr>
+                <td readonly></td>
+                <td readonly align="right">Total</td>
+                <td readonly></td>
+                <td readonly></td>
+                <td readonly></td>
+                <td readonly></td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -161,6 +169,14 @@
                 </tr>
                 @endif
               @endforeach
+              <tr>
+                <td readonly></td>
+                <td readonly align="right">Total</td>
+                <td readonly></td>
+                <td readonly></td>
+                <td readonly></td>
+                <td readonly></td>
+              </tr>
             </tbody>
           </table>
         </div>

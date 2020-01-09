@@ -76,7 +76,7 @@
                     @if(!empty($transactiondate))
                     <tr>
                       <td readonly>{{ $member->passbook }}</td>
-                      <td id="membername{{ $loaninstallment->id }}" readonly>{{ $member->name }}</td>
+                      <td id="membername{{ $loaninstallment->id }}" readonly>{{ $member->name }}-{{ $member->fhusband }}</td>
                       <td readonly>{{ $loan->loanname->name }} (Scheme: {{ $loan->schemename->name }})</td>
                       
 
@@ -137,7 +137,7 @@
                   @if(empty($loan->loaninstallments) || $loan->loaninstallments->count() == 0) 
                   <tr>
                     <td readonly>{{ $member->passbook }}</td>
-                    <td id="membername{{ $loan->id }}" readonly>{{ $member->name }}</td>
+                    <td id="membername{{ $loan->id }}" readonly>{{ $member->name }}-{{ $member->fhusband }}</td>
                     <td readonly>{{ $loan->loanname->name }} (Scheme: {{ $loan->schemename->name }})</td>
 
                     @if(!empty($loantype) && $loantype == 1) {{-- if primary then show savings only --}}
