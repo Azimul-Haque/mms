@@ -8,7 +8,7 @@
 @stop
 
 @section('content_header')
-    <h1>Daily Transaction [Staff: <b>{{ $staff->name }}</b>, Group: <b>{{ $group->name }}</b>, Staff: <b>{{ $member->name }}-{{ $member->fhusband }}</b>]</h1>
+    <h1>Daily Transaction [Staff: <b>{{ $staff->name }}</b>, Group: <b>{{ $group->name }}</b>, Staff: <b>{{ $member->name }}-{{ $member->fhusband }}({{ $member->passbook }})</b>]</h1>
 @stop
 
 @section('content')
