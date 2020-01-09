@@ -8,7 +8,7 @@
 
 @section('content_header')
     <h1>
-      Saving Account [Member: <b>{{ $member->name }}-{{ $member->fhusband }}</b>, Group: <b>{{ $group->name }}</b>, Staff: <b>{{ $staff->name }}</b>]
+      Saving Account [Member: <b>{{ $member->name }}-{{ $member->fhusband }}({{ $member->passbook }})</b>, Group: <b>{{ $group->name }}</b>, Staff: <b>{{ $staff->name }}</b>]
     </h1>
 @stop
 
