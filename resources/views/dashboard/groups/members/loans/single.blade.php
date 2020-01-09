@@ -9,7 +9,7 @@
 
 @section('content_header')
     <h1>
-      Loan Account [Member: <b>{{ $member->name }}-{{ $member->fhusband }}</b>, Group: <b>{{ $group->name }}</b>, Staff: <b>{{ $staff->name }}</b>]
+      Loan Account [Member: <b>{{ $member->name }}-{{ $member->fhusband }}({{ $member->passbook }})</b>, Group: <b>{{ $group->name }}</b>, Staff: <b>{{ $staff->name }}</b>]
     </h1>
 @stop
 
