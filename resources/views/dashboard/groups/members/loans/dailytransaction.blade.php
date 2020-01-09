@@ -62,10 +62,10 @@
                   <tr>
                     <td readonly>{{ $loancounter++ }}</td>
                     <td readonly>{{ $loan->loanname->name }}</td>
-                    <td readonly>{{ $loan->total_disbursed }}</td>
-                    <td id="loaninstallment{{ $loaninstallment->id }}" onchange="loancalcandpost({{ $member->id }}, {{ $loaninstallment->id }}, '{{ $transactiondate }}')">{{ $loaninstallment->paid_total }}</td>
-                    <td readonly id="total_paid{{ $loaninstallment->id }}">{{ $loan->total_paid }}</td>
-                    <td readonly id="total_outstanding{{ $loaninstallment->id }}">{{ $loan->total_outstanding }}</td>
+                    <td readonly class="for_total_total_disbursed">{{ $loan->total_disbursed }}</td>
+                    <td id="loaninstallment{{ $loaninstallment->id }}" onchange="loancalcandpost({{ $member->id }}, {{ $loaninstallment->id }}, '{{ $transactiondate }}')" class="for_total_loaninstallment">{{ $loaninstallment->paid_total }}</td>
+                    <td readonly id="total_paid{{ $loaninstallment->id }}" class="for_total_total_paid">{{ $loan->total_paid }}</td>
+                    <td readonly id="total_outstanding{{ $loaninstallment->id }}" class="for_total_total_outstanding">{{ $loan->total_outstanding }}</td>
                     {{-- @php
                       $generalsaving = 0;
                       if(!empty($member->savinginstallments->where('savingname_id', 1)->where('due_date', $transactiondate)->first())) {
@@ -86,14 +86,14 @@
                   <tr>
                     <td readonly>{{ $loancounter++ }}</td>
                     <td readonly>{{ $loan->loanname->name }}</td>
-                    <td readonly>{{ $loan->total_disbursed }}</td>
+                    <td readonly class="for_total_total_disbursed">{{ $loan->total_disbursed }}</td>
                     @if($loan->total_outstanding <= 0)
                       <td readonly>0</td>
                     @else
-                      <td id="old_loaninstallment{{ $loan->id }}" onchange="oldloancalcandpost({{ $member->id }}, {{ $loan->id }}, '{{ $transactiondate }}')">0</td>
+                      <td id="old_loaninstallment{{ $loan->id }}" onchange="oldloancalcandpost({{ $member->id }}, {{ $loan->id }}, '{{ $transactiondate }}')" class="for_total_loaninstallment">0</td>
                     @endif
-                    <td readonly id="old_total_paid{{ $loan->id }}">{{ $loan->total_paid }}</td>
-                    <td readonly id="old_total_outstanding{{ $loan->id }}">{{ $loan->total_outstanding }}</td>
+                    <td readonly id="old_total_paid{{ $loan->id }}" class="for_total_total_paid">{{ $loan->total_paid }}</td>
+                    <td readonly id="old_total_outstanding{{ $loan->id }}" class="for_total_total_outstanding">{{ $loan->total_outstanding }}</td>
                     {{-- @php
                       $generalsaving = 0;
                       if(!empty($member->savinginstallments->where('savingname_id', 1)->where('due_date', $transactiondate)->first())) {
@@ -112,10 +112,10 @@
               <tr>
                 <td readonly></td>
                 <td readonly align="right">Total</td>
-                <td readonly></td>
-                <td readonly></td>
-                <td readonly></td>
-                <td readonly></td>
+                <td readonly id="print_total_total_disbursed"></td>
+                <td readonly id="print_total_loaninstallment"></td>
+                <td readonly id="print_total_total_paid"></td>
+                <td readonly id="print_total_total_outstanding"></td>
               </tr>
             </tbody>
           </table>
@@ -362,6 +362,35 @@
       e.preventDefault();
       e.stopPropagation();
     });
-
   </script>
+
+  {{-- total collection bottom --}}
+  {{-- total collection bottom --}}
+  <script type="text/javascript">
+    var print_total_total_disbursed = 0;
+    $(".for_total_total_disbursed").each(function() {
+        print_total_total_disbursed = print_total_total_disbursed + parseFloat($(this).text());
+        $('#print_total_total_disbursed').text(print_total_total_disbursed);
+    })
+    
+    var print_total_loaninstallment = 0;
+    $(".for_total_loaninstallment").each(function() {
+        print_total_loaninstallment = print_total_loaninstallment + parseFloat($(this).text());
+        $('#print_total_loaninstallment').text(print_total_loaninstallment);
+    })
+    
+    var print_total_total_paid = 0;
+    $(".for_total_total_paid").each(function() {
+        print_total_total_paid = print_total_total_paid + parseFloat($(this).text());
+        $('#print_total_total_paid').text(print_total_total_paid);
+    })
+
+    var print_total_total_outstanding = 0;
+    $(".for_total_total_outstanding").each(function() {
+        print_total_total_outstanding = print_total_total_outstanding + parseFloat($(this).text());
+        $('#print_total_total_outstanding').text(print_total_total_outstanding);
+    })
+  </script>
+  {{-- total collection bottom --}}
+  {{-- total collection bottom --}}
 @endsection
