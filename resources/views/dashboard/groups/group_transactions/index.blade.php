@@ -199,7 +199,7 @@
                 <td readonly></td>
                 <td readonly></td>
                 <td readonly align="right">Total</td>
-                <td readonly></td>
+                <td readonly>কাজ চলছে...</td>
                 <td readonly></td>
                 <td readonly></td>
                 <td readonly></td>
