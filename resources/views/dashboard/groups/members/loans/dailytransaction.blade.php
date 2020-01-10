@@ -148,10 +148,10 @@
                   <tr>
                     <td readonly>{{ $savingcounter++ }}</td>
                     <td readonly>{{ $saving->savingname->name }}</td>
-                    <td readonly id="old_savingbalance{{ $savinginstallment->id }}">{{ $saving->total_amount - $saving->withdraw }}</td>
-                    <td id="old_savinginstallment{{ $savinginstallment->id }}" onchange="oldsavingcalcandpost({{ $member->id }}, {{ $savinginstallment->id }}, '{{ $transactiondate }}')">{{ $savinginstallment->amount }}</td>
-                    <td id="old_savingwithdraw{{ $savinginstallment->id }}" onchange="oldsavingcalcandpost({{ $member->id }}, {{ $savinginstallment->id }}, '{{ $transactiondate }}')">{{ $savinginstallment->withdraw }}</td>
-                    <td readonly id="old_savingcollection{{ $savinginstallment->id }}">{{ $savinginstallment->amount - $savinginstallment->withdraw }}</td>
+                    <td readonly id="old_savingbalance{{ $savinginstallment->id }}" class="for_total_savingbalance">{{ $saving->total_amount - $saving->withdraw }}</td>
+                    <td id="old_savinginstallment{{ $savinginstallment->id }}" onchange="oldsavingcalcandpost({{ $member->id }}, {{ $savinginstallment->id }}, '{{ $transactiondate }}')" class="for_total_savinginstallment">{{ $savinginstallment->amount }}</td>
+                    <td id="old_savingwithdraw{{ $savinginstallment->id }}" onchange="oldsavingcalcandpost({{ $member->id }}, {{ $savinginstallment->id }}, '{{ $transactiondate }}')" class="for_total_withdraw">{{ $savinginstallment->withdraw }}</td>
+                    <td readonly id="old_savingcollection{{ $savinginstallment->id }}" class="for_total_savingcollection">{{ $savinginstallment->amount - $savinginstallment->withdraw }}</td>
                   </tr>
                   @endif
                 @endforeach
@@ -162,20 +162,20 @@
                 <tr>
                   <td readonly>{{ $savingcounter++ }}</td>
                   <td readonly>{{ $saving->savingname->name }}</td>
-                  <td readonly id="new_savingbalance{{ $saving->id }}">{{ $saving->total_amount - $saving->withdraw }}</td>
-                  <td id="new_savinginstallment{{ $saving->id }}" onchange="newsavingcalcandpost({{ $member->id }}, {{ $saving->id }}, '{{ $transactiondate }}')">0</td>
-                  <td id="new_savingwithdraw{{ $saving->id }}" onchange="newsavingcalcandpost({{ $member->id }}, {{ $saving->id }}, '{{ $transactiondate }}')">0</td>
-                  <td readonly id="new_savingcollection{{ $saving->id }}">0</td>
+                  <td readonly id="new_savingbalance{{ $saving->id }}" class="for_total_savingbalance">{{ $saving->total_amount - $saving->withdraw }}</td>
+                  <td id="new_savinginstallment{{ $saving->id }}" onchange="newsavingcalcandpost({{ $member->id }}, {{ $saving->id }}, '{{ $transactiondate }}')" class="for_total_savinginstallment">0</td>
+                  <td id="new_savingwithdraw{{ $saving->id }}" onchange="newsavingcalcandpost({{ $member->id }}, {{ $saving->id }}, '{{ $transactiondate }}')" class="for_total_withdraw">0</td>
+                  <td readonly id="new_savingcollection{{ $saving->id }}" class="for_total_savingcollection">0</td>
                 </tr>
                 @endif
               @endforeach
               <tr>
                 <td readonly></td>
                 <td readonly align="right">Total</td>
-                <td readonly></td>
-                <td readonly></td>
-                <td readonly></td>
-                <td readonly></td>
+                <td readonly id="print_total_savingbalance"></td>
+                <td readonly id="print_total_savinginstallment"></td>
+                <td readonly id="print_total_withdraw"></td>
+                <td readonly id="print_total_savingcollection"></td>
               </tr>
             </tbody>
           </table>
@@ -367,6 +367,7 @@
   {{-- total collection bottom --}}
   {{-- total collection bottom --}}
   <script type="text/javascript">
+    // loan
     var print_total_total_disbursed = 0;
     $(".for_total_total_disbursed").each(function() {
         print_total_total_disbursed = print_total_total_disbursed + parseFloat($(this).text());
@@ -389,6 +390,31 @@
     $(".for_total_total_outstanding").each(function() {
         print_total_total_outstanding = print_total_total_outstanding + parseFloat($(this).text());
         $('#print_total_total_outstanding').text(print_total_total_outstanding);
+    })
+
+    // saving
+    var print_total_savingbalance = 0;
+    $(".for_total_savingbalance").each(function() {
+        print_total_savingbalance = print_total_savingbalance + parseFloat($(this).text());
+        $('#print_total_savingbalance').text(print_total_savingbalance);
+    })
+
+    var print_total_savinginstallment = 0;
+    $(".for_total_savinginstallment").each(function() {
+        print_total_savinginstallment = print_total_savinginstallment + parseFloat($(this).text());
+        $('#print_total_savinginstallment').text(print_total_savinginstallment);
+    })
+
+    var print_total_withdraw = 0;
+    $(".for_total_withdraw").each(function() {
+        print_total_withdraw = print_total_withdraw + parseFloat($(this).text());
+        $('#print_total_withdraw').text(print_total_withdraw);
+    })
+
+    var print_total_savingcollection = 0;
+    $(".for_total_savingcollection").each(function() {
+        print_total_savingcollection = print_total_savingcollection + parseFloat($(this).text());
+        $('#print_total_savingcollection').text(print_total_savingcollection);
     })
   </script>
   {{-- total collection bottom --}}
