@@ -13,7 +13,7 @@
 @section('content')
     <div class="row">
       <div class="col-md-3 col-sm-6 col-xs-12">
-        <a href="{{ route('dashboard.members.create', [$staff->id ,$group->id]) }}">
+        <a href="{{ route('dashboard.members.create', [$staff->id, $group->id]) }}">
           <div class="info-box">
             <span class="info-box-icon bg-aqua"><i class="fa fa-user-plus"></i></span>
             <div class="info-box-content">
@@ -24,7 +24,7 @@
         </a>
       </div>
       <div class="col-md-3 col-sm-6 col-xs-12">
-        <a href="{{ route('dashboard.members', [$staff->id ,$group->id]) }}">
+        <a href="{{ route('dashboard.members', [$staff->id, $group->id]) }}">
           <div class="info-box">
             <span class="info-box-icon bg-red"><i class="fa fa-users"></i></span>
             <div class="info-box-content">
@@ -39,7 +39,7 @@
       <div class="clearfix visible-sm-block"></div>
 
       <div class="col-md-3 col-sm-6 col-xs-12">
-        <a href="{{ route('dashboard.grouptransactions.date', [$staff->id ,$group->id, 1, date('Y-m-d')]) }}">
+        <a href="{{ route('dashboard.grouptransactions.date', [$staff->id, $group->id, 1, date('Y-m-d')]) }}">
           <div class="info-box">
             <span class="info-box-icon bg-green"><i class="fa fa-exchange"></i></span>
 
@@ -52,7 +52,7 @@
        
       </div>
       <div class="col-md-3 col-sm-6 col-xs-12">
-        <a href="{{ route('dashboard.members.passbooklist', [$staff->id ,$group->id]) }}">
+        <a href="{{ route('dashboard.members.passbooklist', [$staff->id, $group->id]) }}">
           <div class="info-box">
             <span class="info-box-icon bg-yellow"><i class="fa fa-pencil-square"></i></span>
 
@@ -79,7 +79,7 @@
         </a>
       </div>
       <div class="col-md-3 col-sm-6 col-xs-12">
-        <a href="{{ route('dashboard.group.gertransferpage', [$staff->id ,$group->id]) }}">
+        <a href="{{ route('dashboard.group.gertransferpage', [$staff->id, $group->id]) }}">
           <div class="info-box">
             <span class="info-box-icon bg-red"><i class="fa fa-paper-plane"></i></span>
 
@@ -96,7 +96,7 @@
       <div class="clearfix visible-sm-block"></div>
 
       <div class="col-md-3 col-sm-6 col-xs-12">
-        <a href="{{ route('report.group.loanbalancesheet', [$staff->id ,$group->id]) }}">
+        <a href="{{ route('report.group.loanbalancesheet', [$staff->id, $group->id]) }}">
           <div class="info-box">
             <span class="info-box-icon bg-green"><i class="fa fa-book"></i></span>
 
@@ -109,7 +109,7 @@
        
       </div>
       <div class="col-md-3 col-sm-6 col-xs-12">
-        <a href="{{ route('report.group.savingbalancesheet', [$staff->id ,$group->id]) }}">
+        <a href="{{ route('report.group.savingbalancesheet', [$staff->id, $group->id]) }}">
           <div class="info-box">
             <span class="info-box-icon bg-yellow"><i class="fa fa-database"></i></span>
 

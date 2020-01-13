@@ -133,6 +133,10 @@ Route::post('/old/daily/transaction/store/api', ['as'=>'dashboard.olddailytransa
 Route::post('/daily/transaction/oldsaving/store/api', ['as'=>'dashboard.dailytransactions.oldsaving.postinstallmentapi','uses'=>'MemberController@postDailyInstallmentOldSavingAPI']);
 Route::post('/daily/transaction/newsaving/store/api', ['as'=>'dashboard.dailytransactions.oldsaving.postinstallmentapi','uses'=>'MemberController@postDailyInstallmentNewSavingAPI']);
 
+
+Route::get('/group/{s_id}/{g_id}/{m_id}/member/transfer', ['as'=>'dashboard.member.gettransfer','uses'=>'MemberController@getMemberTransger']);
+Route::put('/member/{id}/transfer/group', ['as'=>'dashboard.member.transfer','uses'=>'MemberController@postMemberTransfer']);
+
 // group transactions
 Route::get('/group/{s_id}/{g_id}/transactions', ['as'=>'dashboard.grouptransactions','uses'=>'GroupController@getGroupTransactions']);
 Route::get('/group/{s_id}/{g_id}/transactions/{loan_type}/{date}', ['as'=>'dashboard.grouptransactions.date','uses'=>'GroupController@getGroupTransactionsDate']);

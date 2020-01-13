@@ -769,4 +769,35 @@ class MemberController extends Controller
       Session::flash('success', 'Updated successfully!'); 
       return redirect()->route('group.features', [$group->user_id, $group->id]);
     }
+
+    public function getMemberTransger($s_id, $g_id, $m_id)
+    {
+      $staff = User::find($s_id);
+      $group = Group::find($g_id);
+      $member = Member::find($m_id);
+      $groups = Group::all();
+
+      return view('dashboard.groups.members.transfer')
+                ->withStaff($staff)
+                ->withGroup($group)
+                ->withMember($member)
+                ->withGroups($groups);
+    }
+
+    public function postMemberTransfer(Request $request, $id)
+    { 
+      $this->validate($request, [
+        'group_id'       => 'required'
+      ]);
+
+      $member = Member::find($id);
+      $group = Group::find($request->group_id);
+      // dd($group);
+      $member->group_id = $request->group_id;
+      $member->staff_id = $group->user_id;
+      $member->save();
+
+      Session::flash('success', 'Updated successfully!'); 
+      return redirect()->route('dashboard.member.single', [$group->user_id, $group->id, $member->id]);
+    }
 }

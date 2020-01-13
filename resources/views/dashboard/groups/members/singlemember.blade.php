@@ -63,15 +63,16 @@
     </div>
     <div class="row">
       <div class="col-md-3 col-sm-6 col-xs-12">
-        {{-- <a href="#!">
-        	<div class="info-box">
-        	  <span class="info-box-icon bg-aqua"><i class="fa fa-address-book-o"></i></span>
-        	  <div class="info-box-content">
-        	    <span class="info-box-text">View</span>
-        	    <span class="info-box-number">Member</span>
-        	  </div>
-        	</div>
-        </a> --}}
+        <a href="{{ route('dashboard.member.gettransfer', [$staff->id, $group->id, $member->id]) }}">
+          <div class="info-box">
+            <span class="info-box-icon bg-aqua"><i class="fa fa-paper-plane"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Transfer</span>
+              <span class="info-box-number">Member</span>
+            </div>
+          </div>
+        </a>
       </div>
       <div class="col-md-3 col-sm-6 col-xs-12">
      {{--    <a href="#!">
