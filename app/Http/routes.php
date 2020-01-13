@@ -124,6 +124,7 @@ Route::get('/group/{s_id}/{g_id}/{m_id}/member/loan/accounts/create', ['as'=>'da
 Route::post('/group/{s_id}/{g_id}/{m_id}/member/loan/accounts/store', ['as'=>'dashboard.loans.store','uses'=>'MemberController@storeLoanAccount']);
 Route::put('/group/{s_id}/{g_id}/{m_id}/member/loan/accounts/update/{l_id}', ['as'=>'dashboard.loans.update','uses'=>'MemberController@updateLoanAccount']);
 Route::get('/group/{s_id}/{g_id}/{m_id}/member/loan/accounts/single/{l_id}', ['as'=>'dashboard.loans.single','uses'=>'MemberController@getMemberLoanSingle']);
+Route::delete('/loan/accounts/single/delete/{l_id}', ['as'=>'dashboard.loan.delete','uses'=>'MemberController@deleteSingleLoan']);
 
 Route::get('/group/{s_id}/{g_id}/{m_id}/member/daily/transaction', ['as'=>'dashboard.member.dailytransaction','uses'=>'MemberController@getDailyTransaction']);
 Route::get('/group/{s_id}/{g_id}/{m_id}/member/daily/transaction/{loan_type}/{date}', ['as'=>'dashboard.member.dailytransaction.date','uses'=>'MemberController@getDailyTransactionDate']);
@@ -135,7 +136,7 @@ Route::post('/daily/transaction/newsaving/store/api', ['as'=>'dashboard.dailytra
 
 
 Route::get('/group/{s_id}/{g_id}/{m_id}/member/transfer', ['as'=>'dashboard.member.gettransfer','uses'=>'MemberController@getMemberTransger']);
-Route::put('/member/{id}/transfer/group', ['as'=>'dashboard.member.transfer','uses'=>'MemberController@postMemberTransfer']);
+Route::put('/member/{m_id}/transfer/group', ['as'=>'dashboard.member.transfer','uses'=>'MemberController@postMemberTransfer']);
 
 // group transactions
 Route::get('/group/{s_id}/{g_id}/transactions', ['as'=>'dashboard.grouptransactions','uses'=>'GroupController@getGroupTransactions']);

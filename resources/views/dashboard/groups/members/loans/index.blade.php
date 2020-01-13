@@ -60,7 +60,36 @@
                   </td>
                   <td>
                     <a href="{{ route('dashboard.loans.single', [$staff->id, $group->id, $member->id, $loan->id]) }}" class="btn btn-success btn-sm" title="See Loan"><i class="fa fa-pencil"></i> Edit</a>
-                    {{-- <button class="btn btn-danger btn-sm" title="Delete Member" disabled><i class="fa fa-trash"></i> Delete</button> --}}
+                    @php
+                      $disburse_date = Carbon\Carbon::parse($loan->disburse_date);
+                      $today = Carbon\Carbon::now();
+                    @endphp
+                    @if($disburse_date->diffInDays($today) <= 3)
+                      <button class="btn btn-danger btn-sm" title="Delete Loan" data-toggle="modal" data-target="#deleteLoanModal" data-backdrop="static"><i class="fa fa-trash"></i> Delete</button>
+                      <!-- Delete Modal -->
+                      <!-- Delete Modal -->
+                      <div class="modal fade" id="deleteLoanModal" role="dialog">
+                        <div class="modal-dialog modal-md">
+                          <div class="modal-content">
+                            <div class="modal-header modal-header-danger">
+                              <button type="button" class="close" data-dismiss="modal">&times;</button>
+                              <h4 class="modal-title"><i class="fa fa-exclamation-triangle"></i> Delete Loan</h4>
+                            </div>
+                            <div class="modal-body">
+                              Are you sure to Delete this Loan?
+                            </div>
+                            <div class="modal-footer">
+                              {!! Form::model($loan, ['route' => ['dashboard.loan.delete', $loan->id], 'method' => 'DELETE', 'class' => 'form-default']) !!}
+                                  {!! Form::submit('Delete', array('class' => 'btn btn-danger')) !!}
+                                  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                              {!! Form::close() !!}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- Delete Modal -->
+                      <!-- Delete Modal -->
+                    @endif
                   </td>
                 </tr>
               @endforeach

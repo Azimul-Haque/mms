@@ -800,4 +800,16 @@ class MemberController extends Controller
       Session::flash('success', 'Updated successfully!'); 
       return redirect()->route('dashboard.member.single', [$group->user_id, $group->id, $member->id]);
     }
+
+    public function deleteSingleLoan(Request $request, $id)
+    { 
+      $loan = Loan::find($id);
+      foreach ($loan->loaninstallments as $loaninstallment) {
+        $loaninstallment->delete();
+      }
+      $loan->delete();
+      
+      Session::flash('success', 'Deleted successfully!'); 
+      return redirect()->back();
+    }
 }
