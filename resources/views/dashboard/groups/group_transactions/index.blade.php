@@ -112,6 +112,7 @@
                         <td id="generalsavingwd{{ $loaninstallment->id }}" onchange="loancalcandpost({{ $member->id }}, {{ $loaninstallment->id }}, '{{ $transactiondate }}', {{ $loaninstallment->installment_no }}, {{ $general_saving_balance }}, 1)" class="for_total_generalsavingwd">{{ $generalsavingwd }}</td>
                         @php
                           $longsavingwd = 0;
+                          $long_saving_balance = 0;
                           if(!empty($member->savinginstallments->where('savingname_id', 2)->where('due_date', $transactiondate)->first())) {
                             $longsavingwd = $member->savinginstallments->where('member_id', $member->id)->where('savingname_id', 2)->where('due_date', $transactiondate)->first()->withdraw;
                           }
@@ -175,6 +176,7 @@
                         <td id="generalsavingwd{{ $loan->id }}{{ $member->id }}" onchange="brandnewloancalcandpost({{ $member->id }}, {{ $loan->id }}, '{{ $transactiondate }}', {{ $general_saving_balance }}, 1)" class="for_total_generalsavingwd">{{ $generalsavingwd }}</td>
                         @php
                           $longsavingwd = 0;
+                          $long_saving_balance = 0;
                           if(!empty($member->savinginstallments->where('savingname_id', 2)->where('due_date', $transactiondate)->first())) {
                             $longsavingwd = $member->savinginstallments->where('member_id', $member->id)->where('savingname_id', 2)->where('due_date', $transactiondate)->first()->withdraw;
                           }
