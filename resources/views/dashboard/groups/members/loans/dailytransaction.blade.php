@@ -149,8 +149,8 @@
                     <td readonly>{{ $savingcounter++ }}</td>
                     <td readonly>{{ $saving->savingname->name }}</td>
                     <td readonly id="old_savingbalance{{ $savinginstallment->id }}" class="for_total_savingbalance">{{ $saving->total_amount - $saving->withdraw }}</td>
-                    <td id="old_savinginstallment{{ $savinginstallment->id }}" onchange="oldsavingcalcandpost({{ $member->id }}, {{ $savinginstallment->id }}, '{{ $transactiondate }}')" class="for_total_savinginstallment">{{ $savinginstallment->amount }}</td>
-                    <td id="old_savingwithdraw{{ $savinginstallment->id }}" onchange="oldsavingcalcandpost({{ $member->id }}, {{ $savinginstallment->id }}, '{{ $transactiondate }}')" class="for_total_withdraw">{{ $savinginstallment->withdraw }}</td>
+                    <td id="old_savinginstallment{{ $savinginstallment->id }}" onchange="oldsavingcalcandpost({{ $member->id }}, {{ $savinginstallment->id }}, '{{ $transactiondate }}', 0)" class="for_total_savinginstallment">{{ $savinginstallment->amount }}</td>
+                    <td id="old_savingwithdraw{{ $savinginstallment->id }}" onchange="oldsavingcalcandpost({{ $member->id }}, {{ $savinginstallment->id }}, '{{ $transactiondate }}', {{ $saving->total_amount - $saving->withdraw }})" class="for_total_withdraw">{{ $savinginstallment->withdraw }}</td>
                     <td readonly id="old_savingcollection{{ $savinginstallment->id }}" class="for_total_savingcollection">{{ $savinginstallment->amount - $savinginstallment->withdraw }}</td>
                   </tr>
                   @endif
@@ -301,11 +301,16 @@
       });
     }
 
-    function oldsavingcalcandpost(member_id, savinginstallment_id, transactiondate) {
+    function oldsavingcalcandpost(member_id, savinginstallment_id, transactiondate, balance) {
       var membername = '{{ $member->name }}';
       var old_savinginstallment = parseInt($('#old_savinginstallment' + savinginstallment_id).text()) ? parseInt($('#old_savinginstallment' + savinginstallment_id).text()) : 0;
       var old_savingwithdraw = parseInt($('#old_savingwithdraw' + savinginstallment_id).text()) ? parseInt($('#old_savingwithdraw' + savinginstallment_id).text()) : 0;
       
+      if(balance != 0 && (old_savingwithdraw > balance)) {
+        toastr.warning('Invalid amount!').css('width', '400px');
+        $('#old_savingwithdraw' + savinginstallment_id).text(0);
+        return false;
+      }
       // now post the data
       $.post("/daily/transaction/oldsaving/store/api", {_token: '{{ csrf_token() }}', _method : 'POST', 
         data: {
@@ -333,10 +338,11 @@
       var membername = '{{ $member->name }}';
       var new_savinginstallment = parseInt($('#new_savinginstallment' + saving_id).text()) ? parseInt($('#new_savinginstallment' + saving_id).text()) : 0;
       var new_savingwithdraw = parseInt($('#new_savingwithdraw' + saving_id).text()) ? parseInt($('#new_savingwithdraw' + saving_id).text()) : 0;
-      var new_balance = parseInt($('#new_savingbalance' + saving_id).text()) ? parseInt($('#new_savingbalance' + saving_id).text()) : 0;
       
-      if(new_balance != 0) {
-        
+      if(balance != 0 && (new_savingwithdraw > balance)) {
+        toastr.warning('Invalid amount!').css('width', '400px');
+        $('#new_savingwithdraw' + saving_id).text(0);
+        return false;
       }
       // now post the data
       $.post("/daily/transaction/newsaving/store/api", {_token: '{{ csrf_token() }}', _method : 'POST', 
