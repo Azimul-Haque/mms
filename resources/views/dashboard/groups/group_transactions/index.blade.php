@@ -87,7 +87,7 @@
                             $generalsaving = $member->savinginstallments->where('member_id', $member->id)->where('savingname_id', 1)->where('due_date', $transactiondate)->first()->amount;
                           }
                         @endphp
-                        <td id="generalsaving{{ $loaninstallment->id }}" onchange="loancalcandpost({{ $member->id }}, {{ $loaninstallment->id }}, '{{ $transactiondate }}', {{ $loaninstallment->installment_no }})" class="for_total_generalsaving">{{ $generalsaving }}</td>
+                        <td id="generalsaving{{ $loaninstallment->id }}" onchange="loancalcandpost({{ $member->id }}, {{ $loaninstallment->id }}, '{{ $transactiondate }}', {{ $loaninstallment->installment_no }}, 0)" class="for_total_generalsaving">{{ $generalsaving }}</td>
                         @php
                           $longsaving = 0;
                           if(!empty($member->savinginstallments->where('savingname_id', 2)->where('due_date', $transactiondate)->first())) {
@@ -95,11 +95,11 @@
                           }
                         @endphp
                         @if(!empty($member->savings->where('savingname_id', 2)->first()))
-                          <td id="longsaving{{ $loaninstallment->id }}" onchange="loancalcandpost({{ $member->id }}, {{ $loaninstallment->id }}, '{{ $transactiondate }}', {{ $loaninstallment->installment_no }})" class="for_total_longsaving">{{ $longsaving }}</td>
+                          <td id="longsaving{{ $loaninstallment->id }}" onchange="loancalcandpost({{ $member->id }}, {{ $loaninstallment->id }}, '{{ $transactiondate }}', {{ $loaninstallment->installment_no }}, 0)" class="for_total_longsaving">{{ $longsaving }}</td>
                         @else
                           <td readonly>N/A</td>
                         @endif
-                        <td id="loaninstallment{{ $loaninstallment->id }}" onchange="loancalcandpost({{ $member->id }}, {{ $loaninstallment->id }}, '{{ $transactiondate }}', {{ $loaninstallment->installment_no }})" class="for_total_loaninstallment">{{ $loaninstallment->paid_total }}</td>
+                        <td id="loaninstallment{{ $loaninstallment->id }}" onchange="loancalcandpost({{ $member->id }}, {{ $loaninstallment->id }}, '{{ $transactiondate }}', {{ $loaninstallment->installment_no }}, 0)" class="for_total_loaninstallment">{{ $loaninstallment->paid_total }}</td>
                         <td id="totalcollection{{ $loaninstallment->id }}" readonly class="for_total_totalcollection">{{ $loaninstallment->paid_total + $generalsaving + $longsaving }}</td>
 
                         @php
@@ -107,23 +107,25 @@
                           if(!empty($member->savinginstallments->where('savingname_id', 1)->where('due_date', $transactiondate)->first())) {
                             $generalsavingwd = $member->savinginstallments->where('member_id', $member->id)->where('savingname_id', 1)->where('due_date', $transactiondate)->first()->withdraw;
                           }
+                          $general_saving_balance = $member->savings->where('savingname_id', 1)->first()->total_amount - $member->savings->where('savingname_id', 1)->first()->withdraw;
                         @endphp
-                        <td id="generalsavingwd{{ $loaninstallment->id }}" onchange="loancalcandpost({{ $member->id }}, {{ $loaninstallment->id }}, '{{ $transactiondate }}', {{ $loaninstallment->installment_no }})" class="for_total_generalsavingwd">{{ $generalsavingwd }}</td>
+                        <td id="generalsavingwd{{ $loaninstallment->id }}" onchange="loancalcandpost({{ $member->id }}, {{ $loaninstallment->id }}, '{{ $transactiondate }}', {{ $loaninstallment->installment_no }}, {{ $general_saving_balance }})" class="for_total_generalsavingwd">{{ $generalsavingwd }}</td>
                         @php
                           $longsavingwd = 0;
                           if(!empty($member->savinginstallments->where('savingname_id', 2)->where('due_date', $transactiondate)->first())) {
                             $longsavingwd = $member->savinginstallments->where('member_id', $member->id)->where('savingname_id', 2)->where('due_date', $transactiondate)->first()->withdraw;
                           }
+                          $long_saving_balance = $member->savings->where('savingname_id', 2)->first()->total_amount - $member->savings->where('savingname_id', 2)->first()->withdraw;
                         @endphp
                         
                         @if(!empty($member->savings->where('savingname_id', 2)->first()))
-                        <td id="longsavingwd{{ $loaninstallment->id }}" onchange="loancalcandpost({{ $member->id }}, {{ $loaninstallment->id }}, '{{ $transactiondate }}', {{ $loaninstallment->installment_no }})" class="for_total_longsavingwd">{{ $longsavingwd }}</td>
+                        <td id="longsavingwd{{ $loaninstallment->id }}" onchange="loancalcandpost({{ $member->id }}, {{ $loaninstallment->id }}, '{{ $transactiondate }}', {{ $loaninstallment->installment_no }}, $long_saving_balance)" class="for_total_longsavingwd">{{ $longsavingwd }}</td>
                         @else
                         <td readonly>N/A</td>
                         @endif
                         <td id="netcollection{{ $loaninstallment->id }}" class="for_total_netcollection" readonly>{{ $loaninstallment->paid_total + $generalsaving + $longsaving - $generalsavingwd - $longsavingwd }}</td>
                       @else
-                        <td id="loaninstallment{{ $loaninstallment->id }}" onchange="loancalcandpost({{ $member->id }}, {{ $loaninstallment->id }}, '{{ $transactiondate }}', {{ $loaninstallment->installment_no }})" class="for_total_loaninstallment">{{ $loaninstallment->paid_total }}</td>
+                        <td id="loaninstallment{{ $loaninstallment->id }}" onchange="loancalcandpost({{ $member->id }}, {{ $loaninstallment->id }}, '{{ $transactiondate }}', {{ $loaninstallment->installment_no }}, 0)" class="for_total_loaninstallment">{{ $loaninstallment->paid_total }}</td>
                         <td id="totalcollection{{ $loaninstallment->id }}" class="for_total_totalcollection" readonly>{{ $loaninstallment->paid_total }}</td>
                         <td id="netcollection{{ $loaninstallment->id }}" class="for_total_netcollection" readonly>{{ $loaninstallment->paid_total }}</td>
                       @endif
@@ -199,13 +201,19 @@
                 <td readonly></td>
                 <td readonly></td>
                 <td readonly align="right">Total</td>
-                <td readonly id="print_total_generalsaving"></td>
-                <td readonly id="print_total_longsaving"></td>
-                <td readonly id="print_total_loaninstallment"></td>
-                <td readonly id="print_total_totalcollection"></td>
-                <td readonly id="print_total_generalsavingwd"></td>
-                <td readonly id="print_total_longsavingwd"></td>
-                <td readonly id="print_total_netcollection"></td>
+                @if(!empty($loantype) && $loantype == 1)
+                  <td readonly id="print_total_generalsaving"></td>
+                  <td readonly id="print_total_longsaving"></td>
+                  <td readonly id="print_total_loaninstallment"></td>
+                  <td readonly id="print_total_totalcollection"></td>
+                  <td readonly id="print_total_generalsavingwd"></td>
+                  <td readonly id="print_total_longsavingwd"></td>
+                  <td readonly id="print_total_netcollection"></td>
+                @else
+                  <td readonly id="print_total_loaninstallment"></td>
+                  <td readonly id="print_total_totalcollection"></td>
+                  <td readonly id="print_total_netcollection"></td>
+                @endif
               </tr>
             </tbody>
           </table>
