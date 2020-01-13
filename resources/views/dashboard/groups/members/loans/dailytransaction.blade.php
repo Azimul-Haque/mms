@@ -163,8 +163,8 @@
                   <td readonly>{{ $savingcounter++ }}</td>
                   <td readonly>{{ $saving->savingname->name }}</td>
                   <td readonly id="new_savingbalance{{ $saving->id }}" class="for_total_savingbalance">{{ $saving->total_amount - $saving->withdraw }}</td>
-                  <td id="new_savinginstallment{{ $saving->id }}" onchange="newsavingcalcandpost({{ $member->id }}, {{ $saving->id }}, '{{ $transactiondate }}')" class="for_total_savinginstallment">0</td>
-                  <td id="new_savingwithdraw{{ $saving->id }}" onchange="newsavingcalcandpost({{ $member->id }}, {{ $saving->id }}, '{{ $transactiondate }}')" class="for_total_withdraw">0</td>
+                  <td id="new_savinginstallment{{ $saving->id }}" onchange="newsavingcalcandpost({{ $member->id }}, {{ $saving->id }}, '{{ $transactiondate }}', 0)" class="for_total_savinginstallment">0</td>
+                  <td id="new_savingwithdraw{{ $saving->id }}" onchange="newsavingcalcandpost({{ $member->id }}, {{ $saving->id }}, '{{ $transactiondate }}', {{ $saving->total_amount - $saving->withdraw }})" class="for_total_withdraw">0</td>
                   <td readonly id="new_savingcollection{{ $saving->id }}" class="for_total_savingcollection">0</td>
                 </tr>
                 @endif
@@ -329,11 +329,15 @@
       });
     }
 
-    function newsavingcalcandpost(member_id, saving_id, transactiondate) {
+    function newsavingcalcandpost(member_id, saving_id, transactiondate, balance) {
       var membername = '{{ $member->name }}';
       var new_savinginstallment = parseInt($('#new_savinginstallment' + saving_id).text()) ? parseInt($('#new_savinginstallment' + saving_id).text()) : 0;
       var new_savingwithdraw = parseInt($('#new_savingwithdraw' + saving_id).text()) ? parseInt($('#new_savingwithdraw' + saving_id).text()) : 0;
+      var new_balance = parseInt($('#new_savingbalance' + saving_id).text()) ? parseInt($('#new_savingbalance' + saving_id).text()) : 0;
       
+      if(new_balance != 0) {
+        
+      }
       // now post the data
       $.post("/daily/transaction/newsaving/store/api", {_token: '{{ csrf_token() }}', _method : 'POST', 
         data: {
