@@ -180,7 +180,7 @@
                           if(!empty($member->savinginstallments->where('savingname_id', 2)->where('due_date', $transactiondate)->first())) {
                             $longsavingwd = $member->savinginstallments->where('member_id', $member->id)->where('savingname_id', 2)->where('due_date', $transactiondate)->first()->withdraw;
                           }
-                          if(!empty($member->savinginstallments->where('savingname_id', 2)->first())) {
+                          if(!empty($member->savinginstallments->where('savingname_id', 2)->first()->total_amount)) {
                             $long_saving_balance = $member->savings->where('savingname_id', 2)->first()->total_amount - $member->savings->where('savingname_id', 2)->first()->withdraw;
                           }
                         @endphp
