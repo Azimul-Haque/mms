@@ -302,7 +302,7 @@
       var generalsavingwd = parseInt($('#generalsavingwd' + loaninstallment_id).text()) ? parseInt($('#generalsavingwd' + loaninstallment_id).text()) : 0;
       var longsavingwd = parseInt($('#longsavingwd' + loaninstallment_id).text()) ? parseInt($('#longsavingwd' + loaninstallment_id).text()) : 0;
       
-      if((installment_total > 0) && (installment_total > loaninstallment)) {
+      if((installment_total > 0) && (loaninstallment > installment_total)) {
         toastr.warning('Invalid amount!').css('width', '400px');
         $('#loaninstallment' + loaninstallment_id).text(0);
         return false;
@@ -362,7 +362,7 @@
       var generalsavingwd = parseInt($('#generalsavingwd' + loan_id + member_id).text()) ? parseInt($('#generalsavingwd' + loan_id + member_id).text()) : 0;
       var longsavingwd = parseInt($('#longsavingwd' + loan_id + member_id).text()) ? parseInt($('#longsavingwd' + loan_id + member_id).text()) : 0;
       
-      if((installment_total > 0) && (installment_total > loaninstallment)) {
+      if((installment_total > 0) && (loaninstallment > installment_total)) {
         toastr.warning('Invalid amount!').css('width', '400px');
         $('#loaninstallment' + loan_id + member_id).text(0);
         return false;
