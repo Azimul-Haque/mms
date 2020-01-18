@@ -35,7 +35,7 @@
                 <tr>
                   <td id="passbook{{ $member->id }}" onchange="updatepassbook({{ $member }})">{{ $member->passbook }}</td>
                   <td readonly>
-                    <a href="{{ route('dashboard.member.single', [$staff->id, $group->id, $member->id]) }}" @if($member->loans->count() > 0) style="color: #DD4B39;" @else style="color: #000000;" @endif><i class="fa fa-user"></i> {{ $member->name }}</a>
+                    <a href="{{ route('dashboard.member.single', [$staff->id, $group->id, $member->id]) }}" @if($member->loans->count() > 0) style="color: #DD4B39;" @else style="color: #000000;" @endif><i class="fa fa-user"></i> {{ $member->name }}-{{ $member->fhusband }}</a>
                   </td>
                   <td readonly>{{ $member->fhusband }}</td>
                   <td readonly>{{ ishusband($member->ishusband) }}</td>
