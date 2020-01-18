@@ -247,4 +247,51 @@ class ReportController extends Controller
 		    });
 	    })->export('xlsx');
     }
+
+    public function dailySummary() 
+    {
+        // loan calculation
+        $allloans = Loan::all();
+        $primaryloanids = [];
+        $productloanids = [];
+        foreach ($allloans as $loan) {
+        	if($loan->loanname_id == 1) {
+        		$primaryloanids[] = $loan->id;
+        	} elseif($loan->loanname_id == 2) {
+        		$productloanids[] = $loan->id;
+        	}
+        }
+        $totalprimaryloancollection = DB::table("loaninstallments")
+							      	    ->select(DB::raw("SUM(paid_total) as total"))
+							      	    ->where('due_date', date('Y-m-d'))
+							      	    ->whereIn('loan_id', $primaryloanids)
+							      	    ->first();
+		$totalprimaryloancollection = DB::table("loaninstallments")
+							      	    ->select(DB::raw("SUM(paid_total) as total"))
+							      	    ->where('due_date', date('Y-m-d'))
+							      	    ->whereIn('loan_id', $productloanids)
+							      	    ->first();
+		$totalloancollection = DB::table("loaninstallments")
+					      	     ->select(DB::raw("SUM(paid_total) as total"))
+					      	     ->where('due_date', date('Y-m-d'))
+					      	     ->first();
+
+		//saving calculation
+	    $totalgeneralsavingcollection = DB::table("savinginstallments")
+							      	      ->select(DB::raw("SUM(amount) as total"))
+							      	      ->where('due_date', date('Y-m-d'))
+							      	      ->where('savingname_id', 1)
+							      	      ->first();
+	    $totallongtermsavingcollection = DB::table("savinginstallments")
+							      	      ->select(DB::raw("SUM(amount) as total"))
+							      	      ->where('due_date', date('Y-m-d'))
+							      	      ->where('savingname_id', 2)
+							      	      ->first();
+	    $totalsavingcollection = DB::table("savinginstallments")
+					      	     ->select(DB::raw("SUM(amount) as total"))
+					      	     ->where('due_date', date('Y-m-d'))
+					      	     ->first();
+
+        dd($totalsavingcollection);
+    }
 }
