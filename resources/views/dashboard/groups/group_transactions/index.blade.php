@@ -79,8 +79,6 @@
                       <td readonly>{{ $member->passbook }}</td>
                       <td id="membername{{ $loaninstallment->id }}" readonly>{{ $member->name }}-{{ $member->fhusband }}</td>
                       <td readonly>{{ $loan->loanname->name }} (Scheme: {{ $loan->schemename->name }})</td>
-                      
-
                       @if(!empty($loantype) && $loantype == 1) {{-- if primary then show savings only --}}
                         @php
                           $generalsaving = 0;
