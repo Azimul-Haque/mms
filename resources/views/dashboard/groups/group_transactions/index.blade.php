@@ -104,10 +104,13 @@
 
                         @php
                           $generalsavingwd = 0;
+                          $general_saving_balance = 0;
                           if(!empty($member->savinginstallments->where('savingname_id', 1)->where('due_date', $transactiondate)->first())) {
                             $generalsavingwd = $member->savinginstallments->where('member_id', $member->id)->where('savingname_id', 1)->where('due_date', $transactiondate)->first()->withdraw;
                           }
-                          $general_saving_balance = $member->savings->where('savingname_id', 1)->first()->total_amount - $member->savings->where('savingname_id', 1)->first()->withdraw;
+                          if(!empty($member->savinginstallments->where('savingname_id', 1)->first()->total_amount)) {
+                            $general_saving_balance = $member->savings->where('savingname_id', 1)->first()->total_amount - $member->savings->where('savingname_id', 1)->first()->withdraw;
+                          }
                         @endphp
                         <td id="generalsavingwd{{ $loaninstallment->id }}" onchange="loancalcandpost({{ $member->id }}, {{ $loaninstallment->id }}, '{{ $transactiondate }}', {{ $loaninstallment->installment_no }}, {{ $general_saving_balance }}, 1)" class="for_total_generalsavingwd">{{ $generalsavingwd }}</td>
                         @php
@@ -168,10 +171,13 @@
 
                         @php
                           $generalsavingwd = 0;
+                          $general_saving_balance = 0;
                           if(!empty($member->savinginstallments->where('savingname_id', 1)->where('due_date', $transactiondate)->first())) {
                             $generalsavingwd = $member->savinginstallments->where('member_id', $member->id)->where('savingname_id', 1)->where('due_date', $transactiondate)->first()->withdraw;
                           }
-                          $general_saving_balance = $member->savings->where('savingname_id', 1)->first()->total_amount - $member->savings->where('savingname_id', 1)->first()->withdraw;
+                          if(!empty($member->savinginstallments->where('savingname_id', 1)->first()->total_amount)) {
+                            $general_saving_balance = $member->savings->where('savingname_id', 1)->first()->total_amount - $member->savings->where('savingname_id', 1)->first()->withdraw;
+                          }
                         @endphp
                         <td id="generalsavingwd{{ $loan->id }}{{ $member->id }}" onchange="brandnewloancalcandpost({{ $member->id }}, {{ $loan->id }}, '{{ $transactiondate }}', {{ $general_saving_balance }}, 1)" class="for_total_generalsavingwd">{{ $generalsavingwd }}</td>
                         @php
