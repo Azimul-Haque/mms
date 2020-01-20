@@ -7,7 +7,7 @@
 @stop
 
 @section('content_header')
-    <h1>Dailt Report</h1>
+    <h1>Daily Report</h1>
 @stop
 
 @section('content')
