@@ -26,17 +26,31 @@
                 <td>Cash in Hand</td>
                 <td></td>
               </tr>
+              
               <tr>
                 <td>Loan Collection</td>
-                <td>৳ {{ $totalloancollection }}</td>
+                <td>৳ {{ $totalloancollection->total }}</td>
               </tr>
               <tr>
-                <td>Primary Loan Collection</td>
-                <td>৳ {{ $totalprimaryloancollection }}</td>
+                <td>Primary Loan</td>
+                <td>৳ {{ $totalprimaryloancollection->total }}</td>
               </tr>
               <tr>
-                <td>Product Loan Collection</td>
-                <td>৳ {{ $totalproductloancollection }}</td>
+                <td>Product Loan</td>
+                <td>৳ {{ $totalproductloancollection->total }}</td>
+              </tr>
+
+              <tr>
+                <td>Saving Collection</td>
+                <td>৳ {{ $totalloancollection->total }}</td>
+              </tr>
+              <tr>
+                <td>General Saving</td>
+                <td>৳ {{ $totalgeneralsavingcollection->total }}</td>
+              </tr>
+              <tr>
+                <td>Long Term Saving</td>
+                <td>৳ {{ $totallongtermsavingcollection->total }}</td>
               </tr>
             </tbody>
           </table>
