@@ -90,7 +90,11 @@
             </thead>
             <tbody>
               <tr>
-                <td>Cash in Hand</td>
+                <td>Loan Disbursed</td>
+                <td>৳ </td>
+              </tr>
+              <tr>
+                <td>Saving Withdrawal</td>
                 <td>৳ </td>
               </tr>
             </tbody>
