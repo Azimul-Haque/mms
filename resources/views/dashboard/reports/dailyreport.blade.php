@@ -13,6 +13,7 @@
 @section('content')
     <div class="row">
       <div class="col-md-4">
+        <h4>Collection</h4>
         <div class="table-responsive">
           <table class="table table-condensed table-bordered">
             <thead>
@@ -51,6 +52,25 @@
               <tr>
                 <td>Long Term Saving</td>
                 <td>৳ {{ $totallongtermsavingcollection->total }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <h4>Disburse</h4>
+        <div class="table-responsive">
+          <table class="table table-condensed table-bordered">
+            <thead>
+              <tr>
+                <th width="50%">Sector</th>
+                <th>Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Cash in Hand</td>
+                <td>৳ </td>
               </tr>
             </tbody>
           </table>
