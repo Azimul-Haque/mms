@@ -266,7 +266,7 @@ class ReportController extends Controller
 							      	    ->where('due_date', date('Y-m-d'))
 							      	    ->whereIn('loan_id', $primaryloanids)
 							      	    ->first();
-		$totalprimaryloancollection = DB::table("loaninstallments")
+		$totalproductloancollection = DB::table("loaninstallments")
 							      	    ->select(DB::raw("SUM(paid_total) as total"))
 							      	    ->where('due_date', date('Y-m-d'))
 							      	    ->whereIn('loan_id', $productloanids)
@@ -292,6 +292,14 @@ class ReportController extends Controller
 					      	     ->where('due_date', date('Y-m-d'))
 					      	     ->first();
 
-        dd($totalsavingcollection);
+        // dd($totalsavingcollection);
+
+        return view('dashboard.reports.dailyreport')
+        					->withTotalprimaryloancollection($totalprimaryloancollection)
+        					->withTotalproductloancollection($totalproductloancollection)
+        					->withTotalloancollection($totalloancollection)
+        					->withTotalgeneralsavingcollection($totalgeneralsavingcollection)
+        					->withTotallongtermsavingcollection($totallongtermsavingcollection)
+        					->withTotalsavingcollection($totalsavingcollection);
     }
 }
