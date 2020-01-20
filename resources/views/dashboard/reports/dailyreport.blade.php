@@ -24,7 +24,7 @@
             <tbody>
               <tr>
                 <td>Cash in Hand</td>
-                <td></td>
+                <td>৳ </td>
               </tr>
               
               <tr>
@@ -42,7 +42,7 @@
 
               <tr>
                 <td>Saving Collection</td>
-                <td>৳ {{ $totalloancollection->total }}</td>
+                <td>৳ {{ $totalsavingcollection->total }}</td>
               </tr>
               <tr>
                 <td>General Saving</td>
