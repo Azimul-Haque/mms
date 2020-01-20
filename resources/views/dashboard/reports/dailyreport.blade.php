@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Microfinance Management')
+@section('title', 'Daily Report | Microfinance Management')
 
 @section('css')
 
