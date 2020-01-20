@@ -55,19 +55,19 @@
               </tr>
 
               <tr>
-                <td>Insurance Collection</td>
+                <td>Insurance</td>
                 <td>৳ {{ $totalinsurance->total }}</td>
               </tr>
               <tr>
-                <td>Processing Fee Collection</td>
+                <td>Processing Fee</td>
                 <td>৳ {{ $totalprocessingfee->total }}</td>
               </tr>
               <tr>
-                <td>Admission Fee Collection</td>
+                <td>Admission Fee</td>
                 <td>৳ {{ $totaladmissionfee->total }}</td>
               </tr>
               <tr>
-                <td>Passbook Fee Collection</td>
+                <td>Passbook Fee</td>
                 <td>৳ {{ $totalpassbookfee->total }}</td>
               </tr>
               <tr>
