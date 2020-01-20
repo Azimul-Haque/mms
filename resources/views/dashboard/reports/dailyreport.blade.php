@@ -68,7 +68,11 @@
               </tr>
               <tr>
                 <td>Passbook Fee Collection</td>
-                <td>৳ {{ $totaladmissionfee->total }}</td>
+                <td>৳ {{ $totalpassbookfee->total }}</td>
+              </tr>
+              <tr>
+                <th>Total</th>
+                <th>৳ </th>
               </tr>
             </tbody>
           </table>
