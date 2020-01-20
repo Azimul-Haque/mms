@@ -53,6 +53,23 @@
                 <td>Long Term Saving</td>
                 <td>৳ {{ $totallongtermsavingcollection->total }}</td>
               </tr>
+
+              <tr>
+                <td>Insurance Collection</td>
+                <td>৳ {{ $totalinsurance->total }}</td>
+              </tr>
+              <tr>
+                <td>Processing Fee Collection</td>
+                <td>৳ {{ $totalprocessingfee->total }}</td>
+              </tr>
+              <tr>
+                <td>Admission Fee Collection</td>
+                <td>৳ {{ $totaladmissionfee->total }}</td>
+              </tr>
+              <tr>
+                <td>Passbook Fee Collection</td>
+                <td>৳ {{ $totaladmissionfee->total }}</td>
+              </tr>
             </tbody>
           </table>
         </div>

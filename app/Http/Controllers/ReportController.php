@@ -292,7 +292,26 @@ class ReportController extends Controller
 					      	     ->where('due_date', date('Y-m-d'))
 					      	     ->first();
 
-        // dd($totalsavingcollection);
+		//saving calculation
+		$totalinsurance = DB::table("loans")
+					      	    ->select(DB::raw("SUM(insurance) as total"))
+					      	    ->where('disburse_date', date('Y-m-d'))
+					      	    ->where('loanname_id', 1)
+					      	    ->first();
+		$totalprocessingfee = DB::table("loans")
+					      	    ->select(DB::raw("SUM(processing_fee) as total"))
+					      	    ->where('disburse_date', date('Y-m-d'))
+					      	    ->where('loanname_id', 1)
+					      	    ->first();	
+		$totaladmissionfee = DB::table("members")
+					      	    ->select(DB::raw("SUM(admission_fee) as total"))
+					      	    ->where('admission_date', date('Y-m-d'))
+					      	    ->first();	
+		$totalpassbookfee = DB::table("members")
+					      	    ->select(DB::raw("SUM(passbook_fee) as total"))
+					      	    ->where('admission_date', date('Y-m-d'))
+					      	    ->first();	      	     
+        // dd($totalpassbookfee);
 
         return view('dashboard.reports.dailyreport')
         					->withTotalprimaryloancollection($totalprimaryloancollection)
@@ -300,6 +319,10 @@ class ReportController extends Controller
         					->withTotalloancollection($totalloancollection)
         					->withTotalgeneralsavingcollection($totalgeneralsavingcollection)
         					->withTotallongtermsavingcollection($totallongtermsavingcollection)
-        					->withTotalsavingcollection($totalsavingcollection);
+        					->withTotalsavingcollection($totalsavingcollection)
+        					->withTotalinsurance($totalinsurance)
+        					->withTotalprocessingfee($totalprocessingfee)
+        					->withTotaladmissionfee($totaladmissionfee)
+        					->withTotalpassbookfee($totalpassbookfee);
     }
 }
