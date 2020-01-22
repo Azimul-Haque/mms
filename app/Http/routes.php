@@ -162,7 +162,8 @@ Route::get('/report/program/transaction/summary', ['as'=>'report.program.transac
 Route::get('/report/group/loan/balancesheet/{s_id}/{g_id}', ['as'=>'report.group.loanbalancesheet','uses'=>'ReportController@generateGroupLoanBalanceSheet']);
 Route::get('/report/group/saving/balancesheet/{s_id}/{g_id}', ['as'=>'report.group.savingbalancesheet','uses'=>'ReportController@generateGroupSavingBalanceSheet']);
 
-Route::get('/report/daily/summary', ['as'=>'report.daily.summary','uses'=>'ReportController@dailySummary']);
+Route::get('/report/daily/summary/{transactiondate}', ['as'=>'report.daily.summary','uses'=>'ReportController@dailySummary']);
+Route::post('/report/daily/summary/dailyotheramounts', ['as'=>'report.post.dailyotheramounts','uses'=>'ReportController@postDailyOtherAmounts']);
 
 // Route::get('/dashboard/committee', ['as'=>'dashboard.committee','uses'=>'DashboardController@getCommittee']);
 // Route::post('/dashboard/committee', ['as'=>'dashboard.storecommittee','uses'=>'DashboardController@storeCommittee']);

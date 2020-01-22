@@ -7,7 +7,7 @@
 @stop
 
 @section('content_header')
-    <h1>Daily Report [Date: <b>{{ date('D, d/m/Y') }}</b>]</h1>
+    <h1>Daily Report [Date: <b>{{ date('D, d/m/Y', strtotime($transactiondate)) }}</b>]</h1>
 @stop
 
 @section('content')
@@ -25,7 +25,7 @@
             <tbody>
               <tr>
                 <td>Cash in Hand</td>
-                <td>৳ </td>
+                <td>৳ <input type="number" min="0" id="cashinhand" onchange="cashInHandCal()" @if(!empty($dailyotheramounts->cashinhand)) value="{{ $dailyotheramounts->cashinhand }}" @else value="0" @endif></td>
               </tr>
               
               <tr>
@@ -71,8 +71,12 @@
                 <td>৳ {{ $totalpassbookfee->total }}</td>
               </tr>
               <tr>
+                <td>Others</td>
+                <td>৳ <input type="number" onchange="" value="0"></td>
+              </tr>
+              <tr>
                 <th>Total</th>
-                <th>৳ </th>
+                <th>৳ 0</th>
               </tr>
             </tbody>
           </table>
@@ -103,3 +107,25 @@
       </div>
     </div>
 @stop
+
+@section('js')
+  <script type="text/javascript">
+    function cashInHandCal() {
+      var cashinhand = parseFloat($('#cashinhand').val()) ? parseInt($('#cashinhand').val()) : 0;
+      var transactiondate = {{ $transactiondate }};
+
+      // now post the data
+      $.post("/report/daily/summary/dailyotheramounts", {_token: '{{ csrf_token() }}', _method : 'POST', 
+        data: {
+        cashinhand: cashinhand,
+        transactiondate: transactiondate,
+      }},
+      function(data, status){
+      if(status == 'success') {
+        toastr.success('SUCCESS').css('width', '400px');
+      } else {
+        toastr.warning('Error!').css('width', '400px');
+      }
+    }
+  </script>
+@endsection

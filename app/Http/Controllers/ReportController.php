@@ -17,6 +17,7 @@ use App\Loan;
 use App\Loaninstallment;
 use App\Loanname;
 use App\Schemename;
+use App\Dailyotheramount;
 
 use Carbon\Carbon;
 use DB, Hash, Auth, Image, File, Session;
@@ -248,7 +249,7 @@ class ReportController extends Controller
 	    })->export('xlsx');
     }
 
-    public function dailySummary() 
+    public function dailySummary($transactiondate) 
     {
         // loan calculation
         $allloans = Loan::all();
@@ -261,59 +262,64 @@ class ReportController extends Controller
         		$productloanids[] = $loan->id;
         	}
         }
+
+        $dailyotheramounts = Dailyotheramount::where('due_date', date('Y-m-d', strtotime($transactiondate)))->first();
+
         $totalprimaryloancollection = DB::table("loaninstallments")
 							      	    ->select(DB::raw("SUM(paid_total) as total"))
-							      	    ->where('due_date', date('Y-m-d'))
+							      	    ->where('due_date', date('Y-m-d', strtotime($transactiondate)))
 							      	    ->whereIn('loan_id', $primaryloanids)
 							      	    ->first();
 		$totalproductloancollection = DB::table("loaninstallments")
 							      	    ->select(DB::raw("SUM(paid_total) as total"))
-							      	    ->where('due_date', date('Y-m-d'))
+							      	    ->where('due_date', date('Y-m-d', strtotime($transactiondate)))
 							      	    ->whereIn('loan_id', $productloanids)
 							      	    ->first();
 		$totalloancollection = DB::table("loaninstallments")
 					      	     ->select(DB::raw("SUM(paid_total) as total"))
-					      	     ->where('due_date', date('Y-m-d'))
+					      	     ->where('due_date', date('Y-m-d', strtotime($transactiondate)))
 					      	     ->first();
 
 		//saving calculation
 	    $totalgeneralsavingcollection = DB::table("savinginstallments")
 							      	      ->select(DB::raw("SUM(amount) as total"))
-							      	      ->where('due_date', date('Y-m-d'))
+							      	      ->where('due_date', date('Y-m-d', strtotime($transactiondate)))
 							      	      ->where('savingname_id', 1)
 							      	      ->first();
 	    $totallongtermsavingcollection = DB::table("savinginstallments")
 							      	      ->select(DB::raw("SUM(amount) as total"))
-							      	      ->where('due_date', date('Y-m-d'))
+							      	      ->where('due_date', date('Y-m-d', strtotime($transactiondate)))
 							      	      ->where('savingname_id', 2)
 							      	      ->first();
 	    $totalsavingcollection = DB::table("savinginstallments")
 					      	     ->select(DB::raw("SUM(amount) as total"))
-					      	     ->where('due_date', date('Y-m-d'))
+					      	     ->where('due_date', date('Y-m-d', strtotime($transactiondate)))
 					      	     ->first();
 
 		//saving calculation
 		$totalinsurance = DB::table("loans")
 					      	    ->select(DB::raw("SUM(insurance) as total"))
-					      	    ->where('disburse_date', date('Y-m-d'))
+					      	    ->where('disburse_date', date('Y-m-d', strtotime($transactiondate)))
 					      	    ->where('loanname_id', 1)
 					      	    ->first();
 		$totalprocessingfee = DB::table("loans")
 					      	    ->select(DB::raw("SUM(processing_fee) as total"))
-					      	    ->where('disburse_date', date('Y-m-d'))
+					      	    ->where('disburse_date', date('Y-m-d', strtotime($transactiondate)))
 					      	    ->where('loanname_id', 1)
 					      	    ->first();	
 		$totaladmissionfee = DB::table("members")
 					      	    ->select(DB::raw("SUM(admission_fee) as total"))
-					      	    ->where('admission_date', date('Y-m-d'))
+					      	    ->where('admission_date', date('Y-m-d', strtotime($transactiondate)))
 					      	    ->first();	
 		$totalpassbookfee = DB::table("members")
 					      	    ->select(DB::raw("SUM(passbook_fee) as total"))
-					      	    ->where('admission_date', date('Y-m-d'))
+					      	    ->where('admission_date', date('Y-m-d', strtotime($transactiondate)))
 					      	    ->first();	      	     
         // dd($totalpassbookfee);
 
         return view('dashboard.reports.dailyreport')
+        					->withTransactiondate($transactiondate)
+        					->withDailyotheramounts($dailyotheramounts)
         					->withTotalprimaryloancollection($totalprimaryloancollection)
         					->withTotalproductloancollection($totalproductloancollection)
         					->withTotalloancollection($totalloancollection)
@@ -324,5 +330,43 @@ class ReportController extends Controller
         					->withTotalprocessingfee($totalprocessingfee)
         					->withTotaladmissionfee($totaladmissionfee)
         					->withTotalpassbookfee($totalpassbookfee);
+    }
+
+    public function postDailyOtherAmounts(Request $request)
+    {
+    	$dailyotheramounts = Dailyotheramount::where('due_date', $request->data['transactiondate'])->first();
+
+    	if(!empty($dailyotheramounts)) {
+    	    $gensavingac = Saving::where('member_id', $request->data['member_id'])
+    	                      ->where('savingname_id', 1) // hard coded!
+    	                      ->first();
+    	    $gensavingac->total_amount = $gensavingac->total_amount - $generalsaving->amount + $request->data['generalsaving'];
+    	    $gensavingac->withdraw = $gensavingac->withdraw - $generalsaving->withdraw + $request->data['generalsavingwd'];
+    	    $gensavingac->save();
+
+    	    $generalsaving->amount = $request->data['generalsaving'];
+    	    $generalsaving->withdraw = $request->data['generalsavingwd'];
+    	    $generalsaving->balance = $gensavingac->total_amount - $gensavingac->withdraw;
+    	    $generalsaving->save();
+    	} else {
+    	    // balance calculation
+    	    $gensavingac = Saving::where('member_id', $request->data['member_id'])
+    	                      ->where('savingname_id', 1) // hard coded!
+    	                      ->first();
+    	    $gensavingac->total_amount = $gensavingac->total_amount + $request->data['generalsaving'];
+    	    $gensavingac->withdraw = $gensavingac->withdraw + $request->data['generalsavingwd'];
+    	    // balance is considered total_amount - withdraw
+    	    $gensavingac->save();
+
+    	    $newgeneralsaving = new Savinginstallment;
+    	    $newgeneralsaving->due_date = date('Y-m-d', strtotime($request->data['transactiondate']));
+    	    $newgeneralsaving->amount = $request->data['generalsaving'];
+    	    $newgeneralsaving->withdraw = $request->data['generalsavingwd'];
+    	    $newgeneralsaving->balance = $gensavingac->total_amount - $gensavingac->withdraw;
+    	    $newgeneralsaving->member_id = $request->data['member_id'];
+    	    $newgeneralsaving->savingname_id = 1; // hard coded!
+    	    $newgeneralsaving->saving_id = $gensavingac->id;
+    	    $newgeneralsaving->save();            
+    	}
     }
 }
