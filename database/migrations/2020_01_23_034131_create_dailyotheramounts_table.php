@@ -18,7 +18,6 @@ class CreateDailyotheramountsTable extends Migration
             $table->float('cashinhand')->default(0.00);
             $table->float('collentionothers')->default(0.00);
             $table->float('disburseothers')->default(0.00);
-            $table->timestamps();
         });
     }
 

@@ -338,11 +338,13 @@ class ReportController extends Controller
 
     	if(!empty($dailyotheramounts)) {
     	    $dailyotheramounts->cashinhand = $request->data['cashinhand'];
+    	    $dailyotheramounts->collentionothers = $request->data['collentionothers'];
     	    $dailyotheramounts->save();
     	} else {
     	    $newdailyotheramounts = new Dailyotheramount;
     	    $newdailyotheramounts->due_date = date('Y-m-d', strtotime($request->data['transactiondate']));
     	    $newdailyotheramounts->cashinhand = $request->data['cashinhand'];
+    	    $newdailyotheramounts->collentionothers = $request->data['collentionothers'];
     	    $newdailyotheramounts->save();            
     	}
 

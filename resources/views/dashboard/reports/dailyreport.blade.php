@@ -25,7 +25,7 @@
             <tbody>
               <tr>
                 <td>Cash in Hand</td>
-                <td>৳ <input type="number" min="0" id="cashinhand" onchange="cashInHandCal()" @if(!empty($dailyotheramounts->cashinhand)) value="{{ $dailyotheramounts->cashinhand }}" @else value="0" @endif></td>
+                <td>৳ <input type="number" style="width: 100px;" min="0" id="cashinhand" onchange="dailyOtherAmountsCal()" @if(!empty($dailyotheramounts->cashinhand)) value="{{ $dailyotheramounts->cashinhand }}" @else value="0" @endif></td>
               </tr>
               
               <tr>
@@ -72,7 +72,7 @@
               </tr>
               <tr>
                 <td>Others</td>
-                <td>৳ <input type="number" onchange="" value="0"></td>
+                <td>৳ <input type="number" style="width: 100px;" min="0" id="collentionothers" onchange="dailyOtherAmountsCal()" @if(!empty($dailyotheramounts->collentionothers)) value="{{ $dailyotheramounts->collentionothers }}" @else value="0" @endif></td>
               </tr>
               <tr>
                 <th>Total</th>
@@ -110,14 +110,16 @@
 
 @section('js')
   <script type="text/javascript">
-    function cashInHandCal() {
-      var cashinhand = parseFloat($('#cashinhand').val()) ? parseInt($('#cashinhand').val()) : 0;
+    function dailyOtherAmountsCal() {
+      var cashinhand = parseFloat($('#cashinhand').val()) ? parseFloat($('#cashinhand').val()) : 0;
+      var collentionothers = parseFloat($('#collentionothers').val()) ? parseFloat($('#collentionothers').val()) : 0;
       var transactiondate = '{{ $transactiondate }}';
 
       // now post the data
       $.post("/report/daily/summary/dailyotheramounts", {_token: '{{ csrf_token() }}', _method : 'POST', 
         data: {
         cashinhand: cashinhand,
+        collentionothers: collentionothers,
         transactiondate: transactiondate,
       }},
       function(data, status){
