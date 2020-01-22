@@ -337,36 +337,15 @@ class ReportController extends Controller
     	$dailyotheramounts = Dailyotheramount::where('due_date', $request->data['transactiondate'])->first();
 
     	if(!empty($dailyotheramounts)) {
-    	    $gensavingac = Saving::where('member_id', $request->data['member_id'])
-    	                      ->where('savingname_id', 1) // hard coded!
-    	                      ->first();
-    	    $gensavingac->total_amount = $gensavingac->total_amount - $generalsaving->amount + $request->data['generalsaving'];
-    	    $gensavingac->withdraw = $gensavingac->withdraw - $generalsaving->withdraw + $request->data['generalsavingwd'];
-    	    $gensavingac->save();
-
-    	    $generalsaving->amount = $request->data['generalsaving'];
-    	    $generalsaving->withdraw = $request->data['generalsavingwd'];
-    	    $generalsaving->balance = $gensavingac->total_amount - $gensavingac->withdraw;
-    	    $generalsaving->save();
+    	    $dailyotheramounts->cashinhand = $request->data['cashinhand'];
+    	    $dailyotheramounts->save();
     	} else {
-    	    // balance calculation
-    	    $gensavingac = Saving::where('member_id', $request->data['member_id'])
-    	                      ->where('savingname_id', 1) // hard coded!
-    	                      ->first();
-    	    $gensavingac->total_amount = $gensavingac->total_amount + $request->data['generalsaving'];
-    	    $gensavingac->withdraw = $gensavingac->withdraw + $request->data['generalsavingwd'];
-    	    // balance is considered total_amount - withdraw
-    	    $gensavingac->save();
-
-    	    $newgeneralsaving = new Savinginstallment;
-    	    $newgeneralsaving->due_date = date('Y-m-d', strtotime($request->data['transactiondate']));
-    	    $newgeneralsaving->amount = $request->data['generalsaving'];
-    	    $newgeneralsaving->withdraw = $request->data['generalsavingwd'];
-    	    $newgeneralsaving->balance = $gensavingac->total_amount - $gensavingac->withdraw;
-    	    $newgeneralsaving->member_id = $request->data['member_id'];
-    	    $newgeneralsaving->savingname_id = 1; // hard coded!
-    	    $newgeneralsaving->saving_id = $gensavingac->id;
-    	    $newgeneralsaving->save();            
+    	    $newdailyotheramounts = new Dailyotheramount;
+    	    $newdailyotheramounts->due_date = date('Y-m-d', strtotime($request->data['transactiondate']));
+    	    $newdailyotheramounts->cashinhand = $request->data['cashinhand'];
+    	    $newdailyotheramounts->save();            
     	}
+
+    	return 'success';
     }
 }

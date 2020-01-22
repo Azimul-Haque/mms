@@ -112,7 +112,7 @@
   <script type="text/javascript">
     function cashInHandCal() {
       var cashinhand = parseFloat($('#cashinhand').val()) ? parseInt($('#cashinhand').val()) : 0;
-      var transactiondate = {{ $transactiondate }};
+      var transactiondate = '{{ $transactiondate }}';
 
       // now post the data
       $.post("/report/daily/summary/dailyotheramounts", {_token: '{{ csrf_token() }}', _method : 'POST', 
@@ -121,11 +121,12 @@
         transactiondate: transactiondate,
       }},
       function(data, status){
-      if(status == 'success') {
-        toastr.success('SUCCESS').css('width', '400px');
-      } else {
-        toastr.warning('Error!').css('width', '400px');
-      }
+        if(status == 'success') {
+          toastr.success('SUCCESS').css('width', '400px');
+        } else {
+          toastr.warning('Error!').css('width', '400px');
+        }
+    });
     }
   </script>
 @endsection
