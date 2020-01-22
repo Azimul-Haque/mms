@@ -139,6 +139,7 @@
       function(data, status){
         if(status == 'success') {
           toastr.success('SUCCESS').css('width', '400px');
+          collectionCommonCal();
         } else {
           toastr.warning('Error!').css('width', '400px');
         }
@@ -173,10 +174,17 @@
     }
 
     // total calculation
-    var print_total_collectioncommon = 0;
-    $(".for_total_collectioncommon").each(function() {
-        print_total_collectioncommon = print_total_collectioncommon + parseFloat($(this).text());
-        $('#print_total_collectioncommon').text(print_total_collectioncommon);
-    })
+    function collectionCommonCal() {
+      var print_total_collectioncommon = 0;
+      $(".for_total_collectioncommon").each(function() {
+          print_total_collectioncommon = print_total_collectioncommon + parseFloat($(this).text());
+
+          var cashinhand = parseFloat($('#cashinhand').val()) ? parseFloat($('#cashinhand').val()) : 0;
+          var collentionothers = parseFloat($('#collentionothers').val()) ? parseFloat($('#collentionothers').val()) : 0;
+
+          $('#print_total_collectioncommon').text(print_total_collectioncommon + cashinhand + collentionothers);
+      })
+    }
+    collectionCommonCal();
   </script>
 @endsection
