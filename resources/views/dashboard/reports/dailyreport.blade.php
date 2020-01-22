@@ -42,33 +42,33 @@
               
               <tr>
                 <td>Loan Collection</td>
-                <td>৳ {{ $totalloancollection->total }}</td>
+                <td>৳ <span class="for_total_collectioncommon">{{ $totalloancollection->total ? $totalloancollection->total : 0 }}</span></td>
               </tr>
               <tr>
                 <td>Primary Loan</td>
-                <td>৳ {{ $totalprimaryloancollection->total }}</td>
+                <td>৳ <span class="for_total_collectioncommon">{{ $totalprimaryloancollection->total ? $totalprimaryloancollection->total : 0 }}</span></td>
               </tr>
               <tr>
                 <td>Product Loan</td>
-                <td>৳ {{ $totalproductloancollection->total }}</td>
+                <td>৳ <span class="for_total_collectioncommon">{{ $totalproductloancollection->total ? $totalproductloancollection->total : 0 }}</span></td>
               </tr>
 
               <tr>
                 <td>Saving Collection</td>
-                <td>৳ {{ $totalsavingcollection->total }}</td>
+                <td>৳ {{ $totalsavingcollection->total ? $totalsavingcollection->total : 0 }}</td>
               </tr>
               <tr>
                 <td>General Saving</td>
-                <td>৳ {{ $totalgeneralsavingcollection->total }}</td>
+                <td>৳ {{ $totalgeneralsavingcollection->total ? $totalgeneralsavingcollection->total : 0 }}</td>
               </tr>
               <tr>
                 <td>Long Term Saving</td>
-                <td>৳ {{ $totallongtermsavingcollection->total }}</td>
+                <td>৳ {{ $totallongtermsavingcollection->total ? $totallongtermsavingcollection->total : 0 }}</td>
               </tr>
 
               <tr>
                 <td>Insurance</td>
-                <td>৳ {{ $totalinsurance->total }}</td>
+                <td>৳ {{ $totalinsurance->total ? $totalinsurance->total : 0 }}</td>
               </tr>
               <tr>
                 <td>Processing Fee</td>
@@ -88,7 +88,7 @@
               </tr>
               <tr>
                 <th>Total</th>
-                <th>৳ 0</th>
+                <th>৳ <span id="print_total_collectioncommon"></span></th>
               </tr>
             </tbody>
           </table>
@@ -171,5 +171,13 @@
     function isEmptyOrSpaces(str){
         return str === null || str.match(/^ *$/) !== null;
     }
+
+    // total calculation
+    var print_total_collectioncommon = 0;
+    $(".for_total_collectioncommon").each(function() {
+        print_total_collectioncommon = print_total_collectioncommon + parseFloat($(this).text());
+        $('#print_total_collectioncommon').text(print_total_collectioncommon);
+        console.log($(this).text());
+    })
   </script>
 @endsection
