@@ -3,7 +3,7 @@
 @section('title', 'Daily Report | Microfinance Management')
 
 @section('css')
-
+  <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap-datepicker.min.css') }}">
 @stop
 
 @section('content_header')
@@ -12,8 +12,20 @@
 
 @section('content')
     <div class="row">
+      <div class="col-md-2">
+        <input class="form-control" type="text" name="date_to_load" id="date_to_load" @if(!empty($transactiondate)) value="{{ date('F d, Y', strtotime($transactiondate)) }}" @else value="{{ date('F d, Y') }}" @endif placeholder="Select Date" readonly=""><br/>
+      </div>
+      <div class="col-md-3">
+        <button class="btn btn-success" id="loaddailyOtherAmounts"><i class="fa fa fa-balance-scale"></i> Load</button><br/>
+      </div>
+      <div class="col-md-3">
+        <a href="{{ url()->current() }}" class="btn btn-primary pull-right"><i class="fa fa-floppy-o"></i> Save</a><br/>
+      </div>
+      <div class="col-md-4"></div>
+    </div>
+    <div class="row">
       <div class="col-md-4">
-        <h4>Collection</h4>
+        <span style="font-size: 20px;">Collection</span>
         <div class="table-responsive">
           <table class="table table-condensed table-bordered">
             <thead>
@@ -83,7 +95,7 @@
         </div>
       </div>
       <div class="col-md-4">
-        <h4>Disburse</h4>
+        <span style="font-size: 20px;">Disburse</span>
         <div class="table-responsive">
           <table class="table table-condensed table-bordered">
             <thead>
@@ -109,6 +121,8 @@
 @stop
 
 @section('js')
+  <script type="text/javascript" src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
   <script type="text/javascript">
     function dailyOtherAmountsCal() {
       var cashinhand = parseFloat($('#cashinhand').val()) ? parseFloat($('#cashinhand').val()) : 0;
@@ -117,10 +131,10 @@
 
       // now post the data
       $.post("/report/daily/summary/dailyotheramounts", {_token: '{{ csrf_token() }}', _method : 'POST', 
-        data: {
-        cashinhand: cashinhand,
-        collentionothers: collentionothers,
-        transactiondate: transactiondate,
+          data: {
+          cashinhand: cashinhand,
+          collentionothers: collentionothers,
+          transactiondate: transactiondate,
       }},
       function(data, status){
         if(status == 'success') {
@@ -128,7 +142,34 @@
         } else {
           toastr.warning('Error!').css('width', '400px');
         }
+      });
+    }
+
+    $(function() {
+      $("#date_to_load").datepicker({
+        format: 'MM dd, yyyy',
+        todayHighlight: true,
+        autoclose: true,
+      });
     });
+
+    $('#loaddailyOtherAmounts').click(function() {
+      var date_to_load =$('#date_to_load').val();
+
+      if(isEmptyOrSpaces(date_to_load)) {
+        if($(window).width() > 768) {
+          toastr.warning('Select Date!', 'WARNING').css('width', '400px');
+        } else {
+          toastr.warning('Select Date!', 'WARNING').css('width', ($(window).width()-25)+'px');
+        }
+      } else {
+        window.location.href = '/report/daily/summary/'+ moment(date_to_load).format('YYYY-MM-DD');
+      }
+    })
+
+    // on enter search
+    function isEmptyOrSpaces(str){
+        return str === null || str.match(/^ *$/) !== null;
     }
   </script>
 @endsection
