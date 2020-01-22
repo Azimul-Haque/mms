@@ -55,32 +55,32 @@
 
               <tr>
                 <td>Saving Collection</td>
-                <td>৳ {{ $totalsavingcollection->total ? $totalsavingcollection->total : 0 }}</td>
+                <td>৳ <span class="for_total_collectioncommon">{{ $totalsavingcollection->total ? $totalsavingcollection->total : 0 }}</span></td>
               </tr>
               <tr>
                 <td>General Saving</td>
-                <td>৳ {{ $totalgeneralsavingcollection->total ? $totalgeneralsavingcollection->total : 0 }}</td>
+                <td>৳ <span class="for_total_collectioncommon">{{ $totalgeneralsavingcollection->total ? $totalgeneralsavingcollection->total : 0 }}</span></td>
               </tr>
               <tr>
                 <td>Long Term Saving</td>
-                <td>৳ {{ $totallongtermsavingcollection->total ? $totallongtermsavingcollection->total : 0 }}</td>
+                <td>৳ <span class="for_total_collectioncommon">{{ $totallongtermsavingcollection->total ? $totallongtermsavingcollection->total : 0 }}</span></td>
               </tr>
 
               <tr>
                 <td>Insurance</td>
-                <td>৳ {{ $totalinsurance->total ? $totalinsurance->total : 0 }}</td>
+                <td>৳ <span class="for_total_collectioncommon">{{ $totalinsurance->total ? $totalinsurance->total : 0 }}</span></td>
               </tr>
               <tr>
                 <td>Processing Fee</td>
-                <td>৳ {{ $totalprocessingfee->total }}</td>
+                <td>৳ <span class="for_total_collectioncommon">{{ $totalprocessingfee->total ? $totalprocessingfee->total : 0 }}</span></td>
               </tr>
               <tr>
                 <td>Admission Fee</td>
-                <td>৳ {{ $totaladmissionfee->total }}</td>
+                <td>৳ <span class="for_total_collectioncommon">{{ $totaladmissionfee->total ? $totaladmissionfee->total : 0 }}</span></td>
               </tr>
               <tr>
                 <td>Passbook Fee</td>
-                <td>৳ {{ $totalpassbookfee->total }}</td>
+                <td>৳ <span class="for_total_collectioncommon">{{ $totalpassbookfee->total ? $totalpassbookfee->total : 0 }}</span></td>
               </tr>
               <tr>
                 <td>Others</td>
@@ -177,7 +177,6 @@
     $(".for_total_collectioncommon").each(function() {
         print_total_collectioncommon = print_total_collectioncommon + parseFloat($(this).text());
         $('#print_total_collectioncommon').text(print_total_collectioncommon);
-        console.log($(this).text());
     })
   </script>
 @endsection
