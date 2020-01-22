@@ -86,11 +86,13 @@
                 <td>Others</td>
                 <td>৳ <input type="number" style="width: 100px;" min="0" id="collentionothers" onchange="dailyOtherAmountsCal()" @if(!empty($dailyotheramounts->collentionothers)) value="{{ $dailyotheramounts->collentionothers }}" @else value="0" @endif></td>
               </tr>
+            </tbody>
+            <tfoot>
               <tr>
                 <th>Total</th>
                 <th>৳ <span id="print_total_collectioncommon"></span></th>
               </tr>
-            </tbody>
+            </tfoot>
           </table>
         </div>
       </div>
@@ -107,13 +109,31 @@
             <tbody>
               <tr>
                 <td>Loan Disbursed</td>
-                <td>৳ </td>
+                <td>৳ 0</td>
               </tr>
               <tr>
                 <td>Saving Withdrawal</td>
-                <td>৳ </td>
+                <td>৳ 0</td>
+              </tr>
+              <tr>
+                <td>General Saving Withdrawal</td>
+                <td>৳ 0</td>
+              </tr>
+              <tr>
+                <td>Long Term Saving Withdrawal</td>
+                <td>৳ 0</td>
+              </tr>
+              <tr>
+                <td>Others</td>
+                <td>৳ <input type="number" style="width: 100px;" min="0" id="disburseothers" onchange="dailyOtherAmountsCal()" @if(!empty($dailyotheramounts->disburseothers)) value="{{ $dailyotheramounts->disburseothers }}" @else value="0" @endif></td>
               </tr>
             </tbody>
+            <tfoot>
+              <tr>
+                <th>Total</th>
+                <th>৳ <span id="print_total_disbursecommon">0</span></th>
+              </tr>
+            </tfoot>
           </table>
         </div>
       </div>
@@ -145,10 +165,11 @@
         window.location.href = '/report/daily/summary/'+ moment(date_to_load).format('YYYY-MM-DD');
       }
     })
-    
+
     function dailyOtherAmountsCal() {
       var cashinhand = parseFloat($('#cashinhand').val()) ? parseFloat($('#cashinhand').val()) : 0;
       var collentionothers = parseFloat($('#collentionothers').val()) ? parseFloat($('#collentionothers').val()) : 0;
+      var disburseothers = parseFloat($('#disburseothers').val()) ? parseFloat($('#disburseothers').val()) : 0;
       var transactiondate = '{{ $transactiondate }}';
 
       // now post the data
@@ -156,6 +177,7 @@
           data: {
           cashinhand: cashinhand,
           collentionothers: collentionothers,
+          disburseothers: disburseothers,
           transactiondate: transactiondate,
       }},
       function(data, status){
