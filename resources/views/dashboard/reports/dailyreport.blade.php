@@ -124,6 +124,28 @@
   <script type="text/javascript" src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
   <script type="text/javascript">
+    $(function() {
+      $("#date_to_load").datepicker({
+        format: 'MM dd, yyyy',
+        todayHighlight: true,
+        autoclose: true,
+      });
+    });
+
+    $('#loaddailyOtherAmounts').click(function() {
+      var date_to_load =$('#date_to_load').val();
+
+      if(isEmptyOrSpaces(date_to_load)) {
+        if($(window).width() > 768) {
+          toastr.warning('Select Date!', 'WARNING').css('width', '400px');
+        } else {
+          toastr.warning('Select Date!', 'WARNING').css('width', ($(window).width()-25)+'px');
+        }
+      } else {
+        window.location.href = '/report/daily/summary/'+ moment(date_to_load).format('YYYY-MM-DD');
+      }
+    })
+    
     function dailyOtherAmountsCal() {
       var cashinhand = parseFloat($('#cashinhand').val()) ? parseFloat($('#cashinhand').val()) : 0;
       var collentionothers = parseFloat($('#collentionothers').val()) ? parseFloat($('#collentionothers').val()) : 0;
@@ -146,33 +168,6 @@
       });
     }
 
-    $(function() {
-      $("#date_to_load").datepicker({
-        format: 'MM dd, yyyy',
-        todayHighlight: true,
-        autoclose: true,
-      });
-    });
-
-    $('#loaddailyOtherAmounts').click(function() {
-      var date_to_load =$('#date_to_load').val();
-
-      if(isEmptyOrSpaces(date_to_load)) {
-        if($(window).width() > 768) {
-          toastr.warning('Select Date!', 'WARNING').css('width', '400px');
-        } else {
-          toastr.warning('Select Date!', 'WARNING').css('width', ($(window).width()-25)+'px');
-        }
-      } else {
-        window.location.href = '/report/daily/summary/'+ moment(date_to_load).format('YYYY-MM-DD');
-      }
-    })
-
-    // on enter search
-    function isEmptyOrSpaces(str){
-        return str === null || str.match(/^ *$/) !== null;
-    }
-
     // total calculation
     function collectionCommonCal() {
       var print_total_collectioncommon = 0;
@@ -186,5 +181,12 @@
       })
     }
     collectionCommonCal();
+
+
+
+    // on enter search
+    function isEmptyOrSpaces(str){
+        return str === null || str.match(/^ *$/) !== null;
+    }
   </script>
 @endsection
