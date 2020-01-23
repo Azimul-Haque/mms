@@ -327,6 +327,10 @@ class ReportController extends Controller
 					      	    ->select(DB::raw("SUM(total_disbursed) as total"))
 					      	    ->where('disburse_date', date('Y-m-d', strtotime($transactiondate)))
 					      	    ->first();
+	    $totalsavingwithdraw = DB::table("savinginstallments")
+					      	     ->select(DB::raw("SUM(withdraw) as total"))
+					      	     ->where('due_date', date('Y-m-d', strtotime($transactiondate)))
+					      	     ->first();
 	    $totalgeneralsavingwithdraw = DB::table("savinginstallments")
 							      	     ->select(DB::raw("SUM(withdraw) as total"))
 							      	     ->where('due_date', date('Y-m-d', strtotime($transactiondate)))
@@ -355,7 +359,10 @@ class ReportController extends Controller
         					->withTotaladmissionfee($totaladmissionfee)
         					->withTotalpassbookfee($totalpassbookfee)
         					->withTotalshareddeposit($totalshareddeposit)
-        					->withTotaldisbursed($totaldisbursed);
+        					->withTotaldisbursed($totaldisbursed)
+        					->withTotalsavingwithdraw($totalsavingwithdraw)
+        					->withTotalgeneralsavingwithdraw($totalgeneralsavingwithdraw)
+        					->withTotallongtermsavingcwithdraw($totallongtermsavingcwithdraw);
     }
 
     public function postDailyOtherAmounts(Request $request)

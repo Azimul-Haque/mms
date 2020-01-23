@@ -42,7 +42,7 @@
               
               <tr>
                 <td>Loan Collection</td>
-                <td>৳ <span class="for_total_collectioncommon">{{ $totalloancollection->total ? $totalloancollection->total : 0 }}</span></td>
+                <td>৳ <span class="">{{ $totalloancollection->total ? $totalloancollection->total : 0 }}</span></td>
               </tr>
               <tr>
                 <td>Primary Loan</td>
@@ -55,7 +55,7 @@
 
               <tr>
                 <td>Saving Collection</td>
-                <td>৳ <span class="for_total_collectioncommon">{{ $totalsavingcollection->total ? $totalsavingcollection->total : 0 }}</span></td>
+                <td>৳ <span class="">{{ $totalsavingcollection->total ? $totalsavingcollection->total : 0 }}</span></td>
               </tr>
               <tr>
                 <td>General Saving</td>
@@ -117,15 +117,15 @@
               </tr>
               <tr>
                 <td>Saving Withdrawal</td>
-                <td>৳ 0</td>
+                <td>৳ <span class="">{{ $totalsavingwithdraw->total ? $totalsavingwithdraw->total : 0 }}</span></td>
               </tr>
               <tr>
                 <td>General Saving Withdrawal</td>
-                <td>৳ 0</td>
+                <td>৳ <span class="for_total_disbursecommon">{{ $totalgeneralsavingwithdraw->total ? $totalgeneralsavingwithdraw->total : 0 }}</span></td>
               </tr>
               <tr>
                 <td>Long Term Saving Withdrawal</td>
-                <td>৳ 0</td>
+                <td>৳ <span class="for_total_disbursecommon">{{ $totallongtermsavingcwithdraw->total ? $totallongtermsavingcwithdraw->total : 0 }}</span></td>
               </tr>
               <tr>
                 <td>Others</td>
@@ -188,13 +188,14 @@
         if(status == 'success') {
           toastr.success('SUCCESS').css('width', '400px');
           collectionCommonCal();
+          disburseCommonCal();
         } else {
           toastr.warning('Error!').css('width', '400px');
         }
       });
     }
 
-    // total calculation
+    // total collection calculation
     function collectionCommonCal() {
       var print_total_collectioncommon = 0;
       $(".for_total_collectioncommon").each(function() {
@@ -207,6 +208,19 @@
       })
     }
     collectionCommonCal();
+
+    // total disburse calculation
+    function disburseCommonCal() {
+      var print_total_disbursecommon = 0;
+      $(".for_total_disbursecommon").each(function() {
+          print_total_disbursecommon = print_total_disbursecommon + parseFloat($(this).text());
+
+          var disburseothers = parseFloat($('#disburseothers').val()) ? parseFloat($('#disburseothers').val()) : 0;
+
+          $('#print_total_disbursecommon').text(print_total_disbursecommon + disburseothers);
+      })
+    }
+    disburseCommonCal();
 
 
 
