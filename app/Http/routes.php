@@ -139,6 +139,7 @@ Route::get('/group/{s_id}/{g_id}/{m_id}/member/transfer', ['as'=>'dashboard.memb
 Route::put('/member/{m_id}/transfer/group', ['as'=>'dashboard.member.transfer','uses'=>'MemberController@memberTransfer']);
 Route::put('/member/{m_id}/close', ['as'=>'dashboard.member.close','uses'=>'MemberController@closeMember']);
 Route::get('/member/archive', ['as'=>'dashboard.member.archive','uses'=>'MemberController@getMembersArchive']);
+Route::put('/member/{m_id}/activate', ['as'=>'dashboard.member.activate','uses'=>'MemberController@activateMember']);
 
 // group transactions
 Route::get('/group/{s_id}/{g_id}/transactions', ['as'=>'dashboard.grouptransactions','uses'=>'GroupController@getGroupTransactions']);

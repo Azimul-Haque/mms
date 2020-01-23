@@ -831,4 +831,15 @@ class MemberController extends Controller
       return view('dashboard.groups.members.archive')
                 ->withMembers($members);
     }
+
+    public function activateMember(Request $request, $id)
+    { 
+      $member = Member::find($id);
+      $member->status = 1;
+      $member->closing_date = '1970-01-01';
+      $member->save();
+
+      Session::flash('success', 'Updated successfully!'); 
+      return redirect()->route('dashboard.member.archive');
+    }
 }
