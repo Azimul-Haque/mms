@@ -63,7 +63,7 @@
                     <td readonly>{{ $loancounter++ }}</td>
                     <td readonly>{{ $loan->loanname->name }}</td>
                     <td readonly class="for_total_total_disbursed">{{ $loan->total_disbursed }}</td>
-                    <td id="loaninstallment{{ $loaninstallment->id }}" onchange="loancalcandpost({{ $member->id }}, {{ $loaninstallment->id }}, '{{ $transactiondate }}')" class="for_total_loaninstallment">{{ $loaninstallment->paid_total }}</td>
+                    <td id="loaninstallment{{ $loaninstallment->id }}" onchange="loancalcandpost({{ $member->id }}, {{ $loaninstallment->id }}, '{{ $transactiondate }}', {{ $loan->total_outstanding }})" class="for_total_loaninstallment">{{ $loaninstallment->paid_total }}</td>
                     <td readonly id="total_paid{{ $loaninstallment->id }}" class="for_total_total_paid">{{ $loan->total_paid }}</td>
                     <td readonly id="total_outstanding{{ $loaninstallment->id }}" class="for_total_total_outstanding">{{ $loan->total_outstanding }}</td>
                     {{-- @php
@@ -90,7 +90,7 @@
                     @if($loan->total_outstanding <= 0)
                       <td readonly>0</td>
                     @else
-                      <td id="old_loaninstallment{{ $loan->id }}" onchange="oldloancalcandpost({{ $member->id }}, {{ $loan->id }}, '{{ $transactiondate }}')" class="for_total_loaninstallment">0</td>
+                      <td id="old_loaninstallment{{ $loan->id }}" onchange="oldloancalcandpost({{ $member->id }}, {{ $loan->id }}, '{{ $transactiondate }}', {{ $loan->total_outstanding }})" class="for_total_loaninstallment">0</td>
                     @endif
                     <td readonly id="old_total_paid{{ $loan->id }}" class="for_total_total_paid">{{ $loan->total_paid }}</td>
                     <td readonly id="old_total_outstanding{{ $loan->id }}" class="for_total_total_outstanding">{{ $loan->total_outstanding }}</td>
@@ -249,10 +249,16 @@
       // toastr.success(newValue + ' Added!', 'SUCCESS').css('width', '400px');
     });
 
-    function loancalcandpost(member_id, loaninstallment_id, transactiondate) {
+    function loancalcandpost(member_id, loaninstallment_id, transactiondate, total_outstanding) {
       var membername = '{{ $member->name }}';
       var loaninstallment = parseInt($('#loaninstallment' + loaninstallment_id).text()) ? parseInt($('#loaninstallment' + loaninstallment_id).text()) : 0;
       
+      if(total_outstanding != 0 && (loaninstallment > total_outstanding)) {
+        toastr.warning('Invalid amount!').css('width', '400px');
+        $('#loaninstallment' + loaninstallment_id).text(0);
+        return false;
+      }
+
       // now post the data
       $.post("/daily/transaction/store/api", {_token: '{{ csrf_token() }}', _method : 'POST', 
         data: {
@@ -275,10 +281,15 @@
     }
 
 
-    function oldloancalcandpost(member_id, loan_id, transactiondate) {
+    function oldloancalcandpost(member_id, loan_id, transactiondate, total_outstanding) {
       var membername = '{{ $member->name }}';
       var loaninstallment = parseInt($('#old_loaninstallment' + loan_id).text()) ? parseInt($('#old_loaninstallment' + loan_id).text()) : 0;
       
+      if(total_outstanding != 0 && (loaninstallment > total_outstanding)) {
+        toastr.warning('Invalid amount!').css('width', '400px');
+        $('#old_loaninstallment' + loan_id).text(0);
+        return false;
+      }
       // now post the data
       $.post("/old/daily/transaction/store/api", {_token: '{{ csrf_token() }}', _method : 'POST', 
         data: {
