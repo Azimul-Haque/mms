@@ -99,7 +99,7 @@
                           <td readonly>N/A</td>
                         @endif
                         <td id="loaninstallmentrealisable{{ $loaninstallment->id }}" readonly class="for_total_loaninstallmentrealisable">{{ $loaninstallment->installment_total }}</td>
-                        <td id="loaninstallment{{ $loaninstallment->id }}" onchange="loancalcandpost({{ $member->id }}, {{ $loaninstallment->id }}, '{{ $transactiondate }}', {{ $loaninstallment->installment_no }}, 0, 0, {{ $loaninstallment->installment_total }})" class="for_total_loaninstallment">{{ $loaninstallment->paid_total }}</td>
+                        <td id="loaninstallment{{ $loaninstallment->id }}" onchange="loancalcandpost({{ $member->id }}, {{ $loaninstallment->id }}, '{{ $transactiondate }}', {{ $loaninstallment->installment_no }}, 0, 0, {{ $loan->total_outstanding }})" class="for_total_loaninstallment">{{ $loaninstallment->paid_total }}</td>
                         <td id="totalcollection{{ $loaninstallment->id }}" readonly class="for_total_totalcollection">{{ $loaninstallment->paid_total + $generalsaving + $longsaving }}</td>
 
                         @php
@@ -129,7 +129,7 @@
                         <td id="netcollection{{ $loaninstallment->id }}" class="for_total_netcollection" readonly>{{ $loaninstallment->paid_total + $generalsaving + $longsaving - $generalsavingwd - $longsavingwd }}</td>
                       @else
                         <td id="loaninstallmentrealisable{{ $loaninstallment->id }}" readonly class="for_total_loaninstallmentrealisable">{{ $loaninstallment->installment_total }}</td>
-                        <td id="loaninstallment{{ $loaninstallment->id }}" onchange="loancalcandpost({{ $member->id }}, {{ $loaninstallment->id }}, '{{ $transactiondate }}', {{ $loaninstallment->installment_no }}, 0, 0, {{ $loaninstallment->installment_total }})" class="for_total_loaninstallment">{{ $loaninstallment->paid_total }}</td>
+                        <td id="loaninstallment{{ $loaninstallment->id }}" onchange="loancalcandpost({{ $member->id }}, {{ $loaninstallment->id }}, '{{ $transactiondate }}', {{ $loaninstallment->installment_no }}, 0, 0, {{ $loan->total_outstanding }})" class="for_total_loaninstallment">{{ $loaninstallment->paid_total }}</td>
                         <td id="totalcollection{{ $loaninstallment->id }}" class="for_total_totalcollection" readonly>{{ $loaninstallment->paid_total }}</td>
                         <td id="netcollection{{ $loaninstallment->id }}" class="for_total_netcollection" readonly>{{ $loaninstallment->paid_total }}</td>
                       @endif
