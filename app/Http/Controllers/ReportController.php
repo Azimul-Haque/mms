@@ -310,9 +310,13 @@ class ReportController extends Controller
 		$totaladmissionfee = DB::table("members")
 					      	    ->select(DB::raw("SUM(admission_fee) as total"))
 					      	    ->where('admission_date', date('Y-m-d', strtotime($transactiondate)))
-					      	    ->first();	
+					      	    ->first();
 		$totalpassbookfee = DB::table("members")
 					      	    ->select(DB::raw("SUM(passbook_fee) as total"))
+					      	    ->where('admission_date', date('Y-m-d', strtotime($transactiondate)))
+					      	    ->first();
+		$totalshareddeposit = DB::table("members")
+					      	    ->select(DB::raw("SUM(shared_deposit) as total"))
 					      	    ->where('admission_date', date('Y-m-d', strtotime($transactiondate)))
 					      	    ->first();	      	     
         // dd($totalpassbookfee);
@@ -329,7 +333,8 @@ class ReportController extends Controller
         					->withTotalinsurance($totalinsurance)
         					->withTotalprocessingfee($totalprocessingfee)
         					->withTotaladmissionfee($totaladmissionfee)
-        					->withTotalpassbookfee($totalpassbookfee);
+        					->withTotalpassbookfee($totalpassbookfee)
+        					->withTotalshareddeposit($totalshareddeposit);
     }
 
     public function postDailyOtherAmounts(Request $request)

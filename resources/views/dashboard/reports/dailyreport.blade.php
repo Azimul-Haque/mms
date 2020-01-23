@@ -83,6 +83,10 @@
                 <td>৳ <span class="for_total_collectioncommon">{{ $totalpassbookfee->total ? $totalpassbookfee->total : 0 }}</span></td>
               </tr>
               <tr>
+                <td>Shared Deposit</td>
+                <td>৳ <span class="for_total_collectioncommon">{{ $totalshareddeposit->total ? $totalshareddeposit->total : 0 }}</span></td>
+              </tr>
+              <tr>
                 <td>Others</td>
                 <td>৳ <input type="number" style="width: 100px;" min="0" id="collentionothers" onchange="dailyOtherAmountsCal()" @if(!empty($dailyotheramounts->collentionothers)) value="{{ $dailyotheramounts->collentionothers }}" @else value="0" @endif></td>
               </tr>
