@@ -113,7 +113,7 @@
             <tbody>
               <tr>
                 <td>Loan Disbursed</td>
-                <td>৳ 0</td>
+                <td>৳ <span class="for_total_disbursecommon">{{ $totaldisbursed->total ? $totaldisbursed->total : 0 }}</span></td>
               </tr>
               <tr>
                 <td>Saving Withdrawal</td>

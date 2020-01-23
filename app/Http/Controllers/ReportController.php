@@ -265,6 +265,7 @@ class ReportController extends Controller
 
         $dailyotheramounts = Dailyotheramount::where('due_date', date('Y-m-d', strtotime($transactiondate)))->first();
 
+        // collection
         $totalprimaryloancollection = DB::table("loaninstallments")
 							      	    ->select(DB::raw("SUM(paid_total) as total"))
 							      	    ->where('due_date', date('Y-m-d', strtotime($transactiondate)))
@@ -318,7 +319,26 @@ class ReportController extends Controller
 		$totalshareddeposit = DB::table("members")
 					      	    ->select(DB::raw("SUM(shared_deposit) as total"))
 					      	    ->where('admission_date', date('Y-m-d', strtotime($transactiondate)))
-					      	    ->first();	      	     
+					      	    ->first();
+        // collection
+
+        // disburse
+		$totaldisbursed = DB::table("loans")
+					      	    ->select(DB::raw("SUM(total_disbursed) as total"))
+					      	    ->where('disburse_date', date('Y-m-d', strtotime($transactiondate)))
+					      	    ->first();
+	    $totalgeneralsavingwithdraw = DB::table("savinginstallments")
+							      	     ->select(DB::raw("SUM(withdraw) as total"))
+							      	     ->where('due_date', date('Y-m-d', strtotime($transactiondate)))
+							      	     ->where('savingname_id', 1)
+							      	     ->first();
+	    $totallongtermsavingcwithdraw = DB::table("savinginstallments")
+							      	      ->select(DB::raw("SUM(withdraw) as total"))
+							      	      ->where('due_date', date('Y-m-d', strtotime($transactiondate)))
+							      	      ->where('savingname_id', 2)
+							      	      ->first();
+        // disburse
+
         // dd($totalpassbookfee);
 
         return view('dashboard.reports.dailyreport')
@@ -334,7 +354,8 @@ class ReportController extends Controller
         					->withTotalprocessingfee($totalprocessingfee)
         					->withTotaladmissionfee($totaladmissionfee)
         					->withTotalpassbookfee($totalpassbookfee)
-        					->withTotalshareddeposit($totalshareddeposit);
+        					->withTotalshareddeposit($totalshareddeposit)
+        					->withTotaldisbursed($totaldisbursed);
     }
 
     public function postDailyOtherAmounts(Request $request)
