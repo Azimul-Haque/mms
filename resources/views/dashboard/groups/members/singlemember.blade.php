@@ -13,7 +13,7 @@
 @section('content')
     <div class="row">
       <div class="col-md-3 col-sm-6 col-xs-12">
-        <a href="{{ route('dashboard.member.dailytransaction', [$staff->id, $group->id, $member->id]) }}">
+        <a href="{{ route('dashboard.member.dailytransaction.date', [$staff->id, $group->id, $member->id, 1, date('Y-m-d')]) }}">
           <div class="info-box">
             <span class="info-box-icon bg-aqua"><i class="fa fa-exchange"></i></span>
             <div class="info-box-content">
