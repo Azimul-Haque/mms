@@ -79,8 +79,8 @@
           <div class="info-box">
             <span class="info-box-icon bg-red"><i class="fa fa-archive"></i></span>
             <div class="info-box-content">
-              <span class="info-box-text">Bad</span>
-              <span class="info-box-number">Debt</span>
+              <span class="info-box-text">Close</span>
+              <span class="info-box-number">Member</span>
             </div>
           </div>
     	  </a>
