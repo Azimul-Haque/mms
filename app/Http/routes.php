@@ -136,7 +136,9 @@ Route::post('/daily/transaction/newsaving/store/api', ['as'=>'dashboard.dailytra
 
 
 Route::get('/group/{s_id}/{g_id}/{m_id}/member/transfer', ['as'=>'dashboard.member.gettransfer','uses'=>'MemberController@getMemberTransger']);
-Route::put('/member/{m_id}/transfer/group', ['as'=>'dashboard.member.transfer','uses'=>'MemberController@postMemberTransfer']);
+Route::put('/member/{m_id}/transfer/group', ['as'=>'dashboard.member.transfer','uses'=>'MemberController@memberTransfer']);
+Route::put('/member/{m_id}/close', ['as'=>'dashboard.member.close','uses'=>'MemberController@closeMember']);
+Route::get('/member/archive', ['as'=>'dashboard.member.archive','uses'=>'MemberController@getMembersArchive']);
 
 // group transactions
 Route::get('/group/{s_id}/{g_id}/transactions', ['as'=>'dashboard.grouptransactions','uses'=>'GroupController@getGroupTransactions']);

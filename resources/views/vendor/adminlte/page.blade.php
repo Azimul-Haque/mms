@@ -207,8 +207,8 @@
                                 <span>Loan, Saving, Scheme Names</span>
                             </a>
                         </li>
-                        <li class="{{ Request::is('loanandsavingnames') ? 'active' : '' }} {{ Request::is('loannames') ? 'active' : '' }} {{ Request::is('loannames/*') ? 'active' : '' }}">
-                            <a href="{{ route('dashboard.loanandsavingnames') }}">
+                        <li class="{{ Request::is('member/archive') ? 'active' : '' }}">
+                            <a href="{{ route('dashboard.member.archive') }}">
                                 <i class="fa fa-fw fa-archive"></i>
                                 <span>Closed Members</span>
                             </a>

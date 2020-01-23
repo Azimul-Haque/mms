@@ -784,7 +784,7 @@ class MemberController extends Controller
                 ->withGroups($groups);
     }
 
-    public function postMemberTransfer(Request $request, $id)
+    public function memberTransfer(Request $request, $id)
     { 
       $this->validate($request, [
         'group_id'       => 'required'
@@ -811,5 +811,24 @@ class MemberController extends Controller
       
       Session::flash('success', 'Deleted successfully!'); 
       return redirect()->back();
+    }
+
+    public function closeMember(Request $request, $id)
+    { 
+      $member = Member::find($id);
+      $member->status = 0;
+      $member->closing_date = date('Y-m-d');
+      $member->save();
+
+      Session::flash('success', 'Updated successfully!'); 
+      return redirect()->route('dashboard.member.archive');
+    }
+
+    public function getMembersArchive()
+    { 
+      $members = Member::where('status', 0)->get();
+      
+      return view('dashboard.groups.members.archive')
+                ->withMembers($members);
     }
 }

@@ -75,7 +75,7 @@
         </a>
       </div>
       <div class="col-md-3 col-sm-6 col-xs-12">
-        <a href="#!">
+        <a href="#!" data-toggle="modal" data-target="#closeMemberModal" data-backdrop="static">
           <div class="info-box">
             <span class="info-box-icon bg-red"><i class="fa fa-archive"></i></span>
             <div class="info-box-content">
@@ -84,6 +84,29 @@
             </div>
           </div>
     	  </a>
+        <!-- Close Modal -->
+        <!-- Close Modal -->
+        <div class="modal fade" id="closeMemberModal" role="dialog">
+          <div class="modal-dialog modal-md">
+            <div class="modal-content">
+              <div class="modal-header modal-header-danger">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"><i class="fa fa-exclamation-triangle"></i> Close Member</h4>
+              </div>
+              <div class="modal-body">
+                Are you sure to Close this member: <b>{{ $member->name }}-{{ $member->fhusband }}({{ $member->passbook }})</b> ?
+              </div>
+              <div class="modal-footer">
+                {!! Form::model($member, ['route' => ['dashboard.member.close', $member->id], 'method' => 'PUT', 'class' => 'form-default']) !!}
+                    {!! Form::submit('Submit', array('class' => 'btn btn-danger')) !!}
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                {!! Form::close() !!}
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Close Modal -->
+        <!-- Close Modal -->
       </div>
 
       <!-- fix for small devices only -->
