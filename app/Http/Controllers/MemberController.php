@@ -840,6 +840,6 @@ class MemberController extends Controller
       $member->save();
 
       Session::flash('success', 'Updated successfully!'); 
-      return redirect()->route('dashboard.member.archive');
+      return redirect()->route('dashboard.member.single', [$member->staff_id, $member->group_id, $member->id]);
     }
 }
