@@ -166,7 +166,7 @@
                           <td readonly>N/A</td>
                         @endif
                         <td id="loaninstallmentrealisable{{ $member->id }}" readonly>N/A</td>
-                        <td id="loaninstallment{{ $loan->id }}{{ $member->id }}" onchange="brandnewloancalcandpost({{ $member->id }}, {{ $loan->id }}, '{{ $transactiondate }}', 0, 0, 0)" class="for_total_loaninstallment">0</td>
+                        <td id="loaninstallment{{ $loan->id }}{{ $member->id }}" onchange="brandnewloancalcandpost({{ $member->id }}, {{ $loan->id }}, '{{ $transactiondate }}', 0, 0, {{ $loan->total_outstanding }})" class="for_total_loaninstallment">0</td>
                         <td id="brandnewtotalcollection{{ $loan->id }}" class="for_total_totalcollection" readonly>{{ $generalsaving + $longsaving }}</td>
 
                         @php
@@ -197,7 +197,7 @@
                         <td id="brandnewnetcollection{{ $loan->id }}" class="for_total_netcollection" readonly>{{ $generalsaving + $longsaving - $generalsavingwd - $longsavingwd }}</td>
                       @else
                         <td id="loaninstallmentrealisable{{ $member->id }}" readonly>N/A</td>
-                        <td id="loaninstallment{{ $loan->id }}{{ $member->id }}" onchange="brandnewloancalcandpost({{ $member->id }}, {{ $loan->id }}, '{{ $transactiondate }}', 0, 0, 0)" class="for_total_loaninstallment">0</td>
+                        <td id="loaninstallment{{ $loan->id }}{{ $member->id }}" onchange="brandnewloancalcandpost({{ $member->id }}, {{ $loan->id }}, '{{ $transactiondate }}', 0, 0, {{ $loan->total_outstanding }})" class="for_total_loaninstallment">0</td>
                         <td id="brandnewtotalcollection{{ $loan->id }}" class="for_total_totalcollection" readonly>0</td>
                         <td id="brandnewnetcollection{{ $loan->id }}" class="for_total_netcollection" readonly>0</td>
                       @endif
@@ -292,7 +292,7 @@
       // toastr.success(newValue + ' Added!', 'SUCCESS').css('width', '400px');
     });
 
-    function loancalcandpost(member_id, loaninstallment_id, transactiondate, installment_no, balance, saving_type, installment_total) {
+    function loancalcandpost(member_id, loaninstallment_id, transactiondate, installment_no, balance, saving_type, total_outstanding) {
       var membername = $('#membername' + loaninstallment_id).text();
       var loaninstallment = parseInt($('#loaninstallment' + loaninstallment_id).text()) ? parseInt($('#loaninstallment' + loaninstallment_id).text()) : 0;
       var generalsaving = parseInt($('#generalsaving' + loaninstallment_id).text()) ? parseInt($('#generalsaving' + loaninstallment_id).text()) : 0;
@@ -300,7 +300,7 @@
       var generalsavingwd = parseInt($('#generalsavingwd' + loaninstallment_id).text()) ? parseInt($('#generalsavingwd' + loaninstallment_id).text()) : 0;
       var longsavingwd = parseInt($('#longsavingwd' + loaninstallment_id).text()) ? parseInt($('#longsavingwd' + loaninstallment_id).text()) : 0;
       
-      if((installment_total > 0) && (loaninstallment > installment_total)) {
+      if((total_outstanding > 0) && (loaninstallment > total_outstanding)) {
         toastr.warning('Invalid amount!').css('width', '400px');
         $('#loaninstallment' + loaninstallment_id).text(0);
         return false;
@@ -352,7 +352,7 @@
       
     }
 
-    function brandnewloancalcandpost(member_id, loan_id, transactiondate, balance, saving_type, installment_total) {
+    function brandnewloancalcandpost(member_id, loan_id, transactiondate, balance, saving_type, total_outstanding) {
       var membername = $('#membername' + loan_id).text();
       var loaninstallment = parseInt($('#loaninstallment' + loan_id + member_id).text()) ? parseInt($('#loaninstallment' + loan_id + member_id).text()) : 0;
       var generalsaving = parseInt($('#generalsaving' + loan_id + member_id).text()) ? parseInt($('#generalsaving' + loan_id + member_id).text()) : 0;
@@ -360,7 +360,7 @@
       var generalsavingwd = parseInt($('#generalsavingwd' + loan_id + member_id).text()) ? parseInt($('#generalsavingwd' + loan_id + member_id).text()) : 0;
       var longsavingwd = parseInt($('#longsavingwd' + loan_id + member_id).text()) ? parseInt($('#longsavingwd' + loan_id + member_id).text()) : 0;
       
-      if((installment_total > 0) && (loaninstallment > installment_total)) {
+      if((total_outstanding > 0) && (loaninstallment > total_outstanding)) {
         toastr.warning('Invalid amount!').css('width', '400px');
         $('#loaninstallment' + loan_id + member_id).text(0);
         return false;
