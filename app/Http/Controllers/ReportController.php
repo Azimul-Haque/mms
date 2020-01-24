@@ -252,40 +252,28 @@ class ReportController extends Controller
     public function generateStaffTopSheet($s_id)
     {
     	$staff = User::find($s_id);
-    	$datetocalc = date('Y-m-d');
 
-	    // return view('dashboard.reports.savingbalancesheet1')
-	    //                 ->withStaff($staff)
-	    //                 ->withGroup($group)
-	    //                 ->withDatetocalc($datetocalc);
+	    // return view('dashboard.reports.stafftopsheet')
+	    //                 ->withStaff($staff);
 
-	    Excel::create('Saving Balance Sheet', function($excel) use($staff, $group, $datetocalc) 
-	    {
-	    	$excel->sheet('General Saving', function($sheet) use($staff, $group, $datetocalc) 
-	    	{
-		        $sheet->loadView('dashboard.reports.savingbalancesheet1')->withStaff($staff)
-												                      ->withGroup($group)
-												                      ->withDatetocalc($datetocalc);
-		        $sheet->setStyle(array(
-		            'font' => array(
-		                'name'      =>  'Arial',
-		                'size'      =>  10
-		            )
-		        ));
-		    });
-		    $excel->sheet('Long Term Saving', function($sheet) use($staff, $group, $datetocalc) 
-	    	{
-		        $sheet->loadView('dashboard.reports.savingbalancesheet2')->withStaff($staff)
-												                      ->withGroup($group)
-												                      ->withDatetocalc($datetocalc);
-		        $sheet->setStyle(array(
-		            'font' => array(
-		                'name'      =>  'Arial',
-		                'size'      =>  10
-		            )
-		        ));
-		    });
-	    })->export('xlsx');
+        Excel::create('Staff Top Sheet', function($excel) use($staff) {
+        	$excel->sheet('Sheet1', function($sheet) use($staff) {
+
+    	        $sheet->loadView('dashboard.reports.stafftopsheet')->withStaff($staff);
+    	        $sheet->setStyle(array(
+    	            'font' => array(
+    	                'name'      =>  'Arial',
+    	                'size'      =>  10
+    	            )
+    	        ));
+    	    });
+        	// $excel->sheet('Sheet2', function($sheet) use($staffs) {
+
+    	    //     $sheet->loadView('dashboard.reports.test')->withStaffs($staffs);
+
+    	    // });
+
+        })->export('xlsx');
     }
 
     public function dailySummary($transactiondate) 
