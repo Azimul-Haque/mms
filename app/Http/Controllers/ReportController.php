@@ -253,8 +253,8 @@ class ReportController extends Controller
     {
     	$staff = User::find($s_id);
 
-	    return view('dashboard.reports.stafftopsheet1')
-	                    ->withStaff($staff);
+	    // return view('dashboard.reports.stafftopsheet2')
+	    //                 ->withStaff($staff);
 
         Excel::create('Staff Top Sheet', function($excel) use($staff) {
         	$excel->sheet('Sheet1', function($sheet) use($staff) {
