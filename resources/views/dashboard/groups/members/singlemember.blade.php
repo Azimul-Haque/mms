@@ -93,6 +93,17 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title"><i class="fa fa-exclamation-triangle"></i> Close Member</h4>
               </div>
+              @php
+                $loanoutstanding = 0;
+                foreach ($member->loans as $loan) {
+                  $loanoutstanding = $loanoutstanding + $loan->total_outstanding;
+                }
+
+                $savingsbalance = 0;
+                foreach ($member->savings as $saving) {
+                  $savingsbalance = $savingsbalance + $saving->total_amount + $saving->interest - $saving->withdraw;
+                }
+              @endphp
               <div class="modal-body">
                 Are you sure to Close this member: <b>{{ $member->name }}-{{ $member->fhusband }}({{ $member->passbook }})</b> ?
               </div>
