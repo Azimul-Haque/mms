@@ -52,10 +52,16 @@
 				<td>{{ $groupcounter++ }}</td>
 				<td align="left">{{ $group->name }}</td>
 				<td align="right">
-					{{ $group->members->count() }}
 					@php
-						$grosstotalmembersdisbursed = $grosstotalmembersdisbursed + $group->members->count();
+						$totalmembers = 0;
+						foreach ($group->members as $member) {
+							if(($member->status == 1) && !empty($member->loans->where('loanname_id', 1)->first())) {
+								$totalmembers = $totalmembers + 1;
+							}
+						}
+						$grosstotalmembersdisbursed = $grosstotalmembersdisbursed + $totalmembers;
 					@endphp
+					{{ $totalmembers }}
 				</td>
 				<td align="right">
 					@php
