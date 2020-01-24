@@ -94,24 +94,30 @@
                 <h4 class="modal-title"><i class="fa fa-exclamation-triangle"></i> Close Member</h4>
               </div>
               @php
-                $loanoutstanding = 0;
+                $totalloanoutstanding = 0;
                 foreach ($member->loans as $loan) {
-                  $loanoutstanding = $loanoutstanding + $loan->total_outstanding;
+                  $totalloanoutstanding = $totalloanoutstanding + $loan->total_outstanding;
                 }
 
-                $savingsbalance = 0;
+                $totalsavingsbalance = 0;
                 foreach ($member->savings as $saving) {
-                  $savingsbalance = $savingsbalance + $saving->total_amount + $saving->interest - $saving->withdraw;
+                  $totalsavingsbalance = $totalsavingsbalance + $saving->total_amount + $saving->interest - $saving->withdraw;
                 }
               @endphp
               <div class="modal-body">
-                Are you sure to Close this member: <b>{{ $member->name }}-{{ $member->fhusband }}({{ $member->passbook }})</b> ?
+                @if(!($totalloanoutstanding > 0) && !($totalsavingsbalance > 0))
+                  Are you sure to Close this member: <b>{{ $member->name }}-{{ $member->fhusband }}({{ $member->passbook }})</b>?
+                @else
+                  This account cannot be closed!
+                @endif
               </div>
               <div class="modal-footer">
-                {!! Form::model($member, ['route' => ['dashboard.member.close', $member->id], 'method' => 'PUT', 'class' => 'form-default']) !!}
-                    {!! Form::submit('Submit', array('class' => 'btn btn-danger')) !!}
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                {!! Form::close() !!}
+                @if(!($totalloanoutstanding > 0) && !($totalsavingsbalance > 0))
+                  {!! Form::model($member, ['route' => ['dashboard.member.close', $member->id], 'method' => 'PUT', 'class' => 'form-default']) !!}
+                      {!! Form::submit('Submit', array('class' => 'btn btn-danger')) !!}
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                  {!! Form::close() !!}
+                @endif
               </div>
             </div>
           </div>
