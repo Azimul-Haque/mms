@@ -52,7 +52,7 @@
                   <td>{{ $savingaccount->late_fee }}</td> --}}
                   <td>{{ $savingaccount->total_amount }}</td>
                   <td>{{ $savingaccount->withdraw }}</td>
-                  <td>{{ $savingaccount->total_amount - $savingaccount->withdraw }}</td>
+                  <td>{{ $savingaccount->total_amount + $savingaccount->interest - $savingaccount->withdraw }}</td>
                   <td>{{ $savingaccount->interest }}</td>
                   <td>{{ status($savingaccount->status) }}</td>
                   <td>

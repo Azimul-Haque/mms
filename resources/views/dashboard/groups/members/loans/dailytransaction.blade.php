@@ -150,7 +150,7 @@
                     <td readonly>{{ $saving->savingname->name }}</td>
                     <td readonly id="old_savingbalance{{ $savinginstallment->id }}" class="for_total_savingbalance">{{ $saving->total_amount - $saving->withdraw }}</td>
                     <td id="old_savinginstallment{{ $savinginstallment->id }}" onchange="oldsavingcalcandpost({{ $member->id }}, {{ $savinginstallment->id }}, '{{ $transactiondate }}', 0)" class="for_total_savinginstallment">{{ $savinginstallment->amount }}</td>
-                    <td id="old_savingwithdraw{{ $savinginstallment->id }}" onchange="oldsavingcalcandpost({{ $member->id }}, {{ $savinginstallment->id }}, '{{ $transactiondate }}', {{ $saving->total_amount - $saving->withdraw }})" class="for_total_withdraw">{{ $savinginstallment->withdraw }}</td>
+                    <td id="old_savingwithdraw{{ $savinginstallment->id }}" onchange="oldsavingcalcandpost({{ $member->id }}, {{ $savinginstallment->id }}, '{{ $transactiondate }}', {{ $saving->total_amount + $saving->interest - $saving->withdraw }})" class="for_total_withdraw">{{ $savinginstallment->withdraw }}</td>
                     <td readonly id="old_savingcollection{{ $savinginstallment->id }}" class="for_total_savingcollection">{{ $savinginstallment->amount - $savinginstallment->withdraw }}</td>
                   </tr>
                   @endif
@@ -164,7 +164,7 @@
                   <td readonly>{{ $saving->savingname->name }}</td>
                   <td readonly id="new_savingbalance{{ $saving->id }}" class="for_total_savingbalance">{{ $saving->total_amount - $saving->withdraw }}</td>
                   <td id="new_savinginstallment{{ $saving->id }}" onchange="newsavingcalcandpost({{ $member->id }}, {{ $saving->id }}, '{{ $transactiondate }}', 0)" class="for_total_savinginstallment">0</td>
-                  <td id="new_savingwithdraw{{ $saving->id }}" onchange="newsavingcalcandpost({{ $member->id }}, {{ $saving->id }}, '{{ $transactiondate }}', {{ $saving->total_amount - $saving->withdraw }})" class="for_total_withdraw">0</td>
+                  <td id="new_savingwithdraw{{ $saving->id }}" onchange="newsavingcalcandpost({{ $member->id }}, {{ $saving->id }}, '{{ $transactiondate }}', {{ $saving->total_amount + $saving->interest - $saving->withdraw }})" class="for_total_withdraw">0</td>
                   <td readonly id="new_savingcollection{{ $saving->id }}" class="for_total_savingcollection">0</td>
                 </tr>
                 @endif
