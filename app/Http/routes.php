@@ -164,6 +164,7 @@ Route::get('/report/program/top/sheet/savings', ['as'=>'report.program.topsheets
 Route::get('/report/program/transaction/summary', ['as'=>'report.program.transactionsummary','uses'=>'ReportController@generateTransactionSummary']);
 Route::get('/report/group/loan/balancesheet/{s_id}/{g_id}', ['as'=>'report.group.loanbalancesheet','uses'=>'ReportController@generateGroupLoanBalanceSheet']);
 Route::get('/report/group/saving/balancesheet/{s_id}/{g_id}', ['as'=>'report.group.savingbalancesheet','uses'=>'ReportController@generateGroupSavingBalanceSheet']);
+Route::get('/report/staff/topsheet/{s_id}', ['as'=>'report.staff.topsheet','uses'=>'ReportController@generateStaffTopSheet']);
 
 Route::get('/report/daily/summary/{transactiondate}', ['as'=>'report.daily.summary','uses'=>'ReportController@dailySummary']);
 Route::post('/report/daily/summary/dailyotheramounts', ['as'=>'report.post.dailyotheramounts','uses'=>'ReportController@postDailyOtherAmounts']);

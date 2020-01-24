@@ -249,6 +249,45 @@ class ReportController extends Controller
 	    })->export('xlsx');
     }
 
+    public function generateStaffTopSheet($s_id)
+    {
+    	$staff = User::find($s_id);
+    	$datetocalc = date('Y-m-d');
+
+	    // return view('dashboard.reports.savingbalancesheet1')
+	    //                 ->withStaff($staff)
+	    //                 ->withGroup($group)
+	    //                 ->withDatetocalc($datetocalc);
+
+	    Excel::create('Saving Balance Sheet', function($excel) use($staff, $group, $datetocalc) 
+	    {
+	    	$excel->sheet('General Saving', function($sheet) use($staff, $group, $datetocalc) 
+	    	{
+		        $sheet->loadView('dashboard.reports.savingbalancesheet1')->withStaff($staff)
+												                      ->withGroup($group)
+												                      ->withDatetocalc($datetocalc);
+		        $sheet->setStyle(array(
+		            'font' => array(
+		                'name'      =>  'Arial',
+		                'size'      =>  10
+		            )
+		        ));
+		    });
+		    $excel->sheet('Long Term Saving', function($sheet) use($staff, $group, $datetocalc) 
+	    	{
+		        $sheet->loadView('dashboard.reports.savingbalancesheet2')->withStaff($staff)
+												                      ->withGroup($group)
+												                      ->withDatetocalc($datetocalc);
+		        $sheet->setStyle(array(
+		            'font' => array(
+		                'name'      =>  'Arial',
+		                'size'      =>  10
+		            )
+		        ));
+		    });
+	    })->export('xlsx');
+    }
+
     public function dailySummary($transactiondate) 
     {
         // loan calculation
