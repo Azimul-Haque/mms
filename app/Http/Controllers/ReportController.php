@@ -259,7 +259,17 @@ class ReportController extends Controller
         Excel::create('Staff Top Sheet', function($excel) use($staff) {
         	$excel->sheet('Sheet1', function($sheet) use($staff) {
 
-    	        $sheet->loadView('dashboard.reports.stafftopsheet')->withStaff($staff);
+    	        $sheet->loadView('dashboard.reports.stafftopsheet1')->withStaff($staff);
+    	        $sheet->setStyle(array(
+    	            'font' => array(
+    	                'name'      =>  'Arial',
+    	                'size'      =>  10
+    	            )
+    	        ));
+    	    });
+    	    $excel->sheet('Sheet2', function($sheet) use($staff) {
+
+    	        $sheet->loadView('dashboard.reports.stafftopsheet2')->withStaff($staff);
     	        $sheet->setStyle(array(
     	            'font' => array(
     	                'name'      =>  'Arial',
