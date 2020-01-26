@@ -383,7 +383,17 @@ class OldDataEntryContrller extends Controller
         	$oldsaving->save();
         }
 
-        Session::flash('success', 'Added successfully!'); 
+        // check final acc
+        $checkaccfinal = Saving::where('member_id', $member->id)
+                               ->where('savingname_id', 1)
+                               ->first();
+        // check final acc
+        if(!empty($checkaccfinal)) {
+            Session::flash('success', 'Added successfully!');
+        } else {
+            $member->delete();
+            Session::flash('warning', 'Something is wrong!');
+        }
         return redirect()->route('olddata.index');
     }
 
