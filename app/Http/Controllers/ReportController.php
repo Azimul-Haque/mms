@@ -378,6 +378,10 @@ class ReportController extends Controller
 							      	      ->where('due_date', date('Y-m-d', strtotime($transactiondate)))
 							      	      ->where('savingname_id', 2)
 							      	      ->first();
+		$totalshareddepositreturn = DB::table("members")
+					      	    	  ->select(DB::raw("SUM(shared_deposit) as total"))
+					      	   		  ->where('closing_date', date('Y-m-d', strtotime($transactiondate)))
+					      	   		  ->first();
         // disburse
 
         // dd($totalpassbookfee);
@@ -399,7 +403,8 @@ class ReportController extends Controller
         					->withTotaldisbursed($totaldisbursed)
         					->withTotalsavingwithdraw($totalsavingwithdraw)
         					->withTotalgeneralsavingwithdraw($totalgeneralsavingwithdraw)
-        					->withTotallongtermsavingcwithdraw($totallongtermsavingcwithdraw);
+        					->withTotallongtermsavingcwithdraw($totallongtermsavingcwithdraw)
+        					->withTotalshareddepositreturn($totalshareddepositreturn);
     }
 
     public function postDailyOtherAmounts(Request $request)

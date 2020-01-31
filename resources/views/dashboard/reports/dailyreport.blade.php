@@ -128,6 +128,10 @@
                 <td>৳ <span class="for_total_disbursecommon">{{ $totallongtermsavingcwithdraw->total ? $totallongtermsavingcwithdraw->total : 0 }}</span></td>
               </tr>
               <tr>
+                <td>Shared Deposit Return</td>
+                <td>৳ <span class="for_total_disbursecommon">{{ $totalshareddepositreturn->total ? $totalshareddepositreturn->total : 0 }}</span></td>
+              </tr>
+              <tr>
                 <td>Others</td>
                 <td>৳ <input type="number" style="width: 100px;" min="0" id="disburseothers" onchange="dailyOtherAmountsCal()" @if(!empty($dailyotheramounts->disburseothers)) value="{{ $dailyotheramounts->disburseothers }}" @else value="0" @endif></td>
               </tr>
