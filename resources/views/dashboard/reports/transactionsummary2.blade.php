@@ -50,6 +50,7 @@
 			$admissionfeetotal = 0;
 			$passbookfeetotal = 0;
 			$loaninsurancetotal = 0;
+			$processingfeetotal = 0;
 
 		@endphp
 		@foreach($staffs as $staff)
@@ -64,6 +65,7 @@
 				$admissionfeestaff = 0;
 				$passbookfeestaff = 0;
 				$loaninsurancestaff = 0;
+				$processingfeestaff = 0;
 			@endphp
 			@foreach($staff->groups as $group)
 				<tr>
@@ -179,8 +181,22 @@
 						@endphp
 						{{ $loaninsurancegroup }}
 					</td>
+					<td align="right">
+						@php
+							$processingfeegroup = 0;
+							foreach ($group->members as $member) {
+								foreach ($member->loans->where('loanname_id', 1) as $loan) {
+									if(($loan->status == 1) && ($loan->disburse_date == $datetocalc)) {
+										$processingfeegroup = $processingfeegroup + $loan->processing_fee;
+									}
+								}
+							}
+							$processingfeestaff = $processingfeestaff + $processingfeegroup;
+						@endphp
+						{{ $processingfeegroup }}
+					</td>
 					
-					<td align="right">{{ $generalcollgroup + $longtermcollgroup }} {{ $generalwithdrawgroup + $longtermwithdrawgroup }}</td>
+					<td align="right">{{ $generalcollgroup + $longtermcollgroup - ($generalwithdrawgroup + $longtermwithdrawgroup) }}</td>
 				</tr>
 			@endforeach
 			<tr>
@@ -232,6 +248,12 @@
 						$loaninsurancetotal = $loaninsurancetotal + $loaninsurancestaff;
 					@endphp
 				</th>
+				<th align="right">
+					{{ $processingfeestaff }}
+					@php
+						$processingfeetotal = $processingfeetotal + $processingfeestaff;
+					@endphp
+				</th>
 				
 				<th align="right">
 					{{ ($generalcollstaff + $longtermcollstaff + $admissionfeestaff + $passbookfeestaff + $loaninsurancestaff) - ($generalwithdrawstaff + $longtermwithdrawstaff) }}
@@ -251,8 +273,9 @@
 			<th align="right">{{ $admissionfeetotal }}</th>
 			<th align="right">{{ $passbookfeetotal }}</th>
 			<th align="right">{{ $loaninsurancetotal }}</th>
+			<th align="right">{{ $processingfeetotal }}</th>
 
-			<th align="right">{{ ($generalcolltotal + $longtermcolltotal + $admissionfeetotal + $passbookfeetotal + $loaninsurancetotal) - ($generalwithdrawtotal + $longtermwithdrawtotal) }}</th>
+			<th align="right">{{ ($generalcolltotal + $longtermcolltotal + $admissionfeetotal + $passbookfeetotal + $loaninsurancetotal + $processingfeetotal) - ($generalwithdrawtotal + $longtermwithdrawtotal) }}</th>
 			
 		</tr>
 	</tbody>
