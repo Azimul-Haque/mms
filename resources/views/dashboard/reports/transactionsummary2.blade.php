@@ -9,10 +9,10 @@
 <table>
 	<thead>
 		<tr>
-			<th colspan="10" align="center" {{-- style="font-size: 30px;" --}}>Transaction Summary: Groupwise Savings, Admission Fee, PassBook Fee, Loan Insurance</th>
+			<th colspan="11" align="center" {{-- style="font-size: 30px;" --}}>Transaction Summary: Groupwise Savings, Admission Fee, PassBook Fee, Loan Insurance</th>
 		</tr>
 		<tr>
-			<th colspan="10" align="left">Date: {{ date('D, d/m/Y') }}</th>
+			<th colspan="11" align="left">Date: {{ date('D, d/m/Y') }}</th>
 		</tr>
 		<tr>
 			<th rowspan="2" class="lightgray">Loan Officer</th>
@@ -22,6 +22,7 @@
 			<th class="lightgray" align="center">Admission Fee</th>
 			<th class="lightgray" align="center">PassBook Fee</th>
 			<th class="lightgray" align="center">Loan Insurance</th>
+			<th class="lightgray" align="center">Processing Fee</th>
 			<th class="lightgray" align="center"></th>
 		</tr>
 		<tr>
@@ -31,6 +32,7 @@
 			<td class="lightgray" align="center"><b>Withdrawal</b></td>
 			<td class="lightgray" align="center"><b>Collection</b></td>
 			<td class="lightgray" align="center"><b>Withdrawal</b></td>
+			<td class="lightgray" align="center"><b>Total</b></td>
 			<td class="lightgray" align="center"><b>Total</b></td>
 			<td class="lightgray" align="center"><b>Total</b></td>
 			<td class="lightgray" align="center"><b>Total</b></td>
