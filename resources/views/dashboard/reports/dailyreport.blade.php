@@ -40,10 +40,10 @@
                 <td>৳ <input type="number" style="width: 100px;" min="0" id="cashinhand" onchange="dailyOtherAmountsCal()" @if(!empty($dailyotheramounts->cashinhand)) value="{{ $dailyotheramounts->cashinhand }}" @else value="0" @endif></td>
               </tr>
               
-              <tr>
+              {{-- <tr>
                 <td>Loan Collection</td>
                 <td>৳ <span class="">{{ $totalloancollection->total ? $totalloancollection->total : 0 }}</span></td>
-              </tr>
+              </tr> --}}
               <tr>
                 <td>Primary Loan</td>
                 <td>৳ <span class="for_total_collectioncommon">{{ $totalprimaryloancollection->total ? $totalprimaryloancollection->total : 0 }}</span></td>
@@ -53,10 +53,10 @@
                 <td>৳ <span class="for_total_collectioncommon">{{ $totalproductloancollection->total ? $totalproductloancollection->total : 0 }}</span></td>
               </tr>
 
-              <tr>
+              {{-- <tr>
                 <td>Saving Collection</td>
                 <td>৳ <span class="">{{ $totalsavingcollection->total ? $totalsavingcollection->total : 0 }}</span></td>
-              </tr>
+              </tr> --}}
               <tr>
                 <td>General Saving</td>
                 <td>৳ <span class="for_total_collectioncommon">{{ $totalgeneralsavingcollection->total ? $totalgeneralsavingcollection->total : 0 }}</span></td>
