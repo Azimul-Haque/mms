@@ -101,7 +101,7 @@
         </div>
       </div>
       <div class="col-md-4">
-        <span style="font-size: 20px;">Disburse</span>
+        <span style="font-size: 20px;">Disbursement</span>
         <div class="table-responsive">
           <table class="table table-condensed table-bordered">
             <thead>
@@ -143,6 +143,12 @@
               </tr>
             </tfoot>
           </table>
+        </div>
+        <div>
+          <br/><br/>
+          <big>
+            <b>Total Collection - Total Disbursement = ৳ <span id="print_grand_total_calc">0</span></b>
+          </big>
         </div>
       </div>
     </div>
@@ -193,6 +199,7 @@
           toastr.success('SUCCESS').css('width', '400px');
           collectionCommonCal();
           disburseCommonCal();
+          grandTotalCalc();
         } else {
           toastr.warning('Error!').css('width', '400px');
         }
@@ -225,6 +232,16 @@
       })
     }
     disburseCommonCal();
+
+    // total collection - total disburse calculation
+    function grandTotalCalc() {
+      var grand_total_collection = parseFloat($('#print_total_collectioncommon').text());
+      var grand_total_disburse = parseFloat($('#print_total_disbursecommon').text());
+      
+      $('#print_grand_total_calc').text(grand_total_collection - grand_total_disburse);
+
+    }
+    grandTotalCalc();
 
 
 
