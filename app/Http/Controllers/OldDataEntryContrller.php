@@ -392,7 +392,7 @@ class OldDataEntryContrller extends Controller
             Session::flash('success', 'Added successfully!');
         } else {
             $member->delete();
-            Session::flash('warning', 'Something is wrong!');
+            Session::flash('warning', 'Something is wrong! Try Again!');
         }
         return redirect()->route('olddata.index');
     }
