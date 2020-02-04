@@ -228,7 +228,7 @@
               <select name="primary_schemename_id" id="primary_schemename_id" class="form-control">
                 <option value="" selected="" disabled="">Select Program</option>
                 @foreach($schemenames as $schemename)
-                  <option value="{{ $schemename->id }}">{{ $schemename->name }}</option>
+                  <option value="{{ $schemename->id }}" @if($schemename->id == 1) selected="" @endif>{{ $schemename->name }}</option>
                 @endforeach
               </select>
               
