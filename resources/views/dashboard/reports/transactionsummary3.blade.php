@@ -64,16 +64,16 @@
 						if($loan->member->staff_id == $staff->id) {
 							$staffinsurance = $staffinsurance + $loan->insurance;
 						}
-						$totalinsurance = $totalinsurance + $staffinsurance;
 					}
+					$totalinsurance = $totalinsurance + $staffinsurance;
 
 					$staffprocessing_fee = 0;
 					foreach ($totalloans as $loan) {
 						if($loan->member->staff_id == $staff->id) {
 							$staffprocessing_fee = $staffprocessing_fee + $loan->processing_fee;
 						}
-						$totalprocessing_fee = $totalprocessing_fee + $staffprocessing_fee;
 					}
+					$totalprocessing_fee = $totalprocessing_fee + $staffprocessing_fee;
 
 					// member other payments
 					$staffadmission_fee = 0;
@@ -81,24 +81,24 @@
 						if($member->staff_id == $staff->id) {
 							$staffadmission_fee = $staffadmission_fee + $member->admission_fee;
 						}
-						$totaladmission_fee = $totaladmission_fee + $staffadmission_fee;
 					}
+					$totaladmission_fee = $totaladmission_fee + $staffadmission_fee;
 
 					$staffpassbook_fee = 0;
 					foreach ($totalmembers as $member) {
 						if($member->staff_id == $staff->id) {
 							$staffpassbook_fee = $staffpassbook_fee + $member->passbook_fee;
 						}
-						$totalpassbook_fee = $totalpassbook_fee + $staffpassbook_fee;
 					}
+					$totalpassbook_fee = $totalpassbook_fee + $staffpassbook_fee;
 
 					$staffshared_deposit = 0;
 					foreach ($totalmembers as $member) {
 						if($member->staff_id == $staff->id) {
 							$staffshared_deposit = $staffshared_deposit + $member->shared_deposit;
 						}
-						$totalshared_deposit = $totalshared_deposit + $staffshared_deposit;
 					}
+					$totalshared_deposit = $totalshared_deposit + $staffshared_deposit;
 				@endphp
 				{{ $staffloaninstallmentscollection + $staffsavinginstallmentscollection + $staffinsurance + $staffprocessing_fee + $staffadmission_fee + $staffpassbook_fee + $staffshared_deposit }}
 			</td>
