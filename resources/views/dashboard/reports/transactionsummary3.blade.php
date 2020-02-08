@@ -100,7 +100,7 @@
 						$totalshared_deposit = $totalshared_deposit + $staffshared_deposit;
 					}
 				@endphp
-				{{ $staffloaninstallmentscollection + $staffsavinginstallmentscollection + $staffinsurance + $staffprocessing_fee + $staffadmission_fee + $staffpassbook_fee + $staffshared_deposit}}
+				{{ $staffloaninstallmentscollection + $staffsavinginstallmentscollection + $staffinsurance + $staffprocessing_fee + $staffadmission_fee + $staffpassbook_fee + $staffshared_deposit }}
 			</td>
 			<td>
 				@php
@@ -124,33 +124,31 @@
 
 					// shared deposit return
 					$staffshareddepositreturn = 0;
-					foreach ($members as $member) {
+					foreach ($totalclosingmembers as $member) {
 						if($member->staff_id == $staff->id) {
-							$staffshareddepositreturn = $staffshareddepositreturn + $savinginstallment->withdraw;
+							$staffshareddepositreturn = $staffshareddepositreturn + $member->shared_deposit;
 						}
 					}
 					$totalshareddepositreturn = $totalshareddepositreturn + $staffshareddepositreturn;
 				@endphp
-				{{ $staffsavingwithdraw }}
-				{{ $staffdisbursed + $staffsavingwithdraw }}
+				{{ $staffdisbursed + $staffsavingwithdraw + $staffshareddepositreturn }}
 			</td>
-			<td>
-				
-			</td>
+			<th>
+				{{ ($staffloaninstallmentscollection + $staffsavinginstallmentscollection + $staffinsurance + $staffprocessing_fee + $staffadmission_fee + $staffpassbook_fee + $staffshared_deposit) -  ($staffdisbursed + $staffsavingwithdraw + $staffshareddepositreturn) }}
+			</th>
 		</tr>
 		@endforeach
 		<tr>
-			<td align="left">Total</td>
-			<td> 
+			<th align="left">Total</th>
+			<th>
 				{{ $totalloaninstallmentscollection + $totalsavinginstallmentscollection + $totalinsurance + $totalprocessing_fee  + $totaladmission_fee + $totalpassbook_fee + $totalshared_deposit }}
-			</td>
-			<td> 
-				{{ $totalshareddepositreturn }} 
-				{{ $totaldisbursed + $totalsavingwithdraw }}
-			</td>
-			<td>
-				
-			</td>
+			</th>
+			<th> 
+				{{ $totaldisbursed + $totalsavingwithdraw + $totalshareddepositreturn }}
+			</th>
+			<th>
+				{{ ($totalloaninstallmentscollection + $totalsavinginstallmentscollection + $totalinsurance + $totalprocessing_fee  + $totaladmission_fee + $totalpassbook_fee + $totalshared_deposit) - ($totaldisbursed + $totalsavingwithdraw + $totalshareddepositreturn) }}
+			</th>
 		</tr>
 	</tbody>
 </table>

@@ -138,17 +138,17 @@ class ReportController extends Controller
     	$totalmembers = Member::where('admission_date', $datetocalc)->get();
     	$totalclosingmembers = Member::where('closing_date', $datetocalc)->get();
 
-	    return view('dashboard.reports.transactionsummary3')
-	                    ->withStaffs($staffs)
-	                    ->withDatetocalc($datetocalc)
-	                    ->withLoaninstallments($loaninstallments)
-	                    ->withSavinginstallments($savinginstallments)
-	                    ->withTotalloans($totalloans)
-	                    ->withTotalmembers($totalmembers)
-	                    ->withTotalclosingmembers($totalclosingmembers);
+	    // return view('dashboard.reports.transactionsummary3')
+	    //                 ->withStaffs($staffs)
+	    //                 ->withDatetocalc($datetocalc)
+	    //                 ->withLoaninstallments($loaninstallments)
+	    //                 ->withSavinginstallments($savinginstallments)
+	    //                 ->withTotalloans($totalloans)
+	    //                 ->withTotalmembers($totalmembers)
+	    //                 ->withTotalclosingmembers($totalclosingmembers);
 
 
-	    Excel::create('Transaction Summary', function($excel) use($staffs, $datetocalc) 
+	    Excel::create('Transaction Summary', function($excel) use($staffs, $datetocalc, $loaninstallments, $savinginstallments, $totalloans, $totalmembers, $totalclosingmembers) 
 	    {
 	    	$excel->sheet('Loan Collection', function($sheet) use($staffs, $datetocalc) 
 	    	{
@@ -165,6 +165,22 @@ class ReportController extends Controller
 	    	{
 		        $sheet->loadView('dashboard.reports.transactionsummary2')->withStaffs($staffs)
 	                    												->withDatetocalc($datetocalc);
+		        $sheet->setStyle(array(
+		            'font' => array(
+		                'name'      =>  'Arial',
+		                'size'      =>  10
+		            )
+		        ));
+		    });
+	    	$excel->sheet('Staff Wise', function($sheet) use($staffs, $datetocalc, $loaninstallments, $savinginstallments, $totalloans, $totalmembers, $totalclosingmembers) 
+	    	{
+		        $sheet->loadView('dashboard.reports.transactionsummary3')->withStaffs($staffs)
+													                     ->withDatetocalc($datetocalc)
+													                     ->withLoaninstallments($loaninstallments)
+													                     ->withSavinginstallments($savinginstallments)
+													                     ->withTotalloans($totalloans)
+													                     ->withTotalmembers($totalmembers)
+													                     ->withTotalclosingmembers($totalclosingmembers);
 		        $sheet->setStyle(array(
 		            'font' => array(
 		                'name'      =>  'Arial',
