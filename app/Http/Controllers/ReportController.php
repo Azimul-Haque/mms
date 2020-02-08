@@ -132,14 +132,19 @@ class ReportController extends Controller
     {
     	$staffs = User::where('role', 'staff')->get();
     	$datetocalc = date('Y-m-d');
+    	$loaninstallments = Loaninstallment::where('due_date', $datetocalc)->get();
+    	$savinginstallments = Savinginstallment::where('due_date', $datetocalc)->get();
+    	$totalloans = Loan::where('disburse_date', $datetocalc)->get();
+    	$totalmembers = Loan::where('admission_date', $datetocalc)->get();
 
-	    // return view('dashboard.reports.transactionsummary1')
-	    //                 ->withStaffs($staffs)
-	    //                 ->withDatetocalc($datetocalc);
+	    return view('dashboard.reports.transactionsummary3')
+	                    ->withStaffs($staffs)
+	                    ->withDatetocalc($datetocalc)
+	                    ->withLoaninstallments($loaninstallments)
+	                    ->withSavinginstallments($savinginstallments)
+	                    ->withTotalloans($totalloans)
+	                    ->withTotalmembers($totalmembers);
 
-	    // return view('dashboard.reports.transactionsummary2')
-	    //                 ->withStaffs($staffs)
-	    //                 ->withDatetocalc($datetocalc);
 
 	    Excel::create('Transaction Summary', function($excel) use($staffs, $datetocalc) 
 	    {

@@ -85,7 +85,7 @@
       <div class="col-md-3 col-sm-6 col-xs-12">
         <a href="{{ route('report.daily.summary', date('Y-m-d')) }}">
           <div class="info-box">
-            <span class="info-box-icon bg-green"><i class="fa fa-balance-scale"></i></span>
+            <span class="info-box-icon bg-red"><i class="fa fa-balance-scale"></i></span>
 
             <div class="info-box-content">
               <span class="info-box-text">Daily</span>
