@@ -113,7 +113,7 @@ class GroupController extends Controller
         
         // save the deposits(General and LongTerm)
         // General Saving
-        if($request->data['generalsaving'] > 0 || $request->data['generalsavingwd'] > 0) {
+        if($request->data['generalsaving'] > -1 || $request->data['generalsavingwd'] > -1) {
           $generalsaving = Savinginstallment::where('member_id', $request->data['member_id'])
                                             ->where('savingname_id', 1) // hard coded!
                                             ->where('due_date', $request->data['transactiondate'])
@@ -158,7 +158,7 @@ class GroupController extends Controller
 
         // LongTerm Saving
         if(!empty($request->data['longsaving']) || !empty($request->data['longsavingwd'])) { // eta karo karo nao thakte paare...
-          if($request->data['longsaving'] > 0 || $request->data['longsavingwd'] > 0) {
+          if($request->data['longsaving'] > -1 || $request->data['longsavingwd'] > -1) {
             $longsaving = Savinginstallment::where('member_id', $request->data['member_id'])
                                               ->where('savingname_id', 2) // hard coded!
                                               ->where('due_date', $request->data['transactiondate'])
@@ -209,7 +209,7 @@ class GroupController extends Controller
         $member = Member::find($request->data['member_id']);
         $loan = Loan::find($request->data['loan_id']);
         // save the new installment
-        if($request->data['loaninstallment'] > 0) 
+        if($request->data['loaninstallment'] > -1) 
         {
           $installment = new Loaninstallment;
           $installment->due_date = date('Y-m-d', strtotime($request->data['transactiondate']));
@@ -242,7 +242,7 @@ class GroupController extends Controller
         
         // save the deposits(General and LongTerm)
         // General Saving
-        if($request->data['generalsaving'] > 0 || $request->data['generalsavingwd'] > 0) {
+        if($request->data['generalsaving'] > -1 || $request->data['generalsavingwd'] > -1) {
           $generalsaving = Savinginstallment::where('member_id', $request->data['member_id'])
                                             ->where('savingname_id', 1) // hard coded!
                                             ->where('due_date', $request->data['transactiondate'])
@@ -287,7 +287,7 @@ class GroupController extends Controller
 
         // LongTerm Saving
         if(!empty($request->data['longsaving']) || !empty($request->data['longsavingwd'])) { // eta karo karo nao thakte paare...
-          if($request->data['longsaving'] > 0 || $request->data['longsavingwd'] > 0) {
+          if($request->data['longsaving'] > -1 || $request->data['longsavingwd'] > -1) {
             $longsaving = Savinginstallment::where('member_id', $request->data['member_id'])
                                               ->where('savingname_id', 2) // hard coded!
                                               ->where('due_date', $request->data['transactiondate'])
