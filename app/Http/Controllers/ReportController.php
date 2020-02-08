@@ -136,6 +136,7 @@ class ReportController extends Controller
     	$savinginstallments = Savinginstallment::where('due_date', $datetocalc)->get();
     	$totalloans = Loan::where('disburse_date', $datetocalc)->get();
     	$totalmembers = Member::where('admission_date', $datetocalc)->get();
+    	$totalclosingmembers = Member::where('closing_date', $datetocalc)->get();
 
 	    return view('dashboard.reports.transactionsummary3')
 	                    ->withStaffs($staffs)
@@ -143,7 +144,8 @@ class ReportController extends Controller
 	                    ->withLoaninstallments($loaninstallments)
 	                    ->withSavinginstallments($savinginstallments)
 	                    ->withTotalloans($totalloans)
-	                    ->withTotalmembers($totalmembers);
+	                    ->withTotalmembers($totalmembers)
+	                    ->withTotalclosingmembers($totalclosingmembers);
 
 
 	    Excel::create('Transaction Summary', function($excel) use($staffs, $datetocalc) 
@@ -339,7 +341,7 @@ class ReportController extends Controller
 					      	     ->where('due_date', date('Y-m-d', strtotime($transactiondate)))
 					      	     ->first();
 		//saving calculation
-					      	     
+
 		$totalinsurance = DB::table("loans")
 					      	    ->select(DB::raw("SUM(insurance) as total"))
 					      	    ->where('disburse_date', date('Y-m-d', strtotime($transactiondate)))

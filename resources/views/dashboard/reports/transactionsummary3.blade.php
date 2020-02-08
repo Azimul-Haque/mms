@@ -103,7 +103,36 @@
 				{{ $staffloaninstallmentscollection + $staffsavinginstallmentscollection + $staffinsurance + $staffprocessing_fee + $staffadmission_fee + $staffpassbook_fee + $staffshared_deposit}}
 			</td>
 			<td>
-				
+				@php
+					// loan disbursed
+					$staffdisbursed = 0;
+					foreach ($totalloans as $loan) {
+						if($loan->member->staff_id == $staff->id) {
+							$staffdisbursed = $staffdisbursed + $loan->total_disbursed;
+						}
+					}
+					$totaldisbursed = $totaldisbursed + $staffdisbursed;
+
+					// loan withdraw
+					$staffsavingwithdraw = 0;
+					foreach ($savinginstallments as $savinginstallment) {
+						if($savinginstallment->user_id == $staff->id) {
+							$staffsavingwithdraw = $staffsavingwithdraw + $savinginstallment->withdraw;
+						}
+					}
+					$totalsavingwithdraw = $totalsavingwithdraw + $staffsavingwithdraw;
+
+					// shared deposit return
+					$staffshareddepositreturn = 0;
+					foreach ($members as $member) {
+						if($member->staff_id == $staff->id) {
+							$staffshareddepositreturn = $staffshareddepositreturn + $savinginstallment->withdraw;
+						}
+					}
+					$totalshareddepositreturn = $totalshareddepositreturn + $staffshareddepositreturn;
+				@endphp
+				{{ $staffsavingwithdraw }}
+				{{ $staffdisbursed + $staffsavingwithdraw }}
 			</td>
 			<td>
 				
@@ -115,8 +144,9 @@
 			<td> 
 				{{ $totalloaninstallmentscollection + $totalsavinginstallmentscollection + $totalinsurance + $totalprocessing_fee  + $totaladmission_fee + $totalpassbook_fee + $totalshared_deposit }}
 			</td>
-			<td>
-				
+			<td> 
+				{{ $totalshareddepositreturn }} 
+				{{ $totaldisbursed + $totalsavingwithdraw }}
 			</td>
 			<td>
 				
