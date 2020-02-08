@@ -22,11 +22,21 @@
 		</tr>
 	</thead>
 	<tbody>
+		@php
+			$totalloaninstallmentscollection = 0;
+		@endphp
 		@foreach($staffs as $staff)
 		<tr>
 			<td align="left">{{ $staff->name }}</td>
 			<td>
-				
+				@php
+					$staffloaninstallmentscollection = 0;
+					foreach ($loaninstallments as $loaninstallment) {
+						if($loaninstallment->user_id == $staff->id) {
+							
+						}
+					}
+				@endphp
 			</td>
 			<td>
 				
