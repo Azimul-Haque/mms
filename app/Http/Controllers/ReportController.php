@@ -338,8 +338,8 @@ class ReportController extends Controller
 					      	     ->select(DB::raw("SUM(amount) as total"))
 					      	     ->where('due_date', date('Y-m-d', strtotime($transactiondate)))
 					      	     ->first();
-
 		//saving calculation
+					      	     
 		$totalinsurance = DB::table("loans")
 					      	    ->select(DB::raw("SUM(insurance) as total"))
 					      	    ->where('disburse_date', date('Y-m-d', strtotime($transactiondate)))

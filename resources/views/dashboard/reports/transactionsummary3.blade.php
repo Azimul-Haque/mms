@@ -47,7 +47,7 @@
 					}
 					$totalsavinginstallmentscollection = $totalsavinginstallmentscollection + $staffsavinginstallmentscollection;
 				@endphp
-				{{ $staffsavinginstallmentscollection }}
+				{{ $staffloaninstallmentscollection + $staffsavinginstallmentscollection }}
 			</td>
 			<td>
 				
@@ -59,7 +59,7 @@
 		@endforeach
 		<tr>
 			<td align="left">Total</td>
-			<td>{{ $totalloaninstallmentscollection }}</td>
+			<td>{{ $totalloaninstallmentscollection + $totalsavinginstallmentscollection }}</td>
 			<td></td>
 			<td></td>
 		</tr>
