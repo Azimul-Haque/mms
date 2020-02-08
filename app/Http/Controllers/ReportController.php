@@ -135,7 +135,7 @@ class ReportController extends Controller
     	$loaninstallments = Loaninstallment::where('due_date', $datetocalc)->get();
     	$savinginstallments = Savinginstallment::where('due_date', $datetocalc)->get();
     	$totalloans = Loan::where('disburse_date', $datetocalc)->get();
-    	$totalmembers = Loan::where('admission_date', $datetocalc)->get();
+    	$totalmembers = Member::where('admission_date', $datetocalc)->get();
 
 	    return view('dashboard.reports.transactionsummary3')
 	                    ->withStaffs($staffs)

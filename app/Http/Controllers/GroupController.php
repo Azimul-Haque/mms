@@ -255,6 +255,7 @@ class GroupController extends Controller
               $generalsaving->amount = $request->data['generalsaving'];
               $generalsaving->withdraw = $request->data['generalsavingwd'];
               $generalsaving->balance = $gensavingac->total_amount - $gensavingac->withdraw;
+              $generalsaving->user_id = $member->staff_id;
               $generalsaving->save();
           } else {
               // balance calculation
@@ -274,6 +275,7 @@ class GroupController extends Controller
               $newgeneralsaving->member_id = $request->data['member_id'];
               $newgeneralsaving->savingname_id = 1; // hard coded!
               $newgeneralsaving->saving_id = $gensavingac->id;
+              $newgeneralsaving->user_id = $member->staff_id;
               $newgeneralsaving->save();            
           }
         }
@@ -298,6 +300,7 @@ class GroupController extends Controller
                 $longsaving->amount = $request->data['longsaving'];
                 $longsaving->withdraw = $request->data['longsavingwd'];
                 $longsaving->balance = $longsavingac->total_amount - $longsavingac->withdraw;
+                $longsaving->user_id = $member->staff_id;
                 $longsaving->save();
             } else {
                 // balance calculation
@@ -316,6 +319,7 @@ class GroupController extends Controller
                 $newlongsaving->member_id = $request->data['member_id'];
                 $newlongsaving->savingname_id = 2; // hard coded!
                 $newlongsaving->saving_id = $longsavingac->id;
+                $newlongsaving->user_id = $member->staff_id;
                 $newlongsaving->save();            
             }
           }

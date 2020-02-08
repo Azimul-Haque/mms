@@ -24,6 +24,7 @@
 	<tbody>
 		@php
 			$totalloaninstallmentscollection = 0;
+			$totalsavinginstallmentscollection = 0;
 		@endphp
 		@foreach($staffs as $staff)
 		<tr>
@@ -33,10 +34,20 @@
 					$staffloaninstallmentscollection = 0;
 					foreach ($loaninstallments as $loaninstallment) {
 						if($loaninstallment->user_id == $staff->id) {
-							
+							$staffloaninstallmentscollection = $staffloaninstallmentscollection + $loaninstallment->paid_total;
 						}
 					}
+					$totalloaninstallmentscollection = $totalloaninstallmentscollection + $staffloaninstallmentscollection;
+
+					$staffsavinginstallmentscollection = 0;
+					foreach ($savinginstallments as $savinginstallment) {
+						if($savinginstallment->user_id == $staff->id) {
+							$staffsavinginstallmentscollection = $staffsavinginstallmentscollection + $savinginstallment->amount;
+						}
+					}
+					$totalsavinginstallmentscollection = $totalsavinginstallmentscollection + $staffsavinginstallmentscollection;
 				@endphp
+				{{ $staffsavinginstallmentscollection }}
 			</td>
 			<td>
 				
@@ -48,7 +59,7 @@
 		@endforeach
 		<tr>
 			<td align="left">Total</td>
-			<td></td>
+			<td>{{ $totalloaninstallmentscollection }}</td>
 			<td></td>
 			<td></td>
 		</tr>
