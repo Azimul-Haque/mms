@@ -133,9 +133,9 @@
 				@endphp
 				{{ $staffdisbursed + $staffsavingwithdraw + $staffshareddepositreturn }}
 			</td>
-			<th>
+			<td>
 				{{ ($staffloaninstallmentscollection + $staffsavinginstallmentscollection + $staffinsurance + $staffprocessing_fee + $staffadmission_fee + $staffpassbook_fee + $staffshared_deposit) -  ($staffdisbursed + $staffsavingwithdraw + $staffshareddepositreturn) }}
-			</th>
+			</td>
 		</tr>
 		@endforeach
 		<tr>
