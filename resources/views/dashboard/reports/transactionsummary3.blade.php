@@ -25,12 +25,18 @@
 		@php
 			$totalloaninstallmentscollection = 0;
 			$totalsavinginstallmentscollection = 0;
+			$totalinsurance = 0;
+			$totalprocessing_fee = 0;
+			$totaladmission_fee = 0;
+			$totalpassbook_fee = 0;
+			$totalshared_deposit = 0;
 		@endphp
 		@foreach($staffs as $staff)
 		<tr>
 			<td align="left">{{ $staff->name }}</td>
 			<td>
 				@php
+					// loaninstallments
 					$staffloaninstallmentscollection = 0;
 					foreach ($loaninstallments as $loaninstallment) {
 						if($loaninstallment->user_id == $staff->id) {
@@ -39,6 +45,7 @@
 					}
 					$totalloaninstallmentscollection = $totalloaninstallmentscollection + $staffloaninstallmentscollection;
 
+					// savinginstallments
 					$staffsavinginstallmentscollection = 0;
 					foreach ($savinginstallments as $savinginstallment) {
 						if($savinginstallment->user_id == $staff->id) {
@@ -46,8 +53,51 @@
 						}
 					}
 					$totalsavinginstallmentscollection = $totalsavinginstallmentscollection + $staffsavinginstallmentscollection;
+
+					// loan other payments
+					$staffinsurance = 0;
+					foreach ($totalloans as $loan) {
+						if($loan->member->staff_id == $staff->id) {
+							$staffinsurance = $staffinsurance + $loan->insurance;
+						}
+						$totalinsurance = $totalinsurance + $staffinsurance;
+					}
+
+					$staffprocessing_fee = 0;
+					foreach ($totalloans as $loan) {
+						if($loan->member->staff_id == $staff->id) {
+							$staffprocessing_fee = $staffprocessing_fee + $loan->processing_fee;
+						}
+						$totalprocessing_fee = $totalprocessing_fee + $staffprocessing_fee;
+					}
+
+					// member other payments
+					$staffadmission_fee = 0;
+					foreach ($totalmembers as $member) {
+						if($member->staff_id == $staff->id) {
+							$staffadmission_fee = $staffadmission_fee + $member->admission_fee;
+						}
+						$totaladmission_fee = $totaladmission_fee + $staffadmission_fee;
+					}
+
+					$staffpassbook_fee = 0;
+					foreach ($totalmembers as $member) {
+						if($member->staff_id == $staff->id) {
+							$staffpassbook_fee = $staffpassbook_fee + $member->passbook_fee;
+						}
+						$totalpassbook_fee = $totalpassbook_fee + $staffpassbook_fee;
+					}
+
+					$staffshared_deposit = 0;
+					foreach ($totalmembers as $member) {
+						if($member->staff_id == $staff->id) {
+							$staffshared_deposit = $staffshared_deposit + $member->shared_deposit;
+						}
+						$totalshared_deposit = $totalshared_deposit + $staffshared_deposit;
+					}
 				@endphp
-				{{ $staffloaninstallmentscollection + $staffsavinginstallmentscollection }}
+				{{ $staffshared_deposit }} 
+				{{ $staffloaninstallmentscollection + $staffsavinginstallmentscollection + $staffinsurance + $staffprocessing_fee + $staffadmission_fee + $staffpassbook_fee + $staffshared_deposit}}
 			</td>
 			<td>
 				
@@ -59,9 +109,16 @@
 		@endforeach
 		<tr>
 			<td align="left">Total</td>
-			<td>{{ $totalloaninstallmentscollection + $totalsavinginstallmentscollection }}</td>
-			<td></td>
-			<td></td>
+			<td>
+				{{ $totalshared_deposit }} 
+				{{ $totalloaninstallmentscollection + $totalsavinginstallmentscollection + $totalinsurance + $totalprocessing_fee  + $totaladmission_fee + $totalpassbook_fee + $totalshared_deposit }}
+			</td>
+			<td>
+				
+			</td>
+			<td>
+				
+			</td>
 		</tr>
 	</tbody>
 </table>
