@@ -30,6 +30,10 @@
 			$totaladmission_fee = 0;
 			$totalpassbook_fee = 0;
 			$totalshared_deposit = 0;
+
+			$totaldisbursed = 0;
+			$totalsavingwithdraw = 0;
+			$totalshareddepositreturn = 0;
 		@endphp
 		@foreach($staffs as $staff)
 		<tr>
@@ -96,7 +100,6 @@
 						$totalshared_deposit = $totalshared_deposit + $staffshared_deposit;
 					}
 				@endphp
-				{{ $staffshared_deposit }} 
 				{{ $staffloaninstallmentscollection + $staffsavinginstallmentscollection + $staffinsurance + $staffprocessing_fee + $staffadmission_fee + $staffpassbook_fee + $staffshared_deposit}}
 			</td>
 			<td>
@@ -109,8 +112,7 @@
 		@endforeach
 		<tr>
 			<td align="left">Total</td>
-			<td>
-				{{ $totalshared_deposit }} 
+			<td> 
 				{{ $totalloaninstallmentscollection + $totalsavinginstallmentscollection + $totalinsurance + $totalprocessing_fee  + $totaladmission_fee + $totalpassbook_fee + $totalshared_deposit }}
 			</td>
 			<td>

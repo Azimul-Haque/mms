@@ -115,10 +115,10 @@
                 <td>Loan Disbursed</td>
                 <td>৳ <span class="for_total_disbursecommon">{{ $totaldisbursed->total ? $totaldisbursed->total : 0 }}</span></td>
               </tr>
-              <tr>
+             {{--  <tr>
                 <td>Saving Withdrawal</td>
                 <td>৳ <span class="">{{ $totalsavingwithdraw->total ? $totalsavingwithdraw->total : 0 }}</span></td>
-              </tr>
+              </tr> --}}
               <tr>
                 <td>General Saving Withdrawal</td>
                 <td>৳ <span class="for_total_disbursecommon">{{ $totalgeneralsavingwithdraw->total ? $totalgeneralsavingwithdraw->total : 0 }}</span></td>
