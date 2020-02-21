@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'CallbackFilterIterator' => $vendorDir . '/symfony/polyfill-php54/Resources/stubs/CallbackFilterIterator.php',
+    'CreateClosedaysTable' => $baseDir . '/database/migrations/2020_02_22_032326_create_closedays_table.php',
     'CreateDailyotheramountsTable' => $baseDir . '/database/migrations/2020_01_23_034131_create_dailyotheramounts_table.php',
     'CreateGroupsTable' => $baseDir . '/database/migrations/2019_09_30_034025_create_groups_table.php',
     'CreateLoaninstallmentsTable' => $baseDir . '/database/migrations/2019_10_20_034031_create_loaninstallments_table.php',

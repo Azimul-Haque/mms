@@ -365,4 +365,9 @@ class DashboardController extends Controller
     {
         return view('dashboard.programs.features');
     }
+
+    public function getDayClose()
+    {
+        return view('dashboard.programs.dayclose');
+    }
 }
