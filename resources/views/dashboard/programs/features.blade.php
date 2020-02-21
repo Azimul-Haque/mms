@@ -99,16 +99,16 @@
       <div class="clearfix visible-sm-block"></div>
 
       <div class="col-md-3 col-sm-6 col-xs-12">
-        {{-- <a href="{{ route('report.daily.summary', date('Y-m-d')) }}">
+        <a href="{{ route('programs.day.close') }}">
           <div class="info-box">
-            <span class="info-box-icon bg-green"><i class="fa fa-balance-scale"></i></span>
+            <span class="info-box-icon bg-green"><i class="fa fa-calendar-times-o"></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-text">Daily</span>
-              <span class="info-box-number">Report</span>
+              <span class="info-box-text">Day</span>
+              <span class="info-box-number">Close</span>
             </div>
           </div>
-        </a> --}}
+        </a>
       </div>
     </div>
 @stop

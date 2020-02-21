@@ -11,147 +11,149 @@
 @stop
 
 @section('content')
-    <div class="row">
-      <div class="col-md-2">
-        <input class="form-control" type="text" name="date_to_load" id="date_to_load" @if(!empty($transactiondate)) value="{{ date('F d, Y', strtotime($transactiondate)) }}" @else value="{{ date('F d, Y') }}" @endif placeholder="Select Date" readonly=""><br/>
+    @if(Auth::user()->role == 'admin')
+      <div class="row">
+        <div class="col-md-2">
+          <input class="form-control" type="text" name="date_to_load" id="date_to_load" @if(!empty($transactiondate)) value="{{ date('F d, Y', strtotime($transactiondate)) }}" @else value="{{ date('F d, Y') }}" @endif placeholder="Select Date" readonly=""><br/>
+        </div>
+        <div class="col-md-3">
+          <button class="btn btn-success" id="loaddailyOtherAmounts"><i class="fa fa fa-balance-scale"></i> Load</button><br/>
+        </div>
+        <div class="col-md-3">
+          <a href="{{ url()->current() }}" class="btn btn-primary pull-right"><i class="fa fa-floppy-o"></i> Save</a><br/>
+        </div>
+        <div class="col-md-4"></div>
       </div>
-      <div class="col-md-3">
-        <button class="btn btn-success" id="loaddailyOtherAmounts"><i class="fa fa fa-balance-scale"></i> Load</button><br/>
-      </div>
-      <div class="col-md-3">
-        <a href="{{ url()->current() }}" class="btn btn-primary pull-right"><i class="fa fa-floppy-o"></i> Save</a><br/>
-      </div>
-      <div class="col-md-4"></div>
-    </div>
-    <div class="row">
-      <div class="col-md-4">
-        <span style="font-size: 20px;">Collection</span>
-        <div class="table-responsive">
-          <table class="table table-condensed table-bordered">
-            <thead>
-              <tr>
-                <th width="50%">Sector</th>
-                <th>Amount</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Cash in Hand</td>
-                <td>৳ <input type="number" style="width: 100px;" min="0" id="cashinhand" onchange="dailyOtherAmountsCal()" @if(!empty($dailyotheramounts->cashinhand)) value="{{ $dailyotheramounts->cashinhand }}" @else value="0" @endif></td>
-              </tr>
-              
-              {{-- <tr>
-                <td>Loan Collection</td>
-                <td>৳ <span class="">{{ $totalloancollection->total ? $totalloancollection->total : 0 }}</span></td>
-              </tr> --}}
-              <tr>
-                <td>Primary Loan</td>
-                <td>৳ <span class="for_total_collectioncommon">{{ $totalprimaryloancollection->total ? $totalprimaryloancollection->total : 0 }}</span></td>
-              </tr>
-              <tr>
-                <td>Product Loan</td>
-                <td>৳ <span class="for_total_collectioncommon">{{ $totalproductloancollection->total ? $totalproductloancollection->total : 0 }}</span></td>
-              </tr>
+      <div class="row">
+        <div class="col-md-4">
+          <span style="font-size: 20px;">Collection</span>
+          <div class="table-responsive">
+            <table class="table table-condensed table-bordered">
+              <thead>
+                <tr>
+                  <th width="50%">Sector</th>
+                  <th>Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Cash in Hand</td>
+                  <td>৳ <input type="number" style="width: 100px;" min="0" id="cashinhand" onchange="dailyOtherAmountsCal()" @if(!empty($dailyotheramounts->cashinhand)) value="{{ $dailyotheramounts->cashinhand }}" @else value="0" @endif></td>
+                </tr>
+                
+                {{-- <tr>
+                  <td>Loan Collection</td>
+                  <td>৳ <span class="">{{ $totalloancollection->total ? $totalloancollection->total : 0 }}</span></td>
+                </tr> --}}
+                <tr>
+                  <td>Primary Loan</td>
+                  <td>৳ <span class="for_total_collectioncommon">{{ $totalprimaryloancollection->total ? $totalprimaryloancollection->total : 0 }}</span></td>
+                </tr>
+                <tr>
+                  <td>Product Loan</td>
+                  <td>৳ <span class="for_total_collectioncommon">{{ $totalproductloancollection->total ? $totalproductloancollection->total : 0 }}</span></td>
+                </tr>
 
-              {{-- <tr>
-                <td>Saving Collection</td>
-                <td>৳ <span class="">{{ $totalsavingcollection->total ? $totalsavingcollection->total : 0 }}</span></td>
-              </tr> --}}
-              <tr>
-                <td>General Saving</td>
-                <td>৳ <span class="for_total_collectioncommon">{{ $totalgeneralsavingcollection->total ? $totalgeneralsavingcollection->total : 0 }}</span></td>
-              </tr>
-              <tr>
-                <td>Long Term Saving</td>
-                <td>৳ <span class="for_total_collectioncommon">{{ $totallongtermsavingcollection->total ? $totallongtermsavingcollection->total : 0 }}</span></td>
-              </tr>
+                {{-- <tr>
+                  <td>Saving Collection</td>
+                  <td>৳ <span class="">{{ $totalsavingcollection->total ? $totalsavingcollection->total : 0 }}</span></td>
+                </tr> --}}
+                <tr>
+                  <td>General Saving</td>
+                  <td>৳ <span class="for_total_collectioncommon">{{ $totalgeneralsavingcollection->total ? $totalgeneralsavingcollection->total : 0 }}</span></td>
+                </tr>
+                <tr>
+                  <td>Long Term Saving</td>
+                  <td>৳ <span class="for_total_collectioncommon">{{ $totallongtermsavingcollection->total ? $totallongtermsavingcollection->total : 0 }}</span></td>
+                </tr>
 
-              <tr>
-                <td>Insurance</td>
-                <td>৳ <span class="for_total_collectioncommon">{{ $totalinsurance->total ? $totalinsurance->total : 0 }}</span></td>
-              </tr>
-              <tr>
-                <td>Processing Fee</td>
-                <td>৳ <span class="for_total_collectioncommon">{{ $totalprocessingfee->total ? $totalprocessingfee->total : 0 }}</span></td>
-              </tr>
-              <tr>
-                <td>Admission Fee</td>
-                <td>৳ <span class="for_total_collectioncommon">{{ $totaladmissionfee->total ? $totaladmissionfee->total : 0 }}</span></td>
-              </tr>
-              <tr>
-                <td>Passbook Fee</td>
-                <td>৳ <span class="for_total_collectioncommon">{{ $totalpassbookfee->total ? $totalpassbookfee->total : 0 }}</span></td>
-              </tr>
-              <tr>
-                <td>Shared Deposit</td>
-                <td>৳ <span class="for_total_collectioncommon">{{ $totalshareddeposit->total ? $totalshareddeposit->total : 0 }}</span></td>
-              </tr>
-              <tr>
-                <td>Others</td>
-                <td>৳ <input type="number" style="width: 100px;" min="0" id="collentionothers" onchange="dailyOtherAmountsCal()" @if(!empty($dailyotheramounts->collentionothers)) value="{{ $dailyotheramounts->collentionothers }}" @else value="0" @endif></td>
-              </tr>
-            </tbody>
-            <tfoot>
-              <tr>
-                <th>Total</th>
-                <th>৳ <span id="print_total_collectioncommon"></span></th>
-              </tr>
-            </tfoot>
-          </table>
+                <tr>
+                  <td>Insurance</td>
+                  <td>৳ <span class="for_total_collectioncommon">{{ $totalinsurance->total ? $totalinsurance->total : 0 }}</span></td>
+                </tr>
+                <tr>
+                  <td>Processing Fee</td>
+                  <td>৳ <span class="for_total_collectioncommon">{{ $totalprocessingfee->total ? $totalprocessingfee->total : 0 }}</span></td>
+                </tr>
+                <tr>
+                  <td>Admission Fee</td>
+                  <td>৳ <span class="for_total_collectioncommon">{{ $totaladmissionfee->total ? $totaladmissionfee->total : 0 }}</span></td>
+                </tr>
+                <tr>
+                  <td>Passbook Fee</td>
+                  <td>৳ <span class="for_total_collectioncommon">{{ $totalpassbookfee->total ? $totalpassbookfee->total : 0 }}</span></td>
+                </tr>
+                <tr>
+                  <td>Shared Deposit</td>
+                  <td>৳ <span class="for_total_collectioncommon">{{ $totalshareddeposit->total ? $totalshareddeposit->total : 0 }}</span></td>
+                </tr>
+                <tr>
+                  <td>Others</td>
+                  <td>৳ <input type="number" style="width: 100px;" min="0" id="collentionothers" onchange="dailyOtherAmountsCal()" @if(!empty($dailyotheramounts->collentionothers)) value="{{ $dailyotheramounts->collentionothers }}" @else value="0" @endif></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Total</th>
+                  <th>৳ <span id="print_total_collectioncommon"></span></th>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <span style="font-size: 20px;">Disbursement</span>
+          <div class="table-responsive">
+            <table class="table table-condensed table-bordered">
+              <thead>
+                <tr>
+                  <th width="50%">Sector</th>
+                  <th>Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Loan Disbursed</td>
+                  <td>৳ <span class="for_total_disbursecommon">{{ $totaldisbursed->total ? $totaldisbursed->total : 0 }}</span></td>
+                </tr>
+               {{--  <tr>
+                  <td>Saving Withdrawal</td>
+                  <td>৳ <span class="">{{ $totalsavingwithdraw->total ? $totalsavingwithdraw->total : 0 }}</span></td>
+                </tr> --}}
+                <tr>
+                  <td>General Saving Withdrawal</td>
+                  <td>৳ <span class="for_total_disbursecommon">{{ $totalgeneralsavingwithdraw->total ? $totalgeneralsavingwithdraw->total : 0 }}</span></td>
+                </tr>
+                <tr>
+                  <td>Long Term Saving Withdrawal</td>
+                  <td>৳ <span class="for_total_disbursecommon">{{ $totallongtermsavingcwithdraw->total ? $totallongtermsavingcwithdraw->total : 0 }}</span></td>
+                </tr>
+                <tr>
+                  <td>Shared Deposit Return</td>
+                  <td>৳ <span class="for_total_disbursecommon">{{ $totalshareddepositreturn->total ? $totalshareddepositreturn->total : 0 }}</span></td>
+                </tr>
+                <tr>
+                  <td>Others</td>
+                  <td>৳ <input type="number" style="width: 100px;" min="0" id="disburseothers" onchange="dailyOtherAmountsCal()" @if(!empty($dailyotheramounts->disburseothers)) value="{{ $dailyotheramounts->disburseothers }}" @else value="0" @endif></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Total</th>
+                  <th>৳ <span id="print_total_disbursecommon">0</span></th>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+          <div>
+            <br/><br/>
+            <big>
+              <b>Total Collection - Total Disbursement = ৳ <span id="print_grand_total_calc">0</span></b>
+            </big>
+          </div>
         </div>
       </div>
-      <div class="col-md-4">
-        <span style="font-size: 20px;">Disbursement</span>
-        <div class="table-responsive">
-          <table class="table table-condensed table-bordered">
-            <thead>
-              <tr>
-                <th width="50%">Sector</th>
-                <th>Amount</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Loan Disbursed</td>
-                <td>৳ <span class="for_total_disbursecommon">{{ $totaldisbursed->total ? $totaldisbursed->total : 0 }}</span></td>
-              </tr>
-             {{--  <tr>
-                <td>Saving Withdrawal</td>
-                <td>৳ <span class="">{{ $totalsavingwithdraw->total ? $totalsavingwithdraw->total : 0 }}</span></td>
-              </tr> --}}
-              <tr>
-                <td>General Saving Withdrawal</td>
-                <td>৳ <span class="for_total_disbursecommon">{{ $totalgeneralsavingwithdraw->total ? $totalgeneralsavingwithdraw->total : 0 }}</span></td>
-              </tr>
-              <tr>
-                <td>Long Term Saving Withdrawal</td>
-                <td>৳ <span class="for_total_disbursecommon">{{ $totallongtermsavingcwithdraw->total ? $totallongtermsavingcwithdraw->total : 0 }}</span></td>
-              </tr>
-              <tr>
-                <td>Shared Deposit Return</td>
-                <td>৳ <span class="for_total_disbursecommon">{{ $totalshareddepositreturn->total ? $totalshareddepositreturn->total : 0 }}</span></td>
-              </tr>
-              <tr>
-                <td>Others</td>
-                <td>৳ <input type="number" style="width: 100px;" min="0" id="disburseothers" onchange="dailyOtherAmountsCal()" @if(!empty($dailyotheramounts->disburseothers)) value="{{ $dailyotheramounts->disburseothers }}" @else value="0" @endif></td>
-              </tr>
-            </tbody>
-            <tfoot>
-              <tr>
-                <th>Total</th>
-                <th>৳ <span id="print_total_disbursecommon">0</span></th>
-              </tr>
-            </tfoot>
-          </table>
-        </div>
-        <div>
-          <br/><br/>
-          <big>
-            <b>Total Collection - Total Disbursement = ৳ <span id="print_grand_total_calc">0</span></b>
-          </big>
-        </div>
-      </div>
-    </div>
+    @endif
 @stop
 
 @section('js')
