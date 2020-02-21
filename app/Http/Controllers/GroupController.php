@@ -84,15 +84,16 @@ class GroupController extends Controller
                                     ->where('group_id', $g_id)
                                     ->where('status', 1) // status 1 means member is Active
                                     ->orderBy('passbook', 'asc')
-                                    ->with(['loans' => function ($query) use($loan_type, $transaction_date) {
-                                       $query->where('loanname_id', $loan_type)
-                                             ->where('status', 1) // 1 means active loan
-                                             ->with(['loaninstallments' => function ($query) use($transaction_date) {
-                                                 $query->where('due_date', $transaction_date);
-                                              }]);
-                                    }])
+                                    // ->with(['loans' => function ($query) use($loan_type, $transaction_date) {
+                                    //    $query->where('loanname_id', $loan_type)
+                                    //          ->where('status', 1) // 1 means active loan
+                                    //          ->with(['loaninstallments' => function ($query) use($transaction_date) {
+                                    //              $query->where('due_date', $transaction_date);
+                                    //           }]);
+                                    // }])
+                                    ->has('loans', 0)
                                     ->get();
-        // dd($members);
+        dd($memberswithoutloan);
         return view('dashboard.groups.group_transactions.index')
                         ->withGroups($groups)
                         ->withGroup($group)
