@@ -556,7 +556,7 @@ class MemberController extends Controller
               ->withMember($member)
               ->withLoantype($loan_type)
               ->withTransactiondate($transaction_date)
-              ->withcheckcloseday($checkcloseday);
+              ->withCheckcloseday($checkcloseday);
     }
 
     public function postDailyInstallmentAPI(Request $request)

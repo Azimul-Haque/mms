@@ -230,17 +230,19 @@
   <!-- <script src="http://mindmup.github.io/editable-table/numeric-input-example.js"></script> -->
   <script>
     $(document).ready(function () {
-      $('#editable').editableTableWidget();
-      $('#editable2').editableTableWidget();
-      
-      $('#editable td.uneditable').on('change', function(evt, newValue) {
-        console.log('false clicked!');
-        return false;
-      });
-      $('#editable2 td.uneditable').on('change', function(evt, newValue) {
-        console.log('false clicked!');
-        return false;
-      });
+      @if(empty($checkcloseday))
+        $('#editable').editableTableWidget();
+        $('#editable2').editableTableWidget();
+        
+        $('#editable td.uneditable').on('change', function(evt, newValue) {
+          console.log('false clicked!');
+          return false;
+        });
+        $('#editable2 td.uneditable').on('change', function(evt, newValue) {
+          console.log('false clicked!');
+          return false;
+        });
+      @endif
     });
     $('#editable td').on('change', function(evt, newValue) {
       // toastr.success(newValue + ' Added!', 'SUCCESS').css('width', '400px');
