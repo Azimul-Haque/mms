@@ -217,7 +217,7 @@ class GroupController extends Controller
 
         return 'success';
     }
-	
+  
     public function postGroupBrandNewInstallmentAPI(Request $request)
     {
         $member = Member::find($request->data['member_id']);
@@ -253,6 +253,103 @@ class GroupController extends Controller
           $installment->user_id = $member->staff_id;
           $installment->save();
         }
+        
+        // save the deposits(General and LongTerm)
+        // General Saving
+        if($request->data['generalsaving'] > -1 || $request->data['generalsavingwd'] > -1) {
+          $generalsaving = Savinginstallment::where('member_id', $request->data['member_id'])
+                                            ->where('savingname_id', 1) // hard coded!
+                                            ->where('due_date', $request->data['transactiondate'])
+                                            ->first();
+          if(!empty($generalsaving)) {
+              // balance calculation in saving acc
+              $gensavingac = Saving::where('member_id', $request->data['member_id'])
+                                ->where('savingname_id', 1) // hard coded!
+                                ->first();
+              $gensavingac->total_amount = $gensavingac->total_amount - $generalsaving->amount + $request->data['generalsaving'];
+              $gensavingac->withdraw = $gensavingac->withdraw - $generalsaving->withdraw + $request->data['generalsavingwd'];
+              $gensavingac->save();
+
+              $generalsaving->amount = $request->data['generalsaving'];
+              $generalsaving->withdraw = $request->data['generalsavingwd'];
+              $generalsaving->balance = $gensavingac->total_amount - $gensavingac->withdraw;
+              $generalsaving->user_id = $member->staff_id;
+              $generalsaving->save();
+          } else {
+              // balance calculation
+              $gensavingac = Saving::where('member_id', $request->data['member_id'])
+                                ->where('savingname_id', 1) // hard coded!
+                                ->first();
+              $gensavingac->total_amount = $gensavingac->total_amount + $request->data['generalsaving'];
+              $gensavingac->withdraw = $gensavingac->withdraw + $request->data['generalsavingwd'];
+              // balance is considered total_amount - withdraw
+              $gensavingac->save();
+
+              $newgeneralsaving = new Savinginstallment;
+              $newgeneralsaving->due_date = date('Y-m-d', strtotime($request->data['transactiondate']));
+              $newgeneralsaving->amount = $request->data['generalsaving'];
+              $newgeneralsaving->withdraw = $request->data['generalsavingwd'];
+              $newgeneralsaving->balance = $gensavingac->total_amount - $gensavingac->withdraw;
+              $newgeneralsaving->member_id = $request->data['member_id'];
+              $newgeneralsaving->savingname_id = 1; // hard coded!
+              $newgeneralsaving->saving_id = $gensavingac->id;
+              $newgeneralsaving->user_id = $member->staff_id;
+              $newgeneralsaving->save();            
+          }
+        }
+        // General Saving
+
+        // LongTerm Saving
+        if(!empty($request->data['longsaving']) || !empty($request->data['longsavingwd'])) { // eta karo karo nao thakte paare...
+          if($request->data['longsaving'] > -1 || $request->data['longsavingwd'] > -1) {
+            $longsaving = Savinginstallment::where('member_id', $request->data['member_id'])
+                                              ->where('savingname_id', 2) // hard coded!
+                                              ->where('due_date', $request->data['transactiondate'])
+                                              ->first();
+            if(!empty($longsaving)) {
+                // balance calculation in saving acc
+                $longsavingac = Saving::where('member_id', $request->data['member_id'])
+                                  ->where('savingname_id', 2) // hard coded!
+                                  ->first();
+                $longsavingac->total_amount = $longsavingac->total_amount - $longsaving->amount + $request->data['longsaving'];
+                $longsavingac->withdraw = $longsavingac->withdraw - $longsaving->withdraw + $request->data['longsavingwd'];
+                $longsavingac->save();
+
+                $longsaving->amount = $request->data['longsaving'];
+                $longsaving->withdraw = $request->data['longsavingwd'];
+                $longsaving->balance = $longsavingac->total_amount - $longsavingac->withdraw;
+                $longsaving->user_id = $member->staff_id;
+                $longsaving->save();
+            } else {
+                // balance calculation
+                $longsavingac = Saving::where('member_id', $request->data['member_id'])
+                                  ->where('savingname_id', 2) // hard coded!
+                                  ->first();
+                $longsavingac->total_amount = $longsavingac->total_amount + $request->data['longsaving'];
+                $longsavingac->withdraw = $longsavingac->withdraw + $request->data['longsavingwd'];
+                $longsavingac->save();
+
+                $newlongsaving = new Savinginstallment;
+                $newlongsaving->due_date = date('Y-m-d', strtotime($request->data['transactiondate']));
+                $newlongsaving->amount = $request->data['longsaving'];
+                $newlongsaving->withdraw = $request->data['longsavingwd'];
+                $newlongsaving->balance = $longsavingac->total_amount - $longsavingac->withdraw;
+                $newlongsaving->member_id = $request->data['member_id'];
+                $newlongsaving->savingname_id = 2; // hard coded!
+                $newlongsaving->saving_id = $longsavingac->id;
+                $newlongsaving->user_id = $member->staff_id;
+                $newlongsaving->save();            
+            }
+          }
+        }
+        // LongTerm Saving
+
+        return 'success';
+    }
+	
+    public function postGroupNoLoanMembersAPI(Request $request)
+    {
+        $member = Member::find($request->data['member_id']);
         
         // save the deposits(General and LongTerm)
         // General Saving
