@@ -17,6 +17,7 @@ use App\Loan;
 use App\Loaninstallment;
 use App\Loanname;
 use App\Schemename;
+use App\Closeday;
 
 use Carbon\Carbon;
 use DB, Hash, Auth, Image, File, Session;
@@ -526,6 +527,8 @@ class MemberController extends Controller
       $group = Group::find($g_id);
       $loannames = Loanname::all();
 
+      $checkcloseday = Closeday::where('close_date', date('Y-m-d', strtotime($transaction_date)))->first();
+
       $member = Member::where('id', $m_id)
                       ->where('group_id', $g_id)
                       ->where('staff_id', $s_id)
@@ -552,7 +555,8 @@ class MemberController extends Controller
               ->withLoannames($loannames)
               ->withMember($member)
               ->withLoantype($loan_type)
-              ->withTransactiondate($transaction_date);
+              ->withTransactiondate($transaction_date)
+              ->withcheckcloseday($checkcloseday);
     }
 
     public function postDailyInstallmentAPI(Request $request)
