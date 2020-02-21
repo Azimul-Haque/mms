@@ -64,7 +64,7 @@
                       $disburse_date = Carbon\Carbon::parse($loan->disburse_date);
                       $today = Carbon\Carbon::now();
                     @endphp
-                    @if($disburse_date->diffInDays($today) <= 300)
+                    @if($disburse_date->diffInDays($today) <= 3)
                       <button class="btn btn-danger btn-sm" title="Delete Loan" data-toggle="modal" data-target="#deleteLoanModal" data-backdrop="static"><i class="fa fa-trash"></i> Delete</button>
                       <!-- Delete Modal -->
                       <!-- Delete Modal -->
