@@ -244,7 +244,9 @@
                           if(!empty($member->savinginstallments->where('savingname_id', 1)->where('due_date', $transactiondate)->first())) {
                             $generalsavingwd = $member->savinginstallments->where('member_id', $member->id)->where('savingname_id', 1)->where('due_date', $transactiondate)->first()->withdraw;
                           }
-                          $general_saving_balance = $member->savings->where('savingname_id', 1)->first()->total_amount + $member->savings->where('savingname_id', 1)->first()->interest - $member->savings->where('savingname_id', 1)->first()->withdraw;
+                          if(!empty($member->savings->where('savingname_id', 1)->first()->total_amount)) {
+                            $general_saving_balance = $member->savings->where('savingname_id', 1)->first()->total_amount + $member->savings->where('savingname_id', 1)->first()->interest - $member->savings->where('savingname_id', 1)->first()->withdraw;
+                          }
                         @endphp
                         <td id="noloangeneralsavingwd{{ $member->id }}" onchange="noloanmemberspost({{ $member->id }}, '{{ $transactiondate }}', {{ $general_saving_balance }}, 1)" class="for_total_generalsavingwd">{{ $generalsavingwd }}</td>
                         @php
