@@ -20,7 +20,7 @@
           {!! Form::open(['route' => 'programs.store.day.close', 'method' => 'POST']) !!}
           <div class="panel-body">
               {!! Form::label('close_date', 'Select Date *') !!}
-              <input class="form-control" type="text" name="close_date" id="close_date" value="{{ date('F d, Y') }}" placeholder="Select Date" readonly="">
+              <input class="form-control" type="text" name="close_date" id="close_date" value="" placeholder="Select Date" readonly="">
               <br/>
               <label>
                 <input type="checkbox" name="checkbox" class="icheck" required="">
