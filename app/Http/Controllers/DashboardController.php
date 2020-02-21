@@ -369,7 +369,7 @@ class DashboardController extends Controller
 
     public function getDayClose()
     {
-        $closedays = Closeday::orderBy('close_date', 'desc')->paginate(3);
+        $closedays = Closeday::orderBy('close_date', 'desc')->paginate(10);
 
         return view('dashboard.programs.dayclose')->withClosedays($closedays);
     }
