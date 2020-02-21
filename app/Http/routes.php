@@ -150,6 +150,7 @@ Route::post('/group/transaction/for/no/loan/members/api', ['as'=>'dashboard.grou
 
 Route::get('/programs/features', ['as'=>'programs.features','uses'=>'DashboardController@getProgramFeatures']);
 Route::get('/programs/day/close', ['as'=>'programs.day.close','uses'=>'DashboardController@getDayClose']);
+Route::post('/programs/day/close/store', ['as'=>'programs.store.day.close','uses'=>'DashboardController@postDayClose']);
 Route::get('/staff/{id}/features', ['as'=>'staff.features','uses'=>'StaffController@getStaffFeatures']); // id dhukbe ekhane
 Route::get('/group/{s_id}/{g_id}/features', ['as'=>'group.features','uses'=>'GroupController@getGroupFeatures']); // id dhukbe ekhane
 

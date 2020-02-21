@@ -10,6 +10,7 @@ use App\Group;
 use App\Loanname;
 use App\Savingname;
 use App\Schemename;
+use App\Closeday;
 
 use Carbon\Carbon;
 use DB, Hash, Auth, Image, File, Session;
@@ -368,6 +369,32 @@ class DashboardController extends Controller
 
     public function getDayClose()
     {
-        return view('dashboard.programs.dayclose');
+        $closedays = Closeday::orderBy('close_date')->paginate(10);
+
+        return view('dashboard.programs.dayclose')->withClosedays($closedays);
+    }
+
+
+
+    public function postDayClose(Request $request)
+    {
+        $this->validate($request, [
+          'close_date'       => 'required',
+          'checkbox'         => 'required',
+        ]);
+        $checkcloseday = Closeday::where('close_date', date('Y-m-d', strtotime($request->close_date)))->first();
+
+        if(!empty($checkcloseday)) 
+        {
+            Session::flash('warning', 'Already closed!');
+        } else {
+            $closeday = new Closeday;
+            $closeday->close_date = date('Y-m-d', strtotime($request->close_date));
+            $closeday->save();
+
+            Session::flash('success', 'Submitted successfully!'); 
+        }
+
+        return redirect()->route('programs.day.close');
     }
 }
