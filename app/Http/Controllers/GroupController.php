@@ -93,7 +93,7 @@ class GroupController extends Controller
                                     // }])
                                     ->has('loans', 0)
                                     ->get();
-        dd($memberswithoutloan);
+        // dd($memberswithoutloan);
         return view('dashboard.groups.group_transactions.index')
                         ->withGroups($groups)
                         ->withGroup($group)
@@ -101,7 +101,8 @@ class GroupController extends Controller
                         ->withMembers($members)
                         ->withLoannames($loannames)
                         ->withLoantype($loan_type)
-                        ->withTransactiondate($transaction_date);
+                        ->withTransactiondate($transaction_date)
+                        ->withMemberswithoutloan($memberswithoutloan);
     }
   
     public function postGroupInstallmentAPI(Request $request)
