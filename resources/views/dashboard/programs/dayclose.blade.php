@@ -34,22 +34,26 @@
         </div>
         
       </div>
-      <div class="col-md-8">
+      <div class="col-md-6">
         <div class="table-responsive">
-          <table class="table table-">
+          <table class="table table-hover table-condensed table-bordered table-striped">
             <thead>
-              <tr>Date</tr>
-              <tr>Status</tr>
+              <tr>
+                <th>Date</th>
+                <th>Status</th>
+              </tr>
             </thead>
             <tbody>
               @foreach($closedays as $closeday)
                 <tr>
-                  <td>{{ date('') }}</td>
+                  <td>{{ date('D, d/m/Y', strtotime($closeday->close_date)) }}</td>
+                  <td>Closed</td>
                 </tr>
               @endforeach
             </tbody>
           </table>
         </div>
+        {{ $closedays->links() }}
       </div>
     </div>
 @stop
