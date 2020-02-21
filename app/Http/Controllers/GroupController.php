@@ -16,6 +16,7 @@ use App\Loaninstallment;
 use App\Saving;
 use App\Savingname;
 use App\Savinginstallment;
+use App\Closeday;
 
 use Carbon\Carbon;
 use DB, Hash, Auth, Image, File, Session;
@@ -67,6 +68,7 @@ class GroupController extends Controller
         $group = Group::find($g_id);
         $staff = User::find($s_id);
         $loannames = Loanname::all();
+        $checkcloseday = Closeday::where('close_date', date('Y-m-d', strtotime($transaction_date)))->first();
 
         $members = Member::where('staff_id', $s_id)
                          ->where('group_id', $g_id)
@@ -102,7 +104,8 @@ class GroupController extends Controller
                         ->withLoannames($loannames)
                         ->withLoantype($loan_type)
                         ->withTransactiondate($transaction_date)
-                        ->withMemberswithoutloan($memberswithoutloan);
+                        ->withMemberswithoutloan($memberswithoutloan)
+                        ->withCheckcloseday($checkcloseday);
     }
   
     public function postGroupInstallmentAPI(Request $request)
