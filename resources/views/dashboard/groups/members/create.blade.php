@@ -29,8 +29,8 @@
               {!! Form::text('name', null, array('class' => 'form-control', 'placeholder' => 'Member Name', 'required' => '')) !!}
             </div>
             <div class="col-md-4">
-              {!! Form::label('fhusband', 'Fatehr/ Husband Name *') !!}
-              {!! Form::text('fhusband', null, array('class' => 'form-control', 'placeholder' => 'Fatehr/ Husband Name', 'required' => '')) !!}
+              {!! Form::label('fhusband', 'Father/ Husband Name *') !!}
+              {!! Form::text('fhusband', null, array('class' => 'form-control', 'placeholder' => 'Father/ Husband Name', 'required' => '')) !!}
             </div>
           </div>
           <div class="row">
