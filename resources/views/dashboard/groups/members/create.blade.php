@@ -19,7 +19,7 @@
         <div class="panel-heading">Add Member</div>
         {!! Form::open(['route' => ['dashboard.members.store', $staff->id, $group->id], 'method' => 'POST']) !!}
         <div class="panel-body">
-          <div class="row">
+          {{-- <div class="row">
             <div class="col-md-4">
               {!! Form::label('passbook', 'Passbook No *') !!}
               {!! Form::number('passbook', null, array('class' => 'form-control', 'placeholder' => 'Passbook No', 'required' => '')) !!}
@@ -58,10 +58,6 @@
             </div>
           </div>
           <div class="row">
-            {{-- <div class="col-md-4">
-              {!! Form::label('dob', 'Date of Birth *') !!}
-              {!! Form::text('dob', null, array('class' => 'form-control', 'placeholder' => 'Date of Birth', 'required' => '', 'autocomplete' => 'off', 'readonly' => '')) !!}
-            </div> --}}
             <div class="col-md-4">
               {!! Form::label('admission_date', 'Admission Date *') !!}
               {!! Form::text('admission_date', date('F d, Y'), array('class' => 'form-control', 'placeholder' => 'Admission Date', 'required' => '', 'autocomplete' => 'off', 'readonly' => '')) !!}
@@ -83,40 +79,6 @@
             </div>
           </div>
           <div class="row">
-            {{-- <div class="col-md-4">
-              {!! Form::label('marital_status', 'Marital Status *') !!}
-              <select name="marital_status" class="form-control" required>
-                <option selected="" disabled="">Select Marital Status</option>
-                <option value="0">Unmarried</option>
-                <option value="1">Married</option>
-                <option value="2">Divorced</option>
-              </select>
-            </div> --}}
-            {{-- <div class="col-md-4">
-              {!! Form::label('ethnicity', 'Ethnicity *') !!}
-              <select name="ethnicity" class="form-control" required>
-                <option selected="" disabled="">Select Marital Status</option>
-                <option value="0">Non-tribal</option>
-                <option value="1">Tribal</option>
-              </select>
-            </div> --}}
-          </div>
-          <div class="row">
-            {{-- <div class="col-md-4">
-              {!! Form::label('guardian', 'Guardian *') !!}
-              {!! Form::text('guardian', null, array('class' => 'form-control', 'placeholder' => 'Guardian', 'required' => '', 'autocomplete' => 'off')) !!}
-            </div>
-            <div class="col-md-4">
-              {!! Form::label('guardianrelation', 'Guardian Relation *') !!}
-              {!! Form::text('guardianrelation', null, array('class' => 'form-control', 'placeholder' => 'Guardian Relation', 'required' => '', 'autocomplete' => 'off')) !!}
-            </div> --}}
-            
-          </div>
-          <div class="row">
-            {{-- <div class="col-md-4">
-              {!! Form::label('landlord_name', 'Landlord Name (Optional)') !!}
-              {!! Form::text('landlord_name', null, array('class' => 'form-control', 'placeholder' => 'Landlord Name (Optional)', 'autocomplete' => 'off')) !!}
-            </div> --}}
             <div class="col-md-4">
               {!! Form::label('residence_type', 'Residence Type (Optional)') !!}
               {!! Form::text('residence_type', null, array('class' => 'form-control', 'placeholder' => 'Residence Type (Optional)', 'autocomplete' => 'off')) !!}
@@ -149,8 +111,6 @@
               {!! Form::text('present_post', null, array('class' => 'form-control', 'placeholder' => 'Present Post Office', 'required' => '')) !!}
               {!! Form::label('present_village', 'Present Village *') !!}
               {!! Form::text('present_village', null, array('class' => 'form-control', 'placeholder' => 'Present Village', 'required' => '')) !!}
-              {{-- {!! Form::label('present_house', 'Present House *') !!}
-              {!! Form::text('present_house', null, array('class' => 'form-control', 'placeholder' => 'Present House', 'required' => '')) !!} --}}
               {!! Form::label('present_phone', 'Present Phone *') !!}
               {!! Form::text('present_phone', null, array('class' => 'form-control', 'placeholder' => 'Present Phone', 'required' => '')) !!}<br/>
               {!! Form::label('passbook_fee', 'PassBook Fee') !!}
@@ -176,8 +136,6 @@
               {!! Form::text('permanent_post', null, array('class' => 'form-control', 'placeholder' => 'Permanent Post Office')) !!}
               {!! Form::label('permanent_village', 'Permanent Village') !!}
               {!! Form::text('permanent_village', null, array('class' => 'form-control', 'placeholder' => 'Permanent Village ')) !!}
-              {{-- {!! Form::label('permanent_house', 'Permanent House') !!}
-              {!! Form::text('permanent_house', null, array('class' => 'form-control', 'placeholder' => 'Permanent House')) !!} --}}
               {!! Form::label('permanent_phone', 'Permanent Phone (Optional)') !!}
               {!! Form::text('permanent_phone', null, array('class' => 'form-control', 'placeholder' => 'Permanent Phone (Optional)' )) !!}<br/>
               {!! Form::label('admission_fee', 'Admission Fee') !!}
@@ -186,7 +144,7 @@
                 <input id="admission_fee" type="text" class="form-control" name="admission_fee" placeholder="Admission Fee" value="30">
               </div>
             </div>
-          </div>
+          </div> --}}
         </div>
         <div class="panel-footer">
           <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-o"></i> Save</button>
