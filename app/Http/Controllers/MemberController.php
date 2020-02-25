@@ -102,6 +102,7 @@ class MemberController extends Controller
         $savingaccount = new Saving;
         $savingaccount->savingname_id = 1; // 1 for general account
         $savingaccount->opening_date = date('Y-m-d', strtotime($request->admission_date));
+        $savingaccount->closing_date = '1970-01-01';
         
         $savingaccount->meeting_day = 1;
         $savingaccount->installment_type = 2;
