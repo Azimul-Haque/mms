@@ -14,6 +14,7 @@ use App\Loan;
 use App\Loaninstallment;
 use App\Saving;
 use App\Savinginstallment;
+use App\Member;
 use App\Closeday;
 
 use Carbon\Carbon;
@@ -402,7 +403,7 @@ class DashboardController extends Controller
         return redirect()->route('programs.day.close');
     }
 
-    public function deleteMember(Request $id)
+    public function deleteMember($id)
     {
         $member = Member::find($id);
 
@@ -419,5 +420,7 @@ class DashboardController extends Controller
             $saving->delete();
         }
         $member->delete();
+
+        return 'Successful!';
     }
 }
