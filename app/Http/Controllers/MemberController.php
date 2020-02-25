@@ -76,19 +76,7 @@ class MemberController extends Controller
         $member->name = $request->name;
         $member->fhusband = $request->fhusband;
         $member->ishusband = $request->ishusband;
-        $member->mother = $request->mother;
-        $member->gender = $request->gender;
-        // $member->marital_status = $request->marital_status;
-        $member->religion = $request->religion;
-        // $member->ethnicity = $request->ethnicity;
-        // $member->guardian = $request->guardian;
-        // $member->guardianrelation = $request->guardianrelation;
-        $member->residence_type = $request->residence_type;
-        // $member->landlord_name = $request->landlord_name;
-        $member->education = $request->education;
-        $member->profession = $request->profession;
-        // $member->dob = date('Y-m-d', strtotime($request->dob));
-        $member->nid = $request->nid;
+        
         $member->admission_date = date('Y-m-d', strtotime($request->admission_date));
         if($request->closing_date) {
           $member->closing_date = date('Y-m-d', strtotime($request->closing_date));
@@ -97,19 +85,8 @@ class MemberController extends Controller
         }
         $member->present_district = $request->present_district;
         $member->present_upazilla = $request->present_upazilla;
-        $member->present_union = $request->present_union;
-        $member->present_post = $request->present_post;
         $member->present_village = $request->present_village;
-        // $member->present_house = $request->present_house;
         $member->present_phone = $request->present_phone;
-
-        $member->permanent_district = $request->permanent_district;
-        $member->permanent_upazilla = $request->permanent_upazilla;
-        $member->permanent_union = $request->permanent_union;
-        $member->permanent_post = $request->permanent_post;
-        $member->permanent_village = $request->permanent_village;
-        // $member->permanent_house = $request->permanent_house;
-        $member->permanent_phone = $request->permanent_phone;
         
         $member->passbook_fee = $request->passbook_fee;
         $member->admission_fee = $request->admission_fee;
