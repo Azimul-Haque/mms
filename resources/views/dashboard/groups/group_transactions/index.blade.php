@@ -102,7 +102,7 @@
                           <td readonly>N/A</td>
                         @endif
                         <td id="loaninstallmentrealisable{{ $loaninstallment->id }}" readonly class="for_total_loaninstallmentrealisable">
-                          @if($loan->total_outstanding > $loaninstallment->installment_total)
+                          @if($loaninstallment->installment_total > $loan->total_outstanding)
                             {{ $loan->total_outstanding }}
                           @else
                             {{ $loaninstallment->installment_total }}
