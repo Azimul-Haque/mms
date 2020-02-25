@@ -10,6 +10,10 @@ use App\Group;
 use App\Loanname;
 use App\Savingname;
 use App\Schemename;
+use App\Loan;
+use App\Loaninstallment;
+use App\Saving;
+use App\Savinginstallment;
 use App\Closeday;
 
 use Carbon\Carbon;
@@ -396,5 +400,24 @@ class DashboardController extends Controller
         }
 
         return redirect()->route('programs.day.close');
+    }
+
+    public function deleteMember(Request $id)
+    {
+        $member = Member::find($id);
+
+        foreach ($member->loans as $loan) {
+            foreach ($loan->loaninstallments as $loaninstallment) {
+                $loaninstallment->delete();
+            }
+            $loan->delete();
+        }
+        foreach ($member->savings as $saving) {
+            foreach ($saving->savinginstallments as $savinginstallment) {
+                $savinginstallment->delete();
+            }
+            $saving->delete();
+        }
+        $member->delete();
     }
 }

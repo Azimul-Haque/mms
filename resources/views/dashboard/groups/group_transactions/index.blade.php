@@ -79,7 +79,7 @@
                     @if(!empty($transactiondate))
                     <tr>
                       <td readonly>{{ $member->passbook }}</td>
-                      <td id="membername{{ $loaninstallment->id }}" readonly>{{ $member->name }}-{{ $member->fhusband }}</td>
+                      <td id="membername{{ $loaninstallment->id }}" readonly><a href="{{ route('dashboard.member.single', [$staff->id, $group->id, $member->id]) }}">{{ $member->name }}-{{ $member->fhusband }}</a></td>
                       <td readonly>{{ $loan->loanname->name }} (Scheme: {{ $loan->schemename->name }})</td>
                       {{-- @if(!empty($loantype) && $loantype == 1)  --}}
                       {{-- if primary then show savings only --}}
@@ -148,7 +148,7 @@
                   @if(empty($loan->loaninstallments) || $loan->loaninstallments->count() == 0) 
                   <tr>
                     <td readonly>{{ $member->passbook }}</td>
-                    <td id="brmembername{{ $loan->id }}" readonly>{{ $member->name }}-{{ $member->fhusband }}</td>
+                    <td id="brmembername{{ $loan->id }}" readonly><a href="{{ route('dashboard.member.single', [$staff->id, $group->id, $member->id]) }}">{{ $member->name }}-{{ $member->fhusband }}</a></td>
                     <td readonly>{{ $loan->loanname->name }} (Scheme: {{ $loan->schemename->name }})</td>
 
                     {{-- @if(!empty($loantype) && $loantype == 1)  --}}
@@ -222,7 +222,7 @@
                 @foreach($memberswithoutloan as $member)
                   <tr>
                     <td readonly>{{ $member->passbook }}</td>
-                    <td id="noloanmembername{{ $member->id }}" readonly>{{ $member->name }}-{{ $member->fhusband }}</td>
+                    <td id="noloanmembername{{ $member->id }}" readonly><a href="{{ route('dashboard.member.single', [$staff->id, $group->id, $member->id]) }}">{{ $member->name }}-{{ $member->fhusband }}</a></td>
                     <td readonly>No Loan</td>
                         @php
                           $generalsaving = 0;
