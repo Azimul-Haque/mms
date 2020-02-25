@@ -85,6 +85,7 @@
                       {{-- if primary then show savings only --}}
                         @php
                           $generalsaving = 0;
+                          echo $member->id;
                           if(!empty($member->savinginstallments->where('savingname_id', 1)->where('due_date', $transactiondate)->first())) {
                             $generalsaving = $member->savinginstallments->where('member_id', $member->id)->where('savingname_id', 1)->where('due_date', $transactiondate)->first()->amount;
                             echo $generalsaving;
