@@ -1,3 +1,6 @@
+@php
+	header("Content-type: application/xlsx",true,200);
+@endphp
 <style type="text/css">
 	table tr > th, table tr > td {
 		border: 1px solid #000000;
