@@ -85,11 +85,10 @@
                       {{-- if primary then show savings only --}}
                         @php
                           $generalsaving = 0;
-                          // echo $member->savinginstallments->where('savingname_id', 1);
-                          if(!empty($member->savinginstallments->where('savingname_id', 1)->where('due_date', $transactiondate)->first())) {
-                            $generalsaving = $member->savinginstallments->where('member_id', $member->id)->where('savingname_id', 1)->where('due_date', $transactiondate)->first()->amount;
-                            echo $generalsaving;
-                          }
+                          // if(!empty($member->savinginstallments->where('savingname_id', 1)->where('due_date', $transactiondate)->first())) {
+                          //   $generalsaving = $member->savinginstallments->where('member_id', $member->id)->where('savingname_id', 1)->where('due_date', $transactiondate)->first()->amount;
+                          //   echo $generalsaving;
+                          // }
                           foreach ($member->savinginstallments as $savinginstallment) {
                             if($savinginstallment->savingname_id == 1 && $savinginstallment->due_date == $transactiondate) {
                               $generalsaving = $savinginstallment->amount;
@@ -99,8 +98,13 @@
                         <td id="generalsaving{{ $loaninstallment->id }}" onchange="loancalcandpost({{ $member->id }}, {{ $loaninstallment->id }}, '{{ $transactiondate }}', {{ $loaninstallment->installment_no }}, 0, 0, 0)" class="for_total_generalsaving">{{ $generalsaving }}</td>
                         @php
                           $longsaving = 0;
-                          if(!empty($member->savinginstallments->where('savingname_id', 2)->where('due_date', $transactiondate)->first())) {
-                            $longsaving = $member->savinginstallments->where('member_id', $member->id)->where('savingname_id', 2)->where('due_date', $transactiondate)->first()->amount;
+                          // if(!empty($member->savinginstallments->where('savingname_id', 2)->where('due_date', $transactiondate)->first())) {
+                          //   $longsaving = $member->savinginstallments->where('member_id', $member->id)->where('savingname_id', 2)->where('due_date', $transactiondate)->first()->amount;
+                          // }
+                          foreach ($member->savinginstallments as $savinginstallment) {
+                            if($savinginstallment->savingname_id == 2 && $savinginstallment->due_date == $transactiondate) {
+                              $longsaving = $savinginstallment->amount;
+                            }
                           }
                         @endphp
                         @if(!empty($member->savings->where('savingname_id', 2)->first()))
@@ -125,19 +129,34 @@
                         @php
                           $generalsavingwd = 0;
                           $general_saving_balance = 0;
-                          if(!empty($member->savinginstallments->where('savingname_id', 1)->where('due_date', $transactiondate)->first())) {
-                            $generalsavingwd = $member->savinginstallments->where('member_id', $member->id)->where('savingname_id', 1)->where('due_date', $transactiondate)->first()->withdraw;
+                          // if(!empty($member->savinginstallments->where('savingname_id', 1)->where('due_date', $transactiondate)->first())) {
+                          //   $generalsavingwd = $member->savinginstallments->where('member_id', $member->id)->where('savingname_id', 1)->where('due_date', $transactiondate)->first()->withdraw;
+                          // }
+                          foreach ($member->savinginstallments as $savinginstallment) {
+                            if($savinginstallment->savingname_id == 1 && $savinginstallment->due_date == $transactiondate) {
+                              $generalsavingwd = $savinginstallment->withdraw;
+                            }
                           }
                           if(!empty($member->savings->where('savingname_id', 1)->first()->total_amount)) {
                             $general_saving_balance = $member->savings->where('savingname_id', 1)->first()->total_amount + $member->savings->where('savingname_id', 1)->first()->interest - $member->savings->where('savingname_id', 1)->first()->withdraw;
+                          }
+                          foreach ($member->savinginstallments as $savinginstallment) {
+                            if($savinginstallment->savingname_id == 1 && $savinginstallment->due_date == $transactiondate) {
+                              $generalsavingwd = $savinginstallment->withdraw;
+                            }
                           }
                         @endphp
                         <td id="generalsavingwd{{ $loaninstallment->id }}" onchange="loancalcandpost({{ $member->id }}, {{ $loaninstallment->id }}, '{{ $transactiondate }}', {{ $loaninstallment->installment_no }}, {{ $general_saving_balance }}, 1, 0)" class="for_total_generalsavingwd">{{ $generalsavingwd }}</td>
                         @php
                           $longsavingwd = 0;
                           $long_saving_balance = 0;
-                          if(!empty($member->savinginstallments->where('savingname_id', 2)->where('due_date', $transactiondate)->first())) {
-                            $longsavingwd = $member->savinginstallments->where('member_id', $member->id)->where('savingname_id', 2)->where('due_date', $transactiondate)->first()->withdraw;
+                          // if(!empty($member->savinginstallments->where('savingname_id', 2)->where('due_date', $transactiondate)->first())) {
+                          //   $longsavingwd = $member->savinginstallments->where('member_id', $member->id)->where('savingname_id', 2)->where('due_date', $transactiondate)->first()->withdraw;
+                          // }
+                          foreach ($member->savinginstallments as $savinginstallment) {
+                            if($savinginstallment->savingname_id == 2 && $savinginstallment->due_date == $transactiondate) {
+                              $longsaving = $savinginstallment->amount;
+                            }
                           }
                           if(!empty($member->savings->where('savingname_id', 2)->first()->total_amount)) {
                             $long_saving_balance = $member->savings->where('savingname_id', 2)->first()->total_amount + $member->savings->where('savingname_id', 2)->first()->interest - $member->savings->where('savingname_id', 2)->first()->withdraw;
@@ -172,15 +191,25 @@
                     {{-- if primary then show savings only --}}
                       @php
                         $generalsaving = 0;
-                        if(!empty($member->savinginstallments->where('savingname_id', 1)->where('due_date', $transactiondate)->first())) {
-                          $generalsaving = $member->savinginstallments->where('member_id', $member->id)->where('savingname_id', 1)->where('due_date', $transactiondate)->first()->amount;
+                        // if(!empty($member->savinginstallments->where('savingname_id', 1)->where('due_date', $transactiondate)->first())) {
+                        //   $generalsaving = $member->savinginstallments->where('member_id', $member->id)->where('savingname_id', 1)->where('due_date', $transactiondate)->first()->amount;
+                        // }
+                        foreach ($member->savinginstallments as $savinginstallment) {
+                          if($savinginstallment->savingname_id == 1 && $savinginstallment->due_date == $transactiondate) {
+                            $generalsaving = $savinginstallment->amount;
+                          }
                         }
                       @endphp
                       <td id="brgeneralsaving{{ $loan->id }}{{ $member->id }}" onchange="brandnewloancalcandpost({{ $member->id }}, {{ $loan->id }}, '{{ $transactiondate }}', 0, 0, 0)" class="for_total_generalsaving">{{ $generalsaving }}</td>
                       @php
                         $longsaving = 0;
-                        if(!empty($member->savinginstallments->where('savingname_id', 2)->where('due_date', $transactiondate)->first())) {
-                          $longsaving = $member->savinginstallments->where('member_id', $member->id)->where('savingname_id', 2)->where('due_date', $transactiondate)->first()->amount;
+                        // if(!empty($member->savinginstallments->where('savingname_id', 2)->where('due_date', $transactiondate)->first())) {
+                        //   $longsaving = $member->savinginstallments->where('member_id', $member->id)->where('savingname_id', 2)->where('due_date', $transactiondate)->first()->amount;
+                        // }
+                        foreach ($member->savinginstallments as $savinginstallment) {
+                          if($savinginstallment->savingname_id == 2 && $savinginstallment->due_date == $transactiondate) {
+                            $longsaving = $savinginstallment->amount;
+                          }
                         }
                       @endphp
                       @if(!empty($member->savings->where('savingname_id', 2)->first()))
@@ -195,8 +224,13 @@
                       @php
                         $generalsavingwd = 0;
                         $general_saving_balance = 0;
-                        if(!empty($member->savinginstallments->where('savingname_id', 1)->where('due_date', $transactiondate)->first())) {
-                          $generalsavingwd = $member->savinginstallments->where('member_id', $member->id)->where('savingname_id', 1)->where('due_date', $transactiondate)->first()->withdraw;
+                        // if(!empty($member->savinginstallments->where('savingname_id', 1)->where('due_date', $transactiondate)->first())) {
+                        //   $generalsavingwd = $member->savinginstallments->where('member_id', $member->id)->where('savingname_id', 1)->where('due_date', $transactiondate)->first()->withdraw;
+                        // }
+                        foreach ($member->savinginstallments as $savinginstallment) {
+                          if($savinginstallment->savingname_id == 1 && $savinginstallment->due_date == $transactiondate) {
+                            $generalsavingwd = $savinginstallment->withdraw;
+                          }
                         }
                         if(!empty($member->savings->where('savingname_id', 1)->first()->total_amount)) {
                           $general_saving_balance = $member->savings->where('savingname_id', 1)->first()->total_amount + $member->savings->where('savingname_id', 1)->first()->interest - $member->savings->where('savingname_id', 1)->first()->withdraw;
@@ -206,8 +240,13 @@
                       @php
                         $longsavingwd = 0;
                         $long_saving_balance = 0;
-                        if(!empty($member->savinginstallments->where('savingname_id', 2)->where('due_date', $transactiondate)->first())) {
-                          $longsavingwd = $member->savinginstallments->where('member_id', $member->id)->where('savingname_id', 2)->where('due_date', $transactiondate)->first()->withdraw;
+                        // if(!empty($member->savinginstallments->where('savingname_id', 2)->where('due_date', $transactiondate)->first())) {
+                        //   $longsavingwd = $member->savinginstallments->where('member_id', $member->id)->where('savingname_id', 2)->where('due_date', $transactiondate)->first()->withdraw;
+                        // }
+                        foreach ($member->savinginstallments as $savinginstallment) {
+                          if($savinginstallment->savingname_id == 2 && $savinginstallment->due_date == $transactiondate) {
+                            $longsaving = $savinginstallment->amount;
+                          }
                         }
                         if(!empty($member->savings->where('savingname_id', 2)->first()->total_amount)) {
                           $long_saving_balance = $member->savings->where('savingname_id', 2)->first()->total_amount + $member->savings->where('savingname_id', 2)->first()->interest - $member->savings->where('savingname_id', 2)->first()->withdraw;
@@ -243,15 +282,25 @@
                     <td readonly>No Loan</td>
                         @php
                           $generalsaving = 0;
-                          if(!empty($member->savinginstallments->where('savingname_id', 1)->where('due_date', $transactiondate)->first())) {
-                            $generalsaving = $member->savinginstallments->where('member_id', $member->id)->where('savingname_id', 1)->where('due_date', $transactiondate)->first()->amount;
+                          // if(!empty($member->savinginstallments->where('savingname_id', 1)->where('due_date', $transactiondate)->first())) {
+                          //   $generalsaving = $member->savinginstallments->where('member_id', $member->id)->where('savingname_id', 1)->where('due_date', $transactiondate)->first()->amount;
+                          // }
+                          foreach ($member->savinginstallments as $savinginstallment) {
+                            if($savinginstallment->savingname_id == 1 && $savinginstallment->due_date == $transactiondate) {
+                              $generalsaving = $savinginstallment->amount;
+                            }
                           }
                         @endphp
                         <td id="noloangeneralsaving{{ $member->id }}" onchange="noloanmemberspost({{ $member->id }}, '{{ $transactiondate }}', 0, 0)" class="for_total_generalsaving">{{ $generalsaving }}</td>
                         @php
                           $longsaving = 0;
-                          if(!empty($member->savinginstallments->where('savingname_id', 2)->where('due_date', $transactiondate)->first())) {
-                            $longsaving = $member->savinginstallments->where('member_id', $member->id)->where('savingname_id', 2)->where('due_date', $transactiondate)->first()->amount;
+                          // if(!empty($member->savinginstallments->where('savingname_id', 2)->where('due_date', $transactiondate)->first())) {
+                          //   $longsaving = $member->savinginstallments->where('member_id', $member->id)->where('savingname_id', 2)->where('due_date', $transactiondate)->first()->amount;
+                          // }
+                          foreach ($member->savinginstallments as $savinginstallment) {
+                            if($savinginstallment->savingname_id == 2 && $savinginstallment->due_date == $transactiondate) {
+                              $longsaving = $savinginstallment->amount;
+                            }
                           }
                         @endphp
                         @if(!empty($member->savings->where('savingname_id', 2)->first()))
@@ -277,8 +326,13 @@
                         @php
                           $longsavingwd = 0;
                           $long_saving_balance = 0;
-                          if(!empty($member->savinginstallments->where('savingname_id', 2)->where('due_date', $transactiondate)->first())) {
-                            $longsavingwd = $member->savinginstallments->where('member_id', $member->id)->where('savingname_id', 2)->where('due_date', $transactiondate)->first()->withdraw;
+                          // if(!empty($member->savinginstallments->where('savingname_id', 2)->where('due_date', $transactiondate)->first())) {
+                          //   $longsavingwd = $member->savinginstallments->where('member_id', $member->id)->where('savingname_id', 2)->where('due_date', $transactiondate)->first()->withdraw;
+                          // }
+                          foreach ($member->savinginstallments as $savinginstallment) {
+                            if($savinginstallment->savingname_id == 2 && $savinginstallment->due_date == $transactiondate) {
+                              $longsaving = $savinginstallment->amount;
+                            }
                           }
                           if(!empty($member->savings->where('savingname_id', 2)->first()->total_amount)) {
                             $long_saving_balance = $member->savings->where('savingname_id', 2)->first()->total_amount + $member->savings->where('savingname_id', 2)->first()->interest - $member->savings->where('savingname_id', 2)->first()->withdraw;
