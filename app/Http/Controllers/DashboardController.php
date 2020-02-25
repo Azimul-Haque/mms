@@ -426,10 +426,30 @@ class DashboardController extends Controller
 
     public function checkMissingSavings()
     {
-        $members = Member::all()->count();
+        $members = Member::all();
+        
+        foreach ($members as $member) 
+        {
+            $checkgensaving = Saving::where('member_id', $member->id)
+                                    ->where('savingname_id', 1)
+                                    ->first();
+            if(empty($checkgensaving)) {
+                $savingaccount = new Saving;
+                $savingaccount->savingname_id = 1;
+                $savingaccount->opening_date = date('Y-m-d', strtotime($member->admission_date));
+                $savingaccount->closing_date = '1970-01-01';
+                // $savingaccount->meeting_day = $request->general_meeting_day;
+                $savingaccount->installment_type = 1;
+                $savingaccount->minimum_deposit = 0.00;
+                $savingaccount->total_amount = 0.00;
+                $savingaccount->withdraw = 0.00;
+                $savingaccount->status = 1; // 1 means active/open
+                $savingaccount->member_id = $member->id;
+                $savingaccount->save();
+            }
+        }
 
         $savings = Saving::where('savingname_id', 1)->count();
-
-        return "Members: " . $members . " : General Savings: " . $savings;
+        return "Members: " . $members->count() . " : General Savings: " . $savings;
     }
 }
