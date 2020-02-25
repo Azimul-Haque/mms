@@ -53,60 +53,6 @@
             </div>
           </div>
           <div class="row">
-            {{-- <div class="col-md-4">
-              {!! Form::label('marital_status', 'Marital Status *') !!}
-              <select name="marital_status" class="form-control" required>
-                <option selected="" disabled="">Select Marital Status</option>
-                <option value="0">Unmarried</option>
-                <option value="1">Married</option>
-                <option value="2">Divorced</option>
-              </select>
-            </div> --}}
-            {{-- <div class="col-md-4">
-              {!! Form::label('ethnicity', 'Ethnicity *') !!}
-              <select name="ethnicity" class="form-control" required>
-                <option selected="" disabled="">Select Marital Status</option>
-                <option value="0">Non-tribal</option>
-                <option value="1">Tribal</option>
-              </select>
-            </div> --}}
-          </div>
-          <div class="row">
-            {{-- <div class="col-md-4">
-              {!! Form::label('guardian', 'Guardian *') !!}
-              {!! Form::text('guardian', null, array('class' => 'form-control', 'placeholder' => 'Guardian', 'required' => '', 'autocomplete' => 'off')) !!}
-            </div>
-            <div class="col-md-4">
-              {!! Form::label('guardianrelation', 'Guardian Relation *') !!}
-              {!! Form::text('guardianrelation', null, array('class' => 'form-control', 'placeholder' => 'Guardian Relation', 'required' => '', 'autocomplete' => 'off')) !!}
-            </div> --}}
-            
-          </div>
-          <div class="row">
-        {{--     <div class="col-md-4">
-              {!! Form::label('landlord_name', 'Landlord Name (Optional)') !!}
-              {!! Form::text('landlord_name', null, array('class' => 'form-control', 'placeholder' => 'Landlord Name (Optional)', 'autocomplete' => 'off')) !!}
-            </div> --}}
-            {{-- <div class="col-md-4">
-              {!! Form::label('residence_type', 'Residence Type (Optional)') !!}
-              {!! Form::text('residence_type', null, array('class' => 'form-control', 'placeholder' => 'Residence Type (Optional)', 'autocomplete' => 'off')) !!}
-            </div>
-            <div class="col-md-4">
-              {!! Form::label('education', 'Education *') !!}
-              {!! Form::text('education', null, array('class' => 'form-control', 'placeholder' => 'Education', 'required' => '', 'autocomplete' => 'off')) !!}
-            </div>
-            <div class="col-md-4">
-              {!! Form::label('profession', 'Profession *') !!}
-              {!! Form::text('profession', null, array('class' => 'form-control', 'placeholder' => 'Profession', 'required' => '', 'autocomplete' => 'off')) !!}
-            </div> --}}
-          </div>
-          <div class="row">
-            {{-- <div class="col-md-4">
-              {!! Form::label('nid', 'National ID No *') !!}
-              {!! Form::text('nid', null, array('class' => 'form-control', 'placeholder' => 'National ID No', 'required' => '', 'autocomplete' => 'off', 'onkeypress' => 'if(this.value.length==17) return false;')) !!}
-            </div> --}}
-          </div>
-          <div class="row">
             <div class="col-md-12"><br/>
               <big><b><u>Present Address</u></b></big><br/>
             </div>
@@ -147,21 +93,6 @@
                 <input id="shared_deposit" type="text" class="form-control" name="shared_deposit" placeholder="Shared Deposit" required="">
               </div>
             </div>
-            {{-- <div class="col-md-6">
-              <big><b><u>Permanent Address (Optional)</u></b></big><br/>
-              {!! Form::label('permanent_district', 'Permanent District') !!}
-              {!! Form::text('permanent_district', 'Thakurgaon', array('class' => 'form-control', 'placeholder' => 'Permanent District')) !!}
-              {!! Form::label('permanent_upazilla', 'Permanent Upazilla') !!}
-              {!! Form::text('permanent_upazilla', null, array('class' => 'form-control', 'placeholder' => 'Permanent Upazilla')) !!}
-              {!! Form::label('permanent_union', 'Permanent Union') !!}
-              {!! Form::text('permanent_union', null, array('class' => 'form-control', 'placeholder' => 'Permanent Union')) !!}
-              {!! Form::label('permanent_post', 'Permanent Post Office') !!}
-              {!! Form::text('permanent_post', null, array('class' => 'form-control', 'placeholder' => 'Permanent Post Office')) !!}
-              {!! Form::label('permanent_village', 'Permanent Village') !!}
-              {!! Form::text('permanent_village', null, array('class' => 'form-control', 'placeholder' => 'Permanent Village ')) !!}
-              {!! Form::label('permanent_phone', 'Permanent Phone (Optional)') !!}
-              {!! Form::text('permanent_phone', null, array('class' => 'form-control', 'placeholder' => 'Permanent Phone (Optional)' )) !!}<br/>
-            </div> --}}
           </div>
 
             
