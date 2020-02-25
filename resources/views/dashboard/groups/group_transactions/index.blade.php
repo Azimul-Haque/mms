@@ -85,9 +85,9 @@
                       {{-- if primary then show savings only --}}
                         @php
                           $generalsaving = 0;
-                          echo 'test';
                           if(!empty($member->savinginstallments->where('savingname_id', 1)->where('due_date', $transactiondate)->first())) {
                             $generalsaving = $member->savinginstallments->where('member_id', $member->id)->where('savingname_id', 1)->where('due_date', $transactiondate)->first()->amount;
+                            echo $generalsaving;
                           }
                         @endphp
                         <td id="generalsaving{{ $loaninstallment->id }}" onchange="loancalcandpost({{ $member->id }}, {{ $loaninstallment->id }}, '{{ $transactiondate }}', {{ $loaninstallment->installment_no }}, 0, 0, 0)" class="for_total_generalsaving">{{ $generalsaving }}</td>
