@@ -105,7 +105,7 @@ class DashboardController extends Controller
           'bank'             => 'required',
           'acno'             => 'required',
           'checkno'          => 'required',
-          'password'         => 'required|confirmed|min:6'
+          'password'         => 'sometimes|confirmed|min:6'
         ]);
         
         $staff->name = $request->name;
@@ -422,5 +422,14 @@ class DashboardController extends Controller
         $member->delete();
 
         return 'Successful!';
+    }
+
+    public function checkMissingSavings()
+    {
+        $members = Member::all()->count();
+
+        $savings = Saving::where('savingname_id', 1)->count();
+
+        dd($members);
     }
 }

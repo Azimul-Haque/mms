@@ -59,12 +59,12 @@
 
             <div class="row">
               <div class="col-md-6">
-                {!! Form::label('password', 'Password *') !!}
-                {!! Form::password('password', array('class' => 'form-control', 'placeholder' => 'Password', 'required' => '', 'autocomplete' => 'off')) !!}
+                {!! Form::label('password', 'Password (Optional)') !!}
+                {!! Form::password('password', array('class' => 'form-control', 'placeholder' => 'Password', 'autocomplete' => 'off')) !!}
               </div>
               <div class="col-md-6">
-                {!! Form::label('password_confirmation', 'Confirm Password *') !!}
-                {!! Form::password('password_confirmation' , array('class' => 'form-control', 'placeholder' => 'Confirm Password', 'required' => '')) !!}</div>
+                {!! Form::label('password_confirmation', 'Confirm Password (Optional)') !!}
+                {!! Form::password('password_confirmation' , array('class' => 'form-control', 'placeholder' => 'Confirm Password')) !!}</div>
             </div>
           </div>
           <div class="panel-footer">
