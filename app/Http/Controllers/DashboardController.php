@@ -430,6 +430,6 @@ class DashboardController extends Controller
 
         $savings = Saving::where('savingname_id', 1)->count();
 
-        dd($members);
+        return "Members: " . $members . " : General Savings: " . $savings;
     }
 }
