@@ -103,7 +103,11 @@
                         @endif
                         <td id="loaninstallmentrealisable{{ $loaninstallment->id }}" readonly class="for_total_loaninstallmentrealisable">
                           @if($loaninstallment->installment_total > $loan->total_outstanding)
-                            {{ $loan->total_outstanding }}
+                            @if($loan->total_outstanding > 0)
+                              {{ $loan->total_outstanding }}
+                            @else
+                              0.00
+                            @endif
                           @else
                             {{ $loaninstallment->installment_total }}
                           @endif
