@@ -164,7 +164,7 @@
                           // }
                           foreach ($member->savinginstallments as $savinginstallment) {
                             if($savinginstallment->savingname_id == 2 && $savinginstallment->due_date == $transactiondate) {
-                              $longsaving = $savinginstallment->amount;
+                              $longsavingwd = $savinginstallment->withdraw;
                             }
                           }
                           // if(!empty($member->savings->where('savingname_id', 2)->first()->total_amount)) {
@@ -281,7 +281,7 @@
                         // }
                         foreach ($member->savinginstallments as $savinginstallment) {
                           if($savinginstallment->savingname_id == 2 && $savinginstallment->due_date == $transactiondate) {
-                            $longsaving = $savinginstallment->amount;
+                            $longsavingwd = $savinginstallment->withdraw;
                           }
                         }
                         // if(!empty($member->savings->where('savingname_id', 2)->first()->total_amount)) {
@@ -405,7 +405,7 @@
                         // }
                         foreach ($member->savinginstallments as $savinginstallment) {
                           if($savinginstallment->savingname_id == 2 && $savinginstallment->due_date == $transactiondate) {
-                            $longsaving = $savinginstallment->amount;
+                            $longsavingwd = $savinginstallment->withdraw;
                           }
                         }
                         // if(!empty($member->savings->where('savingname_id', 2)->first()->total_amount)) {
