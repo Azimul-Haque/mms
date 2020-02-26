@@ -107,19 +107,20 @@
                             }
                           }
                         @endphp
-                        @foreach($member->savings as $saving)
-                          @if($saving->savingname_id == 2)
-                            <td id="longsaving{{ $loaninstallment->id }}" onchange="loancalcandpost({{ $member->id }}, {{ $loaninstallment->id }}, '{{ $transactiondate }}', {{ $loaninstallment->installment_no }}, 0, 0, 0)" class="for_total_longsaving">{{ $longsaving }}</td>
-                            @php
-                              break;
-                            @endphp
-                          @else
-                            <td readonly>N/A</td>
-                            @php
-                              break;
-                            @endphp
-                          @endif
-                        @endforeach
+
+                        @php
+                          $foundlongterm = 0;
+                          foreach($member->savings as $saving) {
+                            if($saving->savingname_id == 2) {
+                              $foundlongterm = 1;
+                            }
+                          }
+                        @endphp
+                        @if($foundlongterm == 1)
+                          <td id="longsaving{{ $loaninstallment->id }}" onchange="loancalcandpost({{ $member->id }}, {{ $loaninstallment->id }}, '{{ $transactiondate }}', {{ $loaninstallment->installment_no }}, 0, 0, 0)" class="for_total_longsaving">{{ $longsaving }}</td>
+                        @else
+                          <td readonly>N/A</td>
+                        @endif
                         <td id="loaninstallmentrealisable{{ $loaninstallment->id }}" readonly class="for_total_loaninstallmentrealisable">
                           @if($loaninstallment->installment_total > $loan->total_outstanding)
                             @if($loan->total_outstanding > 0)
@@ -175,19 +176,21 @@
                             }
                           }
                         @endphp
-                        @foreach($member->savings as $saving)
-                          @if($saving->savingname_id == 2)
-                            <td id="longsavingwd{{ $loaninstallment->id }}" onchange="loancalcandpost({{ $member->id }}, {{ $loaninstallment->id }}, '{{ $transactiondate }}', {{ $loaninstallment->installment_no }}, {{ $long_saving_balance }}, 2, 0)" class="for_total_longsavingwd">{{ $longsavingwd }}</td>
-                            @php
-                              break;
-                            @endphp
-                          @else
-                            <td readonly>N/A</td>
-                            @php
-                              break;
-                            @endphp
-                          @endif
-                        @endforeach
+
+                        @php
+                          $foundlongterm = 0;
+                          foreach($member->savings as $saving) {
+                            if($saving->savingname_id == 2) {
+                              $foundlongterm = 1;
+                            }
+                          }
+                        @endphp
+                        
+                        @if($foundlongterm == 1)
+                          <td id="longsavingwd{{ $loaninstallment->id }}" onchange="loancalcandpost({{ $member->id }}, {{ $loaninstallment->id }}, '{{ $transactiondate }}', {{ $loaninstallment->installment_no }}, {{ $long_saving_balance }}, 2, 0)" class="for_total_longsavingwd">{{ $longsavingwd }}</td>
+                        @else
+                          <td readonly>N/A</td>
+                        @endif
                         <td id="netcollection{{ $loaninstallment->id }}" class="for_total_netcollection" readonly>{{ $loaninstallment->paid_total + $generalsaving + $longsaving - $generalsavingwd - $longsavingwd }}</td>
                       {{-- @else
                         <td id="loaninstallmentrealisable{{ $loaninstallment->id }}" readonly class="for_total_loaninstallmentrealisable">{{ $loaninstallment->installment_total }}</td>
