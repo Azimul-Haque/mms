@@ -54,10 +54,8 @@
           }
           if($totalprim >= $totalprod) {
             $defaultselected = 1;
-            echo $totalprim;
           } else {
             $defaultselected = 2;
-            echo $totalprim;
           }
         @endphp
         <a href="{{ route('dashboard.grouptransactions.date', [$staff->id, $group->id, $defaultselected, date('Y-m-d')]) }}">
