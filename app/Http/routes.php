@@ -188,6 +188,7 @@ Route::post('/report/daily/summary/dailyotheramounts', ['as'=>'report.post.daily
 // Route::put('/dashboard/member/{id}/update', ['as'=>'dashboard.member.update','uses'=>'DashboardController@updateMember']);
 Route::get('/dashboard/deletemember/{id}', ['as'=>'dashboard.deletemember','uses'=>'DashboardController@deleteMember']);
 Route::get('/dashboard/deletestaff/{id}', ['as'=>'dashboard.deletestaff','uses'=>'DashboardController@deleteStaff']);
+Route::get('/dashboard/deletegroup/{id}', ['as'=>'dashboard.deletegroup','uses'=>'DashboardController@deleteGroup']);
 Route::get('/dashboard/savings/missing', ['as'=>'dashboard.checkmissingsavings','uses'=>'DashboardController@checkMissingSavings']);
 
 // Route::get('/dashboard/applications', ['as'=>'dashboard.applications','uses'=>'DashboardController@getApplications']);
