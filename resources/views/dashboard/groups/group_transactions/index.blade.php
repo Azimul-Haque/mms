@@ -434,7 +434,7 @@
                       <td id="noloannetcollection{{ $member->id }}" class="for_total_netcollection" readonly>{{ $generalsaving + $longsaving - $generalsavingwd - $longsavingwd }}</td>                  
                 </tr>
               @endforeach
-              
+
               <tr>
                 <td readonly></td>
                 <td readonly></td>
@@ -577,10 +577,17 @@
       });
       console.log(totalcollection);
       console.log(member_id);
-      
     }
 
     function brandnewloancalcandpost(member_id, loan_id, transactiondate, balance, saving_type, total_outstanding) {
+
+      var evt = window.event || arguments.callee.caller.arguments[0];
+      var keyCode = evt.keyCode || evt.which;
+      if (keyCode === 13) { 
+        evt.preventDefault();
+        return false;
+      }
+
       var membername = $('#brmembername' + loan_id).text();
       var loaninstallment = parseInt($('#brloaninstallment' + loan_id + member_id).text()) ? parseInt($('#brloaninstallment' + loan_id + member_id).text()) : 0;
       var generalsaving = parseInt($('#brgeneralsaving' + loan_id + member_id).text()) ? parseInt($('#brgeneralsaving' + loan_id + member_id).text()) : 0;
@@ -640,6 +647,13 @@
     }
 
     function noloanmemberspost(member_id, transactiondate, balance, saving_type) {
+
+      var evt = window.event || arguments.callee.caller.arguments[0];
+      var keyCode = evt.keyCode || evt.which;
+      if (keyCode === 13) { 
+        evt.preventDefault();
+        return false;
+      }
       var membername = $('#noloanmembername' + member_id).text();
       var generalsaving = parseInt($('#noloangeneralsaving' + member_id).text()) ? parseInt($('#noloangeneralsaving' + member_id).text()) : 0;
       var longsaving = parseInt($('#noloanlongsaving' + member_id).text()) ? parseInt($('#noloanlongsaving' + member_id).text()) : 0;
