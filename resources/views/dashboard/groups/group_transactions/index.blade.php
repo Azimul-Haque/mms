@@ -110,8 +110,14 @@
                         @foreach($member->savings as $saving)
                           @if($saving->savingname_id == 2)
                             <td id="longsaving{{ $loaninstallment->id }}" onchange="loancalcandpost({{ $member->id }}, {{ $loaninstallment->id }}, '{{ $transactiondate }}', {{ $loaninstallment->installment_no }}, 0, 0, 0)" class="for_total_longsaving">{{ $longsaving }}</td>
+                            @php
+                              break;
+                            @endphp
                           @else
-                          <td readonly>N/A</td>
+                            <td readonly>N/A</td>
+                            @php
+                              break;
+                            @endphp
                           @endif
                         @endforeach
                         <td id="loaninstallmentrealisable{{ $loaninstallment->id }}" readonly class="for_total_loaninstallmentrealisable">
@@ -172,8 +178,14 @@
                         @foreach($member->savings as $saving)
                           @if($saving->savingname_id == 2)
                             <td id="longsavingwd{{ $loaninstallment->id }}" onchange="loancalcandpost({{ $member->id }}, {{ $loaninstallment->id }}, '{{ $transactiondate }}', {{ $loaninstallment->installment_no }}, {{ $long_saving_balance }}, 2, 0)" class="for_total_longsavingwd">{{ $longsavingwd }}</td>
+                            @php
+                              break;
+                            @endphp
                           @else
-                          <td readonly>N/A</td>
+                            <td readonly>N/A</td>
+                            @php
+                              break;
+                            @endphp
                           @endif
                         @endforeach
                         <td id="netcollection{{ $loaninstallment->id }}" class="for_total_netcollection" readonly>{{ $loaninstallment->paid_total + $generalsaving + $longsaving - $generalsavingwd - $longsavingwd }}</td>
@@ -224,8 +236,14 @@
                       @foreach($member->savings as $saving)
                         @if($saving->savingname_id == 2)
                           <td id="brlongsaving{{ $loan->id }}{{ $member->id }}" onchange="brandnewloancalcandpost({{ $member->id }}, {{ $loan->id }}, '{{ $transactiondate }}', 0, 0, 0)" class="for_total_longsaving">{{ $longsaving }}</td>
+                          @php
+                            break;
+                          @endphp
                         @else
-                        <td readonly>N/A</td>
+                          <td readonly>N/A</td>
+                          @php
+                            break;
+                          @endphp
                         @endif
                       @endforeach
                       <td id="loaninstallmentrealisable{{ $member->id }}" readonly>N/A</td>
@@ -273,11 +291,24 @@
                         }
                       @endphp
                       
-                      @if(!empty($member->savings->where('savingname_id', 2)->first()))
+                      {{-- @if(!empty($member->savings->where('savingname_id', 2)->first()))
                       <td id="brlongsavingwd{{ $loan->id }}{{ $member->id }}" onchange="brandnewloancalcandpost({{ $member->id }}, {{ $loan->id }}, '{{ $transactiondate }}', {{ $long_saving_balance }}, 2, 0)" class="for_total_longsavingwd">{{ $longsavingwd }}</td>
                       @else
                       <td readonly>N/A</td>
-                      @endif
+                      @endif --}}
+                      @foreach($member->savings as $saving)
+                        @if($saving->savingname_id == 2)
+                          <td id="brlongsavingwd{{ $loan->id }}{{ $member->id }}" onchange="brandnewloancalcandpost({{ $member->id }}, {{ $loan->id }}, '{{ $transactiondate }}', {{ $long_saving_balance }}, 2, 0)" class="for_total_longsavingwd">{{ $longsavingwd }}</td>
+                          @php
+                            break;
+                          @endphp
+                        @else
+                          <td readonly>N/A</td>
+                          @php
+                            break;
+                          @endphp
+                        @endif
+                      @endforeach
                       <td id="brandnewnetcollection{{ $loan->id }}" class="for_total_netcollection" readonly>{{ $generalsaving + $longsaving - $generalsavingwd - $longsavingwd }}</td>
                     {{-- @else
                       <td id="loaninstallmentrealisable{{ $member->id }}" readonly>N/A</td>
