@@ -308,16 +308,10 @@
                           }
                         }
                       @endphp
-                      @if($saving->savingname_id == 2)
+                      @if($foundlongterm == 1)
                         <td id="brlongsavingwd{{ $loan->id }}{{ $member->id }}" onchange="brandnewloancalcandpost({{ $member->id }}, {{ $loan->id }}, '{{ $transactiondate }}', {{ $long_saving_balance }}, 2, 0)" class="for_total_longsavingwd">{{ $longsavingwd }}</td>
-                        @php
-                          break;
-                        @endphp
                       @else
                         <td readonly>N/A</td>
-                        @php
-                          break;
-                        @endphp
                       @endif
                       <td id="brandnewnetcollection{{ $loan->id }}" class="for_total_netcollection" readonly>{{ $generalsaving + $longsaving - $generalsavingwd - $longsavingwd }}</td>
                     {{-- @else
@@ -364,7 +358,16 @@
                             }
                           }
                         @endphp
-                        @if(!empty($member->savings->where('savingname_id', 2)->first()))
+
+                        @php
+                          $foundlongterm = 0;
+                          foreach($member->savings as $saving) {
+                            if($saving->savingname_id == 2) {
+                              $foundlongterm = 1;
+                            }
+                          }
+                        @endphp
+                        @if($foundlongterm == 1)
                           <td id="noloanlongsaving{{ $member->id }}" onchange="noloanmemberspost({{ $member->id }}, '{{ $transactiondate }}', 0, 0)" class="for_total_longsaving">{{ $longsaving }}</td>
                         @else
                           <td readonly>N/A</td>
@@ -415,7 +418,15 @@
                           }
                         @endphp
                         
-                        @if(!empty($member->savings->where('savingname_id', 2)->first()))
+                        @php
+                          $foundlongterm = 0;
+                          foreach($member->savings as $saving) {
+                            if($saving->savingname_id == 2) {
+                              $foundlongterm = 1;
+                            }
+                          }
+                        @endphp
+                        @if($foundlongterm == 1)
                         <td id="noloanlongsavingwd{{ $member->id }}" onchange="noloanmemberspost({{ $member->id }}, '{{ $transactiondate }}', {{ $long_saving_balance }}, 2)" class="for_total_longsavingwd">{{ $longsavingwd }}</td>
                         @else
                         <td readonly>N/A</td>
