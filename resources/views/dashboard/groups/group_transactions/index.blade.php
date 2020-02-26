@@ -607,16 +607,19 @@
       if((total_outstanding > 0) && (loaninstallment > total_outstanding)) {
         toastr.warning('Invalid amount!').css('width', '400px');
         $('#brloaninstallment' + loan_id + member_id).text(0);
+        location.reload();
         return false;
       }
       if(saving_type == 1 && (generalsavingwd > balance)) {
         toastr.warning('Invalid amount!').css('width', '400px');
         $('#brgeneralsavingwd' + loan_id + member_id).text(0);
+        location.reload();
         return false;
       }
       if(saving_type == 2 && (longsavingwd > balance)) {
         toastr.warning('Invalid amount!').css('width', '400px');
         $('#brlongsavingwd' + loan_id + member_id).text(0);
+        location.reload();
         return false;
       }
 
@@ -680,11 +683,13 @@
       if(saving_type == 1 && (generalsavingwd > balance)) {
         toastr.warning('Invalid amount!').css('width', '400px');
         $('#noloangeneralsavingwd' + member_id).text(0);
+        location.reload();
         return false;
       }
       if(saving_type == 2 && (longsavingwd > balance)) {
         toastr.warning('Invalid amount!').css('width', '400px');
         $('#noloanlongsavingwd' + member_id).text(0);
+        location.reload();
         return false;
       }
 
