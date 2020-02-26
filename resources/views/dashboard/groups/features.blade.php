@@ -45,9 +45,9 @@
           $defaultselected = 1;
           foreach ($group->members as $member) {
             foreach ($member->loans as $loan) {
-              if($loan->loanname_id = 1) {
+              if($loan->loanname_id == 1) {
                 $totalprim++;
-              } elseif ($loan->loanname_id = 2) {
+              } elseif($loan->loanname_id == 2) {
                 $totalprod++;
               }
             }
