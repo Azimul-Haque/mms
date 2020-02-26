@@ -39,7 +39,26 @@
       <div class="clearfix visible-sm-block"></div>
 
       <div class="col-md-3 col-sm-6 col-xs-12">
-        <a href="{{ route('dashboard.grouptransactions.date', [$staff->id, $group->id, 1, date('Y-m-d')]) }}">
+        @php
+          $totalprim = 0;
+          $totalprod = 0;
+          $defaultselected = 1;
+          foreach ($group->members as $member) {
+            foreach ($member->loans as $loan) {
+              if($loan->loanname_id = 1) {
+                $totalprim++;
+              } elseif ($loan->loanname_id = 2) {
+                $totalprod++;
+              }
+            }
+          }
+          if($totalprim >= $totalprod) {
+            $defaultselected = 1;
+          } else {
+            $defaultselected = 2;
+          }
+        @endphp
+        <a href="{{ route('dashboard.grouptransactions.date', [$staff->id, $group->id, $defaultselected, date('Y-m-d')]) }}">
           <div class="info-box">
             <span class="info-box-icon bg-green"><i class="fa fa-exchange"></i></span>
 
