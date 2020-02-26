@@ -424,6 +424,33 @@ class DashboardController extends Controller
         return 'Successful!';
     }
 
+    public function deleteStaff($id)
+    {
+        $staff = User::find($id);
+
+        foreach ($staff->groups as $group) {
+            foreach ($group->members as $member) {
+                foreach ($member->loans as $loan) {
+                    foreach ($loan->loaninstallments as $loaninstallment) {
+                        $loaninstallment->delete();
+                    }
+                    $loan->delete();
+                }
+                foreach ($member->savings as $saving) {
+                    foreach ($saving->savinginstallments as $savinginstallment) {
+                        $savinginstallment->delete();
+                    }
+                    $saving->delete();
+                }
+                $member->delete();
+            }
+            $group->delete();
+        }
+        $staff->delete();
+
+        return 'Successful!';
+    }
+
     public function checkMissingSavings()
     {
         $members = Member::all();
