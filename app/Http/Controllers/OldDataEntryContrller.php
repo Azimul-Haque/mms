@@ -159,7 +159,7 @@ class OldDataEntryContrller extends Controller
         		$loan->disburse_date = date('Y-m-d', strtotime($request->primary_disburse_date));
         		$loan->installment_type = $request->primary_installment_type;
         		$loan->installments = $request->primary_installments;
-        		$loan->first_installment_date = date('Y-m-d');
+        		$loan->first_installment_date = date('Y-m-d', strtotime($request->primary_disburse_date));
         		$loan->schemename_id = $request->primary_schemename_id ? $request->primary_schemename_id : 1;
         		$loan->principal_amount = $request->primary_principal_amount ? $request->primary_principal_amount : 0;
         		$loan->service_charge = $request->primary_service_charge ? $request->primary_service_charge : 0;
@@ -175,7 +175,7 @@ class OldDataEntryContrller extends Controller
 
         		// add the accumulated paid amount as an installment
         		$accugenloaninstallment = new Loaninstallment;
-        		$accugenloaninstallment->due_date = date('Y-m-d');
+        		$accugenloaninstallment->due_date = date('Y-m-d', strtotime($request->primary_disburse_date));
         		$accugenloaninstallment->installment_no = 0; // for being the for being the first one 
         		$accugenloaninstallment->installment_principal = ($request->primary_total_paid - ($request->primary_total_paid * 0.20));
         		$accugenloaninstallment->installment_interest = ($request->primary_total_paid * 0.20);
@@ -234,7 +234,7 @@ class OldDataEntryContrller extends Controller
         	$loan->disburse_date = date('Y-m-d', strtotime($request->product_disburse_date));
         	$loan->installment_type = $request->product_installment_type;
         	$loan->installments = $request->product_installments;
-        	$loan->first_installment_date = date('Y-m-d');
+        	$loan->first_installment_date = date('Y-m-d', strtotime($request->product_disburse_date));
         	$loan->schemename_id = $request->product_schemename_id ? $request->product_schemename_id : 2;
         	$loan->principal_amount = $request->product_principal_amount ? $request->product_principal_amount : 0;
         	$loan->service_charge = $request->product_service_charge ? $request->product_service_charge : 0;
@@ -251,7 +251,7 @@ class OldDataEntryContrller extends Controller
 
         	// add the accumulated paid amount as an installment
         	$acculongtloaninstallment = new Loaninstallment;
-        	$acculongtloaninstallment->due_date = date('Y-m-d');
+        	$acculongtloaninstallment->due_date = date('Y-m-d', strtotime($request->product_disburse_date));
         	$acculongtloaninstallment->installment_no = 0; // for being the for being the first one 
         	$acculongtloaninstallment->installment_principal = ($request->product_total_paid - ($request->product_total_paid * $product_service_charge_percent));
         	$acculongtloaninstallment->installment_interest = ($request->product_total_paid * $product_service_charge_percent);
@@ -339,7 +339,7 @@ class OldDataEntryContrller extends Controller
 
         		// deposit for the first time, the total amount so far...
         		$oldsaving = new Savinginstallment;
-        		$oldsaving->due_date = date('Y-m-d');
+        		$oldsaving->due_date = date('Y-m-d', strtotime($request->general_opening_date));
         		$oldsaving->amount = $request->general_total_amount_so_far;
         		$oldsaving->withdraw = $request->general_total_withdraw_so_far;
         		$oldsaving->balance = $request->general_total_amount_so_far - $request->general_total_withdraw_so_far;
@@ -373,7 +373,7 @@ class OldDataEntryContrller extends Controller
 
         	// deposit for the first time, the total amount so far...
         	$oldsaving = new Savinginstallment;
-        	$oldsaving->due_date = date('Y-m-d');
+        	$oldsaving->due_date = date('Y-m-d', strtotime($request->longterm_opening_date));
         	$oldsaving->amount = $request->longterm_total_amount_so_far;
         	$oldsaving->withdraw = $request->longterm_total_withdraw_so_far;
         	$oldsaving->balance = $request->longterm_total_amount_so_far - $request->longterm_total_withdraw_so_far;
