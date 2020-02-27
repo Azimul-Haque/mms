@@ -346,7 +346,7 @@
                           }
                         }
                       @endphp
-                      <td id="noloangeneralsaving{{ $member->id }}" onchange="noloanmemberspost({{ $member->id }}, '{{ $transactiondate }}', 0, 0)" class="for_total_generalsaving">{{ $generalsaving }}</td>
+                      <td id="noloangeneralsaving{{ $member->id }}" onchange="noloanmemberspost({{ $member->id }}, '{{ $transactiondate }}', 0, 0)" class="for_total_generalsaving">{{ (int) $generalsaving }}</td>
                       @php
                         $longsaving = 0;
                         // if(!empty($member->savinginstallments->where('savingname_id', 2)->where('due_date', $transactiondate)->first())) {
@@ -368,7 +368,7 @@
                         }
                       @endphp
                       @if($foundlongterm == 1)
-                        <td id="noloanlongsaving{{ $member->id }}" onchange="noloanmemberspost({{ $member->id }}, '{{ $transactiondate }}', 0, 0)" class="for_total_longsaving">{{ $longsaving }}</td>
+                        <td id="noloanlongsaving{{ $member->id }}" onchange="noloanmemberspost({{ $member->id }}, '{{ $transactiondate }}', 0, 0)" class="for_total_longsaving">{{ (int) $longsaving }}</td>
                       @else
                         <td readonly>N/A</td>
                       @endif
@@ -396,7 +396,7 @@
                           }
                         }
                       @endphp
-                      <td id="noloangeneralsavingwd{{ $member->id }}" onchange="noloanmemberspost({{ $member->id }}, '{{ $transactiondate }}', {{ $general_saving_balance }}, 1)" class="for_total_generalsavingwd">{{ $generalsavingwd }}</td>
+                      <td id="noloangeneralsavingwd{{ $member->id }}" onchange="noloanmemberspost({{ $member->id }}, '{{ $transactiondate }}', {{ $general_saving_balance }}, 1)" class="for_total_generalsavingwd">{{ (int) $generalsavingwd }}</td>
                       @php
                         $longsavingwd = 0;
                         $long_saving_balance = 0;
@@ -427,7 +427,7 @@
                         }
                       @endphp
                       @if($foundlongterm == 1)
-                      <td id="noloanlongsavingwd{{ $member->id }}" onchange="noloanmemberspost({{ $member->id }}, '{{ $transactiondate }}', {{ $long_saving_balance }}, 2)" class="for_total_longsavingwd">{{ $longsavingwd }}</td>
+                      <td id="noloanlongsavingwd{{ $member->id }}" onchange="noloanmemberspost({{ $member->id }}, '{{ $transactiondate }}', {{ $long_saving_balance }}, 2)" class="for_total_longsavingwd">{{ (int) $longsavingwd }}</td>
                       @else
                       <td readonly>N/A</td>
                       @endif
