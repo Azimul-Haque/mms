@@ -75,8 +75,8 @@
 						@php
 							$generalcollgroup = 0;
 							foreach ($group->members as $member) {
-								foreach ($member->savings->where('savingname_id', 1) as $saving) {
-									if($saving->status == 1) {
+								foreach ($member->savings as $saving) {
+									if($saving->status == 1 && $saving->savingname_id == 1) {
 										foreach ($saving->savinginstallments as $savinginstallment) {
 											if($savinginstallment->due_date == $datetocalc) {
 												$generalcollgroup = $generalcollgroup + $savinginstallment->amount;
@@ -93,8 +93,8 @@
 						@php
 							$generalwithdrawgroup = 0;
 							foreach ($group->members as $member) {
-								foreach ($member->savings->where('savingname_id', 1) as $saving) {
-									if($saving->status == 1) {
+								foreach ($member->savings as $saving) {
+									if($saving->status == 1 && $saving->savingname_id == 1) {
 										foreach ($saving->savinginstallments as $savinginstallment) {
 											if($savinginstallment->due_date == $datetocalc) {
 												$generalwithdrawgroup = $generalwithdrawgroup + $savinginstallment->withdraw;
@@ -111,8 +111,8 @@
 						@php
 							$longtermcollgroup = 0;
 							foreach ($group->members as $member) {
-								foreach ($member->savings->where('savingname_id', 2) as $saving) {
-									if($saving->status == 1) {
+								foreach ($member->savings as $saving) {
+									if($saving->status == 1 && $saving->savingname_id == 2) {
 										foreach ($saving->savinginstallments as $savinginstallment) {
 											if($savinginstallment->due_date == $datetocalc) {
 												$longtermcollgroup = $longtermcollgroup + $savinginstallment->amount;
@@ -129,8 +129,8 @@
 						@php
 							$longtermwithdrawgroup = 0;
 							foreach ($group->members as $member) {
-								foreach ($member->savings->where('savingname_id', 2) as $saving) {
-									if($saving->status == 1) {
+								foreach ($member->savings as $saving) {
+									if($saving->status == 1 && $saving->savingname_id == 2) {
 										foreach ($saving->savinginstallments as $savinginstallment) {
 											if($savinginstallment->due_date == $datetocalc) {
 												$longtermwithdrawgroup = $longtermwithdrawgroup + $savinginstallment->withdraw;
@@ -171,8 +171,8 @@
 						@php
 							$loaninsurancegroup = 0;
 							foreach ($group->members as $member) {
-								foreach ($member->loans->where('loanname_id', 1) as $loan) {
-									if(($loan->status == 1) && ($loan->disburse_date == $datetocalc)) {
+								foreach ($member->loans as $loan) {
+									if(($loan->status == 1) && ($loan->loanname_id == 1) && ($loan->disburse_date == $datetocalc)) {
 										$loaninsurancegroup = $loaninsurancegroup + $loan->insurance;
 									}
 								}
@@ -185,8 +185,8 @@
 						@php
 							$processingfeegroup = 0;
 							foreach ($group->members as $member) {
-								foreach ($member->loans->where('loanname_id', 1) as $loan) {
-									if(($loan->status == 1) && ($loan->disburse_date == $datetocalc)) {
+								foreach ($member->loans as $loan) {
+									if(($loan->status == 1) && ($loan->loanname_id == 1) && ($loan->disburse_date == $datetocalc)) {
 										$processingfeegroup = $processingfeegroup + $loan->processing_fee;
 									}
 								}
