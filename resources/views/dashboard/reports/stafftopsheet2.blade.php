@@ -58,8 +58,10 @@
 					@php
 						$totalmembers = 0;
 						foreach ($group->members as $member) {
-							if(($member->status == 1) && !empty($member->loans->where('loanname_id', 2)->first())) {
-								$totalmembers = $totalmembers + 1;
+							foreach ($member->loans as $loan) {
+								if(($member->status == 1) && ($loan->loanname_id == 2) && ($loan->status == 1)) {
+									$totalmembers = $totalmembers + 1;
+								}
 							}
 						}
 						$grosstotalmembersdisbursed = $grosstotalmembersdisbursed + $totalmembers;
