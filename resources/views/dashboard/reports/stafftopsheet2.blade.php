@@ -72,8 +72,10 @@
 					@php
 						$totaldisbursed = 0;
 						foreach ($group->members as $member) {
-							foreach ($member->loans->where('loanname_id', 2) as $loan) {
-								$totaldisbursed = $totaldisbursed + $loan->total_disbursed;
+							foreach ($member->loans as $loan) {
+								if(($member->status == 1) && ($loan->loanname_id == 2) && ($loan->status == 1)) {
+									$totaldisbursed = $totaldisbursed + $loan->total_disbursed;
+								}
 							}
 						}
 						$grosstotaldisbursed = $grosstotaldisbursed + $totaldisbursed;
@@ -86,9 +88,11 @@
 						$totaloutstanding = 0;
 						foreach ($group->members as $member) {
 							$memberoutstanding = 0;
-							foreach ($member->loans->where('loanname_id', 2) as $loan) {
-								$totaloutstanding = $totaloutstanding + $loan->total_outstanding;
-								$memberoutstanding = $memberoutstanding + $loan->total_outstanding;
+							foreach ($member->loans as $loan) {
+								if(($loan->loanname_id == 2) && ($loan->status == 1)) {
+									$totaloutstanding = $totaloutstanding + $loan->total_outstanding;
+									$memberoutstanding = $memberoutstanding + $loan->total_outstanding;
+								}
 							}
 							if($memberoutstanding > 0) {
 								$totaloutstandingmembers++;
@@ -106,11 +110,13 @@
 						$totaloverdue = 0;
 						foreach ($group->members as $member) {
 							$memberoverdue = 0;
-							foreach ($member->loans->where('loanname_id', 2) as $loan) {
-								foreach ($loan->loaninstallments as $installment) {
-									if((strtotime($installment->due_date) <= strtotime(date('Y-m-d'))) && ($installment->installment_total - $installment->paid_total > 0) && ($loan->total_outstanding > 0)) {
-										$totaloverdue = $totaloverdue + ($installment->installment_total - $installment->paid_total);
-										$memberoverdue = $memberoverdue + ($installment->installment_total - $installment->paid_total);
+							foreach ($member->loans as $loan) {
+								if(($loan->loanname_id == 2) && ($loan->status == 1)) {
+									foreach ($loan->loaninstallments as $installment) {
+										if((strtotime($installment->due_date) <= strtotime(date('Y-m-d'))) && ($installment->installment_total - $installment->paid_total > 0) && ($loan->total_outstanding > 0)) {
+											$totaloverdue = $totaloverdue + ($installment->installment_total - $installment->paid_total);
+											$memberoverdue = $memberoverdue + ($installment->installment_total - $installment->paid_total);
+										}
 									}
 								}
 							}
