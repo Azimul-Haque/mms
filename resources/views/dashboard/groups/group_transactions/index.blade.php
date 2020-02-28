@@ -582,6 +582,13 @@
 
     function brandnewloancalcandpost(member_id, loan_id, transactiondate, balance, saving_type, total_outstanding) 
     {
+      // disable all td
+      // disable all td
+      $('td').on('click dblclick keydown', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+      });
+
       // disable enter button
       var evt = window.event || arguments.callee.caller.arguments[0];
       var keyCode = evt.keyCode || evt.which;
@@ -589,13 +596,6 @@
         evt.preventDefault();
         return false;
       }
-
-      // disable all td
-      // disable all td
-      $('td').on('click dblclick keydown', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-      });
 
       var membername = $('#brmembername' + loan_id).text();
       var loaninstallment = parseInt($('#brloaninstallment' + loan_id + member_id).text()) ? parseInt($('#brloaninstallment' + loan_id + member_id).text()) : 0;
@@ -644,8 +644,8 @@
           longsavingwd: longsavingwd
         }},
         function(data, status){
-        console.log(status);
-        console.log(data);
+        // console.log(status);
+        // console.log(data);
         if(status == 'success') {
           toastr.success('Member: <b>' + membername + '</b><br/>Total Collection: <u>৳ ' + totalcollection + '</u>, Net Collection: <u>৳ ' + netcollection , '</u>SUCCESS').css('width', '400px');
         } else {
@@ -653,26 +653,26 @@
         }
         
       });
-      console.log(totalcollection);
-      console.log(member_id);
+      // console.log(totalcollection);
+      // console.log(member_id);
       location.reload();
     }
 
     function noloanmemberspost(member_id, transactiondate, balance, saving_type) 
     {
+      // disable all td
+      $('td').on('click dblclick keydown', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+      });
+
       // disable enter button
       var evt = window.event || arguments.callee.caller.arguments[0];
       var keyCode = evt.keyCode || evt.which;
       if (keyCode === 13) { 
         evt.preventDefault();
         return false;
-      }
-
-      // disable all td
-      $('td').on('click dblclick keydown', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-      });
+      }      
 
       var membername = $('#noloanmembername' + member_id).text();
       var generalsaving = parseInt($('#noloangeneralsaving' + member_id).text()) ? parseInt($('#noloangeneralsaving' + member_id).text()) : 0;
@@ -711,8 +711,8 @@
           longsavingwd: longsavingwd
         }},
         function(data, status){
-        console.log(status);
-        console.log(data);
+        // console.log(status);
+        // console.log(data);
         if(status == 'success') {
           toastr.success('Member: <b>' + membername + '</b><br/>Total Collection: <u>৳ ' + totalcollection + '</u>, Net Collection: <u>৳ ' + netcollection , '</u>SUCCESS').css('width', '400px');
         } else {
@@ -720,8 +720,8 @@
         }
         
       });
-      console.log(totalcollection);
-      console.log(member_id);
+      // console.log(totalcollection);
+      // console.log(member_id);
       location.reload();
     }
 
