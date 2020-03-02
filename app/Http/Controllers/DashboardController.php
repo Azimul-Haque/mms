@@ -503,4 +503,20 @@ class DashboardController extends Controller
         $savings = Saving::where('savingname_id', 1)->count();
         return "Members: " . $members->count() . " : General Savings: " . $savings;
     }
+
+    public function deleteDoubleInstallments($datetodel, $loanorsavings, $type)
+    {
+        if($loanorsavings == 1) {
+           $loans = Loan::where('loanname_id', $type)->get();
+           foreach ($loans as $loan) {
+               if($loan->loaninstallments->where('due_date', date('Y-m-d', strtotime($datetodel)))->count() > 1) {
+                echo 2;
+               } else {
+                echo 1;
+               }
+           }
+        } elseif($loanorsavings == 2) {
+
+        } 
+    }
 }
