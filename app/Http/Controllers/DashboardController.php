@@ -514,6 +514,7 @@ class DashboardController extends Controller
                     $loaninstallment->delete();
                     break;
                 }
+                echo $saving->savinginstallments->where('due_date', date('Y-m-d', strtotime($datetodel)))->count();
                } else {
                 echo 1;
                }
@@ -526,6 +527,7 @@ class DashboardController extends Controller
                      $savinginstallment->delete();
                      break;
                  }
+                 echo $saving->savinginstallments->where('due_date', date('Y-m-d', strtotime($datetodel)))->count();
                 } else {
                  echo 1;
                 }
