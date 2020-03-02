@@ -425,9 +425,7 @@ class MemberController extends Controller
         $loan = Loan::find($l_id);
         $loan->closing_date = date('Y-m-d', strtotime($request->closing_date ? $request->closing_date : '1970-01-01'));
         // dd($loan->closing_date);
-        if(!empty($request->status)) {
-          $loan->status = $request->status; // 1 means disbursed, 0 means closed
-        }
+        $loan->status = $request->status; // 1 means disbursed, 0 means closed
         $loan->save();
 
         Session::flash('success', 'Updated successfully!'); 
