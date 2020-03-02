@@ -512,7 +512,7 @@ class DashboardController extends Controller
                if($loan->loaninstallments->where('due_date', date('Y-m-d', strtotime($datetodel)))->count() > 1) {
                 foreach ($loan->loaninstallments->where('due_date', date('Y-m-d', strtotime($datetodel))) as $loaninstallment) {
                     $loaninstallment->delete();
-                    break
+                    break;
                 }
                } else {
                 echo 1;
