@@ -507,8 +507,8 @@ class DashboardController extends Controller
     public function deleteDoubleInstallments($datetodel, $loanorsavings, $type)
     {
         if($loanorsavings == 1) {
-           $loans = Loan::where('loanname_id', $type)->get();
-           foreach ($loans as $loan) {
+            $loans = Loan::where('loanname_id', $type)->get();
+            foreach ($loans as $loan) {
                if($loan->loaninstallments->where('due_date', date('Y-m-d', strtotime($datetodel)))->count() > 1) {
                 foreach ($loan->loaninstallments->where('due_date', date('Y-m-d', strtotime($datetodel))) as $loaninstallment) {
                     $loaninstallment->delete();
@@ -517,9 +517,19 @@ class DashboardController extends Controller
                } else {
                 echo 1;
                }
-           }
+            }
         } elseif($loanorsavings == 2) {
-
+            $savings = Saving::where('savingname_id', $type)->get();
+            foreach ($savings as $saving) {
+                if($saving->savinginstallments->where('due_date', date('Y-m-d', strtotime($datetodel)))->count() > 1) {
+                 foreach ($saving->savinginstallments->where('due_date', date('Y-m-d', strtotime($datetodel))) as $savinginstallment) {
+                     $savinginstallment->delete();
+                     break;
+                 }
+                } else {
+                 echo 1;
+                }
+            }
         } 
     }
 }
