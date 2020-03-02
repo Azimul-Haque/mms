@@ -12,7 +12,7 @@
 			<th colspan="4" align="center" {{-- style="font-size: 30px;" --}}>Transaction Summary: Staff wise total Collection and Disbursement</th>
 		</tr>
 		<tr>
-			<th colspan="4" align="left">Date: {{ date('D, d/m/Y') }}</th>
+			<th colspan="4" align="left">Date: {{ date('D, d/m/Y', strtotime($datetocalc)) }}</th>
 		</tr>
 		<tr>
 			<th class="lightgray">Loan Officer</th>
