@@ -128,6 +128,10 @@ class ReportController extends Controller
 	    })->export('xlsx');
     }
 
+    public function getTransactionSummaryPage() {
+    	return view('dashboard.reports.transactionsummarypage');
+    }
+
     public function generateTransactionSummary()
     {
     	$staffs = User::where('role', 'staff')->get();
