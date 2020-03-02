@@ -132,10 +132,14 @@ class ReportController extends Controller
     	return view('dashboard.reports.transactionsummarypage');
     }
 
-    public function generateTransactionSummary()
+    public function generateTransactionSummary(Request $request)
     {
+    	$this->validate($request, [
+    	  'datetocalc' => 'required'
+    	]);
+
     	$staffs = User::where('role', 'staff')->get();
-    	$datetocalc = date('Y-m-d');
+    	$datetocalc = date('Y-m-d', strtotime($request->datetocalc));
     	$loaninstallments = Loaninstallment::where('due_date', $datetocalc)->get();
     	$savinginstallments = Savinginstallment::where('due_date', $datetocalc)->get();
     	$totalloans = Loan::where('disburse_date', $datetocalc)->get();
@@ -168,7 +172,7 @@ class ReportController extends Controller
 	    	$excel->sheet('Savings and Others', function($sheet) use($staffs, $datetocalc) 
 	    	{
 		        $sheet->loadView('dashboard.reports.transactionsummary2')->withStaffs($staffs)
-	                    												->withDatetocalc($datetocalc);
+	                    												 ->withDatetocalc($datetocalc);
 		        $sheet->setStyle(array(
 		            'font' => array(
 		                'name'      =>  'Arial',
