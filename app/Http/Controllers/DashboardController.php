@@ -510,10 +510,10 @@ class DashboardController extends Controller
            $loans = Loan::where('loanname_id', $type)->get();
            foreach ($loans as $loan) {
                if($loan->loaninstallments->where('due_date', date('Y-m-d', strtotime($datetodel)))->count() > 1) {
-                // foreach ($loan->loaninstallments->where('due_date', date('Y-m-d', strtotime($datetodel))) as $loaninstallment) {
-                //     echo '|' . $loaninstallment->id . '|';
-                // }
-                $loan->loaninstallments->where('due_date', date('Y-m-d', strtotime($datetodel)))->count();
+                foreach ($loan->loaninstallments->where('due_date', date('Y-m-d', strtotime($datetodel))) as $loaninstallment) {
+                    $loaninstallment->delete();
+                    break
+                }
                } else {
                 echo 1;
                }
