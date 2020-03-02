@@ -12,7 +12,7 @@
 			<th colspan="11" align="center" {{-- style="font-size: 30px;" --}}>Transaction Summary: Groupwise Savings, Admission Fee, PassBook Fee, Loan Insurance</th>
 		</tr>
 		<tr>
-			<th colspan="11" align="left">Date: {{ date('D, d/m/Y') }}</th>
+			<th colspan="11" align="left">Date: {{ date('D, d/m/Y', strtotime($datetocalc)) }}</th>
 		</tr>
 		<tr>
 			<th rowspan="2" class="lightgray">Loan Officer</th>

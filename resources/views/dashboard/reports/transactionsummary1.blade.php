@@ -12,7 +12,7 @@
 			<th colspan="14" align="center" style="font-size: 30px;"><big>Transaction Summary: Groupwise Loan Collection Information</big></th>
 		</tr>
 		<tr>
-			<th colspan="14" align="left">Date: {{ date('D, d/m/Y') }}</th>
+			<th colspan="14" align="left">Date: {{ date('D, d/m/Y', strtotime($datetocalc)) }}</th>
 		</tr>
 		<tr>
 			<th rowspan="3" class="lightgray">Loan Officer</th>
