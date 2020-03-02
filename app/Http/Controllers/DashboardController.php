@@ -511,7 +511,7 @@ class DashboardController extends Controller
            foreach ($loans as $loan) {
                if($loan->loaninstallments->where('due_date', date('Y-m-d', strtotime($datetodel)))->count() > 1) {
                 foreach ($loan->loaninstallments->where('due_date', date('Y-m-d', strtotime($datetodel))) as $loaninstallment) {
-                    echo '|' . $loaninstallment->id;
+                    echo '|' . $loaninstallment->id . '|';
                 }
                } else {
                 echo 1;
