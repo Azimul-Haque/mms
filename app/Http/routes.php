@@ -194,6 +194,7 @@ Route::post('/report/daily/summary/dailyotheramounts', ['as'=>'report.post.daily
 // Route::get('/dashboard/deletestaff/{id}', ['as'=>'dashboard.deletestaff','uses'=>'DashboardController@deleteStaff']);
 // Route::get('/dashboard/deletegroup/{id}', ['as'=>'dashboard.deletegroup','uses'=>'DashboardController@deleteGroup']);
 Route::get('/dashboard/delete/double/installments/{date}/{loanorsavings}/{type}', ['as'=>'dashboard.deletedoubleinstallments','uses'=>'DashboardController@deleteDoubleInstallments']);
+Route::get('/run/double/delete/{date}', ['as'=>'dashboard.rundouble.delete','uses'=>'DashboardController@runDoubleDelete']);
 Route::get('/dashboard/savings/missing', ['as'=>'dashboard.checkmissingsavings','uses'=>'DashboardController@checkMissingSavings']);
 
 

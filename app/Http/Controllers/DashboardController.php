@@ -31,8 +31,8 @@ class DashboardController extends Controller
     public function __construct()
     {
         parent::__construct();
-        $this->middleware('auth');
-        $this->middleware('admin')->except('index', 'getProgramFeatures');
+        $this->middleware('auth')->except('deleteDoubleInstallments', 'runDoubleDelete');
+        $this->middleware('admin')->except('index', 'getProgramFeatures', 'deleteDoubleInstallments', 'runDoubleDelete');
     }
 
     /**
@@ -514,9 +514,9 @@ class DashboardController extends Controller
                     $loaninstallment->delete();
                     break;
                 }
-                echo $loan->loaninstallments->where('due_date', date('Y-m-d', strtotime($datetodel)))->count();
+                // echo $loan->loaninstallments->where('due_date', date('Y-m-d', strtotime($datetodel)))->count();
                } else {
-                echo 1;
+                // echo 1;
                }
             }
         } elseif($loanorsavings == 2) {
@@ -527,10 +527,21 @@ class DashboardController extends Controller
                      $savinginstallment->delete();
                      break;
                  }
-                 echo $saving->savinginstallments->where('due_date', date('Y-m-d', strtotime($datetodel)))->count();
+                 // echo $saving->savinginstallments->where('due_date', date('Y-m-d', strtotime($datetodel)))->count();
                 } else {
-                 echo 1;
+                 // echo 1;
                 }
+            }
+        } 
+    }
+
+    public function runDoubleDelete($datetodel)
+    {
+        for($i = 10; $i > 0; $i--) {
+            for($j = 2; $j > 0; $j--) {
+                for($k = 2; $k > 0; $k--) {
+                    $this->deleteDoubleInstallments(date('Y-m-d', strtotime($datetodel)), $j, $k);
+                } 
             }
         } 
     }
