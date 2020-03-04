@@ -228,33 +228,53 @@ class GroupController extends Controller
         // save the new installment
         if($request->data['loaninstallment'] > -1) 
         {
-          $installment = new Loaninstallment;
-          $installment->due_date = date('Y-m-d', strtotime($request->data['transactiondate']));
+          $checkinstallment = Loaninstallment::where('loan_id', $loan->id)
+                                             ->where('due_date', date('Y-m-d', strtotime($request->data['transactiondate'])))
+                                             ->first();
+          if(empty($checkinstallment)) {
+            $installment = new Loaninstallment;
+            $installment->due_date = date('Y-m-d', strtotime($request->data['transactiondate']));
 
-          $checkloanlastinstallmentid = Loaninstallment::where('loan_id', $request->data['loan_id'])
-                                                       ->orderBy('installment_no', 'desc')
-                                                       ->first();
-          if(!empty($checkloanlastinstallmentid)) {
-            $installment->installment_no = $checkloanlastinstallmentid->installment_no + 1;
+            $checkloanlastinstallmentid = Loaninstallment::where('loan_id', $request->data['loan_id'])
+                                                         ->orderBy('installment_no', 'desc')
+                                                         ->first();
+            if(!empty($checkloanlastinstallmentid)) {
+              $installment->installment_no = $checkloanlastinstallmentid->installment_no + 1;
+            } else {
+              $installment->installment_no = 1;
+            }
+            $installment->installment_principal = $loan->principal_amount / $loan->installments;
+            $installment->installment_interest = $loan->service_charge / $loan->installments;
+            $installment->installment_total = $installment->installment_principal + $installment->installment_interest;
+            
+            // calculate outstanding from from loan
+            $loan->total_paid = $loan->total_paid + $request->data['loaninstallment'];
+            $loan->total_outstanding = $loan->total_disbursed - $loan->total_paid;
+            $loan->save();
+
+            $installment->paid_principal = $installment->installment_principal;
+            $installment->paid_interest = $installment->installment_interest;
+            $installment->paid_total = $request->data['loaninstallment'];
+            $installment->outstanding_total = $loan->total_outstanding;
+            $installment->loan_id = $loan->id;
+            $installment->user_id = $member->staff_id;
+            $installment->save();
           } else {
-            $installment->installment_no = 1;
-          }
-          $installment->installment_principal = $loan->principal_amount / $loan->installments;
-          $installment->installment_interest = $loan->service_charge / $loan->installments;
-          $installment->installment_total = $installment->installment_principal + $installment->installment_interest;
-          
-          // calculate outstanding from from loan
-          $loan->total_paid = $loan->total_paid + $request->data['loaninstallment'];
-          $loan->total_outstanding = $loan->total_disbursed - $loan->total_paid;
-          $loan->save();
+            $installment = Loaninstallment::where('loan_id', $loan->id)
+                                          ->where('due_date', date('Y-m-d', strtotime($request->data['transactiondate'])))
+                                          ->first();
+            $installment->loan->total_paid = $installment->loan->total_paid - $installment->paid_total + $request->data['loaninstallment'];
+            $installment->loan->total_outstanding = $installment->loan->total_disbursed - $installment->loan->total_paid;
+            $installment->loan->save();
 
-          $installment->paid_principal = $installment->installment_principal;
-          $installment->paid_interest = $installment->installment_interest;
-          $installment->paid_total = $request->data['loaninstallment'];
-          $installment->outstanding_total = $loan->total_outstanding;
-          $installment->loan_id = $loan->id;
-          $installment->user_id = $member->staff_id;
-          $installment->save();
+            // post the installment
+            $installment->paid_principal = $installment->installment_principal; 
+            $installment->paid_interest = $installment->installment_interest;
+            $installment->paid_total = $request->data['loaninstallment']; // assuming the total is paid
+            // $installment->outstanding_total = $installment->loan->total_outstanding; // from the main loan account table
+            $installment->user_id = $member->staff_id; // pore change o hoite paare taar staff ejonno
+            $installment->save();
+          }
         }
         
         // save the deposits(General and LongTerm)
@@ -267,8 +287,8 @@ class GroupController extends Controller
           if(!empty($generalsaving)) {
               // balance calculation in saving acc
               $gensavingac = Saving::where('member_id', $request->data['member_id'])
-                                ->where('savingname_id', 1) // hard coded!
-                                ->first();
+                                   ->where('savingname_id', 1) // hard coded!
+                                   ->first();
               $gensavingac->total_amount = $gensavingac->total_amount - $generalsaving->amount + $request->data['generalsaving'];
               $gensavingac->withdraw = $gensavingac->withdraw - $generalsaving->withdraw + $request->data['generalsavingwd'];
               $gensavingac->save();

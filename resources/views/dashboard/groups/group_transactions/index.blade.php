@@ -672,7 +672,7 @@
       if (keyCode === 13) { 
         evt.preventDefault();
         return false;
-      }      
+      }
 
       var membername = $('#noloanmembername' + member_id).text();
       var generalsaving = parseInt($('#noloangeneralsaving' + member_id).text()) ? parseInt($('#noloangeneralsaving' + member_id).text()) : 0;
