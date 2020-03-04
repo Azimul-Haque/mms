@@ -107,7 +107,7 @@
               <div class="modal-body">
                 @if(!($totalloanoutstanding > 0) && !($totalsavingsbalance > 0))
                   Are you sure to Close this member: <b>{{ $member->name }}-{{ $member->fhusband }}({{ $member->passbook }})</b>?<br/>
-                  <big>Shared Deposit Return: {{ $member->shared_deposit }}</big>
+                  <big>Shared Deposit Return: <b>৳ {{ $member->shared_deposit }}</b></big>
                 @else
                   This account cannot be closed!
                 @endif
