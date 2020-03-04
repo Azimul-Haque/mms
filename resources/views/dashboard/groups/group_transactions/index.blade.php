@@ -568,7 +568,7 @@
         }},
         function(data, status){
         console.log(status);
-        console.log(data);
+        // console.log(data);
         if(status == 'success') {
           toastr.success('Member: <b>' + membername + '</b><br/>Total Collection: <u>৳ ' + totalcollection + '</u>, Net Collection: <u>৳ ' + netcollection , '</u>SUCCESS').css('width', '400px');
         } else {
@@ -576,8 +576,8 @@
         }
         
       });
-      console.log(totalcollection);
-      console.log(member_id);
+      // console.log(totalcollection);
+      // console.log(member_id);
     }
 
     function brandnewloancalcandpost(member_id, loan_id, transactiondate, balance, saving_type, total_outstanding) 
@@ -644,7 +644,7 @@
           longsavingwd: longsavingwd
         }},
         function(data, status){
-        // console.log(status);
+        console.log(status);
         // console.log(data);
         if(status == 'success') {
           toastr.success('Member: <b>' + membername + '</b><br/>Total Collection: <u>৳ ' + totalcollection + '</u>, Net Collection: <u>৳ ' + netcollection , '</u>SUCCESS').css('width', '400px');
@@ -711,7 +711,7 @@
           longsavingwd: longsavingwd
         }},
         function(data, status){
-        // console.log(status);
+        console.log(status);
         // console.log(data);
         if(status == 'success') {
           toastr.success('Member: <b>' + membername + '</b><br/>Total Collection: <u>৳ ' + totalcollection + '</u>, Net Collection: <u>৳ ' + netcollection , '</u>SUCCESS').css('width', '400px');
