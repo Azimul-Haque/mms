@@ -584,18 +584,18 @@
     {
       // disable all td
       // disable all td
-      $('td').on('click dblclick keydown', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-      });
+      // $('td').on('click dblclick keydown', function(e) {
+      //   e.preventDefault();
+      //   e.stopPropagation();
+      // });
 
       // disable enter button
-      var evt = window.event || arguments.callee.caller.arguments[0];
-      var keyCode = evt.keyCode || evt.which;
-      if (keyCode === 13) { 
-        evt.preventDefault();
-        return false;
-      }
+      // var evt = window.event || arguments.callee.caller.arguments[0];
+      // var keyCode = evt.keyCode || evt.which;
+      // if (keyCode === 13) { 
+      //   evt.preventDefault();
+      //   return false;
+      // }
 
       var membername = $('#brmembername' + loan_id).text();
       var loaninstallment = parseInt($('#brloaninstallment' + loan_id + member_id).text()) ? parseInt($('#brloaninstallment' + loan_id + member_id).text()) : 0;
@@ -655,24 +655,24 @@
       });
       // console.log(totalcollection);
       // console.log(member_id);
-      location.reload();
+      // location.reload();
     }
 
     function noloanmemberspost(member_id, transactiondate, balance, saving_type) 
     {
       // disable all td
-      $('td').on('click dblclick keydown', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-      });
+      // $('td').on('click dblclick keydown', function(e) {
+      //   e.preventDefault();
+      //   e.stopPropagation();
+      // });
 
       // disable enter button
-      var evt = window.event || arguments.callee.caller.arguments[0];
-      var keyCode = evt.keyCode || evt.which;
-      if (keyCode === 13) { 
-        evt.preventDefault();
-        return false;
-      }
+      // var evt = window.event || arguments.callee.caller.arguments[0];
+      // var keyCode = evt.keyCode || evt.which;
+      // if (keyCode === 13) { 
+      //   evt.preventDefault();
+      //   return false;
+      // }
 
       var membername = $('#noloanmembername' + member_id).text();
       var generalsaving = parseInt($('#noloangeneralsaving' + member_id).text()) ? parseInt($('#noloangeneralsaving' + member_id).text()) : 0;
@@ -722,7 +722,7 @@
       });
       // console.log(totalcollection);
       // console.log(member_id);
-      location.reload();
+      // location.reload();
     }
 
     $('td[readonly]').on('click dblclick keydown', function(e) {
