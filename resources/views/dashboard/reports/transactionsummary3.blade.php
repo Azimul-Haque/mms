@@ -93,7 +93,7 @@
 					$totalpassbook_fee = $totalpassbook_fee + $staffpassbook_fee;
 
 					$staffshared_deposit = 0;
-					foreach ($totalmembers as $member) {
+					foreach ($totalclosingmembers as $member) {
 						if($member->staff_id == $staff->id) {
 							$staffshared_deposit = $staffshared_deposit + $member->shared_deposit;
 						}
