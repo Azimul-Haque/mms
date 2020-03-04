@@ -570,7 +570,7 @@
         console.log(status);
         // console.log(data);
         if(status == 'success') {
-          toastr.success('Member: <b>' + membername + '</b><br/>Total Collection: <u>৳ ' + totalcollection + '</u>, Net Collection: <u>৳ ' + netcollection , '</u>SUCCESS').css('width', '400px');
+          // toastr.success('Member: <b>' + membername + '</b><br/>Total Collection: <u>৳ ' + totalcollection + '</u>, Net Collection: <u>৳ ' + netcollection , '</u>SUCCESS').css('width', '400px');
         } else {
           toastr.warning('Error!').css('width', '400px');
         }
@@ -613,13 +613,13 @@
       if(saving_type == 1 && (generalsavingwd > balance)) {
         toastr.warning('Invalid amount!').css('width', '400px');
         $('#brgeneralsavingwd' + loan_id + member_id).text(0);
-        location.reload();
+        // location.reload();
         return false;
       }
       if(saving_type == 2 && (longsavingwd > balance)) {
         toastr.warning('Invalid amount!').css('width', '400px');
         $('#brlongsavingwd' + loan_id + member_id).text(0);
-        location.reload();
+        // location.reload();
         return false;
       }
 
