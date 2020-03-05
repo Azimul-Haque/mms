@@ -113,7 +113,7 @@
 					}
 					$totaldisbursed = $totaldisbursed + $staffdisbursed;
 
-					// loan withdraw
+					// saving withdraw
 					$staffsavingwithdraw = 0;
 					foreach ($savinginstallments as $savinginstallment) {
 						if($savinginstallment->user_id == $staff->id) {
