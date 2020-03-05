@@ -9,20 +9,22 @@
 <table>
 	<thead>
 		<tr>
-			<th colspan="11" align="center" {{-- style="font-size: 30px;" --}}>Transaction Summary: Groupwise Savings, Admission Fee, PassBook Fee, Loan Insurance</th>
+			<th colspan="14" align="center" {{-- style="font-size: 30px;" --}}>Transaction Summary: Groupwise Savings, Admission Fee, PassBook Fee, Loan Insurance</th>
 		</tr>
 		<tr>
-			<th colspan="11" align="left">Date: {{ date('D, d/m/Y', strtotime($datetocalc)) }}</th>
+			<th colspan="14" align="left">Date: {{ date('D, d/m/Y', strtotime($datetocalc)) }}</th>
 		</tr>
 		<tr>
 			<th rowspan="2" class="lightgray">Loan Officer</th>
 			<th rowspan="2" class="lightgray">Group Name</th>
 			<th colspan="2" class="lightgray" align="center">GENERAL SAVINGS</th>
 			<th colspan="2" class="lightgray" align="center">LONG TERM SAVINGS</th>
+			<th colspan="2" class="lightgray" align="center">SHARED DEPOSIT</th>
 			<th class="lightgray" align="center">Admission Fee</th>
 			<th class="lightgray" align="center">PassBook Fee</th>
 			<th class="lightgray" align="center">Loan Insurance</th>
 			<th class="lightgray" align="center">Processing Fee</th>
+			<th class="lightgray" align="center">Down Payment</th>
 			<th class="lightgray" align="center"></th>
 		</tr>
 		<tr>
@@ -32,6 +34,9 @@
 			<td class="lightgray" align="center"><b>Withdrawal</b></td>
 			<td class="lightgray" align="center"><b>Collection</b></td>
 			<td class="lightgray" align="center"><b>Withdrawal</b></td>
+			<td class="lightgray" align="center"><b>Collection</b></td>
+			<td class="lightgray" align="center"><b>Withdrawal</b></td>
+			<td class="lightgray" align="center"><b>Total</b></td>
 			<td class="lightgray" align="center"><b>Total</b></td>
 			<td class="lightgray" align="center"><b>Total</b></td>
 			<td class="lightgray" align="center"><b>Total</b></td>
@@ -47,10 +52,14 @@
 			$longtermcolltotal = 0;
 			$longtermwithdrawtotal = 0;
 
+			$shareddepcolltotal = 0;
+			$shareddepwithdrawtotal = 0;
+
 			$admissionfeetotal = 0;
 			$passbookfeetotal = 0;
 			$loaninsurancetotal = 0;
 			$processingfeetotal = 0;
+			$downpaymenttotal = 0;
 
 		@endphp
 		@foreach($staffs as $staff)
@@ -62,10 +71,14 @@
 				$longtermcollstaff = 0;
 				$longtermwithdrawstaff = 0;
 
+				$shareddepcollstaff = 0;
+				$shareddepwithdrawstaff = 0;
+
 				$admissionfeestaff = 0;
 				$passbookfeestaff = 0;
 				$loaninsurancestaff = 0;
 				$processingfeestaff = 0;
+				$downpaymentstaff = 0;
 			@endphp
 			@foreach($staff->groups as $group)
 				<tr>
@@ -143,6 +156,32 @@
 						@endphp
 						{{ $longtermwithdrawgroup }}
 					</td>
+
+					<td align="right">
+						@php
+							$shareddepcollgroup = 0;
+							foreach ($group->members as $member) {
+								if($member->admission_date == $datetocalc) {
+									$shareddepcollgroup = $shareddepcollgroup + $member->shared_deposit;
+								}
+							}
+							$shareddepcollstaff = $shareddepcollstaff + $shareddepcollgroup;
+						@endphp
+						{{ $shareddepcollgroup }}
+					</td>
+					<td align="right">
+						@php
+							$shareddepwithdrawalgroup = 0;
+							foreach ($group->members as $member) {
+								if($member->closing_date == $datetocalc) {
+									$shareddepwithdrawalgroup = $shareddepwithdrawalgroup + $member->shared_deposit;
+								}
+							}
+							$shareddepwithdrawstaff = $shareddepwithdrawstaff + $shareddepwithdrawalgroup;
+						@endphp
+						{{ $shareddepwithdrawalgroup }}
+					</td>
+
 					<td align="right">
 						@php
 							$admissionfeegroup = 0;
@@ -195,8 +234,23 @@
 						@endphp
 						{{ $processingfeegroup }}
 					</td>
+
+					<td align="right">
+						@php
+							$downpaymentgroup = 0;
+							foreach ($group->members as $member) {
+								foreach ($member->loans as $loan) {
+									if(($loan->status == 1) && ($loan->loanname_id == 2) && ($loan->disburse_date == $datetocalc)) {
+										$downpaymentgroup = $downpaymentgroup + $loan->down_payment;
+									}
+								}
+							}
+							$downpaymentstaff = $downpaymentstaff + $downpaymentgroup;
+						@endphp
+						{{ $downpaymentgroup }}
+					</td>
 					
-					<td align="right">{{ $generalcollgroup + $longtermcollgroup - ($generalwithdrawgroup + $longtermwithdrawgroup) }}</td>
+					<td align="right">{{ $generalcollgroup + $longtermcollgroup + $shareddepcollgroup - ($generalwithdrawgroup + $longtermwithdrawgroup + $shareddepwithdrawalgroup) + $admissionfeegroup + $passbookfeegroup + $loaninsurancegroup + $processingfeegroup + $downpaymentgroup  }}</td>
 				</tr>
 			@endforeach
 			<tr>
@@ -215,7 +269,6 @@
 						$generalwithdrawtotal = $generalwithdrawtotal + $generalwithdrawstaff;
 					@endphp
 				</th>
-				
 
 				<th align="right">
 					{{ $longtermcollstaff }}
@@ -227,6 +280,19 @@
 					{{ $longtermwithdrawstaff }}
 					@php
 						$longtermwithdrawtotal = $longtermwithdrawtotal + $longtermwithdrawstaff;
+					@endphp
+				</th>
+
+				<th align="right">
+					{{ $shareddepcollstaff }}
+					@php
+						$shareddepcolltotal = $shareddepcolltotal + $shareddepcollstaff;
+					@endphp
+				</th>
+				<th align="right">
+					{{ $shareddepwithdrawstaff }}
+					@php
+						$shareddepwithdrawtotal = $shareddepwithdrawtotal + $shareddepwithdrawstaff;
 					@endphp
 				</th>
 
@@ -254,9 +320,15 @@
 						$processingfeetotal = $processingfeetotal + $processingfeestaff;
 					@endphp
 				</th>
+				<th align="right">
+					{{ $downpaymentstaff }}
+					@php
+						$downpaymenttotal = $downpaymenttotal + $downpaymentstaff;
+					@endphp
+				</th>
 				
 				<th align="right">
-					{{ ($generalcollstaff + $longtermcollstaff + $admissionfeestaff + $passbookfeestaff + $loaninsurancestaff) - ($generalwithdrawstaff + $longtermwithdrawstaff) }}
+					{{ ($generalcollstaff + $longtermcollstaff + $shareddepcollstaff + $admissionfeestaff + $passbookfeestaff + $loaninsurancestaff + $processingfeestaff + $downpaymentstaff) - ($generalwithdrawstaff + $longtermwithdrawstaff + $shareddepwithdrawstaff) }}
 				</th>
 			</tr>
 			@endif
@@ -269,13 +341,17 @@
 			
 			<th align="right">{{ $longtermcolltotal }}</th>
 			<th align="right">{{ $longtermwithdrawtotal }}</th>
+			
+			<th align="right">{{ $shareddepcolltotal }}</th>
+			<th align="right">{{ $shareddepwithdrawtotal }}</th>
 
 			<th align="right">{{ $admissionfeetotal }}</th>
 			<th align="right">{{ $passbookfeetotal }}</th>
 			<th align="right">{{ $loaninsurancetotal }}</th>
 			<th align="right">{{ $processingfeetotal }}</th>
+			<th align="right">{{ $downpaymenttotal }}</th>
 
-			<th align="right">{{ ($generalcolltotal + $longtermcolltotal + $admissionfeetotal + $passbookfeetotal + $loaninsurancetotal + $processingfeetotal) - ($generalwithdrawtotal + $longtermwithdrawtotal) }}</th>
+			<th align="right">{{ ($generalcolltotal + $longtermcolltotal + $shareddepcolltotal + $admissionfeetotal + $passbookfeetotal + $loaninsurancetotal + $processingfeetotal + $downpaymenttotal) - ($generalwithdrawtotal + $longtermwithdrawtotal + $shareddepwithdrawtotal) }}</th>
 			
 		</tr>
 	</tbody>

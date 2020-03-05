@@ -22,7 +22,7 @@ class IndexController extends Controller
 
     public function index()
     {
-        return view('index.index');
+        return redirect()->route('dashboard.index');
     }
 
     public function homeAdhoc()
