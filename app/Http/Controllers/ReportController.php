@@ -388,6 +388,11 @@ class ReportController extends Controller
 					      	    ->select(DB::raw("SUM(shared_deposit) as total"))
 					      	    ->where('admission_date', date('Y-m-d', strtotime($transactiondate)))
 					      	    ->first();
+		$totaldownpayment = DB::table("loans")
+				      	      ->select(DB::raw("SUM(down_payment) as total"))
+				      	      ->where('disburse_date', date('Y-m-d', strtotime($transactiondate)))
+				      	      ->where('loanname_id', 2)
+				      	      ->first();	
         // collection
 
         // disburse
@@ -431,6 +436,7 @@ class ReportController extends Controller
         					->withTotaladmissionfee($totaladmissionfee)
         					->withTotalpassbookfee($totalpassbookfee)
         					->withTotalshareddeposit($totalshareddeposit)
+        					->withTotaldownpayment($totaldownpayment)
         					->withTotaldisbursed($totaldisbursed)
         					->withTotalsavingwithdraw($totalsavingwithdraw)
         					->withTotalgeneralsavingwithdraw($totalgeneralsavingwithdraw)

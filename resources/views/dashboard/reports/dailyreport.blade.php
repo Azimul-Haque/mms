@@ -89,7 +89,7 @@
                 </tr>
                 <tr>
                   <td>Down Payment</td>
-                  <td>৳ <span class="for_total_collectioncommon">{{ $totalshareddeposit->total ? $totalshareddeposit->total : 0 }}</span></td>
+                  <td>৳ <span class="for_total_collectioncommon">{{ $totaldownpayment->total ? $totaldownpayment->total : 0 }}</span></td>
                 </tr>
                 <tr>
                   <td>Others</td>
