@@ -186,7 +186,7 @@
 						@php
 							$admissionfeegroup = 0;
 							foreach ($group->members as $member) {
-								if(($member->status == 1) && ($member->admission_date == $datetocalc)) {
+								if(($member->admission_date == $datetocalc)) {
 									$admissionfeegroup = $admissionfeegroup + $member->admission_fee;
 								}
 							}
@@ -198,7 +198,7 @@
 						@php
 							$passbookfeegroup = 0;
 							foreach ($group->members as $member) {
-								if(($member->status == 1) && ($member->admission_date == $datetocalc)) {
+								if(($member->admission_date == $datetocalc)) {
 									$passbookfeegroup = $passbookfeegroup + $member->passbook_fee;
 								}
 							}
@@ -211,7 +211,7 @@
 							$loaninsurancegroup = 0;
 							foreach ($group->members as $member) {
 								foreach ($member->loans as $loan) {
-									if(($loan->status == 1) && ($loan->loanname_id == 1) && ($loan->disburse_date == $datetocalc)) {
+									if(($loan->loanname_id == 1) && ($loan->disburse_date == $datetocalc)) {
 										$loaninsurancegroup = $loaninsurancegroup + $loan->insurance;
 									}
 								}
@@ -225,7 +225,7 @@
 							$processingfeegroup = 0;
 							foreach ($group->members as $member) {
 								foreach ($member->loans as $loan) {
-									if(($loan->status == 1) && ($loan->loanname_id == 1) && ($loan->disburse_date == $datetocalc)) {
+									if(($loan->loanname_id == 1) && ($loan->disburse_date == $datetocalc)) {
 										$processingfeegroup = $processingfeegroup + $loan->processing_fee;
 									}
 								}
@@ -240,7 +240,7 @@
 							$downpaymentgroup = 0;
 							foreach ($group->members as $member) {
 								foreach ($member->loans as $loan) {
-									if(($loan->status == 1) && ($loan->loanname_id == 2) && ($loan->disburse_date == $datetocalc)) {
+									if(($loan->loanname_id == 2) && ($loan->disburse_date == $datetocalc)) {
 										$downpaymentgroup = $downpaymentgroup + $loan->down_payment;
 									}
 								}

@@ -186,7 +186,8 @@ class OldDataEntryContrller extends Controller
         		$accugenloaninstallment->paid_total = $request->primary_total_paid;
 
         		$accugenloaninstallment->outstanding_total = $request->primary_total_disbursed - $request->primary_total_paid;
-        		$accugenloaninstallment->loan_id = $loan->id;
+                $accugenloaninstallment->loan_id = $loan->id;
+        		$accugenloaninstallment->user_id = $groupforstaff->user->id;
         		$accugenloaninstallment->save();
 
         		// add the installments of this account
@@ -262,7 +263,8 @@ class OldDataEntryContrller extends Controller
         	$acculongtloaninstallment->paid_total = $request->product_total_paid;
 
         	$acculongtloaninstallment->outstanding_total = $request->product_total_disbursed - $request->product_total_paid;
-        	$acculongtloaninstallment->loan_id = $loan->id;
+            $acculongtloaninstallment->loan_id = $loan->id;
+        	$acculongtloaninstallment->user_id = $groupforstaff->user->id;
         	$acculongtloaninstallment->save();
 
         	// add the installments of this account
@@ -345,7 +347,8 @@ class OldDataEntryContrller extends Controller
         		$oldsaving->balance = $request->general_total_amount_so_far - $request->general_total_withdraw_so_far;
         		$oldsaving->member_id = $member->id;
         		$oldsaving->savingname_id = 1; // hard coded, 1 is for general saving!
-        		$oldsaving->saving_id = $savingaccount->id;
+                $oldsaving->saving_id = $savingaccount->id;
+        		$oldsaving->user_id = $groupforstaff->user->id;
         		$oldsaving->save();
         	}
         }
@@ -379,7 +382,8 @@ class OldDataEntryContrller extends Controller
         	$oldsaving->balance = $request->longterm_total_amount_so_far - $request->longterm_total_withdraw_so_far;
         	$oldsaving->member_id = $member->id;
         	$oldsaving->savingname_id = 2; // hard coded, 2 is for long term saving!
-        	$oldsaving->saving_id = $savingaccount->id;
+            $oldsaving->saving_id = $savingaccount->id;
+        	$oldsaving->user_id = $groupforstaff->user->id;
         	$oldsaving->save();
         }
 

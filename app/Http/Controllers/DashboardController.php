@@ -31,8 +31,8 @@ class DashboardController extends Controller
     public function __construct()
     {
         parent::__construct();
-        $this->middleware('auth')->except('deleteDoubleInstallments', 'runDoubleDelete');
-        $this->middleware('admin')->except('index', 'getProgramFeatures', 'deleteDoubleInstallments', 'runDoubleDelete');
+        $this->middleware('auth')->except('deleteDoubleInstallments', 'runDoubleDelete', 'checkUserIDMissing');
+        $this->middleware('admin')->except('index', 'getProgramFeatures', 'deleteDoubleInstallments', 'runDoubleDelete', 'checkUserIDMissing');
     }
 
     /**
@@ -544,5 +544,29 @@ class DashboardController extends Controller
                 } 
             }
         } 
+    }
+
+    public function checkUserIDMissing() {
+        $loans = Loan::all();
+        foreach ($loans as $loan) {
+            foreach ($loan->loaninstallments as $loaninstallment) {
+                if($loaninstallment->user_id == 0) {
+                    $loaninstallment->user_id = $loan->member->group->user->id;
+                    $loaninstallment->save();
+                }
+                echo $loan->member->group->user->id;
+            }
+        }
+        echo '<br/><br/>';
+        $savings = Saving::all();
+        foreach ($savings as $saving) {
+            foreach ($saving->savinginstallments as $savinginstallment) {
+                if($savinginstallment->user_id == 0) {
+                    $savinginstallment->user_id = $saving->member->group->user->id;
+                    $savinginstallment->save();
+                }
+                echo $saving->member->group->user->id;
+            }
+        }
     }
 }

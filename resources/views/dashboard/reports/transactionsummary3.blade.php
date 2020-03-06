@@ -30,6 +30,7 @@
 			$totaladmission_fee = 0;
 			$totalpassbook_fee = 0;
 			$totalshared_deposit = 0;
+			$totaldownpayment = 0;
 
 			$totaldisbursed = 0;
 			$totalsavingwithdraw = 0;
@@ -93,14 +94,22 @@
 					$totalpassbook_fee = $totalpassbook_fee + $staffpassbook_fee;
 
 					$staffshared_deposit = 0;
-					foreach ($totalclosingmembers as $member) {
+					foreach ($totalmembers as $member) {
 						if($member->staff_id == $staff->id) {
 							$staffshared_deposit = $staffshared_deposit + $member->shared_deposit;
 						}
 					}
 					$totalshared_deposit = $totalshared_deposit + $staffshared_deposit;
+
+					$staffdownpayment = 0;
+					foreach ($totalloans as $loan) {
+						if($loan->member->staff_id == $staff->id && $loan->loanname_id == 2) {
+							$staffdownpayment = $staffdownpayment + $loan->down_payment;
+						}
+					}
+					$totaldownpayment = $totaldownpayment + $staffdownpayment;
 				@endphp
-				{{ $staffloaninstallmentscollection + $staffsavinginstallmentscollection + $staffinsurance + $staffprocessing_fee + $staffadmission_fee + $staffpassbook_fee + $staffshared_deposit }}
+				{{ $staffloaninstallmentscollection + $staffsavinginstallmentscollection + $staffinsurance + $staffprocessing_fee + $staffadmission_fee + $staffpassbook_fee + $staffshared_deposit + $staffdownpayment }}
 			</td>
 			<td>
 				@php
@@ -134,20 +143,20 @@
 				{{ $staffdisbursed + $staffsavingwithdraw + $staffshareddepositreturn }}
 			</td>
 			<td>
-				{{ ($staffloaninstallmentscollection + $staffsavinginstallmentscollection + $staffinsurance + $staffprocessing_fee + $staffadmission_fee + $staffpassbook_fee + $staffshared_deposit) -  ($staffdisbursed + $staffsavingwithdraw + $staffshareddepositreturn) }}
+				{{ ($staffloaninstallmentscollection + $staffsavinginstallmentscollection + $staffinsurance + $staffprocessing_fee + $staffadmission_fee + $staffpassbook_fee + $staffshared_deposit + $totaldownpayment) -  ($staffdisbursed + $staffsavingwithdraw + $staffshareddepositreturn) }}
 			</td>
 		</tr>
 		@endforeach
 		<tr>
 			<th align="left">Total</th>
 			<th>
-				{{ $totalloaninstallmentscollection + $totalsavinginstallmentscollection + $totalinsurance + $totalprocessing_fee  + $totaladmission_fee + $totalpassbook_fee + $totalshared_deposit }}
+				{{ $totalloaninstallmentscollection + $totalsavinginstallmentscollection + $totalinsurance + $totalprocessing_fee  + $totaladmission_fee + $totalpassbook_fee + $totalshared_deposit + $totaldownpayment }}
 			</th>
 			<th> 
 				{{ $totaldisbursed + $totalsavingwithdraw + $totalshareddepositreturn }}
 			</th>
 			<th>
-				{{ ($totalloaninstallmentscollection + $totalsavinginstallmentscollection + $totalinsurance + $totalprocessing_fee  + $totaladmission_fee + $totalpassbook_fee + $totalshared_deposit) - ($totaldisbursed + $totalsavingwithdraw + $totalshareddepositreturn) }}
+				{{ ($totalloaninstallmentscollection + $totalsavinginstallmentscollection + $totalinsurance + $totalprocessing_fee  + $totaladmission_fee + $totalpassbook_fee + $totalshared_deposit + $totaldownpayment) - ($totaldisbursed + $totalsavingwithdraw + $totalshareddepositreturn) }}
 			</th>
 		</tr>
 	</tbody>
