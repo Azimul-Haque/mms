@@ -85,11 +85,11 @@ class GroupController extends Controller
         } else {
           $members = Member::where('staff_id', $s_id)
                            ->where('group_id', $g_id)
-                           ->where('status', 1) // status 1 means member is Active
+                           // ->where('status', 1) // no close check
                            ->orderBy('passbook', 'asc')
                            ->with(['loans' => function ($query) use($loan_type, $transaction_date) {
                                $query->where('loanname_id', $loan_type)
-                                     // ->where('status', 1) // no loan check
+                                     // ->where('status', 1) // no close check
                                      ->with(['loaninstallments' => function ($query) use($transaction_date) {
                                          $query->where('due_date', $transaction_date);
                                       }]);

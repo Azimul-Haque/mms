@@ -36,23 +36,24 @@
 		@endphp
 		@foreach($group->members as $member)
 			@foreach($member->savings->where('savingname_id', 2) as $saving)
-				@if($saving->status == 1)
-					<tr>
-						<td>{{ $counter++ }}</td>
-						<td>{{ $group->name }}</td>
-						<td>{{ $member->name }}-{{ $member->fhusband }}</td>
-						<td>{{ $member->present_phone }}</td>
-						<td>LONG TERM SAVING</td>
-						<td align="right">{{ $saving->total_amount }}</td>
-						<td align="right">{{ $saving->withdraw }}</td>
-						<td align="right">{{ $saving->total_amount - $saving->withdraw }}</td>
-					</tr>
-					@php			
-						$totalamount = $totalamount + $saving->total_amount;
-						$totalwithdraw = $totalwithdraw + $saving->withdraw;
-						$totalbalance = $totalbalance + $saving->total_amount - $saving->withdraw;
-					@endphp
-				@endif
+				{{-- @if($saving->status == 1)
+					
+				@endif --}}
+				<tr>
+					<td>{{ $counter++ }}</td>
+					<td>{{ $group->name }}</td>
+					<td>{{ $member->name }}-{{ $member->fhusband }}</td>
+					<td>{{ $member->present_phone }}</td>
+					<td>LONG TERM SAVING</td>
+					<td align="right">{{ $saving->total_amount }}</td>
+					<td align="right">{{ $saving->withdraw }}</td>
+					<td align="right">{{ $saving->total_amount - $saving->withdraw }}</td>
+				</tr>
+				@php			
+					$totalamount = $totalamount + $saving->total_amount;
+					$totalwithdraw = $totalwithdraw + $saving->withdraw;
+					$totalbalance = $totalbalance + $saving->total_amount - $saving->withdraw;
+				@endphp
 			@endforeach
 		@endforeach
 		<tr>

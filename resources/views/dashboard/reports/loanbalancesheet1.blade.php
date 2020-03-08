@@ -37,34 +37,35 @@
 		@endphp
 		@foreach($group->members as $member)
 			@foreach($member->loans->where('loanname_id', 1) as $loan)
-				@if($loan->status == 1)
-					<tr>
-						<td>{{ $counter++ }}</td>
-						<td>{{ $group->name }}</td>
-						<td>{{ $member->name }}-{{ $member->fhusband }}</td>
-						<td>{{ $member->present_phone }}</td>
-						<td align="right">{{ $loan->total_disbursed }}</td>
-						<td align="right">{{ $loan->total_paid }}</td>
-						<td align="right">{{ $loan->total_outstanding }}</td>
-						<td align="right">
-							@php
-								$memberoverdue = 0;
-								foreach ($loan->loaninstallments as $installment) {
-									if((strtotime($installment->due_date) <= strtotime(date('Y-m-d'))) && ($installment->installment_total - $installment->paid_total > 0) && ($loan->total_outstanding > 0)) {
-										$memberoverdue = $memberoverdue + ($installment->installment_total - $installment->paid_total);
-									}
+				{{-- @if($loan->status == 1)
+					
+				@endif --}}
+				<tr>
+					<td>{{ $counter++ }}</td>
+					<td>{{ $group->name }}</td>
+					<td>{{ $member->name }}-{{ $member->fhusband }}</td>
+					<td>{{ $member->present_phone }}</td>
+					<td align="right">{{ $loan->total_disbursed }}</td>
+					<td align="right">{{ $loan->total_paid }}</td>
+					<td align="right">{{ $loan->total_outstanding }}</td>
+					<td align="right">
+						@php
+							$memberoverdue = 0;
+							foreach ($loan->loaninstallments as $installment) {
+								if((strtotime($installment->due_date) <= strtotime(date('Y-m-d'))) && ($installment->installment_total - $installment->paid_total > 0) && ($loan->total_outstanding > 0)) {
+									$memberoverdue = $memberoverdue + ($installment->installment_total - $installment->paid_total);
 								}
-								$totaloverdue = $totaloverdue + $memberoverdue;
-							@endphp
-							{{ $memberoverdue }}
-						</td>
-					</tr>
-					@php			
-						$totaldisbursed = $totaldisbursed + $loan->total_disbursed;
-						$totalpaid = $totalpaid + $loan->total_paid;
-						$totaloutstanding = $totaloutstanding + $loan->total_outstanding;
-					@endphp
-				@endif
+							}
+							$totaloverdue = $totaloverdue + $memberoverdue;
+						@endphp
+						{{ $memberoverdue }}
+					</td>
+				</tr>
+				@php			
+					$totaldisbursed = $totaldisbursed + $loan->total_disbursed;
+					$totalpaid = $totalpaid + $loan->total_paid;
+					$totaloutstanding = $totaloutstanding + $loan->total_outstanding;
+				@endphp
 			@endforeach
 		@endforeach
 		<tr>

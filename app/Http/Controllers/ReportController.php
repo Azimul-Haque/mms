@@ -18,6 +18,7 @@ use App\Loaninstallment;
 use App\Loanname;
 use App\Schemename;
 use App\Dailyotheramount;
+use App\Closeday;
 
 use Carbon\Carbon;
 use DB, Hash, Auth, Image, File, Session;

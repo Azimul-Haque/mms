@@ -84,7 +84,7 @@
 							$primaryrealisablegroup = 0;
 							foreach ($group->members as $member) {
 								foreach ($member->loans as $loan) {
-									if($loan->status == 1 && $loan->loanname_id == 1) {
+									if($loan->loanname_id == 1) {
 										foreach ($loan->loaninstallments as $loaninstallment) {
 											if($loaninstallment->due_date == $datetocalc) {
 												$primaryrealisablegroup = $primaryrealisablegroup + $loaninstallment->installment_total;
@@ -102,7 +102,7 @@
 							$primarycashgroup = 0;
 							foreach ($group->members as $member) {
 								foreach ($member->loans as $loan) {
-									if($loan->status == 1 && $loan->loanname_id == 1) {
+									if($loan->loanname_id == 1) {
 										foreach ($loan->loaninstallments as $loaninstallment) {
 											if($loaninstallment->due_date == $datetocalc) {
 												$primarycashgroup = $primarycashgroup + $loaninstallment->paid_total;
@@ -120,7 +120,7 @@
 							$primaryoverduegroup = 0;
 							foreach ($group->members as $member) {
 								foreach ($member->loans as $loan) {
-									if($loan->status == 1 && $loan->loanname_id == 1) {
+									if($loan->loanname_id == 1) {
 										foreach ($loan->loaninstallments as $loaninstallment) {
 											if(($loaninstallment->due_date == $datetocalc) && ($loaninstallment->installment_total - $loaninstallment->paid_total > 0)) {
 												$primaryoverduegroup = $primaryoverduegroup + ($loaninstallment->installment_total - $loaninstallment->paid_total);
@@ -138,7 +138,7 @@
 							$primaryadvancedgroup = 0;
 							foreach ($group->members as $member) {
 								foreach ($member->loans as $loan) {
-									if($loan->status == 1 && $loan->loanname_id == 1) {
+									if($loan->loanname_id == 1) {
 										foreach ($loan->loaninstallments as $loaninstallment) {
 											if(($loaninstallment->due_date == $datetocalc) && ($loaninstallment->paid_total - $loaninstallment->installment_total > 0)) {
 												$primaryadvancedgroup = $primaryadvancedgroup + ($loaninstallment->paid_total - $loaninstallment->installment_total);
@@ -157,7 +157,7 @@
 							$productrealisablegroup = 0;
 							foreach ($group->members as $member) {
 								foreach ($member->loans as $loan) {
-									if($loan->status == 1 && $loan->loanname_id == 2) {
+									if($loan->loanname_id == 2) {
 										foreach ($loan->loaninstallments as $loaninstallment) {
 											if($loaninstallment->due_date == $datetocalc) {
 												$productrealisablegroup = $productrealisablegroup + $loaninstallment->installment_total;
@@ -175,7 +175,7 @@
 							$productcashgroup = 0;
 							foreach ($group->members as $member) {
 								foreach ($member->loans as $loan) {
-									if($loan->status == 1 && $loan->loanname_id == 2) {
+									if($loan->loanname_id == 2) {
 										foreach ($loan->loaninstallments as $loaninstallment) {
 											if($loaninstallment->due_date == $datetocalc) {
 												$productcashgroup = $productcashgroup + $loaninstallment->paid_total;
@@ -193,7 +193,7 @@
 							$productoverduegroup = 0;
 							foreach ($group->members as $member) {
 								foreach ($member->loans as $loan) {
-									if($loan->status == 1 && $loan->loanname_id == 2) {
+									if($loan->loanname_id == 2) {
 										foreach ($loan->loaninstallments as $loaninstallment) {
 											if(($loaninstallment->due_date == $datetocalc) && ($loaninstallment->installment_total - $loaninstallment->paid_total > 0)) {
 												$productoverduegroup = $productoverduegroup + ($loaninstallment->installment_total - $loaninstallment->paid_total);
@@ -211,7 +211,7 @@
 							$productadvancedgroup = 0;
 							foreach ($group->members as $member) {
 								foreach ($member->loans as $loan) {
-									if($loan->status == 1 && $loan->loanname_id == 2) {
+									if($loan->loanname_id == 2) {
 										foreach ($loan->loaninstallments as $loaninstallment) {
 											if(($loaninstallment->due_date == $datetocalc) && ($loaninstallment->paid_total - $loaninstallment->installment_total > 0)) {
 												$productadvancedgroup = $productadvancedgroup + ($loaninstallment->paid_total - $loaninstallment->installment_total);
