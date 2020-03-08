@@ -70,6 +70,9 @@ class GroupController extends Controller
         $loannames = Loanname::all();
         $checkcloseday = Closeday::where('close_date', date('Y-m-d', strtotime($transaction_date)))->first();
 
+        if(!empty($checkcloseday)) {
+          dd($checkcloseday);
+        }
         $members = Member::where('staff_id', $s_id)
                          ->where('group_id', $g_id)
                          ->where('status', 1) // status 1 means member is Active
