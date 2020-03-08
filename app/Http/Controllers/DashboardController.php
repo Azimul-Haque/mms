@@ -151,7 +151,6 @@ class DashboardController extends Controller
         // $group->min_savings_dep = $request->min_savings_dep;
         // $group->min_security_dep = $request->min_security_dep;
         $group->status = $request->status;
-        $group->status = $request->status;
         $group->user_id = $request->user_id;
         $group->save();
 
@@ -196,7 +195,6 @@ class DashboardController extends Controller
         // $group->min_savings_dep = $request->min_savings_dep;
         // $group->min_security_dep = $request->min_security_dep;
         $group->status = $request->status;
-        $group->status = $request->status;
         $group->user_id = $request->user_id;
         $group->save();
 
@@ -230,7 +228,6 @@ class DashboardController extends Controller
         $group->village = $request->village;
         $group->min_savings_dep = $request->min_savings_dep;
         $group->min_security_dep = $request->min_security_dep;
-        $group->status = $request->status;
         $group->status = $request->status;
         $group->user_id = $request->user_id;
         $group->save();
