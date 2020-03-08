@@ -144,7 +144,7 @@
 			</td>
 			<td>
 				{{-- {{ ($staffloaninstallmentscollection + $staffsavinginstallmentscollection + $staffinsurance + $staffprocessing_fee + $staffadmission_fee + $staffpassbook_fee + $staffshared_deposit + $totaldownpayment) -  ($staffdisbursed + $staffsavingwithdraw + $staffshareddepositreturn) }} --}}
-				{{ ($staffloaninstallmentscollection + $staffsavinginstallmentscollection + $staffinsurance) }}
+				{{ $staffprocessing_fee + $staffadmission_fee }}
 			</td>
 		</tr>
 		@endforeach
