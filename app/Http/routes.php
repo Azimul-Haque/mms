@@ -197,6 +197,7 @@ Route::get('/dashboard/delete/double/installments/{date}/{loanorsavings}/{type}'
 Route::get('/run/double/delete/{date}', ['as'=>'dashboard.rundouble.delete','uses'=>'DashboardController@runDoubleDelete']);
 Route::get('/dashboard/savings/missing', ['as'=>'dashboard.checkmissingsavings','uses'=>'DashboardController@checkMissingSavings']);
 Route::get('/dashboard/userid/missing', ['as'=>'dashboard.useridmissing','uses'=>'DashboardController@checkUserIDMissing']);
+Route::get('/dashboard/deben/change', ['as'=>'dashboard.debenmannan','uses'=>'DashboardController@changeDebenLoanAndSaving']);
 
 
 

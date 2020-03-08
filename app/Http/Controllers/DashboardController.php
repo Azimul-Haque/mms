@@ -569,4 +569,25 @@ class DashboardController extends Controller
             }
         }
     }
+
+    public function changeDebenLoanAndSaving() {
+        $members = Member::where('staff_id', 13)->get();
+
+        foreach ($members->loans as $loan) {
+            if($loan->disburse_date == '2020-02-04') {
+                $loan->disburse_date = date('Y-m-d', strtotime('2020-01-15'));
+                $loan->save();
+                echo 'Loan Done';
+            }
+        }
+        echo '<br/><br/>';
+
+        foreach ($members->savings as $saving) {
+            if($saving->opening_date == '2020-02-04') {
+                $saving->opening_date = date('Y-m-d', strtotime('2020-01-15'));
+                $saving->save();
+                echo 'Saving Done';
+            }
+        }
+    }
 }
