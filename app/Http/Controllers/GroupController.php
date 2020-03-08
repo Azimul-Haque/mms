@@ -252,8 +252,8 @@ class GroupController extends Controller
             $loan->total_outstanding = $loan->total_disbursed - $loan->total_paid;
             $loan->save();
 
-            $installment->paid_principal = $installment->installment_principal;
-            $installment->paid_interest = $installment->installment_interest;
+            $installment->paid_principal = $request->data['loaninstallment'] * 0.8;
+            $installment->paid_interest = $request->data['loaninstallment'] * 0.2;
             $installment->paid_total = $request->data['loaninstallment'];
             $installment->outstanding_total = $loan->total_outstanding;
             $installment->loan_id = $loan->id;
@@ -268,8 +268,8 @@ class GroupController extends Controller
             $installment->loan->save();
 
             // post the installment
-            $installment->paid_principal = $installment->installment_principal; 
-            $installment->paid_interest = $installment->installment_interest;
+            $installment->paid_principal = $request->data['loaninstallment'] * 0.8;
+            $installment->paid_interest = $request->data['loaninstallment'] * 0.2;
             $installment->paid_total = $request->data['loaninstallment']; // assuming the total is paid
             // $installment->outstanding_total = $installment->loan->total_outstanding; // from the main loan account table
             $installment->user_id = $member->staff_id; // pore change o hoite paare taar staff ejonno
