@@ -575,8 +575,8 @@ class DashboardController extends Controller
 
         foreach ($members as $member) {
             foreach ($member->loans as $loan) {
-                if($loan->disburse_date == '2020-02-04') {
-                    $loan->disburse_date = date('Y-m-d', strtotime('2020-01-15'));
+                if($loan->closing_date == '2020-02-04') {
+                    $loan->closing_date = date('Y-m-d', strtotime('2020-01-15'));
                     $loan->save();
                     echo 'Loan Done';
                 }
@@ -586,8 +586,8 @@ class DashboardController extends Controller
 
         foreach ($members as $member) {
             foreach ($member->savings as $saving) {
-                if($saving->opening_date == '2020-02-04') {
-                    $saving->opening_date = date('Y-m-d', strtotime('2020-01-15'));
+                if($saving->closing_date == '2020-02-04') {
+                    $saving->closing_date = date('Y-m-d', strtotime('2020-01-15'));
                     $saving->save();
                     echo 'Saving Done';
                 }
