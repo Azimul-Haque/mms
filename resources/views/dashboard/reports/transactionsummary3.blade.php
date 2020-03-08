@@ -143,8 +143,8 @@
 				{{ $staffdisbursed + $staffsavingwithdraw + $staffshareddepositreturn }}
 			</td>
 			<td>
-				{{-- {{ ($staffloaninstallmentscollection + $staffsavinginstallmentscollection + $staffinsurance + $staffprocessing_fee + $staffadmission_fee + $staffpassbook_fee + $staffshared_deposit + $totaldownpayment) -  ($staffdisbursed + $staffsavingwithdraw + $staffshareddepositreturn) }} --}}
-				{{ $totaldownpayment }}
+				{{-- {{ ($staffloaninstallmentscollection + $staffsavinginstallmentscollection + $staffinsurance + $staffprocessing_fee + $staffadmission_fee + $staffpassbook_fee + $staffshared_deposit + $staffdownpayment) -  ($staffdisbursed + $staffsavingwithdraw + $staffshareddepositreturn) }} --}}
+				{{ $staffdownpayment }}
 			</td>
 		</tr>
 		@endforeach
