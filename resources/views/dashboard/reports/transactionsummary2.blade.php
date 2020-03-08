@@ -89,7 +89,7 @@
 							$generalcollgroup = 0;
 							foreach ($group->members as $member) {
 								foreach ($member->savings as $saving) {
-									if($saving->status == 1 && $saving->savingname_id == 1) {
+									if($saving->savingname_id == 1) {
 										foreach ($saving->savinginstallments as $savinginstallment) {
 											if($savinginstallment->due_date == $datetocalc) {
 												$generalcollgroup = $generalcollgroup + $savinginstallment->amount;
@@ -107,7 +107,7 @@
 							$generalwithdrawgroup = 0;
 							foreach ($group->members as $member) {
 								foreach ($member->savings as $saving) {
-									if($saving->status == 1 && $saving->savingname_id == 1) {
+									if($saving->savingname_id == 1) {
 										foreach ($saving->savinginstallments as $savinginstallment) {
 											if($savinginstallment->due_date == $datetocalc) {
 												$generalwithdrawgroup = $generalwithdrawgroup + $savinginstallment->withdraw;
@@ -125,7 +125,7 @@
 							$longtermcollgroup = 0;
 							foreach ($group->members as $member) {
 								foreach ($member->savings as $saving) {
-									if($saving->status == 1 && $saving->savingname_id == 2) {
+									if($saving->savingname_id == 2) {
 										foreach ($saving->savinginstallments as $savinginstallment) {
 											if($savinginstallment->due_date == $datetocalc) {
 												$longtermcollgroup = $longtermcollgroup + $savinginstallment->amount;
@@ -143,7 +143,7 @@
 							$longtermwithdrawgroup = 0;
 							foreach ($group->members as $member) {
 								foreach ($member->savings as $saving) {
-									if($saving->status == 1 && $saving->savingname_id == 2) {
+									if($saving->savingname_id == 2) {
 										foreach ($saving->savinginstallments as $savinginstallment) {
 											if($savinginstallment->due_date == $datetocalc) {
 												$longtermwithdrawgroup = $longtermwithdrawgroup + $savinginstallment->withdraw;
