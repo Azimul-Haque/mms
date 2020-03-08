@@ -177,10 +177,8 @@
               <tr>
                 <td>{{ $loaninstallment->installment_no }}</td>
                 <td>{{ date('D, d/m/Y', strtotime($loaninstallment->due_date)) }}</td>
-                {{-- <td>{{ $loaninstallment->installment_principal }}</td>
-                <td>{{ $loaninstallment->installment_interest }}</td> --}}
-                <td>{{ $loaninstallment->installment_total * 0.80 }}</td>
-                <td>{{ $loaninstallment->installment_total * 0.20 }}</td>
+                <td>{{ $loaninstallment->installment_principal }}</td>
+                <td>{{ $loaninstallment->installment_interest }}</td>
                 <td>{{ $loaninstallment->installment_total }}</td>
                 {{-- <td>{{ $loaninstallment->paid_principal }}</td>
                 <td>{{ $loaninstallment->paid_interest }}</td> --}}
