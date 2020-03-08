@@ -94,6 +94,7 @@ class GroupController extends Controller
                                          $query->where('due_date', $transaction_date);
                                       }]);
                            }])->get();
+                           dd($checkcloseday);
         }
         
         $memberswithoutloan = Member::where('staff_id', $s_id)
