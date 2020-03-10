@@ -398,7 +398,7 @@ class ReportController extends Controller
 
         // disburse
 		$totaldisbursed = DB::table("loans")
-					      	    ->select(DB::raw("SUM(total_disbursed) as total"))
+					      	    ->select(DB::raw("SUM(principal_amount) as total"))
 					      	    ->where('disburse_date', date('Y-m-d', strtotime($transactiondate)))
 					      	    ->first();
 	    $totalsavingwithdraw = DB::table("savinginstallments")
