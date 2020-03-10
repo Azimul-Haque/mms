@@ -162,7 +162,7 @@ class ReportController extends Controller
 	    	$excel->sheet('Loan Collection', function($sheet) use($staffs, $datetocalc) 
 	    	{
 		        $sheet->loadView('dashboard.reports.transactionsummary1')->withStaffs($staffs)
-	                    												->withDatetocalc($datetocalc);
+	                    												 ->withDatetocalc($datetocalc);
 		        $sheet->setStyle(array(
 		            'font' => array(
 		                'name'      =>  'Arial',
