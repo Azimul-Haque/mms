@@ -18,18 +18,22 @@
 			<th rowspan="3" class="lightgray">Loan Officer</th>
 			<th rowspan="3" class="lightgray">Group Name</th>
 			<th colspan="4" class="lightgray" align="center">PRIMARY LOAN</th>
-			<th colspan="4" class="lightgray" align="center">PRODUCT LOAN</th>
-			<th colspan="4" class="lightgray" align="center">Total</th>
+			<th colspan="5" class="lightgray" align="center">PRODUCT LOAN</th>
+			<th colspan="5" class="lightgray" align="center">Total</th>
 		</tr>
 		<tr>
 			<td colspan="2" class="lightgray" align="center"><b>Dummy</b></td>
 
 			<td class="lightgray" align="center"><b>Realisable</b></td>
 			<td colspan="3" class="lightgray" align="center"><b>Realised</b></td>
+
 			<td class="lightgray" align="center"><b>Realisable</b></td>
 			<td colspan="3" class="lightgray" align="center"><b>Realised</b></td>
+			<td class="lightgray" align="center"><b>Down Payment</b></td>
+
 			<td class="lightgray" align="center"><b>Realisable</b></td>
 			<td colspan="3" class="lightgray" align="center"><b>Realised</b></td>
+			<td class="lightgray" align="center"><b>Down Payment</b></td>
 		</tr>
 		<tr>
 			<td colspan="2" class="lightgray"><b></b></td>
@@ -43,11 +47,13 @@
 			<td class="lightgray" align="center"><b>Cash</b></td>
 			<td class="lightgray" align="center"><b>Overdue</b></td>
 			<td class="lightgray" align="center"><b>Advance</b></td>
+			<td class="lightgray" align="center"><b></b></td>
 
 			<td class="lightgray" align="center"><b></b></td>
 			<td class="lightgray" align="center"><b>Cash</b></td>
 			<td class="lightgray" align="center"><b>Overdue</b></td>
 			<td class="lightgray" align="center"><b>Advance</b></td>
+			<td class="lightgray" align="center"><b></b></td>
 		</tr>
 	</thead>
 	<tbody>
@@ -61,6 +67,7 @@
 			$productcashtotal = 0;
 			$productoverduetotal = 0;
 			$productadvancedtotal = 0;
+			$productdownpaymenttotal = 0;
 		@endphp
 		@foreach($staffs as $staff)
 			@if($staff->groups->count() > 0)
@@ -74,6 +81,7 @@
 				$productcashstaff = 0;
 				$productoverduestaff = 0;
 				$productadvancedstaff = 0;
+				$productdownpaymentstaff = 0;
 			@endphp
 			@foreach($staff->groups as $group)
 				<tr>
@@ -224,11 +232,27 @@
 						@endphp
 						{{ $productadvancedgroup }}
 					</td>
+
+					<td align="right">
+						@php
+							$productdownpaymentgroup = 0;
+							foreach ($group->members as $member) {
+								foreach ($member->loans as $loan) {
+									if(($loan->loanname_id == 2) && ($loan->disburse_date == $datetocalc)) {
+										$productdownpaymentgroup = $productdownpaymentgroup + $loan->down_payment;
+									}
+								}
+							}
+							$productdownpaymentstaff = $productdownpaymentstaff + $productdownpaymentgroup;
+						@endphp
+						{{ $productdownpaymentgroup }}
+					</td>
 					
 					<td align="right">{{ $primaryrealisablegroup + $productrealisablegroup }}</td>
 					<td align="right">{{ $primarycashgroup + $productcashgroup }}</td>
 					<td align="right">{{ $primaryoverduegroup + $productoverduegroup }}</td>
 					<td align="right">{{ $primaryadvancedgroup + $productadvancedgroup }}</td>
+					<td align="right">{{ $productdownpaymentgroup }}</td>
 				</tr>
 			@endforeach
 			<tr>
@@ -284,11 +308,18 @@
 						$productadvancedtotal = $productadvancedtotal + $productadvancedstaff;
 					@endphp
 				</th>
+				<th align="right">
+					{{ $productdownpaymentstaff }}
+					@php
+						$productdownpaymenttotal = $productdownpaymenttotal + $productdownpaymentstaff;
+					@endphp
+				</th>
 				
 				<th align="right">{{ $primaryrealisablestaff + $productrealisablestaff }}</th>
 				<th align="right">{{ $primarycashstaff + $productcashstaff }}</th>
 				<th align="right">{{ $primaryoverduestaff + $productoverduestaff }}</th>
 				<th align="right">{{ $primaryadvancedstaff + $productadvancedstaff }}</th>
+				<th align="right">{{ $productdownpaymentstaff }}</th>
 			</tr>
 			@endif
 		@endforeach
@@ -304,11 +335,13 @@
 			<th align="right">{{ $productcashtotal }}</th>
 			<th align="right">{{ $productoverduetotal }}</th>
 			<th align="right">{{ $productadvancedtotal }}</th>
+			<th align="right">{{ $productdownpaymenttotal }}</th>
 
 			<th align="right">{{ $primaryrealisabletotal + $productrealisabletotal }}</th>
 			<th align="right">{{ $primarycashtotal + $productcashtotal }}</th>
 			<th align="right">{{ $primaryoverduetotal + $productoverduetotal }}</th>
 			<th align="right">{{ $primaryadvancedtotal + $productadvancedtotal }}</th>
+			<th align="right">{{ $productdownpaymenttotal }}</th>
 		</tr>
 	</tbody>
 </table>
