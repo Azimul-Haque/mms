@@ -26,8 +26,8 @@
 			<th class="lightgray" align="center">Processing Fee</th>
 			{{-- <th class="lightgray" align="center">Down Payment</th> --}}
 			<th class="lightgray" align="center"></th>
-			<th rowspan="2" class="lightgray" align="center">Total Loan</th>
-			<th rowspan="2" class="lightgray" align="center">Total Loan Amount</th>
+			<th class="lightgray" align="center">Total Loan</th>
+			<th class="lightgray" align="center">Total Loan Amount</th>
 		</tr>
 		<tr>
 			<td colspan="2" class="lightgray" align="center"><b>Dummy</b></td>
@@ -44,6 +44,8 @@
 			<td class="lightgray" align="center"><b>Total</b></td>
 			{{-- <td class="lightgray" align="center"><b>Total</b></td> --}}
 			<td class="lightgray" align="center"><b>Total</b></td>
+			<td class="lightgray" align="center"></td>
+			<td class="lightgray" align="center"></td>
 		</tr>
 	</thead>
 	<tbody>
@@ -371,8 +373,9 @@
 			<th align="right">{{ $processingfeetotal }}</th>
 
 			<th align="right">{{ ($generalcolltotal + $longtermcolltotal + $shareddepcolltotal + $admissionfeetotal + $passbookfeetotal + $loaninsurancetotal + $processingfeetotal) - ($generalwithdrawtotal + $longtermwithdrawtotal + $shareddepwithdrawtotal) }}</th>
-			
-			
+
+			<th align="right">{{ $loanstotal }}</th>
+			<th align="right">{{ $loansamounttotal }}</th>
 		</tr>
 	</tbody>
 </table>
