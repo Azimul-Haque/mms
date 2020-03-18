@@ -332,12 +332,6 @@
 						$processingfeetotal = $processingfeetotal + $processingfeestaff;
 					@endphp
 				</th>
-				{{-- <th align="right">
-					{{ $downpaymentstaff }}
-					@php
-						$downpaymenttotal = $downpaymenttotal + $downpaymentstaff;
-					@endphp
-				</th> --}}
 				
 				<th align="right">
 					{{ ($generalcollstaff + $longtermcollstaff + $shareddepcollstaff + $admissionfeestaff + $passbookfeestaff + $loaninsurancestaff + $processingfeestaff) - ($generalwithdrawstaff + $longtermwithdrawstaff + $shareddepwithdrawstaff) }}
