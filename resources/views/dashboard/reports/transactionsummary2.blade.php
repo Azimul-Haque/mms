@@ -9,10 +9,10 @@
 <table>
 	<thead>
 		<tr>
-			<th colspan="13" align="center" {{-- style="font-size: 30px;" --}}>Transaction Summary: Groupwise Savings, Admission Fee, PassBook Fee, Loan Insurance</th>
+			<th colspan="15" align="center" {{-- style="font-size: 30px;" --}}>Transaction Summary: Groupwise Savings, Admission Fee, PassBook Fee, Loan Insurance</th>
 		</tr>
 		<tr>
-			<th colspan="13" align="left">Date: {{ date('D, d/m/Y', strtotime($datetocalc)) }}</th>
+			<th colspan="15" align="left">Date: {{ date('D, d/m/Y', strtotime($datetocalc)) }}</th>
 		</tr>
 		<tr>
 			<th rowspan="2" class="lightgray">Loan Officer</th>
@@ -26,6 +26,8 @@
 			<th class="lightgray" align="center">Processing Fee</th>
 			{{-- <th class="lightgray" align="center">Down Payment</th> --}}
 			<th class="lightgray" align="center"></th>
+			<th rowspan="2" class="lightgray" align="center">Total Loan</th>
+			<th rowspan="2" class="lightgray" align="center">Total Loan Amount</th>
 		</tr>
 		<tr>
 			<td colspan="2" class="lightgray" align="center"><b>Dummy</b></td>
@@ -59,7 +61,9 @@
 			$passbookfeetotal = 0;
 			$loaninsurancetotal = 0;
 			$processingfeetotal = 0;
-			// $downpaymenttotal = 0;
+
+			$loanstotal = 0;
+			$loansamounttotal = 0;
 
 		@endphp
 		@foreach($staffs as $staff)
@@ -78,7 +82,9 @@
 				$passbookfeestaff = 0;
 				$loaninsurancestaff = 0;
 				$processingfeestaff = 0;
-				// $downpaymentstaff = 0;
+
+				$loansofstaff = 0;
+				$loansamountofstaff = 0;
 			@endphp
 			@foreach($staff->groups as $group)
 				<tr>
@@ -234,23 +240,29 @@
 						@endphp
 						{{ $processingfeegroup }}
 					</td>
+					
+					<td align="right">{{ $generalcollgroup + $longtermcollgroup + $shareddepcollgroup - ($generalwithdrawgroup + $longtermwithdrawgroup + $shareddepwithdrawalgroup) + $admissionfeegroup + $passbookfeegroup + $loaninsurancegroup + $processingfeegroup  }}</td>
 
-					{{-- <td align="right">
+					<td align="right">
 						@php
-							$downpaymentgroup = 0;
+							$totalloansofgroup = 0;
+							$totalloansamountofgroup = 0;
 							foreach ($group->members as $member) {
 								foreach ($member->loans as $loan) {
-									if(($loan->loanname_id == 2) && ($loan->disburse_date == $datetocalc)) {
-										$downpaymentgroup = $downpaymentgroup + $loan->down_payment;
+									if($loan->disburse_date == $datetocalc) {
+										$totalloansofgroup = $totalloansofgroup + 1;
+										$totalloansamountofgroup = $totalloansamountofgroup + $loan->total_disbursed;
 									}
 								}
 							}
-							$downpaymentstaff = $downpaymentstaff + $downpaymentgroup;
+							$loansofstaff = $loansofstaff + $loaninsurancegroup;
+							$loansamountofstaff = $loansamountofstaff + $totalloansamountofgroup;
 						@endphp
-						{{ $downpaymentgroup }}
-					</td> --}}
-					
-					<td align="right">{{ $generalcollgroup + $longtermcollgroup + $shareddepcollgroup - ($generalwithdrawgroup + $longtermwithdrawgroup + $shareddepwithdrawalgroup) + $admissionfeegroup + $passbookfeegroup + $loaninsurancegroup + $processingfeegroup  }}</td>
+						{{ $totalloansofgroup }}
+					</td>
+					<td>
+						{{ $totalloansamountofgroup }}
+					</td>
 				</tr>
 			@endforeach
 			<tr>
