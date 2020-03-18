@@ -336,6 +336,20 @@
 				<th align="right">
 					{{ ($generalcollstaff + $longtermcollstaff + $shareddepcollstaff + $admissionfeestaff + $passbookfeestaff + $loaninsurancestaff + $processingfeestaff) - ($generalwithdrawstaff + $longtermwithdrawstaff + $shareddepwithdrawstaff) }}
 				</th>
+
+				<th align="right">
+					{{ $loansofstaff }}
+					@php
+						$loanstotal = $loanstotal + $loansofstaff;
+					@endphp
+				</th>
+
+				<th align="right">
+					{{ $loansamountofstaff }}
+					@php
+						$loansamounttotal = $loansamounttotal + $loansamountofstaff;
+					@endphp
+				</th>
 			</tr>
 			@endif
 		@endforeach
