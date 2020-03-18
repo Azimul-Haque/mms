@@ -257,7 +257,7 @@
 									}
 								}
 							}
-							$loansofstaff = $loansofstaff + $loaninsurancegroup;
+							$loansofstaff = $loansofstaff + $totalloansofgroup;
 							$loansamountofstaff = $loansamountofstaff + $totalloansamountofgroup;
 						@endphp
 						{{ $totalloansofgroup }}
