@@ -132,6 +132,9 @@ class GroupController extends Controller
         // calculate outstanding from from loan
         $installment->loan->total_paid = $installment->loan->total_paid - $installment->paid_total + $request->data['loaninstallment'];
         $installment->loan->total_outstanding = $installment->loan->total_disbursed - $installment->loan->total_paid;
+        if($installment->loan->total_outstanding < 0) {
+          $installment->loan->total_outstanding = 0;
+        }
         $installment->loan->save();
 
         // post the installment
@@ -264,6 +267,9 @@ class GroupController extends Controller
             // calculate outstanding from from loan
             $loan->total_paid = $loan->total_paid + $request->data['loaninstallment'];
             $loan->total_outstanding = $loan->total_disbursed - $loan->total_paid;
+            if($loan->total_outstanding < 0) {
+              $loan->total_outstanding = 0;
+            }
             $loan->save();
 
             $installment->paid_principal = $request->data['loaninstallment'] * 0.8;
@@ -279,6 +285,9 @@ class GroupController extends Controller
                                           ->first();
             $installment->loan->total_paid = $installment->loan->total_paid - $installment->paid_total + $request->data['loaninstallment'];
             $installment->loan->total_outstanding = $installment->loan->total_disbursed - $installment->loan->total_paid;
+            if($installment->loan->total_outstanding < 0) {
+              $installment->loan->total_outstanding = 0;
+            }
             $installment->loan->save();
 
             // post the installment
