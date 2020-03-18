@@ -369,9 +369,9 @@
 			<th align="right">{{ $passbookfeetotal }}</th>
 			<th align="right">{{ $loaninsurancetotal }}</th>
 			<th align="right">{{ $processingfeetotal }}</th>
-			{{-- <th align="right">{{ $downpaymenttotal }}</th> --}}
 
 			<th align="right">{{ ($generalcolltotal + $longtermcolltotal + $shareddepcolltotal + $admissionfeetotal + $passbookfeetotal + $loaninsurancetotal + $processingfeetotal) - ($generalwithdrawtotal + $longtermwithdrawtotal + $shareddepwithdrawtotal) }}</th>
+			
 			
 		</tr>
 	</tbody>
