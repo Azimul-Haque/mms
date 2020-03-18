@@ -27,6 +27,7 @@
                 <th>Disburse Date</th>
                 <th>Total Installments</th>
                 <th>Disbursed (৳)</th>
+                <th>Principal Amount (৳)</th>
                 <th>Total Paid (৳)</th>
                 <th>Total Outstanding (৳)</th>
                 <th>Status</th>
@@ -44,6 +45,7 @@
                   <td>{{ date('D, d/m/Y', strtotime($loan->disburse_date)) }}</td>
                   <td>{{ $loan->installments }}</td>
                   <td>{{ $loan->total_disbursed }}</td>
+                  <td>{{ $loan->principal_amount }}</td>
                   <td>{{ $loan->total_paid }}</td>
                   <td>{{ $loan->total_outstanding }}</td>
                   <td>
