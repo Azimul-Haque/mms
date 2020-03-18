@@ -253,7 +253,7 @@
 								foreach ($member->loans as $loan) {
 									if($loan->disburse_date == $datetocalc) {
 										$totalloansofgroup = $totalloansofgroup + 1;
-										$totalloansamountofgroup = $totalloansamountofgroup + $loan->total_disbursed;
+										$totalloansamountofgroup = $totalloansamountofgroup + $loan->principal_amount;
 									}
 								}
 							}
