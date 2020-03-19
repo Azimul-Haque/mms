@@ -172,7 +172,17 @@
                                     @foreach($group->members->sortBy('passbook') as $member)
                                         @if($member->status == 1) {{-- if member is Active --}}
                                           <li class="{{ Request::is('group/'. $staff->id .'/'. $group->id .'/'.$member->id.'/member') ? 'active' : '' }} {{ Request::is('group/'. $staff->id .'/'. $group->id .'/'.$member->id.'/member/*') ? 'active' : '' }}">
-                                            <a href="{{ route('dashboard.member.single', [$staff->id, $group->id, $member->id]) }}" @if($member->loans->count() > 0) style="color: #DD4B39; font-size: 11.5px !important;" @else style="font-size: 11.5px !important;" @endif>
+                                            @php
+                                              $total_outstanding_loan = 0;
+                                              foreach ($member->loans as $loan) {
+                                                $total_outstanding_loan = $total_outstanding_loan + $loan->total_outstanding;
+                                              }
+                                            @endphp
+                                            @if($member->loans->count() > 0 && $total_outstanding_loan > 0)
+                                              <a href="{{ route('dashboard.member.single', [$staff->id, $group->id, $member->id]) }}"  style="color: #DD4B39; font-size: 11.5px !important;">
+                                            @else
+                                              <a href="{{ route('dashboard.member.single', [$staff->id, $group->id, $member->id]) }}"  style="font-size: 11.5px !important;">
+                                            @endif
                                               <i class="fa fa-user"></i> {{ $member->name }}-{{ $member->fhusband }}({{ $member->passbook }})
                                             </a>
                                           </li>
