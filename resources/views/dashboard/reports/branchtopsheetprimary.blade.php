@@ -54,8 +54,10 @@
 					@php
 						$totalmembers = 0;
 						foreach ($staff->groups as $group) {
-							foreach ($group->members as $key => $value) {
-								# code...
+							foreach ($group->members as $member) {
+								foreach ($member->loans as $loan) {
+									if($loan->loanname_id == 1 && )
+								}
 							}
 							$totalmembers = $totalmembers + $group->members->count();
 						}
