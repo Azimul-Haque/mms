@@ -119,7 +119,7 @@ class MemberController extends Controller
     {
         // $group = Group::find($id);
         // return view('dashboard.groups.edit')->withMember($group);
-    }    
+    }
 
     public function updateMember(Request $request, $s_id, $g_id, $id)
     {
@@ -147,6 +147,29 @@ class MemberController extends Controller
 
         Session::flash('success', 'Updated successfully!'); 
         return redirect()->route('dashboard.members');
+    }
+
+    public function deleteMember(Request $request, $id)
+    {
+        $member = Member::find($id);
+
+        foreach ($member->loans as $loan) {
+          foreach ($loan->loaninstallments as $loaninstallment) {
+            $loaninstallment->delete();
+          }
+          $loan->delete();
+        }
+
+        foreach ($member->savings as $saving) {
+          foreach ($saving->savinginstallments as $savinginstallment) {
+            $savinginstallment->delete();
+          }
+          $saving->delete();
+        }
+        $member->delete();
+
+        Session::flash('success', 'Deleted successfully!'); 
+        return redirect()->back();
     }
 
     public function getSingleMember($s_id, $g_id, $m_id)

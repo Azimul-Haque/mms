@@ -106,6 +106,7 @@ Route::get('/group/{s_id}/{g_id}/members/create', ['as'=>'dashboard.members.crea
 Route::post('/group/{s_id}/{g_id}/members/store', ['as'=>'dashboard.members.store','uses'=>'MemberController@storeMember']);
 Route::get('/group/{s_id}/{g_id}/members/{id}/edit', ['as'=>'dashboard.members.edit','uses'=>'MemberController@editMember']);
 Route::put('/group/{s_id}/{g_id}/members/{id}/update', ['as'=>'dashboard.members.update','uses'=>'MemberController@updateMember']);
+Route::delete('/group/member/{id}/delete', ['as'=>'dashboard.member.delete','uses'=>'MemberController@deleteMember']);
 Route::get('/group/{s_id}/{g_id}/transfer', ['as'=>'dashboard.group.gertransferpage','uses'=>'MemberController@getGroupTransfer']);
 Route::put('/group/{id}/transfer', ['as'=>'dashboard.group.transfer','uses'=>'MemberController@transferGroup']);
 

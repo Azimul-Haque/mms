@@ -67,7 +67,32 @@
                   <td>{{ $member->group->name }}</td>
                   <td>
                     <a href="#!" class="btn btn-success btn-sm" title="See/ Edit Member"><i class="fa fa-pencil"></i> Edit</a>
-                    {{-- <button class="btn btn-danger btn-sm" title="Delete Member" disabled><i class="fa fa-trash"></i> Delete</button> --}}
+                    @if(Auth::user()->role == 'admin')
+                    <button class="btn btn-danger btn-sm" title="Delete Member" data-toggle="modal" data-target="#deleteMemberModal{{ $member->id }}" data-backdrop="static"><i class="fa fa-trash"></i> Delete</button>
+                    <!-- Delete Modal -->
+                    <!-- Delete Modal -->
+                    <div class="modal fade" id="deleteMemberModal{{ $member->id }}" role="dialog">
+                      <div class="modal-dialog modal-md">
+                        <div class="modal-content">
+                          <div class="modal-header modal-header-danger">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title"><i class="fa fa-exclamation-triangle"></i> Delete Member</h4>
+                          </div>
+                          <div class="modal-body">
+                            Are you sure to Delete this member: <b>{{ $member->name }}-{{ $member->fhusband }}({{ $member->passbook }})</b>?<br/>
+                          </div>
+                          <div class="modal-footer">
+                            {!! Form::model($member, ['route' => ['dashboard.member.delete', $member->id], 'method' => 'DELETE', 'class' => 'form-default']) !!}
+                                {!! Form::submit('Delte', array('class' => 'btn btn-danger')) !!}
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            {!! Form::close() !!}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Delete Modal -->
+                    <!-- Delete Modal -->
+                    @endif
                   </td>
                 </tr>
               @endforeach
