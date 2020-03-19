@@ -62,8 +62,10 @@
 						$totalgeneralbalance = 0;
 						foreach ($staff->groups as $group) {
 							foreach ($group->members as $member) {
-								foreach ($member->savings->where('savingname_id', 1) as $saving) {
-									$totalgeneralbalance = $totalgeneralbalance + $saving->total_amount - $saving->withdraw;
+								foreach ($member->savings as $saving) {
+									if($saving->savingname_id == 1) {
+										$totalgeneralbalance = $totalgeneralbalance + $saving->total_amount - $saving->withdraw;
+									}
 								}
 							}
 						}
@@ -78,9 +80,11 @@
 						foreach ($staff->groups as $group) {
 							foreach ($group->members as $member) {
 								$memberbalance = 0;
-								foreach ($member->savings->where('savingname_id', 2) as $saving) {
-									$totallongtermbalance = $totallongtermbalance + $saving->total_amount - $saving->withdraw;
-									$memberbalance = $memberbalance + $saving->total_amount - $saving->withdraw;
+								foreach ($member->savings as $saving) {
+									if($saving->savingname_id == 1) {
+										$totallongtermbalance = $totallongtermbalance + $saving->total_amount - $saving->withdraw;
+										$memberbalance = $memberbalance + $saving->total_amount - $saving->withdraw;
+									}
 								}
 								if($memberbalance > 0) {
 									$totallongtermmembers++;
