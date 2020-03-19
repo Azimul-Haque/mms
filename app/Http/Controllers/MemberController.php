@@ -115,38 +115,53 @@ class MemberController extends Controller
         return redirect()->route('dashboard.members', [$s_id, $g_id]);
     }
 
-    public function editMember($s_id, $g_id, $id)
+    public function editMember($id)
     {
-        // $group = Group::find($id);
-        // return view('dashboard.groups.edit')->withMember($group);
+        $member = Member::find($id);
+        return view('dashboard.groups.members.edit')->withMember($member);
     }
 
-    public function updateMember(Request $request, $s_id, $g_id, $id)
+    public function updateMember(Request $request, $id)
     {
-        $group = Group::find($id);
         $this->validate($request, [
-          'name'               => 'required',
-          'formation'          => 'required',
-          'meeting_day'        => 'required',
-          'village'            => 'required',
-          'min_savings_dep'    => 'required',
-          'min_security_dep'   => 'required',
-          'status'             => 'required',
-          'user_id'            => 'required',
-        ]);
-        
-        $group->name = $request->name;
-        $group->formation = strtotime($request->formation);
-        $group->meeting_day = $request->meeting_day;
-        $group->village = $request->village;
-        $group->min_savings_dep = $request->min_savings_dep;
-        $group->min_security_dep = $request->min_security_dep;
-        $group->status = $request->status;
-        $group->user_id = $request->user_id;
-        $group->save();
+            'passbook'              => 'required',
+            'name'                  => 'required',
+            'fhusband'              => 'required',
+            'ishusband'             => 'required',
+            'admission_date'        => 'required',
+            'closing_date'          => 'sometimes',
+
+            'present_district'      => 'required',
+            'present_upazilla'      => 'required',
+            'present_village'       => 'required',
+            'present_phone'         => 'required',
+            'shared_deposit'         => 'required',
+          ]);
+
+          $member = Member::find($id);
+          $member->passbook = $request->passbook;
+          $member->name = $request->name;
+          $member->fhusband = $request->fhusband;
+          $member->ishusband = $request->ishusband;
+          
+          $member->admission_date = date('Y-m-d', strtotime($request->admission_date));
+          if($request->closing_date) {
+            $member->closing_date = date('Y-m-d', strtotime($request->closing_date));
+          } else {
+            $member->closing_date = '1970-01-01';
+          }
+          $member->present_district = $request->present_district;
+          $member->present_upazilla = $request->present_upazilla;
+          $member->present_village = $request->present_village;
+          $member->present_phone = $request->present_phone;
+          
+          $member->passbook_fee = $request->passbook_fee;
+          $member->admission_fee = $request->admission_fee;
+          $member->shared_deposit = $request->shared_deposit;
+          $member->save();
 
         Session::flash('success', 'Updated successfully!'); 
-        return redirect()->route('dashboard.members');
+        return redirect()->route('dashboard.members', [$member->staff_id, $member->group_id]);
     }
 
     public function deleteMember(Request $request, $id)
