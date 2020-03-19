@@ -53,9 +53,9 @@
 						foreach ($staff->groups as $group) {
 							foreach ($group->members as $member) {
 								if($member->status == 1) {
-									foreach ($member->loans as $loan) {
-										if($loan->loanname_id == 2) {
-											$totaldisbursed = $totaldisbursed + $loan->total_disbursed;
+									foreach ($member->savings as $saving) {
+										if($saving->savingname_id == 1) {
+											$totalgeneralmembers++;
 										}
 									}
 								}
@@ -70,9 +70,11 @@
 						$totalgeneralbalance = 0;
 						foreach ($staff->groups as $group) {
 							foreach ($group->members as $member) {
-								foreach ($member->savings as $saving) {
-									if($saving->savingname_id == 1) {
-										$totalgeneralbalance = $totalgeneralbalance + $saving->total_amount - $saving->withdraw;
+								if($member->status == 1) {
+									foreach ($member->savings as $saving) {
+										if($saving->savingname_id == 1) {
+											$totalgeneralbalance = $totalgeneralbalance + $saving->total_amount - $saving->withdraw;
+										}
 									}
 								}
 							}
@@ -87,15 +89,17 @@
 						$totallongtermbalance = 0;
 						foreach ($staff->groups as $group) {
 							foreach ($group->members as $member) {
-								$memberbalance = 0;
-								foreach ($member->savings as $saving) {
-									if($saving->savingname_id == 1) {
-										$totallongtermbalance = $totallongtermbalance + $saving->total_amount - $saving->withdraw;
-										$memberbalance = $memberbalance + $saving->total_amount - $saving->withdraw;
+								if($member->status == 1) {
+									$memberbalance = 0;
+									foreach ($member->savings as $saving) {
+										if($saving->savingname_id == 2) {
+											$totallongtermbalance = $totallongtermbalance + $saving->total_amount - $saving->withdraw;
+											$memberbalance = $memberbalance + $saving->total_amount - $saving->withdraw;
+										}
 									}
-								}
-								if($memberbalance > 0) {
-									$totallongtermmembers++;
+									if($memberbalance > 0) {
+										$totallongtermmembers++;
+									}
 								}
 							}
 						}
