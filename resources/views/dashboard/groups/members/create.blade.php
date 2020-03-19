@@ -76,14 +76,14 @@
               {!! Form::label('passbook_fee', 'PassBook Fee') !!}
               <div class="input-group">
                 <span class="input-group-addon">৳</span>
-                <input id="passbook_fee" type="text" class="form-control" name="passbook_fee" placeholder="PassBook Fee" value="20">
+                <input id="passbook_fee" type="text" class="form-control" name="passbook_fee" placeholder="PassBook Fee" value="20" readonly="">
               </div>
             </div>
             <div class="col-md-4">
               {!! Form::label('admission_fee', 'Admission Fee') !!}
               <div class="input-group">
                 <span class="input-group-addon">৳</span>
-                <input id="admission_fee" type="text" class="form-control" name="admission_fee" placeholder="Admission Fee" value="30">
+                <input id="admission_fee" type="text" class="form-control" name="admission_fee" placeholder="Admission Fee" value="30" readonly="">
               </div>
             </div>
             <div class="col-md-4">
