@@ -64,10 +64,10 @@
                   {{-- <td>{{ $member->profession }}</td> --}}
                   <td>{{ $member->group->name }}</td>
                   <td>
-                    <button class="btn btn-success btn-sm" title="Activate Member" data-toggle="modal" data-target="#activateMemberModal" data-backdrop="static"><i class="fa fa-flash"></i> Activate Member</button>
+                    <button class="btn btn-success btn-sm" title="Activate Member" data-toggle="modal" data-target="#activateMemberModal{{ $member->id }}" data-backdrop="static"><i class="fa fa-flash"></i> Activate Member</button>
                     <!-- Activate Modal -->
                     <!-- Activate Modal -->
-                    <div class="modal fade" id="activateMemberModal" role="dialog">
+                    <div class="modal fade" id="activateMemberModal{{ $member->id }}" role="dialog">
                       <div class="modal-dialog modal-md">
                         <div class="modal-content">
                           <div class="modal-header modal-header-success">
