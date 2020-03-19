@@ -51,7 +51,15 @@
 					@php
 						$totalgeneralmembers = 0;
 						foreach ($staff->groups as $group) {
-							$totalgeneralmembers = $totalgeneralmembers + $group->members->count();
+							foreach ($group->members as $member) {
+								if($member->status == 1) {
+									foreach ($member->loans as $loan) {
+										if($loan->loanname_id == 2) {
+											$totaldisbursed = $totaldisbursed + $loan->total_disbursed;
+										}
+									}
+								}
+							}
 						}
 						$grosstotalmembersgeneral = $grosstotalmembersgeneral + $totalgeneralmembers;
 					@endphp

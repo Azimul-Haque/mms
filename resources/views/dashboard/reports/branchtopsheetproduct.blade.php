@@ -55,9 +55,11 @@
 						$totalmembers = 0;
 						foreach ($staff->groups as $group) {
 							foreach ($group->members as $member) {
-								foreach ($member->loans as $loan) {
-									if($loan->loanname_id == 2) {
-										$totalmembers++;
+								if($member->status == 1) {
+									foreach ($member->loans as $loan) {
+										if($loan->loanname_id == 2) {
+											$totalmembers++;
+										}
 									}
 								}
 							}
@@ -71,9 +73,11 @@
 						$totaldisbursed = 0;
 						foreach ($staff->groups as $group) {
 							foreach ($group->members as $member) {
-								foreach ($member->loans as $loan) {
-									if($loan->loanname_id == 2) {
-										$totaldisbursed = $totaldisbursed + $loan->total_disbursed;
+								if($member->status == 1) {
+									foreach ($member->loans as $loan) {
+										if($loan->loanname_id == 2) {
+											$totaldisbursed = $totaldisbursed + $loan->total_disbursed;
+										}
 									}
 								}
 							}
@@ -88,15 +92,17 @@
 						$totaloutstanding = 0;
 						foreach ($staff->groups as $group) {
 							foreach ($group->members as $member) {
-								$memberoutstanding = 0;
-								foreach ($member->loans as $loan) {
-									if($loan->loanname_id == 2) {
-										$totaloutstanding = $totaloutstanding + $loan->total_outstanding;
-										$memberoutstanding = $memberoutstanding + $loan->total_outstanding;
+								if($member->status == 1) {
+									$memberoutstanding = 0;
+									foreach ($member->loans as $loan) {
+										if($loan->loanname_id == 2) {
+											$totaloutstanding = $totaloutstanding + $loan->total_outstanding;
+											$memberoutstanding = $memberoutstanding + $loan->total_outstanding;
+										}
 									}
-								}
-								if($memberoutstanding > 0) {
-									$totaloutstandingmembers++;
+									if($memberoutstanding > 0) {
+										$totaloutstandingmembers++;
+									}
 								}
 							}
 						}
@@ -112,19 +118,21 @@
 						$totaloverdue = 0;
 						foreach ($staff->groups as $group) {
 							foreach ($group->members as $member) {
-								$memberoverdue = 0;
-								foreach ($member->loans as $loan) {
-									if($loan->loanname_id == 2) {
-										foreach ($loan->loaninstallments as $installment) {
-											if((strtotime($installment->due_date) <= strtotime(date('Y-m-d'))) && ($installment->installment_total - $installment->paid_total > 0) && ($loan->total_outstanding > 0)) {
-												$totaloverdue = $totaloverdue + ($installment->installment_total - $installment->paid_total);
-												$memberoverdue = $memberoverdue + ($installment->installment_total - $installment->paid_total);
+								if($member->status == 1) {
+									$memberoverdue = 0;
+									foreach ($member->loans as $loan) {
+										if($loan->loanname_id == 2) {
+											foreach ($loan->loaninstallments as $installment) {
+												if((strtotime($installment->due_date) <= strtotime(date('Y-m-d'))) && ($installment->installment_total - $installment->paid_total > 0) && ($loan->total_outstanding > 0)) {
+													$totaloverdue = $totaloverdue + ($installment->installment_total - $installment->paid_total);
+													$memberoverdue = $memberoverdue + ($installment->installment_total - $installment->paid_total);
+												}
 											}
 										}
 									}
-								}
-								if($memberoverdue > 0) {
-									$totaloverduemembers++;
+									if($memberoverdue > 0) {
+										$totaloverduemembers++;
+									}
 								}
 							}
 						}
