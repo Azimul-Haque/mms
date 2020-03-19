@@ -54,6 +54,9 @@
 					@php
 						$totalmembers = 0;
 						foreach ($staff->groups as $group) {
+							foreach ($group->members as $key => $value) {
+								# code...
+							}
 							$totalmembers = $totalmembers + $group->members->count();
 						}
 						$grosstotalmembersdisbursed = $grosstotalmembersdisbursed + $totalmembers;
