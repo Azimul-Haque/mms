@@ -11,9 +11,9 @@
 		<tr>
 			<th colspan="6" align="center">Program Top Sheet</th>
 		</tr>
-		<tr>
+		{{-- <tr>
 			<th colspan="6">Year: {{ date('Y') }}</th>
-		</tr>
+		</tr> --}}
 		<tr>
 			<th rowspan="3" class="lightgray">S# </th>
 			<th rowspan="3" class="lightgray">Loan Officer</th>
