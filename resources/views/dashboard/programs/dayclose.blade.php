@@ -40,6 +40,7 @@
               <tr>
                 <th>Date</th>
                 <th>Status</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
@@ -47,6 +48,34 @@
                 <tr>
                   <td>{{ date('D, d/m/Y', strtotime($closeday->close_date)) }}</td>
                   <td>Closed</td>
+                  <td>
+                    <center>
+                      <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#openDayModal{{ $closeday->id }}" data-backdrop="static">Open Day</button>
+                    </center>
+                    <!-- Open Day Modal -->
+                    <!-- Open Day Modal -->
+                    <div class="modal fade" id="openDayModal{{ $closeday->id }}" role="dialog">
+                      <div class="modal-dialog modal-md">
+                        <div class="modal-content">
+                          <div class="modal-header modal-header-danger">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title"><i class="fa fa-exclamation-triangle"></i> Open Day</h4>
+                          </div>
+                          <div class="modal-body">
+                            Are you sure to Open this day: <b>{{ date('D, d/m/Y', strtotime($closeday->close_date)) }}</b>?<br/>
+                          </div>
+                          <div class="modal-footer">
+                            {!! Form::model($closeday, ['route' => ['programs.store.day.open', $closeday->id], 'method' => 'DELETE', 'class' => 'form-default']) !!}
+                                {!! Form::submit('Open', array('class' => 'btn btn-danger')) !!}
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            {!! Form::close() !!}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Open Day Modal -->
+                    <!-- Open Day Modal -->
+                  </td>
                 </tr>
               @endforeach
             </tbody>

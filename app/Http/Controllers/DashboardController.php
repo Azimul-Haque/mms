@@ -376,8 +376,6 @@ class DashboardController extends Controller
         return view('dashboard.programs.dayclose')->withClosedays($closedays);
     }
 
-
-
     public function postDayClose(Request $request)
     {
         $this->validate($request, [
@@ -397,6 +395,14 @@ class DashboardController extends Controller
             Session::flash('success', 'Submitted successfully!'); 
         }
 
+        return redirect()->route('programs.day.close');
+    }
+    public function deleteDayClose($id)
+    {
+        $closeday = Closeday::find($id);
+        $closeday->delete();
+
+        Session::flash('success', 'Day opened successfully!');
         return redirect()->route('programs.day.close');
     }
 
