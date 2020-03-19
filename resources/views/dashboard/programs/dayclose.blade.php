@@ -50,7 +50,7 @@
                   <td>Closed</td>
                   <td>
                     <center>
-                      <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#openDayModal{{ $closeday->id }}" data-backdrop="static">Open Day</button>
+                      <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#openDayModal{{ $closeday->id }}" data-backdrop="static"><i class="fa fa-calendar"></i> Open Day</button>
                     </center>
                     <!-- Open Day Modal -->
                     <!-- Open Day Modal -->
