@@ -156,7 +156,7 @@
               </div>
               <div class="col-md-6">
                 {!! Form::label('status', 'Status *') !!}
-                <select name="status" class="form-control" required="" @if($loan->total_disbursed > $loan->total_paid) disabled="" @endif>
+                <select name="status" class="form-control" required="" {{-- @if($loan->total_disbursed > $loan->total_paid) disabled="" @endif --}}>
                   <option value="" selected="" disabled="">Select Status</option>
                   <option value="1" @if($loan->status == 1) selected="" @endif>Disbursed</option>
                   <option value="0" @if($loan->status == 0) selected="" @endif>Closed</option>
