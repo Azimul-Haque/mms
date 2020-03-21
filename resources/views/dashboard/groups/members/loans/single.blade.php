@@ -105,6 +105,27 @@
                 </div>
               </div>
             </div>
+
+            @if(Auth::user()->role == 'admin')
+            <div class="row">
+              <br/>
+              <div class="col-md-6">
+                {!! Form::label('total_paid', 'Total Paid') !!}
+                <div class="input-group">
+                  <span class="input-group-addon">৳</span>
+                  {!! Form::text('total_paid', null, array('class' => 'form-control', 'placeholder' => 'Down Payment (If PRODUCT)', 'autocomplete' => 'off', 'onchange' => 'calculateTotalPaid();')) !!}
+                </div>
+              </div>
+              <div class="col-md-6">
+                {!! Form::label('total_outstanding', 'Total Outstanding') !!}
+                <div class="input-group">
+                  <span class="input-group-addon">৳</span>
+                  {!! Form::text('total_outstanding', null, array('class' => 'form-control', 'placeholder' => 'Total Outstanding', 'autocomplete' => 'off')) !!}
+                </div>
+              </div>
+            </div>
+            @endif
+
             @if($loan->schemename_id == 1)
             <div class="row">
               <br/>
@@ -251,6 +272,11 @@
       var service_charge = $('#service_charge').val() ? $('#service_charge').val() : 0; // a ? a : 0;
       var total_disbursed = parseFloat(left_pricipal_amount) + parseFloat(service_charge);
       $('#total_disbursed').val(total_disbursed);
+    };
+    function calculateTotalPaid() {
+      var total_disbursed = $('#total_disbursed').val() ? $('#total_disbursed').val() : 0; // a ? a : 0;
+      var total_paid = $('#total_paid').val() ? $('#total_paid').val() : 0; // a ? a : 0;
+      $('#total_outstanding').val(total_disbursed - total_paid);
     };
   </script>
 @endsection

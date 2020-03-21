@@ -248,7 +248,7 @@ class GroupController extends Controller
           $checkinstallment = Loaninstallment::where('loan_id', $loan->id)
                                              ->where('due_date', date('Y-m-d', strtotime($request->data['transactiondate'])))
                                              ->first();
-          if(empty($checkinstallment)) {
+          if(empty($checkinstallment) || $checkinstallment == null) {
             $installment = new Loaninstallment;
             $installment->due_date = date('Y-m-d', strtotime($request->data['transactiondate']));
 

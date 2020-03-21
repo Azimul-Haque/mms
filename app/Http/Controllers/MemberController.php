@@ -461,7 +461,13 @@ class MemberController extends Controller
 
         $loan = Loan::find($l_id);
         $loan->closing_date = date('Y-m-d', strtotime($request->closing_date ? $request->closing_date : '1970-01-01'));
-        // dd($loan->closing_date);
+        
+        if($request->total_paid) {
+          $loan->total_paid = $request->total_paid;
+        }
+        if($request->total_outstanding) {
+          $loan->total_outstanding = $request->total_outstanding;
+        }
         $loan->status = $request->status; // 1 means disbursed, 0 means closed
         $loan->save();
 
