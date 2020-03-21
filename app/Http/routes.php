@@ -148,6 +148,7 @@ Route::get('/group/{s_id}/{g_id}/transactions/{loan_type}/{date}', ['as'=>'dashb
 Route::post('/group/transaction/store/api', ['as'=>'dashboard.grouptransactions.postinstallmentapi','uses'=>'GroupController@postGroupInstallmentAPI']);
 Route::post('/group/brand/new/transaction/store/api', ['as'=>'dashboard.grouptransactions.brandnew.postinstallmentapi','uses'=>'GroupController@postGroupBrandNewInstallmentAPI']);
 Route::post('/group/transaction/for/no/loan/members/api', ['as'=>'dashboard.grouptransactions.installmentsfornoloans','uses'=>'GroupController@postGroupNoLoanMembersAPI']);
+Route::delete('/loan/installment/{id}/delete', ['as'=>'dashboard.loaninstallment.delete','uses'=>'GroupController@deleteLoanInstallment']);
 
 Route::get('/programs/features', ['as'=>'programs.features','uses'=>'DashboardController@getProgramFeatures']);
 Route::get('/programs/day/close', ['as'=>'programs.day.close','uses'=>'DashboardController@getDayClose']);

@@ -489,4 +489,13 @@ class GroupController extends Controller
 
         return 'success';
     }
+
+    public function deleteLoanInstallment($id)
+    {
+      $loaninstallment = Loaninstallment::find($id);
+      $loaninstallment->delete();
+
+      Session::flash('success', 'Deleted successfully!'); 
+      return redirect()->back();
+    }
 }
