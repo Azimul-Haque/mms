@@ -83,7 +83,7 @@
                             </div>
                             <div class="modal-footer">
                               {!! Form::model($member, ['route' => ['dashboard.member.delete', $member->id], 'method' => 'DELETE', 'class' => 'form-default']) !!}
-                                  {!! Form::submit('Delte', array('class' => 'btn btn-danger')) !!}
+                                  {!! Form::submit('Delete', array('class' => 'btn btn-danger')) !!}
                                   <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                               {!! Form::close() !!}
                             </div>

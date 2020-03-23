@@ -113,7 +113,7 @@
                 {!! Form::label('total_paid', 'Total Paid') !!}
                 <div class="input-group">
                   <span class="input-group-addon">৳</span>
-                  {!! Form::text('total_paid', null, array('class' => 'form-control', 'placeholder' => 'Down Payment (If PRODUCT)', 'autocomplete' => 'off', 'onchange' => 'calculateTotalPaid();')) !!}
+                  {!! Form::text('total_paid', null, array('class' => 'form-control', 'placeholder' => 'Total Paid', 'autocomplete' => 'off', 'onchange' => 'calculateTotalPaid();')) !!}
                 </div>
               </div>
               <div class="col-md-6">
@@ -146,6 +146,7 @@
             </div>
             @endif
             <div class="row">
+              <br/>
               <div class="col-md-6">
                 {!! Form::label('closing_date', 'Closing Date (Optional)') !!}
                 @if($loan->closing_date == '1970-01-01')
