@@ -177,7 +177,7 @@ Route::get('/report/staff/topsheet/{s_id}', ['as'=>'report.staff.topsheet','uses
 Route::get('/report/daily/summary/{transactiondate}', ['as'=>'report.daily.summary','uses'=>'ReportController@dailySummary']);
 Route::post('/report/daily/summary/dailyotheramounts', ['as'=>'report.post.dailyotheramounts','uses'=>'ReportController@postDailyOtherAmounts']);
 
-Route::get('/dashboard/staffs/borrows', ['as'=>'dashboard.borrows','uses'=>'DashboardController@getBorrows']);
+Route::get('/dashboard/staffs/borrows/{date}', ['as'=>'dashboard.borrows','uses'=>'DashboardController@getBorrows']);
 Route::post('/staffs/borrow/store', ['as'=>'dashboard.storeborrow','uses'=>'DashboardController@storeBorrow']);
 Route::put('/staffs/borrow/{id}/update', ['as'=>'dashboard.updateborrow','uses'=>'DashboardController@updateBorrow']);
 Route::delete('/staffs/borrow/{id}/delete', ['as'=>'dashboard.deleteborrow','uses'=>'DashboardController@deleteBorrow']);

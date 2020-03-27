@@ -229,8 +229,8 @@
                                 <span>Old Data Entry</span>
                             </a>
                         </li>
-                        <li class="{{ Request::is('dashboard/staffs/borrows') ? 'active' : '' }}">
-                            <a href="{{ route('dashboard.borrows') }}">
+                        <li class="{{ Request::is('dashboard/staffs/borrows/*') ? 'active' : '' }}">
+                            <a href="{{ route('dashboard.borrows', date('Y-m-d')) }}">
                                 <i class="fa fa-fw fa-files-o"></i>
                                 <span>Staff Borrows</span>
                             </a>

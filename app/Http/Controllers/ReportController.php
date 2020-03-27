@@ -393,7 +393,13 @@ class ReportController extends Controller
 				      	      ->select(DB::raw("SUM(down_payment) as total"))
 				      	      ->where('disburse_date', date('Y-m-d', strtotime($transactiondate)))
 				      	      ->where('loanname_id', 2)
-				      	      ->first();	
+				      	      ->first();
+
+		$totalborrowcollection = DB::table("borrows")
+					      	       ->select(DB::raw("SUM(amount) as total"))
+					      	       ->where('borrow_date', date('Y-m-d', strtotime($transactiondate)))
+					      	       ->where('borrow_type', 2)
+					      	       ->first();
         // collection
 
         // disburse
@@ -419,6 +425,12 @@ class ReportController extends Controller
 					      	    	  ->select(DB::raw("SUM(shared_deposit) as total"))
 					      	   		  ->where('closing_date', date('Y-m-d', strtotime($transactiondate)))
 					      	   		  ->first();
+
+		$totalborrowdisbursed = DB::table("borrows")
+					      	       ->select(DB::raw("SUM(amount) as total"))
+					      	       ->where('borrow_date', date('Y-m-d', strtotime($transactiondate)))
+					      	       ->where('borrow_type', 1)
+					      	       ->first();
         // disburse
 
         // dd($totalpassbookfee);
@@ -438,11 +450,13 @@ class ReportController extends Controller
         					->withTotalpassbookfee($totalpassbookfee)
         					->withTotalshareddeposit($totalshareddeposit)
         					->withTotaldownpayment($totaldownpayment)
+        					->withTotalborrowcollection($totalborrowcollection)
         					->withTotaldisbursed($totaldisbursed)
         					->withTotalsavingwithdraw($totalsavingwithdraw)
         					->withTotalgeneralsavingwithdraw($totalgeneralsavingwithdraw)
         					->withTotallongtermsavingcwithdraw($totallongtermsavingcwithdraw)
-        					->withTotalshareddepositreturn($totalshareddepositreturn);
+        					->withTotalshareddepositreturn($totalshareddepositreturn)
+        					->withTotalborrowdisbursed($totalborrowdisbursed);
     }
 
     public function postDailyOtherAmounts(Request $request)

@@ -410,14 +410,15 @@ class DashboardController extends Controller
 
 
 
-    public function getBorrows()
+    public function getBorrows($borrow_date)
     {
         $staffs = User::where('role', 'staff')->get();
-        $borrows = Borrow::orderBy('borrow_date', 'desc')->get();
+        $borrows = Borrow::where('borrow_date', $borrow_date)->orderBy('borrow_date', 'desc')->get();
 
         return view('dashboard.staffs.borrows')
                             ->withBorrows($borrows)
-                            ->withStaffs($staffs);
+                            ->withStaffs($staffs)
+                            ->withBorrowdate($borrow_date);
     }
 
     public function storeBorrow(Request $request)
@@ -432,28 +433,35 @@ class DashboardController extends Controller
         $borrow = new Borrow;
         $borrow->user_id = $request->user_id;
         $borrow->borrow_date = date('Y-m-d', strtotime($request->borrow_date));
-        $borrow->borrow_type = $request->borrow_type;
+        $borrow->borrow_type = $request->borrow_type; // 1 means disburse, 2 means collection
         $borrow->amount = $request->amount;
         $borrow->save();
 
         Session::flash('success', 'Added successfully!'); 
-        return redirect()->route('dashboard.borrows');
+        return redirect()->route('dashboard.borrows', date('Y-m-d', strtotime($request->borrow_date)));
     }
 
 
-    // public function updateBorrow(Request $request, $id)
-    // {
-    //     $loanname = Loanname::find($id);
-    //     $this->validate($request, [
-    //       'name'                  => 'required',
-    //     ]);
+    public function updateBorrow(Request $request, $id)
+    {
+        $borrow = Borrow::find($id);
+        $this->validate($request, [
+          'user_id'         => 'required',
+          'borrow_date'     => 'required',
+          'borrow_type'     => 'required',
+          'amount'          => 'required',
+        ]);
 
-    //     $loanname->name = $request->name;
-    //     $loanname->save();
+        $borrow = new Borrow;
+        $borrow->user_id = $request->user_id;
+        $borrow->borrow_date = date('Y-m-d', strtotime($request->borrow_date));
+        $borrow->borrow_type = $request->borrow_type;
+        $borrow->amount = $request->amount;
+        $borrow->save();
 
-    //     Session::flash('success', 'Updated successfully!'); 
-    //     return redirect()->route('dashboard.loanandsavingnames');
-    // }
+        Session::flash('success', 'Updated successfully!'); 
+        return redirect()->route('dashboard.loanandsavingnames');
+    }
 
     // public function deleteBorrow($id)
     // {

@@ -92,6 +92,10 @@
                   <td>৳ <span class="for_total_collectioncommon">{{ $totaldownpayment->total ? $totaldownpayment->total : 0 }}</span></td>
                 </tr>
                 <tr>
+                  <td>Staff Borrows In</td>
+                  <td>৳ <span class="for_total_collectioncommon">{{ $totalborrowcollection->total ? $totalborrowcollection->total : 0 }}</span></td>
+                </tr>
+                <tr>
                   <td>Others</td>
                   <td>৳ <input type="number" style="width: 100px;" min="0" id="collentionothers" onchange="dailyOtherAmountsCal()" @if(!empty($dailyotheramounts->collentionothers)) value="{{ $dailyotheramounts->collentionothers }}" @else value="0" @endif></td>
                 </tr>
@@ -135,6 +139,10 @@
                 <tr>
                   <td>Shared Deposit Return</td>
                   <td>৳ <span class="for_total_disbursecommon">{{ $totalshareddepositreturn->total ? $totalshareddepositreturn->total : 0 }}</span></td>
+                </tr>
+                <tr>
+                  <td>Staff Borrows Out</td>
+                  <td>৳ <span class="for_total_disbursecommon">{{ $totalborrowdisbursed->total ? $totalborrowdisbursed->total : 0 }}</span></td>
                 </tr>
                 <tr>
                   <td>Others</td>
