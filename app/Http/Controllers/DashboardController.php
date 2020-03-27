@@ -467,7 +467,7 @@ class DashboardController extends Controller
         $borrow = Borrow::find($id);
         $borrow->delete();
 
-        Session::flash('success', 'Day opened successfully!');
+        Session::flash('success', 'Deleted successfully!');
         return redirect()->back();
     }
 
