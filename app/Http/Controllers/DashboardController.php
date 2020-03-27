@@ -471,6 +471,18 @@ class DashboardController extends Controller
         return redirect()->back();
     }
 
+    public function getSingleBorrow($id)
+    {
+        $staff = User::find($id);
+        $borrows = Borrow::where('user_id', $staff->id)->orderBy('borrow_date', 'desc')->paginate(10);
+        $staffs = User::where('role', 'staff')->get();
+
+        return view('dashboard.staffs.singleborrow')
+                                    ->withStaff($staff)
+                                    ->withBorrows($borrows)
+                                    ->withStaffs($staffs);
+    }
+
 
 
 

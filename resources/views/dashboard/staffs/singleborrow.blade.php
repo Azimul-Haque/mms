@@ -18,91 +18,46 @@
 @section('content')
   <div class="row">
     <div class="col-md-5">
-      <div class="panel panel-primary">
-        <div class="panel-heading">Add/ Pay Borrow</div>
-        {!! Form::open(['route' => 'dashboard.storeborrow', 'method' => 'POST']) !!}
-        <div class="panel-body">
-          <div class="row">
-            <div class="col-md-6">
-              {!! Form::label('user_id', 'Staff') !!}
-              <select name="user_id" class="form-control" required="">
-                <option value="" selected="" disabled="">Select Staff</option>
-                @foreach($staffs as $staff)
-                  <option value="{{ $staff->id }}">{{ $staff->name }}</option>
-                @endforeach
-              </select>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="small-box bg-aqua">
+            <div class="inner">
+              @php
+                $totaldisbursestaff = 0;
+                $totalcollectionstaff = 0;
+
+                foreach ($staff->borrows as $borrow) {
+                  if($borrow->borrow_type == 1) {
+                    $totaldisbursestaff += $borrow->amount;
+                  } elseif ($borrow->borrow_type == 2) {
+                    $totalcollectionstaff += $borrow->amount;
+                  }
+                }
+              @endphp
+              <h3>৳ {{ $totaldisbursestaff }}</h3>
+              <p>Total Disburse</p>
             </div>
-            <div class="col-md-6">
-              {!! Form::label('borrow_date', 'Date') !!}
-              {!! Form::text('borrow_date', null, array('class' => 'form-control', 'placeholder' => 'Select Date', 'required' => '', 'readonly' => '')) !!}
+            <div class="icon">
+              <i class="fa fa-arrow-circle-o-up"></i>
             </div>
-          </div><br/>
-          <div class="row">
-            <div class="col-md-6">
-              {!! Form::label('borrow_type', 'Borrow Type (ধরণ)') !!}
-              <select name="borrow_type" class="form-control" required="">
-                <option value="" selected="" disabled="">Select Borrow Type (ধরণ)</option>
-                <option value="1">Borrow Disburse (বিতরণ)</option>
-                <option value="2">Borrow Collection (আদায়)</option>
-              </select>
-            </div>
-            <div class="col-md-6">
-              {!! Form::label('amount', 'Amount') !!}
-              {!! Form::text('amount', null, array('class' => 'form-control', 'placeholder' => 'Amount', 'required' => '')) !!}
-            </div>
-          </div>          
+          </div>
         </div>
-        <div class="panel-footer">
-          <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-o"></i> Submit</button>
+        <div class="col-md-6">
+          <div class="small-box bg-orange">
+            <div class="inner">
+              <h3>৳ {{ $totalcollectionstaff }}</h3>
+              <p>Total Collection</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-arrow-circle-o-down"></i>
+            </div>
+          </div>
         </div>
-        {!! Form::close() !!}
       </div>
 
-      <div class="table-responsive">
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Staff</th>
-              <th>Total Borrow</th>
-              <th>Total Paid</th>
-            </tr>
-          </thead>
-          <tbody>
-            @foreach($staffs as $staff)
-              <tr>
-                <td><a href="{{ route('dashboard.singleborrow', $staff->id) }}">{{ $staff->name }}</a></td>
-                <td>
-                  @php
-                    $totaldisbursestaff = 0;
-                    $totalcollectionstaff = 0;
-
-                    foreach ($staff->borrows as $borrow) {
-                      if($borrow->borrow_type == 1) {
-                        $totaldisbursestaff += $borrow->amount;
-                      } elseif ($borrow->borrow_type == 2) {
-                        $totalcollectionstaff += $borrow->amount;
-                      }
-                    }
-                  @endphp
-                  ৳ {{ $totaldisbursestaff }}
-                </td>
-                <td>৳ {{ $totalcollectionstaff }}</td>
-              </tr>
-            @endforeach
-          </tbody>
-        </table>
-      </div>
+      
     </div>
     <div class="col-md-7">
-      <div class="row">
-        <div class="col-md-4">
-          <input type="text" id="date_to_load" class="form-control" value="{{ date('F d, Y', strtotime($borrowdate)) }}" placeholder="Select Date" readonly="">
-        </div>
-        <div class="col-md-4">
-          <button class="btn btn-success" id="loadBorrowsBtn"><i class="fa fa-users"></i> Load</button><br/>
-        </div>
-      </div>
-      <br/>
       <div class="table-responsive">
         <table class="table">
           <thead>
@@ -221,17 +176,9 @@
             </tr>
             @endforeach
           </tbody>
-          <tfoot>
-            <tr>
-              <th>মোট বিতরণ</th>
-              <th>৳ {{ $totaldisburse }}</th>
-              <th>মোট আদায়</th>
-              <th>৳ {{ $totalcollection }}</th>
-              <th></th>
-            </tr>
-          </tfoot>
         </table>
       </div>
+      {{ $borrows->links() }}
     </div>
   </div>  
 @stop

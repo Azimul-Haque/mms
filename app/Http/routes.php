@@ -181,6 +181,7 @@ Route::get('/dashboard/staffs/borrows/{date}', ['as'=>'dashboard.borrows','uses'
 Route::post('/staffs/borrow/store', ['as'=>'dashboard.storeborrow','uses'=>'DashboardController@storeBorrow']);
 Route::put('/staffs/borrow/{id}/update', ['as'=>'dashboard.updateborrow','uses'=>'DashboardController@updateBorrow']);
 Route::delete('/staffs/borrow/{id}/delete', ['as'=>'dashboard.deleteborrow','uses'=>'DashboardController@deleteBorrow']);
+Route::get('/dashboard/staffs/borrows/{id}/single', ['as'=>'dashboard.singleborrow','uses'=>'DashboardController@getSingleBorrow']);
 
 
 
