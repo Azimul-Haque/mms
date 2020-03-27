@@ -420,19 +420,25 @@ class DashboardController extends Controller
                             ->withStaffs($staffs);
     }
 
-    // public function storeBorrow(Request $request)
-    // {
-    //     $this->validate($request, [
-    //       'name'                  => 'required',
-    //     ]);
+    public function storeBorrow(Request $request)
+    {
+        $this->validate($request, [
+          'user_id'         => 'required',
+          'borrow_date'     => 'required',
+          'borrow_type'     => 'required',
+          'amount'          => 'required',
+        ]);
 
-    //     $loanname = new Loanname;
-    //     $loanname->name = $request->name;
-    //     $loanname->save();
+        $borrow = new Borrow;
+        $borrow->user_id = $request->user_id;
+        $borrow->borrow_date = date('Y-m-d', strtotime($request->borrow_date));
+        $borrow->borrow_type = $request->borrow_type;
+        $borrow->amount = $request->amount;
+        $borrow->save();
 
-    //     Session::flash('success', 'Added successfully!'); 
-    //     return redirect()->route('dashboard.loanandsavingnames');
-    // }
+        Session::flash('success', 'Added successfully!'); 
+        return redirect()->route('dashboard.borrows');
+    }
 
 
     // public function updateBorrow(Request $request, $id)
