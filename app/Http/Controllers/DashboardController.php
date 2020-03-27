@@ -452,25 +452,24 @@ class DashboardController extends Controller
           'amount'          => 'required',
         ]);
 
-        $borrow = new Borrow;
         $borrow->user_id = $request->user_id;
         $borrow->borrow_date = date('Y-m-d', strtotime($request->borrow_date));
-        $borrow->borrow_type = $request->borrow_type;
+        $borrow->borrow_type = $request->borrow_type; // 1 means disburse, 2 means collection
         $borrow->amount = $request->amount;
         $borrow->save();
 
         Session::flash('success', 'Updated successfully!'); 
-        return redirect()->route('dashboard.loanandsavingnames');
+        return redirect()->route('dashboard.borrows', date('Y-m-d', strtotime($request->borrow_date)));
     }
 
-    // public function deleteBorrow($id)
-    // {
-    //     $closeday = Closeday::find($id);
-    //     $closeday->delete();
+    public function deleteBorrow($id)
+    {
+        $borrow = Borrow::find($id);
+        $borrow->delete();
 
-    //     Session::flash('success', 'Day opened successfully!');
-    //     return redirect()->route('programs.day.close');
-    // }
+        Session::flash('success', 'Day opened successfully!');
+        return redirect()->back();
+    }
 
 
 
