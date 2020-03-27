@@ -229,6 +229,12 @@
                                 <span>Old Data Entry</span>
                             </a>
                         </li>
+                        <li class="{{ Request::is('dashboard/staffs/borrows') ? 'active' : '' }}">
+                            <a href="{{ route('dashboard.borrows') }}">
+                                <i class="fa fa-fw fa-files-o"></i>
+                                <span>Staff Borrows</span>
+                            </a>
+                        </li>
                     @endif
                     {{-- <li class="header">Personal Profile</li>
                     <li class="{{ Request::is('dashboard/personal/profile') ? 'active' : '' }}">

@@ -177,20 +177,11 @@ Route::get('/report/staff/topsheet/{s_id}', ['as'=>'report.staff.topsheet','uses
 Route::get('/report/daily/summary/{transactiondate}', ['as'=>'report.daily.summary','uses'=>'ReportController@dailySummary']);
 Route::post('/report/daily/summary/dailyotheramounts', ['as'=>'report.post.dailyotheramounts','uses'=>'ReportController@postDailyOtherAmounts']);
 
-// Route::get('/dashboard/committee', ['as'=>'dashboard.committee','uses'=>'DashboardController@getCommittee']);
-// Route::post('/dashboard/committee', ['as'=>'dashboard.storecommittee','uses'=>'DashboardController@storeCommittee']);
-// Route::put('/dashboard/committee/{id}', ['as'=>'dashboard.updatecommittee','uses'=>'DashboardController@updateCommittee']);
-// Route::delete('/dashboard/committee/{id}', ['as'=>'dashboard.deletecommittee','uses'=>'DashboardController@deleteCommittee']);
+Route::get('/dashboard/staffs/borrows', ['as'=>'dashboard.borrows','uses'=>'DashboardController@getBorrows']);
+Route::post('/staffs/borrow/store', ['as'=>'dashboard.storeborrow','uses'=>'DashboardController@storeBorrow']);
+Route::put('/staffs/borrow/{id}/update', ['as'=>'dashboard.updateborrow','uses'=>'DashboardController@updateBorrow']);
+Route::delete('/staffs/borrow/{id}/delete', ['as'=>'dashboard.deleteborrow','uses'=>'DashboardController@deleteBorrow']);
 
-// Route::get('/dashboard/news', ['as'=>'dashboard.news','uses'=>'DashboardController@getNews']);
-// Route::get('/dashboard/events', ['as'=>'dashboard.events','uses'=>'DashboardController@getEvents']);
-// Route::get('/dashboard/gallery', ['as'=>'dashboard.gallery','uses'=>'DashboardController@getGallery']);
-// Route::get('/dashboard/blogs', ['as'=>'dashboard.blogs','uses'=>'DashboardController@getBlogs']);
-// Route::get('/dashboard/members', ['as'=>'dashboard.members','uses'=>'DashboardController@getMembers']);
-// Route::get('/dashboard/member/create', ['as'=>'dashboard.member.create','uses'=>'DashboardController@createMember']);
-// Route::post('/dashboard/member/store', ['as'=>'dashboard.member.store','uses'=>'DashboardController@storeMember']);
-// Route::get('/dashboard/member/{id}/edit', ['as'=>'dashboard.member.edit','uses'=>'DashboardController@editMember']);
-// Route::put('/dashboard/member/{id}/update', ['as'=>'dashboard.member.update','uses'=>'DashboardController@updateMember']);
 
 
 

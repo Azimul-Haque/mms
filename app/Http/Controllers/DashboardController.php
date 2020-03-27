@@ -16,6 +16,7 @@ use App\Saving;
 use App\Savinginstallment;
 use App\Member;
 use App\Closeday;
+use App\Borrow;
 
 use Carbon\Carbon;
 use DB, Hash, Auth, Image, File, Session;
@@ -397,6 +398,7 @@ class DashboardController extends Controller
 
         return redirect()->route('programs.day.close');
     }
+
     public function deleteDayClose($id)
     {
         $closeday = Closeday::find($id);
@@ -405,6 +407,61 @@ class DashboardController extends Controller
         Session::flash('success', 'Day opened successfully!');
         return redirect()->route('programs.day.close');
     }
+
+
+
+    public function getBorrows()
+    {
+        $staffs = User::where('role', 'staff')->get();
+        $borrows = Borrow::orderBy('borrow_date', 'desc')->get();
+
+        return view('dashboard.staffs.borrows')
+                            ->withBorrows($borrows)
+                            ->withStaffs($staffs);
+    }
+
+    // public function storeBorrow(Request $request)
+    // {
+    //     $this->validate($request, [
+    //       'name'                  => 'required',
+    //     ]);
+
+    //     $loanname = new Loanname;
+    //     $loanname->name = $request->name;
+    //     $loanname->save();
+
+    //     Session::flash('success', 'Added successfully!'); 
+    //     return redirect()->route('dashboard.loanandsavingnames');
+    // }
+
+
+    // public function updateBorrow(Request $request, $id)
+    // {
+    //     $loanname = Loanname::find($id);
+    //     $this->validate($request, [
+    //       'name'                  => 'required',
+    //     ]);
+
+    //     $loanname->name = $request->name;
+    //     $loanname->save();
+
+    //     Session::flash('success', 'Updated successfully!'); 
+    //     return redirect()->route('dashboard.loanandsavingnames');
+    // }
+
+    // public function deleteBorrow($id)
+    // {
+    //     $closeday = Closeday::find($id);
+    //     $closeday->delete();
+
+    //     Session::flash('success', 'Day opened successfully!');
+    //     return redirect()->route('programs.day.close');
+    // }
+
+
+
+
+
 
     public function deleteMember($id)
     {
@@ -477,6 +534,12 @@ class DashboardController extends Controller
 
         return 'Successful!';
     }
+
+
+
+
+
+
 
     public function checkMissingSavings()
     {

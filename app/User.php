@@ -18,6 +18,10 @@ class User extends Authenticatable
         return $this->hasMany('App\Savinginstallment');
     }
 
+    public function borrows() {
+        return $this->hasMany('App\Borrow');
+    }
+
     // protected $fillable = [
     //     'name', 'email', 'password',
     // ];
