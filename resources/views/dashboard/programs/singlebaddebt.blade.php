@@ -113,7 +113,7 @@
                       </div>
                       <div class="modal-body">
                         Are you sure to delete this payment? <br/>
-                        <big><b>{{ $debtpayment->baddebt->name }}, ৳ {{ $debtpayment->amount }}, {{ date('D, d/m/Y', strtotime($debtpayment->pay_date)) }}</b></big> 
+                        <big><b>৳ {{ $debtpayment->amount }}, {{ date('D, d/m/Y', strtotime($debtpayment->pay_date)) }}</b></big> 
                       </div>
                       <div class="modal-footer">
                         {!! Form::model($debtpayment, ['route' => ['dashboard.deleteborrow', $debtpayment->id], 'method' => 'DELETE', 'class' => 'form-default', 'enctype' => 'multipart/form-data']) !!}
@@ -132,7 +132,6 @@
           </tbody>
         </table>
       </div>
-      {{ $debtpayments->links() }}
     </div>
   </div>  
 @stop
