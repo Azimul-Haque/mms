@@ -60,8 +60,8 @@
               <div class="row">
                 <div class="col-md-12">
                   {!! Form::label('baddebt_id', 'Debtor Name') !!}
-                  <select id="baddebt_id" class="form-control" required="">
-                    <option value="" selected="" disabled="">Select Debt Type</option>
+                  <select name="baddebt_id" class="form-control" required="" onchange="badDebtSelectChange()">
+                    <option value="" selected="" disabled="">Select Debtor Name</option>
                     @foreach($baddebts as $baddebt)
                       <option value="{{ $baddebt->id }}">{{ $baddebt->name }}-{{ $baddebt->fhusband }}</option>
                     @endforeach
@@ -71,11 +71,11 @@
               <div class="row">
                 <div class="col-md-6">
                   {!! Form::label('pay_date', 'Father/ Husband') !!}
-                  {!! Form::text('pay_date', null, array('class' => 'form-control', 'placeholder' => 'Payment Date', 'required' => '', 'readonly' => '')) !!}
+                  {!! Form::text('pay_date', date('F d, Y'), array('class' => 'form-control', 'placeholder' => 'Payment Date', 'required' => '', 'readonly' => '')) !!}
                 </div>
                 <div class="col-md-6">
                   {!! Form::label('amount', 'Payment Amount') !!}
-                  {!! Form::text('amount', null, array('class' => 'form-control', 'placeholder' => 'Payment Amount', 'required' => '')) !!}
+                  {!! Form::number('amount', null, array('class' => 'form-control', 'placeholder' => 'Payment Amount', 'required' => '')) !!}
                 </div>
               </div>
               <br/>
@@ -99,23 +99,19 @@
             </tr>
           </thead>
           <tbody>
-            {{-- @php
-              $totaldisburse = 0;
-              $totalcollection = 0;
-            @endphp --}}
             @foreach($baddebts as $baddebt)
-              {{-- @php
-                if($baddebt->borrow_type == 1) {
-                  $totaldisburse = $totaldisburse + $baddebt->amount;
-                } elseif ($baddebt->borrow_type == 2) {
-                  $totalcollection = $totalcollection + $baddebt->amount;
+              @php
+                $totaldebtpayment = 0;
+
+                foreach ($baddebt->debtpayments as $debtpayment) {
+                  $totaldebtpayment = $totaldebtpayment + $debtpayment->amount;
                 }
-              @endphp --}}
+              @endphp
             <tr>
-              <td>{{ $baddebt->name }}-{{ $baddebt->fhusband }}</td>
+              <td><a href="{{ route('bad.debt.single', $baddebt->id) }}">{{ $baddebt->name }}-{{ $baddebt->fhusband }}</a></td>
               <td>৳ {{ $baddebt->debt }}</td>
-              <td>৳ {{ $baddebt->debt }}</td>
-              <td>৳ {{ $baddebt->debt }}</td>
+              <td>৳ {{ $totaldebtpayment }}</td>
+              <td>৳ {{ $baddebt->debt - $totaldebtpayment }}</td>
               <td>
                 <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#editBadDebtModal{{ $baddebt->id }}" data-backdrop="static" title="Edit Bad Debt"><i class="fa fa-pencil"></i></button>
                 <!-- Edit Modal -->
@@ -226,6 +222,10 @@
         $('#debt_payment_div').show();
       }
     })
+
+    function badDebtSelectChange($id, $debt) {
+
+    }
 
     // on enter search
     function isEmptyOrSpaces(str){

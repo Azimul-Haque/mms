@@ -541,14 +541,9 @@ class DashboardController extends Controller
 
     public function getSingleBadDebt($id)
     {
-        // $staff = User::find($id);
-        // $borrows = Borrow::where('user_id', $staff->id)->orderBy('borrow_date', 'desc')->paginate(10);
-        // $staffs = User::where('role', 'staff')->get();
+        $baddebt = Baddebt::find($id);
 
-        // return view('dashboard.staffs.singleborrow')
-        //                             ->withStaff($staff)
-        //                             ->withBorrows($borrows)
-        //                             ->withStaffs($staffs);
+        return view('dashboard.programs.singlebaddebt')->withBaddebt($baddebt);
     }
 
     public function storeDebtPayment(Request $request)
