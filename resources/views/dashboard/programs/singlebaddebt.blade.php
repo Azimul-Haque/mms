@@ -10,7 +10,7 @@
     <h1>
       Single Bad Debt
       <div class="pull-right">
-        
+        <a href="{{ route('bad.debts') }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i> Back to Bad Debts</a>
       </div>
     </h1>
 @stop
