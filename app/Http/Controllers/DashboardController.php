@@ -582,11 +582,11 @@ class DashboardController extends Controller
 
     public function deleteDebtPayment($id)
     {
-        // $borrow = Borrow::find($id);
-        // $borrow->delete();
+        $payment = Debtpayment::find($id);
+        $payment->delete();
 
-        // Session::flash('success', 'Deleted successfully!');
-        // return redirect()->back();
+        Session::flash('success', 'Deleted successfully!');
+        return redirect()->back();
     }
 
 

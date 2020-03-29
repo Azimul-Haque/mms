@@ -116,7 +116,7 @@
                         <big><b>৳ {{ $debtpayment->amount }}, {{ date('D, d/m/Y', strtotime($debtpayment->pay_date)) }}</b></big> 
                       </div>
                       <div class="modal-footer">
-                        {!! Form::model($debtpayment, ['route' => ['dashboard.deleteborrow', $debtpayment->id], 'method' => 'DELETE', 'class' => 'form-default', 'enctype' => 'multipart/form-data']) !!}
+                        {!! Form::model($debtpayment, ['route' => ['debt.payment.delete', $debtpayment->id], 'method' => 'DELETE', 'class' => 'form-default', 'enctype' => 'multipart/form-data']) !!}
                           {!! Form::submit('Delete', array('class' => 'btn btn-danger')) !!}
                           <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                         {!! Form::close() !!}
