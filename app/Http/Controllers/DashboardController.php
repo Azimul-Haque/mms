@@ -17,6 +17,8 @@ use App\Savinginstallment;
 use App\Member;
 use App\Closeday;
 use App\Borrow;
+use App\Baddebt;
+use App\Debtpayment;
 
 use Carbon\Carbon;
 use DB, Hash, Auth, Image, File, Session;
@@ -441,7 +443,6 @@ class DashboardController extends Controller
         return redirect()->route('dashboard.borrows', date('Y-m-d', strtotime($request->borrow_date)));
     }
 
-
     public function updateBorrow(Request $request, $id)
     {
         $borrow = Borrow::find($id);
@@ -482,6 +483,128 @@ class DashboardController extends Controller
                                     ->withBorrows($borrows)
                                     ->withStaffs($staffs);
     }
+
+    public function getBadDebts()
+    {
+        $baddebts = Baddebt::all();
+        return view('dashboard.programs.baddebts')
+                                    ->withBaddebts($baddebts);
+    }
+
+    public function storeBadDebt(Request $request)
+    {
+        $this->validate($request, [
+          'name'         => 'required',
+          'fhusband'     => 'required',
+          'debt'       => 'required',
+        ]);
+
+        $baddebt = new Baddebt;
+        $baddebt->name = $request->name;
+        $baddebt->fhusband = $request->fhusband;
+        $baddebt->debt = $request->debt;
+        $baddebt->save();
+
+        Session::flash('success', 'Added successfully!'); 
+        return redirect()->route('bad.debts');
+    }
+
+    public function updateBadDebt(Request $request, $id)
+    {
+        $baddebt = Baddebt::find($id);
+        $this->validate($request, [
+          'name'         => 'required',
+          'fhusband'     => 'required',
+          'debt'       => 'required',
+        ]);
+
+        $baddebt->name = $request->name;
+        $baddebt->fhusband = $request->fhusband;
+        $baddebt->debt = $request->debt;
+        $baddebt->save();
+
+        Session::flash('success', 'Updated successfully!'); 
+        return redirect()->route('bad.debts');
+    }
+
+    public function deleteBadDebt($id)
+    {
+        $baddebt = Baddebt::find($id);
+        foreach ($baddebt->debtpayments as $debtpayment) {
+            $debtpayment->delete();
+        }
+        $baddebt->delete();
+
+        Session::flash('success', 'Deleted successfully!');
+        return redirect()->route('bad.debts');
+    }
+
+    public function getSingleBadDebt($id)
+    {
+        // $staff = User::find($id);
+        // $borrows = Borrow::where('user_id', $staff->id)->orderBy('borrow_date', 'desc')->paginate(10);
+        // $staffs = User::where('role', 'staff')->get();
+
+        // return view('dashboard.staffs.singleborrow')
+        //                             ->withStaff($staff)
+        //                             ->withBorrows($borrows)
+        //                             ->withStaffs($staffs);
+    }
+
+    public function storeDebtPayment(Request $request)
+    {
+        $this->validate($request, [
+          'baddebt_id'    => 'required',
+          'pay_date'      => 'required',
+          'amount'        => 'required',
+        ]);
+
+        $payment = new Debtpayment;
+        $payment->baddebt_id = $request->baddebt_id;
+        $payment->pay_date = date('Y-m-d', strtotime($request->pay_date));
+        $payment->amount = $request->amount;
+        $payment->save();
+
+        Session::flash('success', 'Paid successfully!'); 
+        return redirect()->route('bad.debts');
+    }
+
+    public function updateDebtPayment(Request $request, $id)
+    {
+        // $borrow = Borrow::find($id);
+        // $this->validate($request, [
+        //   'user_id'         => 'required',
+        //   'borrow_date'     => 'required',
+        //   'borrow_type'     => 'required',
+        //   'amount'          => 'required',
+        // ]);
+
+        // $borrow->user_id = $request->user_id;
+        // $borrow->borrow_date = date('Y-m-d', strtotime($request->borrow_date));
+        // $borrow->borrow_type = $request->borrow_type; // 1 means disburse, 2 means collection
+        // $borrow->amount = $request->amount;
+        // $borrow->save();
+
+        // Session::flash('success', 'Updated successfully!'); 
+        // return redirect()->route('dashboard.borrows', date('Y-m-d', strtotime($request->borrow_date)));
+    }    
+
+    public function deleteDebtPayment($id)
+    {
+        // $borrow = Borrow::find($id);
+        // $borrow->delete();
+
+        // Session::flash('success', 'Deleted successfully!');
+        // return redirect()->back();
+    }
+
+
+
+
+
+
+
+
 
 
 

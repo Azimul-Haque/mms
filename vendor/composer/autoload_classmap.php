@@ -7,9 +7,11 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'CallbackFilterIterator' => $vendorDir . '/symfony/polyfill-php54/Resources/stubs/CallbackFilterIterator.php',
+    'CreateBaddebtsTable' => $baseDir . '/database/migrations/2020_03_29_220728_create_baddebts_table.php',
     'CreateBorrowsTable' => $baseDir . '/database/migrations/2020_03_27_121220_create_borrows_table.php',
     'CreateClosedaysTable' => $baseDir . '/database/migrations/2020_02_22_032326_create_closedays_table.php',
     'CreateDailyotheramountsTable' => $baseDir . '/database/migrations/2020_01_23_034131_create_dailyotheramounts_table.php',
+    'CreateDebtpaymentsTable' => $baseDir . '/database/migrations/2020_03_29_221149_create_debtpayments_table.php',
     'CreateGroupsTable' => $baseDir . '/database/migrations/2019_09_30_034025_create_groups_table.php',
     'CreateLoaninstallmentsTable' => $baseDir . '/database/migrations/2019_10_20_034031_create_loaninstallments_table.php',
     'CreateLoannamesTable' => $baseDir . '/database/migrations/2019_10_14_023038_create_loannames_table.php',

@@ -133,7 +133,7 @@
                 <!-- Sidebar Menu -->
                 <ul class="sidebar-menu" data-widget="tree">
                     {{-- @each('adminlte::partials.menu-item', $adminlte->menu(), 'item') --}}
-                    <li class="treeview {{ Request::is('dashboard') ? 'active' : '' }} {{ Request::is('programs/*') ? 'active' : '' }} {{ Request::is('group/*') ? 'active' : '' }} {{ Request::is('staff/*') ? 'active' : '' }}">
+                    <li class="treeview {{ Request::is('dashboard') ? 'active' : '' }} {{ Request::is('programs/*') ? 'active' : '' }} {{ Request::is('group/*') ? 'active' : '' }} {{ Request::is('staff/*') ? 'active' : '' }} {{ Request::is('report/daily/summary/*') ? 'active' : '' }} {{ Request::is('bad/*') ? 'active' : '' }}">
                         <a href="#">
                             <i class="fa fa-fw fa-university"></i><span>Programs</span>
                             <span class="pull-right-container">

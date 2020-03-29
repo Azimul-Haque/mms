@@ -155,6 +155,16 @@ Route::get('/programs/day/close', ['as'=>'programs.day.close','uses'=>'Dashboard
 Route::post('/programs/day/close/store', ['as'=>'programs.store.day.close','uses'=>'DashboardController@postDayClose']);
 Route::delete('/programs/day/close/{id}/delete', ['as'=>'programs.store.day.open','uses'=>'DashboardController@deleteDayClose']);
 
+Route::get('/bad/debts', ['as'=>'bad.debts','uses'=>'DashboardController@getBadDebts']);
+Route::post('/bad/debt/store', ['as'=>'bad.debt.store','uses'=>'DashboardController@storeBadDebt']);
+Route::post('/debt/payment/store', ['as'=>'debt.payment.store','uses'=>'DashboardController@storeDebtPayment']);
+Route::put('/bad/debt/{id}/update', ['as'=>'bad.debt.update','uses'=>'DashboardController@updateBadDebt']);
+Route::delete('/bad/debt/{id}/delete', ['as'=>'bad.debt.delete','uses'=>'DashboardController@deleteBadDebt']);
+Route::get('/bad/debt/{id}/single', ['as'=>'bad.debt.single','uses'=>'DashboardController@getSingleBadDebt']);
+Route::put('/debt/payment/{id}/update', ['as'=>'debt.payment.update','uses'=>'DashboardController@updateDebtPayment']);
+Route::delete('/debt/payment/{id}/delete', ['as'=>'debt.payment.delete','uses'=>'DashboardController@deleteDebtPayment']);
+
+
 Route::get('/staff/{id}/features', ['as'=>'staff.features','uses'=>'StaffController@getStaffFeatures']);
 Route::get('/group/{s_id}/{g_id}/features', ['as'=>'group.features','uses'=>'GroupController@getGroupFeatures']);
 

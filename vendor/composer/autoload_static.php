@@ -398,9 +398,11 @@ class ComposerStaticInit5ba844acaeab7533148c65467b83a279
 
     public static $classMap = array (
         'CallbackFilterIterator' => __DIR__ . '/..' . '/symfony/polyfill-php54/Resources/stubs/CallbackFilterIterator.php',
+        'CreateBaddebtsTable' => __DIR__ . '/../..' . '/database/migrations/2020_03_29_220728_create_baddebts_table.php',
         'CreateBorrowsTable' => __DIR__ . '/../..' . '/database/migrations/2020_03_27_121220_create_borrows_table.php',
         'CreateClosedaysTable' => __DIR__ . '/../..' . '/database/migrations/2020_02_22_032326_create_closedays_table.php',
         'CreateDailyotheramountsTable' => __DIR__ . '/../..' . '/database/migrations/2020_01_23_034131_create_dailyotheramounts_table.php',
+        'CreateDebtpaymentsTable' => __DIR__ . '/../..' . '/database/migrations/2020_03_29_221149_create_debtpayments_table.php',
         'CreateGroupsTable' => __DIR__ . '/../..' . '/database/migrations/2019_09_30_034025_create_groups_table.php',
         'CreateLoaninstallmentsTable' => __DIR__ . '/../..' . '/database/migrations/2019_10_20_034031_create_loaninstallments_table.php',
         'CreateLoannamesTable' => __DIR__ . '/../..' . '/database/migrations/2019_10_14_023038_create_loannames_table.php',
