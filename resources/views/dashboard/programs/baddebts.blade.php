@@ -155,7 +155,7 @@
                 <!-- Edit Modal -->
                 <!-- Edit Modal -->
 
-                <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteBadDebt{{ $baddebt->id }}" data-backdrop="static" title="Delete Borrow"><i class="fa fa-trash"></i></button>
+                <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteBadDebt{{ $baddebt->id }}" data-backdrop="static" title="Delete Bad Debt"><i class="fa fa-trash"></i></button>
                 <!-- Delete Modal -->
                 <!-- Delete Modal -->
                 <div class="modal fade" id="deleteBadDebt{{ $baddebt->id }}" role="dialog">
