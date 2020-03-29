@@ -542,7 +542,6 @@ class DashboardController extends Controller
     public function getSingleBadDebt($id)
     {
         $baddebt = Baddebt::find($id);
-
         return view('dashboard.programs.singlebaddebt')->withBaddebt($baddebt);
     }
 
@@ -566,22 +565,19 @@ class DashboardController extends Controller
 
     public function updateDebtPayment(Request $request, $id)
     {
-        // $borrow = Borrow::find($id);
-        // $this->validate($request, [
-        //   'user_id'         => 'required',
-        //   'borrow_date'     => 'required',
-        //   'borrow_type'     => 'required',
-        //   'amount'          => 'required',
-        // ]);
+        $payment = Debtpayment::find($id);
 
-        // $borrow->user_id = $request->user_id;
-        // $borrow->borrow_date = date('Y-m-d', strtotime($request->borrow_date));
-        // $borrow->borrow_type = $request->borrow_type; // 1 means disburse, 2 means collection
-        // $borrow->amount = $request->amount;
-        // $borrow->save();
+        $this->validate($request, [
+          'pay_date'      => 'required',
+          'amount'        => 'required',
+        ]);
 
-        // Session::flash('success', 'Updated successfully!'); 
-        // return redirect()->route('dashboard.borrows', date('Y-m-d', strtotime($request->borrow_date)));
+        $payment->pay_date = date('Y-m-d', strtotime($request->pay_date));
+        $payment->amount = $request->amount;
+        $payment->save();
+
+        Session::flash('success', 'Updated successfully!'); 
+        return redirect()->route('bad.debt.single', $payment->baddebt->id);
     }    
 
     public function deleteDebtPayment($id)
