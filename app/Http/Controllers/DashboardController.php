@@ -486,8 +486,12 @@ class DashboardController extends Controller
 
     public function getBadDebts()
     {
+        $groups = Group::all();
+        // $staffs = User::where('role', 'staff')->get();
+
         $baddebts = Baddebt::all();
         return view('dashboard.programs.baddebts')
+                                    ->withGroups($groups)
                                     ->withBaddebts($baddebts);
     }
 
