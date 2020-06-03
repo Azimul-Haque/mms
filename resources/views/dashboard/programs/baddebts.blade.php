@@ -41,6 +41,20 @@
                   {!! Form::label('fhusband', 'Father/ Husband') !!}
                   {!! Form::text('fhusband', null, array('class' => 'form-control', 'placeholder' => 'Father/ Husband', 'required' => '')) !!}
                 </div>
+              </div><br/><div class="row">
+                <div class="col-md-6">
+                  {!! Form::label('groupname', 'Group') !!}
+                  <select class="form-control" name="groupname" id="groupname">
+                    <option value="" selected="" disabled="">Select Group</option>
+                    @foreach($groups as $group)
+                      <option value="{{ $group->id }}">{{ $group->name }}</option>
+                    @endforeach
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  {!! Form::label('staffname', 'Staff') !!}
+                  {!! Form::text('staffname', null, array('class' => 'form-control', 'placeholder' => 'Staff', 'required' => '')) !!}
+                </div>
               </div><br/>
               <div class="row">
                 <div class="col-md-6">
@@ -221,7 +235,15 @@
         $('#bad_debt_div').hide();
         $('#debt_payment_div').show();
       }
-    })
+    });
+
+    $('#groupname').change(function() {
+      @foreach($groups as $group)
+        if({{ $group->id }} == $('#groupname').val()) {
+          $('#staffname').val("{{ $group->user->name }}");
+        }
+      @endforeach
+    });
 
     function badDebtSelectChange($id, $debt) {
 
