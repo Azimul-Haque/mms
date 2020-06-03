@@ -41,7 +41,8 @@
                   {!! Form::label('fhusband', 'Father/ Husband') !!}
                   {!! Form::text('fhusband', null, array('class' => 'form-control', 'placeholder' => 'Father/ Husband', 'required' => '')) !!}
                 </div>
-              </div><br/><div class="row">
+              </div><br/>
+              <div class="row">
                 <div class="col-md-6">
                   {!! Form::label('groupname', 'Group') !!}
                   <select class="form-control" name="groupname" id="groupname" required="">
@@ -53,7 +54,7 @@
                 </div>
                 <div class="col-md-6">
                   {!! Form::label('staffname', 'Staff') !!}
-                  {!! Form::text('staffname', null, array('class' => 'form-control', 'placeholder' => 'Staff', 'required' => '')) !!}
+                  {!! Form::text('staffname', null, array('class' => 'form-control', 'placeholder' => 'Staff Name', 'required' => '')) !!}
                 </div>
               </div><br/>
               <div class="row">
@@ -151,6 +152,16 @@
                             <div class="col-md-6">
                               {!! Form::label('fhusband', 'Father/ Husband') !!}
                               {!! Form::text('fhusband', null, array('class' => 'form-control', 'placeholder' => 'Father/ Husband', 'required' => '')) !!}
+                            </div>
+                          </div><br/>
+                          <div class="row">
+                            <div class="col-md-6">
+                              {!! Form::label('groupname', 'Group') !!}
+                              {!! Form::text('groupname', null, array('class' => 'form-control', 'placeholder' => 'Group Name', 'required' => '')) !!}
+                            </div>
+                            <div class="col-md-6">
+                              {!! Form::label('staffname', 'Staff') !!}
+                              {!! Form::text('staffname', null, array('class' => 'form-control', 'placeholder' => 'Staff Name', 'required' => '')) !!}
                             </div>
                           </div><br/>
                           <div class="row">
