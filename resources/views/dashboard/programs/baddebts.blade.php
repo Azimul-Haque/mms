@@ -60,7 +60,7 @@
               <div class="row">
                 <div class="col-md-6">
                   {!! Form::label('debt', 'Debt Amount') !!}
-                  {!! Form::text('debt', null, array('class' => 'form-control', 'placeholder' => 'Debt Amount', 'required' => '')) !!}
+                  {!! Form::number('debt', null, array('class' => 'form-control', 'placeholder' => 'Debt Amount', 'required' => '')) !!}
                 </div>
                 <div class="col-md-6">
                 </div>
@@ -167,7 +167,7 @@
                           <div class="row">
                             <div class="col-md-6">
                               {!! Form::label('debt', 'Debt Amount') !!}
-                              {!! Form::text('debt', null, array('class' => 'form-control', 'placeholder' => 'Debt Amount', 'required' => '')) !!}
+                              {!! Form::number('debt', null, array('class' => 'form-control', 'placeholder' => 'Debt Amount', 'required' => '')) !!}
                             </div>
                             <div class="col-md-6">
                             </div>
