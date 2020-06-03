@@ -18,6 +18,15 @@
 @section('content')
   <div class="row">
     <div class="col-md-5">
+      <div class="panel panel-success">
+        <div class="panel-heading">Member Data</div>
+        <div class="panel-body">
+          <b>Name:</b> {{ $baddebt->name }}<br/>
+          <b>Father/ Husband:</b> {{ $baddebt->fhusband }}<br/>
+          <b>Group Name:</b> {{ $baddebt->groupname }}<br/>
+          <b>Staff Name:</b> {{ $baddebt->staffname }}<br/>
+        </div>
+      </div>
       <div class="row">
         <div class="col-md-6">
           <div class="small-box bg-aqua">

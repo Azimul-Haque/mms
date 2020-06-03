@@ -500,12 +500,16 @@ class DashboardController extends Controller
         $this->validate($request, [
           'name'         => 'required',
           'fhusband'     => 'required',
+          'groupname'    => 'required',
+          'staffname'    => 'required',
           'debt'       => 'required',
         ]);
 
         $baddebt = new Baddebt;
         $baddebt->name = $request->name;
         $baddebt->fhusband = $request->fhusband;
+        $baddebt->groupname = $request->groupname;
+        $baddebt->staffname = $request->staffname;
         $baddebt->debt = $request->debt;
         $baddebt->save();
 

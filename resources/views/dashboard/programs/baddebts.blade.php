@@ -44,10 +44,10 @@
               </div><br/><div class="row">
                 <div class="col-md-6">
                   {!! Form::label('groupname', 'Group') !!}
-                  <select class="form-control" name="groupname" id="groupname">
+                  <select class="form-control" name="groupname" id="groupname" required="">
                     <option value="" selected="" disabled="">Select Group</option>
                     @foreach($groups as $group)
-                      <option value="{{ $group->id }}">{{ $group->name }}</option>
+                      <option value="{{ $group->name }}">{{ $group->name }}</option>
                     @endforeach
                   </select>
                 </div>
@@ -106,6 +106,8 @@
           <thead>
             <tr>
               <th>Name-Gurdian</th>
+              <th>Group</th>
+              <th>Staff</th>
               <th>Total Debts</th>
               <th>Total Debts Paid</th>
               <th>Current Debt</th>
@@ -123,6 +125,8 @@
               @endphp
             <tr>
               <td><a href="{{ route('bad.debt.single', $baddebt->id) }}">{{ $baddebt->name }}-{{ $baddebt->fhusband }}</a></td>
+              <td>{{ $baddebt->groupname }}</td>
+              <td>{{ $baddebt->staffname }}</td>
               <td>৳ {{ $baddebt->debt }}</td>
               <td>৳ {{ $totaldebtpayment }}</td>
               <td>৳ {{ $baddebt->debt - $totaldebtpayment }}</td>
@@ -239,7 +243,7 @@
 
     $('#groupname').change(function() {
       @foreach($groups as $group)
-        if({{ $group->id }} == $('#groupname').val()) {
+        if("{{ $group->name }}" == $('#groupname').val()) {
           $('#staffname').val("{{ $group->user->name }}");
         }
       @endforeach
