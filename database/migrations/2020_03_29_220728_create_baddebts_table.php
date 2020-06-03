@@ -16,6 +16,8 @@ class CreateBaddebtsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('fhusband');
+            $table->string('groupname')->nullable();
+            $table->string('staffname')->nullable();
             $table->float('debt');
             $table->timestamps();
         });
