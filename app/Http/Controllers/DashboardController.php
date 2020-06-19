@@ -419,10 +419,10 @@ class DashboardController extends Controller
             //saving calculation
 
             $totalinsurance = DB::table("loans")
-                                    ->select(DB::raw("SUM(insurance) as total"))
-                                    ->where('disburse_date', date('Y-m-d', strtotime($request->close_date)))
-                                    ->where('loanname_id', 1)
-                                    ->first();
+                                ->select(DB::raw("SUM(insurance) as total"))
+                                ->where('disburse_date', date('Y-m-d', strtotime($request->close_date)))
+                                ->where('loanname_id', 1)
+                                ->first();
             $totalprocessingfee = DB::table("loans")
                                     ->select(DB::raw("SUM(processing_fee) as total"))
                                     ->where('disburse_date', date('Y-m-d', strtotime($request->close_date)))
@@ -452,6 +452,7 @@ class DashboardController extends Controller
                                        ->where('borrow_type', 2)
                                        ->first();
             // collection
+            dd($totalinsurance->total);
 
             // disburse
             $totaldisbursed = DB::table("loans")
@@ -466,7 +467,6 @@ class DashboardController extends Controller
                                           ->select(DB::raw("SUM(shared_deposit) as total"))
                                           ->where('closing_date', date('Y-m-d', strtotime($request->close_date)))
                                           ->first();
-
             $totalborrowdisbursed = DB::table("borrows")
                                        ->select(DB::raw("SUM(amount) as total"))
                                        ->where('borrow_date', date('Y-m-d', strtotime($request->close_date)))
