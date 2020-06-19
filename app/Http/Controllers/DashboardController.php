@@ -406,103 +406,73 @@ class DashboardController extends Controller
             $thenextdayamounts = Dailyotheramount::where('due_date', date('Y-m-d', strtotime($thenextday)))->first();
 
             // collection
-        $totalprimaryloancollection = DB::table("loaninstallments")
-                                        ->select(DB::raw("SUM(paid_total) as total"))
-                                        ->where('due_date', date('Y-m-d', strtotime($transactiondate)))
-                                        ->whereIn('loan_id', $primaryloanids)
-                                        ->first();
-        $totalproductloancollection = DB::table("loaninstallments")
-                                        ->select(DB::raw("SUM(paid_total) as total"))
-                                        ->where('due_date', date('Y-m-d', strtotime($transactiondate)))
-                                        ->whereIn('loan_id', $productloanids)
-                                        ->first();
-        $totalloancollection = DB::table("loaninstallments")
-                                 ->select(DB::raw("SUM(paid_total) as total"))
-                                 ->where('due_date', date('Y-m-d', strtotime($transactiondate)))
-                                 ->first();
+            $totalloancollection = DB::table("loaninstallments")
+                                     ->select(DB::raw("SUM(paid_total) as total"))
+                                     ->where('due_date', date('Y-m-d', strtotime($request->close_date)))
+                                     ->first();
 
-        //saving calculation
-        $totalgeneralsavingcollection = DB::table("savinginstallments")
-                                          ->select(DB::raw("SUM(amount) as total"))
-                                          ->where('due_date', date('Y-m-d', strtotime($transactiondate)))
-                                          ->where('savingname_id', 1)
+            //saving calculation
+            $totalsavingcollection = DB::table("savinginstallments")
+                                     ->select(DB::raw("SUM(amount) as total"))
+                                     ->where('due_date', date('Y-m-d', strtotime($request->close_date)))
+                                     ->first();
+            //saving calculation
+
+            $totalinsurance = DB::table("loans")
+                                    ->select(DB::raw("SUM(insurance) as total"))
+                                    ->where('disburse_date', date('Y-m-d', strtotime($request->close_date)))
+                                    ->where('loanname_id', 1)
+                                    ->first();
+            $totalprocessingfee = DB::table("loans")
+                                    ->select(DB::raw("SUM(processing_fee) as total"))
+                                    ->where('disburse_date', date('Y-m-d', strtotime($request->close_date)))
+                                    ->where('loanname_id', 1)
+                                    ->first();  
+            $totaladmissionfee = DB::table("members")
+                                    ->select(DB::raw("SUM(admission_fee) as total"))
+                                    ->where('admission_date', date('Y-m-d', strtotime($request->close_date)))
+                                    ->first();
+            $totalpassbookfee = DB::table("members")
+                                    ->select(DB::raw("SUM(passbook_fee) as total"))
+                                    ->where('admission_date', date('Y-m-d', strtotime($request->close_date)))
+                                    ->first();
+            $totalshareddeposit = DB::table("members")
+                                    ->select(DB::raw("SUM(shared_deposit) as total"))
+                                    ->where('admission_date', date('Y-m-d', strtotime($request->close_date)))
+                                    ->first();
+            $totaldownpayment = DB::table("loans")
+                                  ->select(DB::raw("SUM(down_payment) as total"))
+                                  ->where('disburse_date', date('Y-m-d', strtotime($request->close_date)))
+                                  ->where('loanname_id', 2)
+                                  ->first();
+
+            $totalborrowcollection = DB::table("borrows")
+                                       ->select(DB::raw("SUM(amount) as total"))
+                                       ->where('borrow_date', date('Y-m-d', strtotime($request->close_date)))
+                                       ->where('borrow_type', 2)
+                                       ->first();
+            // collection
+
+            // disburse
+            $totaldisbursed = DB::table("loans")
+                                    ->select(DB::raw("SUM(principal_amount) as total"))
+                                    ->where('disburse_date', date('Y-m-d', strtotime($request->close_date)))
+                                    ->first();
+            $totalsavingwithdraw = DB::table("savinginstallments")
+                                     ->select(DB::raw("SUM(withdraw) as total"))
+                                     ->where('due_date', date('Y-m-d', strtotime($request->close_date)))
+                                     ->first();
+            $totalshareddepositreturn = DB::table("members")
+                                          ->select(DB::raw("SUM(shared_deposit) as total"))
+                                          ->where('closing_date', date('Y-m-d', strtotime($request->close_date)))
                                           ->first();
-        $totallongtermsavingcollection = DB::table("savinginstallments")
-                                          ->select(DB::raw("SUM(amount) as total"))
-                                          ->where('due_date', date('Y-m-d', strtotime($transactiondate)))
-                                          ->where('savingname_id', 2)
-                                          ->first();
-        $totalsavingcollection = DB::table("savinginstallments")
-                                 ->select(DB::raw("SUM(amount) as total"))
-                                 ->where('due_date', date('Y-m-d', strtotime($transactiondate)))
-                                 ->first();
-        //saving calculation
 
-        $totalinsurance = DB::table("loans")
-                                ->select(DB::raw("SUM(insurance) as total"))
-                                ->where('disburse_date', date('Y-m-d', strtotime($transactiondate)))
-                                ->where('loanname_id', 1)
-                                ->first();
-        $totalprocessingfee = DB::table("loans")
-                                ->select(DB::raw("SUM(processing_fee) as total"))
-                                ->where('disburse_date', date('Y-m-d', strtotime($transactiondate)))
-                                ->where('loanname_id', 1)
-                                ->first();  
-        $totaladmissionfee = DB::table("members")
-                                ->select(DB::raw("SUM(admission_fee) as total"))
-                                ->where('admission_date', date('Y-m-d', strtotime($transactiondate)))
-                                ->first();
-        $totalpassbookfee = DB::table("members")
-                                ->select(DB::raw("SUM(passbook_fee) as total"))
-                                ->where('admission_date', date('Y-m-d', strtotime($transactiondate)))
-                                ->first();
-        $totalshareddeposit = DB::table("members")
-                                ->select(DB::raw("SUM(shared_deposit) as total"))
-                                ->where('admission_date', date('Y-m-d', strtotime($transactiondate)))
-                                ->first();
-        $totaldownpayment = DB::table("loans")
-                              ->select(DB::raw("SUM(down_payment) as total"))
-                              ->where('disburse_date', date('Y-m-d', strtotime($transactiondate)))
-                              ->where('loanname_id', 2)
-                              ->first();
-
-        $totalborrowcollection = DB::table("borrows")
-                                   ->select(DB::raw("SUM(amount) as total"))
-                                   ->where('borrow_date', date('Y-m-d', strtotime($transactiondate)))
-                                   ->where('borrow_type', 2)
-                                   ->first();
-        // collection
-
-        // disburse
-        $totaldisbursed = DB::table("loans")
-                                ->select(DB::raw("SUM(principal_amount) as total"))
-                                ->where('disburse_date', date('Y-m-d', strtotime($transactiondate)))
-                                ->first();
-        $totalsavingwithdraw = DB::table("savinginstallments")
-                                 ->select(DB::raw("SUM(withdraw) as total"))
-                                 ->where('due_date', date('Y-m-d', strtotime($transactiondate)))
-                                 ->first();
-        $totalgeneralsavingwithdraw = DB::table("savinginstallments")
-                                         ->select(DB::raw("SUM(withdraw) as total"))
-                                         ->where('due_date', date('Y-m-d', strtotime($transactiondate)))
-                                         ->where('savingname_id', 1)
-                                         ->first();
-        $totallongtermsavingcwithdraw = DB::table("savinginstallments")
-                                          ->select(DB::raw("SUM(withdraw) as total"))
-                                          ->where('due_date', date('Y-m-d', strtotime($transactiondate)))
-                                          ->where('savingname_id', 2)
-                                          ->first();
-        $totalshareddepositreturn = DB::table("members")
-                                      ->select(DB::raw("SUM(shared_deposit) as total"))
-                                      ->where('closing_date', date('Y-m-d', strtotime($transactiondate)))
-                                      ->first();
-
-        $totalborrowdisbursed = DB::table("borrows")
-                                   ->select(DB::raw("SUM(amount) as total"))
-                                   ->where('borrow_date', date('Y-m-d', strtotime($transactiondate)))
-                                   ->where('borrow_type', 1)
-                                   ->first();
-        // disburse
+            $totalborrowdisbursed = DB::table("borrows")
+                                       ->select(DB::raw("SUM(amount) as total"))
+                                       ->where('borrow_date', date('Y-m-d', strtotime($request->close_date)))
+                                       ->where('borrow_type', 1)
+                                       ->first();
+            // disburse
 
 
 
