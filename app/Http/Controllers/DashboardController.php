@@ -19,6 +19,7 @@ use App\Closeday;
 use App\Borrow;
 use App\Baddebt;
 use App\Debtpayment;
+use App\Dailyotheramount;
 
 use Carbon\Carbon;
 use DB, Hash, Auth, Image, File, Session;
@@ -397,6 +398,22 @@ class DashboardController extends Controller
 
             Session::flash('success', 'Submitted successfully!'); 
         }
+
+        // save the CASH IN HAND
+        $dailyotheramounts = Dailyotheramount::where('due_date', date('Y-m-d', strtotime($request->close_date)))->first();
+        if(!empty($dailyotheramounts)) {
+            $thenextday = date('Y-m-d', strtotime($request->close_date . ' + 1 day'));
+            $thenextdayamounts = Dailyotheramount::where('due_date', date('Y-m-d', strtotime($thenextday)))->first();
+            if(!empty($thenextdayamounts)) {
+                $thenextdayamounts->cashinhand = $dailyotheramounts->cashinhand + $dailyotheramounts->collentionothers - $dailyotheramounts->disburseothers;
+            } else {
+                $newdailyotheramounts = new Dailyotheramount;
+                $newdailyotheramounts->due_date = date('Y-m-d', strtotime($thenextday));
+                $newdailyotheramounts->cashinhand = $dailyotheramounts->cashinhand + $dailyotheramounts->collentionothers - $dailyotheramounts->disburseothers;
+                $newdailyotheramounts->save();            
+            }
+        }
+        // save the CASH IN HAND
 
         return redirect()->route('programs.day.close');
     }

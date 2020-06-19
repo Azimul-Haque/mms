@@ -206,7 +206,9 @@ Route::get('/dashboard/userid/missing', ['as'=>'dashboard.useridmissing','uses'=
 Route::get('/dashboard/deben/change', ['as'=>'dashboard.debenmannan','uses'=>'DashboardController@changeDebenLoanAndSaving']);
 
 
-
+// Route::get('api/user/{user}', function (App\User $user) {
+//     return $user->name; 
+// });
 
 // Route::get('/dashboard/applications', ['as'=>'dashboard.applications','uses'=>'DashboardController@getApplications']);
 // Route::patch('/dashboard/applications/{id}/approve', ['as'=>'dashboard.approveapplication','uses'=>'DashboardController@approveApplication']);
