@@ -452,7 +452,6 @@ class DashboardController extends Controller
                                        ->where('borrow_type', 2)
                                        ->first();
             // collection
-            dd($totalinsurance->total);
 
             // disburse
             $totaldisbursed = DB::table("loans")
@@ -474,15 +473,50 @@ class DashboardController extends Controller
                                        ->first();
             // disburse
 
-
-
-
             if(!empty($thenextdayamounts)) {
-                $thenextdayamounts->cashinhand = $dailyotheramounts->cashinhand + $dailyotheramounts->collentionothers - $dailyotheramounts->disburseothers;
+                $thenextdayamounts->cashinhand = 
+                    $dailyotheramounts->cashinhand 
+                    + ($totalsavingcollection->total ? $totalsavingcollection->total : 0)
+                    + ($totalloancollection->total ? $totalloancollection->total : 0)
+                    + ($totalinsurance->total ? $totalinsurance->total : 0)
+                    + ($totalprocessingfee->total ? $totalprocessingfee->total : 0)
+                    + ($totaladmissionfee->total ? $totaladmissionfee->total : 0)
+                    + ($totalpassbookfee->total ? $totalpassbookfee->tota : 0)
+                    + ($totalshareddeposit->total ? $totalshareddeposit->total : 0)
+                    + ($totaldownpayment->total ? $totaldownpayment->total : 0)
+                    + ($totalborrowcollection->total ? $totalborrowcollection->tota : 0)
+                    + $dailyotheramounts->collentionothers
+
+                    - ($totaldisbursed->total ? $totaldisbursed->total : 0)
+                    - ($totalsavingwithdraw->total ? $totalsavingwithdraw->total : 0)
+                    - ($totalshareddepositreturn->total ? $totalshareddepositreturn->total : 0)
+                    - ($totalborrowdisbursed->total ? $totalborrowdisbursed->total : 0) 
+                    - $dailyotheramounts->disburseothers;
+
+                $thenextdayamounts->save();
+
             } else {
                 $newdailyotheramounts = new Dailyotheramount;
                 $newdailyotheramounts->due_date = date('Y-m-d', strtotime($thenextday));
-                $newdailyotheramounts->cashinhand = $dailyotheramounts->cashinhand + $dailyotheramounts->collentionothers - $dailyotheramounts->disburseothers;
+                $newdailyotheramounts->cashinhand = 
+                    $dailyotheramounts->cashinhand 
+                    + ($totalsavingcollection->total ? $totalsavingcollection->total : 0)
+                    + ($totalloancollection->total ? $totalloancollection->total : 0)
+                    + ($totalinsurance->total ? $totalinsurance->total : 0)
+                    + ($totalprocessingfee->total ? $totalprocessingfee->total : 0)
+                    + ($totaladmissionfee->total ? $totaladmissionfee->total : 0)
+                    + ($totalpassbookfee->total ? $totalpassbookfee->tota : 0)
+                    + ($totalshareddeposit->total ? $totalshareddeposit->total : 0)
+                    + ($totaldownpayment->total ? $totaldownpayment->total : 0)
+                    + ($totalborrowcollection->total ? $totalborrowcollection->tota : 0)
+                    + $dailyotheramounts->collentionothers
+
+                    - ($totaldisbursed->total ? $totaldisbursed->total : 0)
+                    - ($totalsavingwithdraw->total ? $totalsavingwithdraw->total : 0)
+                    - ($totalshareddepositreturn->total ? $totalshareddepositreturn->total : 0)
+                    - ($totalborrowdisbursed->total ? $totalborrowdisbursed->total : 0) 
+                    - $dailyotheramounts->disburseothers;
+                    
                 $newdailyotheramounts->save();            
             }
         }
