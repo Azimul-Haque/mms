@@ -40,12 +40,7 @@
                   <td>Cash in Hand</td>
                   <td>৳ 
                     {{-- <input type="number" style="width: 100px;" min="0" id="cashinhand" onchange="dailyOtherAmountsCal()" @if(!empty($dailyotheramounts->cashinhand)) value="{{ $dailyotheramounts->cashinhand }}" @else value="0" @endif> --}}
-                    @if(!empty($dailyotheramounts->cashinhand))
-                      {{ $dailyotheramounts->cashinhand ? $dailyotheramounts->cashinhand : 0 }}
-                    @else
-                      0.00
-                    @endif
-                    
+                    <span id="cashinhand">@if(!empty($dailyotheramounts->cashinhand)) {{ $dailyotheramounts->cashinhand ? $dailyotheramounts->cashinhand : 0 }} @else 0.00 @endif</span>
                   </td>
                 </tr>
                 
@@ -203,7 +198,7 @@
     })
 
     function dailyOtherAmountsCal() {
-      // var cashinhand = parseFloat($('#cashinhand').val()) ? parseFloat($('#cashinhand').val()) : 0;
+      // var cashinhand = parseFloat($('#cashinhand').text()) ? parseFloat($('#cashinhand').text()) : 0;
       var collentionothers = parseFloat($('#collentionothers').val()) ? parseFloat($('#collentionothers').val()) : 0;
       var disburseothers = parseFloat($('#disburseothers').val()) ? parseFloat($('#disburseothers').val()) : 0;
       var transactiondate = '{{ $transactiondate }}';
@@ -234,7 +229,7 @@
       $(".for_total_collectioncommon").each(function() {
           print_total_collectioncommon = print_total_collectioncommon + parseFloat($(this).text());
 
-          var cashinhand = parseFloat($('#cashinhand').val()) ? parseFloat($('#cashinhand').val()) : 0;
+          var cashinhand = parseFloat($('#cashinhand').text()) ? parseFloat($('#cashinhand').text()) : 0;
           var collentionothers = parseFloat($('#collentionothers').val()) ? parseFloat($('#collentionothers').val()) : 0;
 
           $('#print_total_collectioncommon').text(print_total_collectioncommon + cashinhand + collentionothers);
