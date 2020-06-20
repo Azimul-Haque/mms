@@ -40,7 +40,12 @@
                   <td>Cash in Hand</td>
                   <td>৳ 
                     {{-- <input type="number" style="width: 100px;" min="0" id="cashinhand" onchange="dailyOtherAmountsCal()" @if(!empty($dailyotheramounts->cashinhand)) value="{{ $dailyotheramounts->cashinhand }}" @else value="0" @endif> --}}
-                    {{ $dailyotheramounts->cashinhand ? $dailyotheramounts->cashinhand : 0 }}
+                    @if(!empty($dailyotheramounts->cashinhand))
+                      {{ $dailyotheramounts->cashinhand ? $dailyotheramounts->cashinhand : 0 }}
+                    @else
+                      0.00
+                    @endif
+                    
                   </td>
                 </tr>
                 

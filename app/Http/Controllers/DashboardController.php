@@ -527,8 +527,12 @@ class DashboardController extends Controller
 
     public function deleteDayClose($id)
     {
-        $closeday = Closeday::find($id);
-        $closeday->delete();
+        try {
+            $closeday = Closeday::find($id);
+            $closeday->delete();
+        } catch(Exception $e) {
+            
+        }
 
         Session::flash('success', 'Day opened successfully!');
         return redirect()->route('programs.day.close');
