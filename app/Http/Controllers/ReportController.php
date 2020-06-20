@@ -464,14 +464,14 @@ class ReportController extends Controller
     	$dailyotheramounts = Dailyotheramount::where('due_date', $request->data['transactiondate'])->first();
 
     	if(!empty($dailyotheramounts)) {
-    	    $dailyotheramounts->cashinhand = $request->data['cashinhand'];
+    	    // $dailyotheramounts->cashinhand = $request->data['cashinhand'];
     	    $dailyotheramounts->collentionothers = $request->data['collentionothers'];
     	    $dailyotheramounts->disburseothers = $request->data['disburseothers'];
     	    $dailyotheramounts->save();
     	} else {
     	    $newdailyotheramounts = new Dailyotheramount;
     	    $newdailyotheramounts->due_date = date('Y-m-d', strtotime($request->data['transactiondate']));
-    	    $newdailyotheramounts->cashinhand = $request->data['cashinhand'];
+    	    // $newdailyotheramounts->cashinhand = $request->data['cashinhand'];
     	    $newdailyotheramounts->collentionothers = $request->data['collentionothers'];
     	    $newdailyotheramounts->disburseothers = $request->data['disburseothers'];
     	    $newdailyotheramounts->save();            

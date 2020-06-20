@@ -38,7 +38,10 @@
               <tbody>
                 <tr>
                   <td>Cash in Hand</td>
-                  <td>৳ <input type="number" style="width: 100px;" min="0" id="cashinhand" onchange="dailyOtherAmountsCal()" @if(!empty($dailyotheramounts->cashinhand)) value="{{ $dailyotheramounts->cashinhand }}" @else value="0" @endif></td>
+                  <td>৳ 
+                    {{-- <input type="number" style="width: 100px;" min="0" id="cashinhand" onchange="dailyOtherAmountsCal()" @if(!empty($dailyotheramounts->cashinhand)) value="{{ $dailyotheramounts->cashinhand }}" @else value="0" @endif> --}}
+                    {{ $dailyotheramounts->cashinhand ? $dailyotheramounts->cashinhand : 0 }}
+                  </td>
                 </tr>
                 
                 {{-- <tr>
@@ -195,7 +198,7 @@
     })
 
     function dailyOtherAmountsCal() {
-      var cashinhand = parseFloat($('#cashinhand').val()) ? parseFloat($('#cashinhand').val()) : 0;
+      // var cashinhand = parseFloat($('#cashinhand').val()) ? parseFloat($('#cashinhand').val()) : 0;
       var collentionothers = parseFloat($('#collentionothers').val()) ? parseFloat($('#collentionothers').val()) : 0;
       var disburseothers = parseFloat($('#disburseothers').val()) ? parseFloat($('#disburseothers').val()) : 0;
       var transactiondate = '{{ $transactiondate }}';
@@ -203,7 +206,7 @@
       // now post the data
       $.post("/report/daily/summary/dailyotheramounts", {_token: '{{ csrf_token() }}', _method : 'POST', 
           data: {
-          cashinhand: cashinhand,
+          // cashinhand: cashinhand,
           collentionothers: collentionothers,
           disburseothers: disburseothers,
           transactiondate: transactiondate,
