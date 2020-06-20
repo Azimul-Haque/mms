@@ -481,10 +481,10 @@ class DashboardController extends Controller
                     + ($totalinsurance->total ? $totalinsurance->total : 0)
                     + ($totalprocessingfee->total ? $totalprocessingfee->total : 0)
                     + ($totaladmissionfee->total ? $totaladmissionfee->total : 0)
-                    + ($totalpassbookfee->total ? $totalpassbookfee->tota : 0)
+                    + ($totalpassbookfee->total ? $totalpassbookfee->total : 0)
                     + ($totalshareddeposit->total ? $totalshareddeposit->total : 0)
                     + ($totaldownpayment->total ? $totaldownpayment->total : 0)
-                    + ($totalborrowcollection->total ? $totalborrowcollection->tota : 0)
+                    + ($totalborrowcollection->total ? $totalborrowcollection->total : 0)
                     + $dailyotheramounts->collentionothers
 
                     - ($totaldisbursed->total ? $totaldisbursed->total : 0)
@@ -505,10 +505,10 @@ class DashboardController extends Controller
                     + ($totalinsurance->total ? $totalinsurance->total : 0)
                     + ($totalprocessingfee->total ? $totalprocessingfee->total : 0)
                     + ($totaladmissionfee->total ? $totaladmissionfee->total : 0)
-                    + ($totalpassbookfee->total ? $totalpassbookfee->tota : 0)
+                    + ($totalpassbookfee->total ? $totalpassbookfee->total : 0)
                     + ($totalshareddeposit->total ? $totalshareddeposit->total : 0)
                     + ($totaldownpayment->total ? $totaldownpayment->total : 0)
-                    + ($totalborrowcollection->total ? $totalborrowcollection->tota : 0)
+                    + ($totalborrowcollection->total ? $totalborrowcollection->total : 0)
                     + $dailyotheramounts->collentionothers
 
                     - ($totaldisbursed->total ? $totaldisbursed->total : 0)
@@ -531,7 +531,7 @@ class DashboardController extends Controller
             $closeday = Closeday::find($id);
             $closeday->delete();
         } catch(Exception $e) {
-            
+
         }
 
         Session::flash('success', 'Day opened successfully!');
