@@ -184,7 +184,7 @@
     });
 
     $('#loaddailyOtherAmounts').click(function() {
-      var date_to_load =$('#date_to_load').val();
+      var date_to_load = $('#date_to_load').val();
 
       if(isEmptyOrSpaces(date_to_load)) {
         if($(window).width() > 768) {
